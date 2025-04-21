@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <title>Register - Border Haul</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Register to Border Haul platform."/>
+    <meta name="author" content="Zoyothemes"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
+    <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style" />
+    <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    <style>
+        .is-invalid {
+        border-color: #dc3545;
+        }
+        .invalid-feedback {
+            color: #dc3545;
+            font-size: 0.875em;
+        }
+    </style>
+</head>
+
+<body class="bg-primary-subtle">
+    <div class="account-page">
+        <div class="p-0 container-fluid">
+            <div class="row align-items-center g-0">
+                <div class="col-xl-12">
+                    <div class="row">
+                        <div class="mx-auto col-md-6">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="p-4 mb-0 border-0 p-md-5 p-lg-0">
+                                        <div class="p-0 mb-2 text-center">
+                                            <a href="" class="auth-logo">
+                                                <img src="{{ asset('assets/images/logo/Border-Haul-logo.png') }}" alt="" height="90" style="margin-top: -25px;">
+                                            </a>
+                                        </div>
+                                        <div class="text-center auth-title-section">
+                                            {{-- <h3 class="mb-2 text-dark fs-20 fw-medium">Welcome to Border Haul</h3> --}}
+                                            <h4 class="mb-4 text-dark text-uppercase" style="font-weight: bold;">Shipper Register</h4>
+                                        </div>
+                                        <div class="pt-0">
+                                            <form id="registrationForm" method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
+                                                @csrf
+
+                                                <!-- User Type -->
+                                                <div class="mb-3 row">
+                                                    <div class="col-md-6">
+                                                        <label for="user_type" class="form-label">Shipper Name <span class="text-danger">*</span></label>
+                                                        <input type="text" name="name" id="name" class="form-control" placeholder="Company Name" >
+                                                        <div class="invalid-feedback"></div>
+                                                    </div>
+
+                                                    <!-- Service Category -->
+                                                    <div class="col-md-6">
+                                                        <label for="service_category" class="form-label">Service Category <span class="text-danger">*</span></label>
+                                                        <select name="service_category" id="service_category" class="form-control" >
+                                                            <option value="" selected="">Select</option>
+                                                            @foreach (serviceCategory() as $key => $services_category)
+                                                                <option value="{{ $key }}">{{ $services_category }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                        <div class="invalid-feedback"></div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Company Name & Address -->
+                                                <div class="mb-3 row">
+                                                    <div class="col-md-6">
+                                                        <label for="company_name" class="form-label">Company Name <span class="text-danger">*</span></label>
+                                                        <input type="text" name="company_name" id="company_name" class="form-control" placeholder="Company Name" >
+                                                        <div class="invalid-feedback"></div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="company_address" class="form-label">Company Address <span class="text-danger">*</span></label>
+                                                        <input type="text" name="company_address" id="company_address" class="form-control" placeholder="Company Address" >
+                                                        <div class="invalid-feedback"></div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Email & Phone -->
+                                                <div class="mb-3 row">
+                                                    <div class="col-md-6">
+                                                        <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
+                                                        <input type="email" name="email" id="email" class="form-control" placeholder="Email Address" >
+                                                        <div class="invalid-feedback"></div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
+                                                        <input type="text" name="phone" id="phone" class="form-control" placeholder="Phone" >
+                                                        <div class="invalid-feedback"></div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Password & Confirm Password -->
+                                                <div class="mb-3 row">
+                                                    <div class="col-md-6">
+                                                        <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                                                        <input type="password" name="password" id="password" class="form-control" placeholder="Password" >
+                                                        <div class="invalid-feedback"></div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label for="password_confirmation" class="form-label">Confirm Password <span class="text-danger">*</span></label>
+                                                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="Confirm Password" >
+                                                        <div class="invalid-feedback"></div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- Submit Button -->
+                                                <div class="mb-2 text-center" style="padding: 0 100px; margin-top: 20px;">
+                                                    <button type="submit" class="btn btn-primary w-100">Register</button>
+                                                </div>
+                                            </form>
+
+                                            <div class="mt-3 text-center text-muted">
+                                                <p class="mb-0">Already have an account?
+                                                    <a class="text-primary ms-2 fw-medium" href="{{ route('login') }}">Login here</a>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> <!-- card end -->
+                        </div> <!-- col end -->
+                    </div> <!-- row end -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+@include('backend.components.js-validations.shipper-users.shipper-register')
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+{{-- <x-guest-layout>
+    <form method="POST" action="{{ route('register') }}">
+        @csrf
+
+        <!-- Name -->
+        <div>
+            <x-input-label for="name" :value="__('Name')" />
+            <x-text-input id="name" class="block w-full mt-1" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
+            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+        </div>
+
+        <!-- Email Address -->
+        <div class="mt-4">
+            <x-input-label for="email" :value="__('Email')" />
+            <x-text-input id="email" class="block w-full mt-1" type="email" name="email" :value="old('email')" required autocomplete="username" />
+            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        </div>
+
+        <!-- Password -->
+        <div class="mt-4">
+            <x-input-label for="password" :value="__('Password')" />
+
+            <x-text-input id="password" class="block w-full mt-1"
+                            type="password"
+                            name="password"
+                            required autocomplete="new-password" />
+
+            <x-input-error :messages="$errors->get('password')" class="mt-2" />
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="mt-4">
+            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+
+            <x-text-input id="password_confirmation" class="block w-full mt-1"
+                            type="password"
+                            name="password_confirmation" required autocomplete="new-password" />
+
+            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+        </div>
+
+        <div class="flex items-center justify-end mt-4">
+            <a class="text-sm text-gray-600 underline rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
+                {{ __('Already registered?') }}
+            </a>
+
+            <x-primary-button class="ms-4">
+                {{ __('Register') }}
+            </x-primary-button>
+        </div>
+    </form>
+</x-guest-layout> --}}
+
+
+
+
