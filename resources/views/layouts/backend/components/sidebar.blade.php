@@ -30,7 +30,7 @@
 
                {{-- Menu for Admin --}}
 
-                @hasrole($adminRole)
+                {{-- @hasrole($adminRole)
                 <li>
                     <a href="#sidebarDashboards">
                         <i data-feather="credit-card"></i>
@@ -79,7 +79,7 @@
                     </a>
                 </li>
 
-                @endhasrole
+                @endhasrole --}}
 
                {{-- Menu for Shipper --}}
                 @hasrole($shipperRole)

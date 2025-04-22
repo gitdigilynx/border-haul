@@ -105,7 +105,7 @@
                                                             <div class="mb-3 form-group row">
                                                                 <label class="form-label">Role</label>
                                                                 <div class="col-lg-12 col-xl-12">
-                                                                    <input class="form-control" type="text" value="{{ Auth::user()->role}}">
+                                                                    <input class="form-control" type="text" value="{{ Auth::user()->role}}" disabled>
                                                                 </div>
                                                             </div>
 
