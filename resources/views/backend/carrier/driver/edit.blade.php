@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="driverModalLabel">
-                    {{ isset($driver) ? 'Edit Driver' : 'Add Driver' }}
+                    {{ isset($driver) ? 'Update Driver' : 'Add Driver' }}
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -15,7 +15,7 @@
                 <div class="modal-body">
                     <div class="row g-3">
                         <div class="col-xxl-6">
-                            <label for="name" class="form-label">Name</label>
+                            <label for="name" class="form-label">Drive Name</label>
                             <input type="text" class="form-control" name="name" placeholder="Full Name"
                                 value="{{ old('name', $driver->name ?? '') }}" required>
                         </div>

@@ -48,7 +48,7 @@ class AddressBookController extends Controller
 
             return to_route('shipper.address-book')->with('success', 'Address created successfully!');;
         } catch (\Exception $e) {
-            flash()->error($e->getMessage());
+            flash()->error('Something went wrong: ' . $e->getMessage());
             return to_route('shipper.address-book');
         }
     }
@@ -90,7 +90,7 @@ class AddressBookController extends Controller
 
             return to_route('shipper.address-book')->with('success', 'Address updated successfully!');
         } catch (\Exception $e) {
-            flash()->error($e->getMessage());
+            flash()->error('Something went wrong: ' . $e->getMessage());
             return to_route('shipper.address-book');
         }
     }
@@ -107,7 +107,7 @@ class AddressBookController extends Controller
             $addressBook = AddressBook::findOrFail($id);
             $addressBook->delete();
         } catch (\Exception $e) {
-            flash()->error($e->getMessage());
+            flash()->error('Something went wrong: ' . $e->getMessage());
         }
     }
 }

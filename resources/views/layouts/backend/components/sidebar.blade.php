@@ -92,14 +92,14 @@
 
                 <li>
                     <a href="#sidebarAuth" data-bs-toggle="collapse">
-                        <i data-feather="truck"></i>
+                        <i class="fa-solid fa-users"></i>
                         <span> My Delivery </span>
                     </a>
                 </li>
 
                 <li>
                     <a href="{{ route('shipper.sub-users') }}">
-                        <i data-feather="users"></i>
+                        <i class="fa-solid fa-users"></i>
                         <span> Shipper Users </span>
                     </a>
                 </li>
@@ -141,21 +141,16 @@
                     </a>
                 </li>
 
-                 {{-- <li>
-                    <a href="{{ route('carrier.documents') }}">
+                 <li>
+                    <a href="{{ route('carrier.trucks') }}">
                        <i class="fa-solid fa-truck"></i>
                         <span> Trucks </span>
                     </a>
-                </li> --}}
-
+                </li>
                 @endhasrole
-
-
             </ul>
-
         </div>
         <!-- End Sidebar -->
-
         <div class="clearfix"></div>
 
     </div>

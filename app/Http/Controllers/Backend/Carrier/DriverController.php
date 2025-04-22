@@ -11,13 +11,16 @@ class DriverController extends Controller
 {
     public function index()
     {
-        try {
-            $drivers = Driver::all();
+
+        $user = auth()->user();
+            $drivers = Driver::with('carrier')
+                ->where('carrier_id', $user->carrier->id)
+                ->orderBy('created_at', 'desc')
+                ->get();
+
             return view('backend.carrier.driver.index', compact('drivers'));
-        } catch (\Exception $e) {
-            flash()->error($e->getMessage());
-            return redirect()->back();
-        }
+
+
     }
 
     public function create()
@@ -45,7 +48,7 @@ class DriverController extends Controller
 
             return redirect()->back()->with('success', 'Driver created successfully.');
         } catch (\Exception $e) {
-            flash()->error($e->getMessage());
+            flash()->error('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -56,7 +59,7 @@ class DriverController extends Controller
             $driver = Driver::findOrFail($id);
             return view('backend.carrier.driver.edit', compact('driver'));
         } catch (\Exception $e) {
-            flash()->error($e->getMessage());
+            flash()->error('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -75,7 +78,7 @@ class DriverController extends Controller
 
             return redirect()->back()->with('success', 'Driver updated successfully.');
         } catch (\Exception $e) {
-            flash()->error($e->getMessage());
+            flash()->error('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -87,7 +90,7 @@ class DriverController extends Controller
             $driver->delete();
             return redirect()->back()->with('success', 'Driver deleted successfully.');
         } catch (\Exception $e) {
-            flash()->error($e->getMessage());
+            flash()->error('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }

@@ -26,3 +26,25 @@ function statusBadge(string $status): string
         'pending'  => 'badge bg-warning text-dark',
     };
 }
+
+
+function statusInService($in_service): string
+{
+    return match ((string) $in_service) {
+        '1', 'ON' => 'badge bg-success',
+        '0', 'OFF' => 'badge bg-danger',
+        default => 'badge bg-secondary',
+    };
+}
+
+
+function serviceDirverCategory()
+{
+    return [
+        'general_cargo' => 'General Cargo',
+        'reefer' => 'Reefer',
+        'hazmat' => 'Hazmat',
+        'flatbed' => 'Flatbed',
+        'RGN' => 'rgn',
+    ];
+}

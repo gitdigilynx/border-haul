@@ -26,10 +26,10 @@
                         <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" required>
                     </div>
-                    <div class="col-md-6">
+                    {{-- <div class="col-md-6">
                         <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
                         <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>

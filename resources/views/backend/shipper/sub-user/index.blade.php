@@ -60,13 +60,15 @@
                                                     <i class="p-1 text-white fa fa-eye text-secondary"></i>
                                                 </a>
 
+                                                <!-- Delete Button -->
+                                                <a href="javascript:void(0);" class="p-0 mb-0 delete-user btn bg-danger rounded-circle"  data-id="{{ $user->id }}"
+                                                        data-url="{{ route('shipper.sub-users.destroy', $user->id) }}">
+                                                    <i class="p-1 text-white fa fa-trash"></i>
+                                                </a>
 
                                                 {{-- <a href="{{ route('sub-users.edit', $user->id) }}" class="p-0 mb-0 rounded-circle btn bg-success">
                                                     <i class="p-1 text-white fa fa-edit text-secondary"></i>
                                                 </a> --}}
-                                                <a href="javascript:void(0);" class="p-0 mb-0 delete-sub-user btn bg-danger rounded-circle" data-id="{{ $user->id }}">
-                                                    <i class="p-1 text-white fa fa-trash"></i>
-                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -83,12 +85,49 @@
 </div>
 
 @include('backend.shipper.sub-user.create')
-@include('backend.components.alerts.shipper-users')
-
 @foreach($subUsers as $user)
     @include('backend.shipper.sub-user.show')
 @endforeach
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script>
+    $(document).ready(function () {
+        $('.delete-user').click(function () {
+            const button = $(this);
+            const deleteUrl = button.data('url');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'This action cannot be undone.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: deleteUrl,
+                        type: 'POST',
+                        data: {
+                            _method: 'DELETE',
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function (response) {
+                            Swal.fire('Deleted!', 'The document entry has been deleted.', 'success')
+                                .then(() => {
+                                    location.reload();
+                                });
+                        },
+                        error: function (xhr) {
+                            Swal.fire('Error', 'Something went wrong.', 'error');
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>
 
 <script>
     $(document).ready(function () {

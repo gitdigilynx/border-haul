@@ -6,12 +6,11 @@ use App\Http\Controllers\Controller;
 use App\Models\Shipper;
 use App\Models\ShipperSubUser;
 use Illuminate\Http\Request;
-use App\Notifications\SubUserCredentialsNotification;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\SubUserCreated;
+use App\Mail\SendPasswordToShipperUser;
 
 class SubUserController extends Controller
 {
@@ -57,7 +56,7 @@ class SubUserController extends Controller
         ]);
 
         // Send credentials via email
-        Mail::to($request->email)->send(new SubUserCreated($request->email, $rawPassword));
+        Mail::to($request->email)->send(new SendPasswordToShipperUser($request->email, $rawPassword));
 
         return redirect()->route('shipper.sub-users')->with('success', 'Sub-user created successfully!');
     }
@@ -85,10 +84,17 @@ class SubUserController extends Controller
         return redirect()->route('shipper.sub-users.index');
     }
 
-    public function destroy($id)
+     public function destroy($id)
     {
-        $subUser = ShipperSubUser::findOrFail($id);
-        $subUser->delete();
+        try {
+            $subUser = ShipperSubUser::findOrFail($id);
+            $subUser->delete();
+
+            return response()->json(['message' => 'Deleted successfully']);
+        } catch (\Exception $e) {
+            flash()->error('Something went wrong: ' . $e->getMessage());
+            return redirect()->back();
+        }
     }
 
 }

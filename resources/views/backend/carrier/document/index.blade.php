@@ -53,11 +53,9 @@
                                                 {{ ucfirst($document->status) }}
                                             </span>
                                         </td>
-
                                         <td>
-
                                              <!-- Download Button -->
-                                             <a href="{{ route('carrier.documents.download', $document->id) }}"
+                                            <a href="{{ route('carrier.documents.download', $document->id) }}"
                                                 class="p-0 mb-0 rounded-circle btn bg-info" title="Download">
                                                 <i class="p-1 text-white fa fa-download"></i>
                                             </a>
@@ -145,7 +143,6 @@
         });
     });
 </script>
-
 
 <script>
     $(document).ready(function () {

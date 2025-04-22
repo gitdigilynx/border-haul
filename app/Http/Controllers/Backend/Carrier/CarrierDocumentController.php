@@ -12,7 +12,6 @@ use App\Http\Requests\UpdateDocumentRequest;
 class CarrierDocumentController extends Controller
 {
     protected $uploadService;
-
     public function __construct(DocumentUploadService $uploadService)
     {
         $this->uploadService = $uploadService;
@@ -29,7 +28,7 @@ class CarrierDocumentController extends Controller
 
             return view('backend.carrier.document.index', compact('documents'));
         } catch (\Exception $e) {
-            flash()->error($e->getMessage());
+            flash()->error('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -57,7 +56,7 @@ class CarrierDocumentController extends Controller
 
             return redirect()->back()->with('success', 'Document uploaded successfully.');
         } catch (\Exception $e) {
-            flash()->error($e->getMessage());
+            flash()->error('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -76,7 +75,7 @@ class CarrierDocumentController extends Controller
 
             return redirect()->back()->with('success', 'Document updated successfully.');
         } catch (\Exception $e) {
-            flash()->error($e->getMessage());
+            flash()->error('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -88,7 +87,7 @@ class CarrierDocumentController extends Controller
             $document->delete();
             return redirect()->back()->with('success', 'Document deleted successfully.');
         } catch (\Exception $e) {
-            flash()->error($e->getMessage());
+            flash()->error('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -104,7 +103,7 @@ class CarrierDocumentController extends Controller
 
             return response()->download(storage_path('app/' . $document->file_path));
         } catch (\Exception $e) {
-            flash()->error($e->getMessage());
+            flash()->error('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }

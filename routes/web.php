@@ -110,13 +110,14 @@ Route::middleware(['auth'])->group(function () {
         });
 
         Route::controller(TruckController::class)->group(function () {
-            Route::get('/trucks', 'index')->name('trucks.index');
+            Route::get('/trucks', 'index')->name('trucks');
             Route::get('/trucks/create', 'create')->name('trucks.create');
             Route::post('/trucks', 'store')->name('trucks.store');
             Route::get('/trucks/{id}/edit', 'edit')->name('trucks.edit');
             Route::post('/trucks/{id}', 'update')->name('trucks.update');
             Route::get('/trucks/{id}/show', 'show')->name('trucks.show');
             Route::delete('/trucks/{id}', 'destroy')->name('trucks.destroy');
+            Route::patch('/trucks/{truck}/toggle-truck',  'toggleTruck')->name('trucks.toggleTruck');
         });
 
         Route::controller(DriverController::class)->group(function () {

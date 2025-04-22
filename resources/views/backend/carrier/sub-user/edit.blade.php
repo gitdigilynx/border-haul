@@ -37,10 +37,10 @@
                                 <label for="phone" class="form-label">Phone</label>
                                 <input type="text" class="form-control" name="phone" placeholder="Phone">
                             </div>
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <label for="password" class="form-label">Password</label>
                                 <input type="password" class="form-control" name="password" placeholder="Password">
-                            </div>
+                            </div> --}}
                         </div>
 
                         <div class="modal-footer">

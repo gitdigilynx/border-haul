@@ -1,5 +1,5 @@
 <!-- Modal -->
-   <div class="modal fade" id="driverUserModal" tabindex="-1" aria-labelledby="exampleModalgridLabel">
+<div class="modal fade" id="truckUserModal" tabindex="-1" aria-labelledby="exampleModalgridLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -7,7 +7,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="driverForm" method="POST" action="{{ route('carrier.drivers.store') }}">
+                    <form id="truckForm" method="POST" action="{{ route('carrier.trucks.store') }}">
                       @csrf
                        <div class="row g-3">
                             <div class="col-xxl-6">
@@ -27,7 +27,12 @@
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="serviceCategory" class="form-label">Service Category</label>
-                                    <input type="text" class="form-control" name="service_category" placeholder="Enter Service Category" required>
+                                      <select class="form-select" name="service_category">
+                                        <option value="" selected="">Select</option>
+                                        @foreach (serviceDirverCategory() as $key => $service_category)
+                                            <option value="{{ $key }}">{{ $service_category }}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div><!--end col-->
 
@@ -67,7 +72,7 @@
 
   <script>
     $(document).ready(function () {
-      $('#driverForm').validate({
+      $('#truckForm').validate({
         errorClass: 'is-invalid',
         validClass: 'is-valid',
         errorElement: 'div',

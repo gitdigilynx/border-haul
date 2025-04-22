@@ -48,11 +48,11 @@ class Carrier extends Model
 
     public function trucks()
     {
-        return $this->hasMany(Truck::class, 'carrier_id');
+        return $this->hasMany(Truck::class);
     }
 
     public function drivers()
     {
-        return $this->hasMany(Driver::class, 'carrier_id');
+        return $this->hasMany(Driver::class);
     }
 }

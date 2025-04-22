@@ -5,76 +5,122 @@ namespace App\Http\Controllers\Backend\Carrier;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\CarrierSubUser;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendPasswordToCarrierUser;
+use Illuminate\Support\Str;
 
 class CarrierSubUserController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
-        $carrierId = auth()->id();
-        $carrierUsers = CarrierSubUser::with('users')
-            ->where('carrier_id', $carrierId)
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        return view('backend.carrier.sub-user.index', compact('carrierUsers'));
+        try {
+            $carrierId = auth()->id();
+            $carrierUsers = CarrierSubUser::with('users')
+                ->where('carrier_id', $carrierId)
+                ->orderBy('created_at', 'desc')
+                ->get();
+            return view('backend.carrier.sub-user.index', compact('carrierUsers'));
+        } catch (\Exception $e) {
+            flash()->error('Something went wrong: ' . $e->getMessage());
+            return redirect()->back();
+        }
     }
 
     public function create()
     {
-        return view('backend.carrier.sub-user.create');
+        try {
+            return view('backend.carrier.sub-user.create');
+        } catch (\Exception $e) {
+            flash()->error('Something went wrong: ' . $e->getMessage());
+            return redirect()->back();
+        }
     }
 
     public function store(Request $request)
     {
-        $carrier = auth()->user();
+        try {
+            $carrier = auth()->user();
 
-        $user = User::create([
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'carrier_user',
-        ]);
+            $rawPassword = Str::random(8);
+            $user = User::create([
+                'email' => $request->email,
+                'password' => Hash::make($rawPassword),
+                'role' => 'carrier_user',
+            ]);
 
-        CarrierSubUser::create([
-            'user_id' => $user->id,
-            'carrier_id' => $carrier->id,
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'phone' => $request->email,
-        ]);
+            CarrierSubUser::create([
+                'user_id' => $user->id,
+                'carrier_id' => $carrier->id,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'phone' => $request->email,
+            ]);
 
-        return redirect()->route('carrier.carrier-users')->with('success', 'Sub-user created successfully!');
+            // Send credentials via email
+             Mail::to($request->email)->send(new SendPasswordToCarrierUser($request->email, $rawPassword));
+
+            return redirect()->route('carrier.carrier-users')->with('success', 'User created successfully!');
+        } catch (\Exception $e) {
+            flash()->error('Something went wrong: ' . $e->getMessage());
+            return redirect()->back();
+        }
     }
 
     public function show($id)
     {
-        $user = CarrierSubUser::with('users')->findOrFail($id);
-        return view('backend.carrier.sub-user.show', compact('user'));
+        try {
+
+            $user = CarrierSubUser::with('users')->findOrFail($id);
+            return view('backend.carrier.sub-user.show', compact('user'));
+        } catch (\Exception $e) {
+            flash()->error('Something went wrong: ' . $e->getMessage());
+            return redirect()->back();
+        }
     }
 
     public function edit(Request $request)
     {
-        return view('backend.carrier.sub-user.edit');
+        try {
+            return view('backend.carrier.sub-user.edit');
+        } catch (\Exception $e) {
+            flash()->error('Something went wrong: ' . $e->getMessage());
+            return redirect()->back();
+        }
     }
 
     public function update(Request $request)
     {
-        $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:sub_users,email,' . $request->id,
-        ]);
+        try {
+            $validated = $request->validate([
+                'name' => 'required|string|max:255',
+                'email' => 'required|email|unique:sub_users,email,' . $request->id,
+            ]);
 
-        $request->update($validated);
-        return redirect()->route('carrier.carrier-users.index');
+            $request->update($validated);
+            return redirect()->route('carrier.carrier-users.index');
+        } catch (\Exception $e) {
+            flash()->error('Something went wrong: ' . $e->getMessage());
+            return redirect()->back();
+        }
     }
 
     public function destroy($id)
     {
-        $subUser = CarrierSubUser::findOrFail($id);
-        $subUser->delete();
-        return response()->json(['message' => 'Deleted successfully']);
-    }
+        try {
+            $subUser = CarrierSubUser::findOrFail($id);
+            $subUser->delete();
 
+            return response()->json(['message' => 'Deleted successfully']);
+        } catch (\Exception $e) {
+            flash()->error('Something went wrong: ' . $e->getMessage());
+            return redirect()->back();
+        }
+    }
 }

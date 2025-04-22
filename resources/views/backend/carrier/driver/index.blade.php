@@ -29,16 +29,15 @@
                             <table id="datatable-basic" class="table table-bordered dt-responsive nowrap table-flush">
                                 <thead>
                                     <tr>
-                                        <th>Sr #</th>
-                                        <th>Name</th>
+                                        <th>Driver Name</th>
                                         <th>Phone Number</th>
-                                        <th>Action</th>
+                                        <th style="width: 100px;">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($drivers as $driver)
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
+                                            {{-- <td>{{ $loop->iteration }}</td> --}}
                                             <td>{{ $driver->name }}</td>
                                             <td>{{ $driver->phone_number }}</td>
                                             <td>

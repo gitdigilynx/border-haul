@@ -20,5 +20,9 @@ class Driver extends Model
     {
         return $this->belongsTo(Truck::class);
     }
+    public function carrier()
+    {
+        return $this->belongsTo(Carrier::class, 'carrier_id');
+    }
 
 }

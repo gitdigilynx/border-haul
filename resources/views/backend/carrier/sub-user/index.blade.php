@@ -67,8 +67,9 @@
                                                     <i class="p-1 text-white fa fa-edit text-secondary"></i>
                                                 </a> --}}
 
-                                                <!-- Delete Button -->
-                                                <a href="javascript:void(0);" class="p-0 mb-0 delete-carrier-user btn bg-danger rounded-circle" data-id="{{ $user->id }}">
+                                                  <!-- Delete Button -->
+                                                <a href="javascript:void(0);" class="p-0 mb-0 delete-carrier-user btn bg-danger rounded-circle"  data-id="{{ $user->id }}"
+                                                        data-url="{{ route('carrier.carrier-users.destroy', $user->id) }}">
                                                     <i class="p-1 text-white fa fa-trash"></i>
                                                 </a>
                                             </td>
@@ -87,13 +88,50 @@
 </div>
 
 @include('backend.carrier.sub-user.create')
-@include('backend.components.alerts.carrier-users')
-
 @foreach($carrierUsers as $user)
     @include('backend.carrier.sub-user.show', ['document' => $user])
 @endforeach
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<script>
+    $(document).ready(function () {
+        $('.delete-carrier-user').click(function () {
+            const button = $(this);
+            const deleteUrl = button.data('url');
+
+            Swal.fire({
+                title: 'Are you sure?',
+                text: 'This action cannot be undone.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+                confirmButtonText: 'Yes, delete it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.ajax({
+                        url: deleteUrl,
+                        type: 'POST',
+                        data: {
+                            _method: 'DELETE',
+                            _token: '{{ csrf_token() }}'
+                        },
+                        success: function (response) {
+                            Swal.fire('Deleted!', 'The document entry has been deleted.', 'success')
+                                .then(() => {
+                                    location.reload();
+                                });
+                        },
+                        error: function (xhr) {
+                            Swal.fire('Error', 'Something went wrong.', 'error');
+                        }
+                    });
+                }
+            });
+        });
+    });
+</script>
 <script>
     $(document).ready(function () {
         $('#datatable-basic').DataTable({
