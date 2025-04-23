@@ -18,8 +18,14 @@
                 </a>
             </div>
             <ul id="side-menu">
-                <li class="mt-3 menu-title">Menu</li>
+                <li class="d-none d-lg-block mt-4">
+                    <div class="position-relative topbar-search">
+                        <input type="text" class="bg-opacity-75 form-control bg-light ps-4" placeholder="Search...">
+                        <i class="mdi mdi-magnify fs-16 position-absolute text-muted top-50 translate-middle-y ms-2"></i>
+                    </div>
+                </li>
 
+                <li class="mt-1 menu-title">Menu</li>
                 <li>
                     <a href="{{ route('home') }}">
                         <i class="fas fa-tachometer-alt"></i>
@@ -96,7 +102,7 @@
                     </li>
                 @endhasrole
 
-                <hr style="margin-top: 80px;">
+                <hr style="margin-top: 40px;">
 
                 <li>
                     <a href="#">
