@@ -22,6 +22,7 @@ return new class extends Migration
             $table->string('postal_code')->nullable();
             $table->string('country');
             $table->string('type');
+            $table->string('contact_person_name')->nullable();
             $table->foreign('shipper_id')->references('id')->on('shippers')->onDelete('cascade');
 
             $table->timestamps();

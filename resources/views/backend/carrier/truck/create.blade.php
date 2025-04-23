@@ -27,11 +27,13 @@
                             <div class="col-xxl-6">
                                 <div>
                                     <label for="serviceCategory" class="form-label">Service Category</label>
-                                      <select class="form-select" name="service_category">
-                                        <option value="" selected="">Select</option>
-                                        @foreach (serviceDirverCategory() as $key => $service_category)
-                                            <option value="{{ $key }}">{{ $service_category }}</option>
-                                        @endforeach
+                                    <select class="form-select" name="service_category" id="serviceCategory">
+                                    <option value="" selected>Select</option>
+                                    <option value="general_cargo">General Cargo</option>
+                                    <option value="reefer">Reefer</option>
+                                    <option value="hazmat">Hazmat</option>
+                                    <option value="flatbed">Flatbed</option>
+                                    <option value="RGN">rgn</option>
                                     </select>
                                 </div>
                             </div><!--end col-->

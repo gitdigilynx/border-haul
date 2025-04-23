@@ -20,7 +20,7 @@
         <p style="color: #5a6772; line-height: 1.6; font-size: 16px;">
             <span style="font-weight: bold; color: #2c3e50;">Your account password:</span> {{ $password }}
         </p>
-        <a href="#" style="display: block; width: fit-content; margin: 30px auto 0; background-color: #2d3748; color: white; padding: 12px 24px; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">Login</a>
+        <a href="#{{ url('https://admin.borderhaul.com/login') }}" style="display: block; width: fit-content; margin: 30px auto 0; background-color: #2d3748; color: white; padding: 12px 24px; border: none; border-radius: 5px; text-decoration: none; font-weight: bold;">Login</a>
         <p style="color: #5a6772; line-height: 1.6; font-size: 16px; margin-top: 30px;">Thank you,<br>Regards,<br><strong>Border Haul</strong></p>
     </div>
 </body>

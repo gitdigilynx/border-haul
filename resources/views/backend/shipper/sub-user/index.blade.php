@@ -28,14 +28,14 @@
                             <h5 class="mb-0 card-title">Users List</h5>
                             {{-- <button type="button" class="btn btn-success">Add Users</button> --}}
                             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#subUserModal">
-                               + Add User
+                               + Invite User
                             </button>
                         </div>
                         <div class="card-body responsive-datatable">
                             <table id="datatable-basic" class="table table-bordered dt-responsive nowrap table-flush">
                                 <thead>
                                     <tr>
-                                        <th>Sr #</th>
+                                        {{-- <th>Sr #</th> --}}
                                         <th>First Name</th>
                                         <th>Last Name</th>
                                         <th>Email</th>
@@ -46,7 +46,7 @@
                                 <tbody>
                                     @foreach ($subUsers as $user)
                                         <tr>
-                                            <td>{{ $loop->iteration }}</td>
+                                            {{-- <td>{{ $loop->iteration }}</td> --}}
                                             <td>{{ $user->first_name }}</td>
                                             <td>{{ $user->last_name }}</td>
                                             <td>{{ $user->users->email }}</td>

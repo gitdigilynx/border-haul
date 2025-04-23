@@ -4,7 +4,7 @@ namespace App\Enums;
 
 enum RoleEnum: string
 {
-    case ADMIN = 'admin';
-    case SHIPPER = 'shipper';
-    case CARRIER = 'carrier';
+    case ADMIN = 'Admin';
+    case SHIPPER = 'Shipper';
+    case CARRIER = 'Carrier';
 }

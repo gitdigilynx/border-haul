@@ -74,8 +74,6 @@
 </div>
 
 @include('backend.carrier.driver.create')
-@include('backend.components.alerts.shipper-users')
-
 @foreach($drivers as $driver)
     @include('backend.carrier.driver.show', ['driver' => $driver])
     @include('backend.carrier.driver.edit', ['driver' => $driver])

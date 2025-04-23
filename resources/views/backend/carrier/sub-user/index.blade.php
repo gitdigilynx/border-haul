@@ -28,7 +28,7 @@
                             <h5 class="mb-0 card-title">Users List</h5>
                             {{-- <button type="button" class="btn btn-success">Add Users</button> --}}
                             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#carrierUserCreate">
-                                + Add User
+                                + Invite Users
                             </button>
                         </div>
                         <div class="card-body responsive-datatable">

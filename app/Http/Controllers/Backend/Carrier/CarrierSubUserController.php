@@ -52,7 +52,7 @@ class CarrierSubUserController extends Controller
             $user = User::create([
                 'email' => $request->email,
                 'password' => Hash::make($rawPassword),
-                'role' => 'carrier_user',
+                'role' => 'CarrierUser',
             ]);
 
             CarrierSubUser::create([

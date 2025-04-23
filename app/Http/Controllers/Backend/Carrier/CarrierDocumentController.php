@@ -50,7 +50,7 @@ class CarrierDocumentController extends Controller
                 'document_type' => $request->document_type,
                 'file_path' => $path,
                 'expires_at' => $request->expires_at,
-                'status' => $request->status ?? 'pending',
+                'status' => $request->status,
                 'notes' => $request->notes
             ]);
 

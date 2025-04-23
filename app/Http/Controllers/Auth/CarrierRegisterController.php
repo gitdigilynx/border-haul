@@ -53,7 +53,7 @@ class CarrierRegisterController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
-            'role' => 'carrier',
+            'role' => 'Carrier',
         ]);
 
         Carrier::create([

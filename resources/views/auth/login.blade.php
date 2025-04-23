@@ -33,7 +33,7 @@
                                         <div class="p-4 mb-0 border-0 p-md-5 p-lg-0">
                                             <div class="p-0 mb-3 text-center">
                                                 <a href="" class="auth-logo">
-                                                    <img src="{{ asset('assets/images/logo/Border-Haul-logo.png') }}" alt="" height="90" style="margin-top: -25px;">
+                                                    <img src="{{ asset('assets/images/logo/Border-Haul-logo.png') }}" alt="" height="100" width="160" style="margin-top: -25px;">
                                                 </a>
                                             </div>
 

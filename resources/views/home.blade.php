@@ -19,7 +19,7 @@
                 <div class="col-md-12 col-xl-12">
                     <div class="row g-3">
 
-                        @hasrole('carrier')
+                        @hasrole($carrierRole)
                         <div class="col-md-6 col-xl-6">
                             <div class="mb-0 card">
                                 <div class="card-body">
@@ -83,7 +83,7 @@
                         </div>
                     @endhasrole
 
-                     @hasrole('shipper')
+                     @hasrole($shipperRole)
                         <div class="col-md-6 col-xl-6">
                             <div class="mb-0 card">
                                 <div class="card-body">
@@ -145,9 +145,6 @@
                             </div>
                         </div>
                      @endhasrole
-
-
-
                     </div>
                 </div>
             </div>

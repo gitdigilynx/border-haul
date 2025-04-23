@@ -38,13 +38,13 @@ function statusInService($in_service): string
 }
 
 
-function serviceDirverCategory()
-{
-    return [
-        'general_cargo' => 'General Cargo',
-        'reefer' => 'Reefer',
-        'hazmat' => 'Hazmat',
-        'flatbed' => 'Flatbed',
-        'RGN' => 'rgn',
-    ];
-}
+// function serviceDirverCategory()
+// {
+//     return [
+//         'general_cargo' => 'General Cargo',
+//         'reefer' => 'Reefer',
+//         'hazmat' => 'Hazmat',
+//         'flatbed' => 'Flatbed',
+//         'RGN' => 'rgn',
+//     ];
+// }

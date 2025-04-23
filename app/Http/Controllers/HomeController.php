@@ -11,11 +11,11 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $totalShippers = User::where('role', 'shipper')->count();
-        $totalSubShippers = User::where('role', 'shipper_user')->count();
+        $totalShippers = User::where('role', 'Shipper')->count();
+        $totalSubShippers = User::where('role', 'ShipperUser')->count();
 
-        $totalCarriers = User::where('role', 'carrier')->count();
-        $totalSubCarriers = User::where('role', 'carrier_user')->count();
+        $totalCarriers = User::where('role', 'Carrier')->count();
+        $totalSubCarriers = User::where('role', 'CarrierUser')->count();
         return view('home', compact('totalShippers', 'totalSubShippers','totalCarriers','totalSubCarriers'));
     }
 

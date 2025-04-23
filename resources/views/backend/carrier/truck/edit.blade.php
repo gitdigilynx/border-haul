@@ -29,14 +29,14 @@
 
                         <div class="col-xxl-6">
                             <label for="service_category" class="form-label">Service Category</label>
-                            <select class="form-control" name="service_category" required>
-                                <option value="">Select Category</option>
-                                <option value="general_cargo" {{ old('service_category', $truck->service_category ?? '') == 'general_cargo' ? 'selected' : '' }}>General Cargo</option>
-                                <option value="reefer" {{ old('service_category', $truck->service_category ?? '') == 'reefer' ? 'selected' : '' }}>Reefer</option>
-                                <option value="hazmat" {{ old('service_category', $truck->service_category ?? '') == 'hazmat' ? 'selected' : '' }}>Hazmat</option>
-                                <option value="flatbed" {{ old('service_category', $truck->service_category ?? '') == 'flatbed' ? 'selected' : '' }}>Flatbed</option>
-                                <option value="rgn" {{ old('service_category', $truck->service_category ?? '') == 'rgn' ? 'selected' : '' }}>RGN</option>
-                            </select>
+                          <select class="form-control" name="service_category" required>
+                            <option value="">Select Category</option>
+                            <option value="general_cargo" {{ old('service_category', $truck->service_category ?? '') === 'general_cargo' ? 'selected' : '' }}>General Cargo</option>
+                            <option value="reefer" {{ old('service_category', $truck->service_category ?? '') === 'reefer' ? 'selected' : '' }}>Reefer</option>
+                            <option value="hazmat" {{ old('service_category', $truck->service_category ?? '') === 'hazmat' ? 'selected' : '' }}>Hazmat</option>
+                            <option value="flatbed" {{ old('service_category', $truck->service_category ?? '') === 'flatbed' ? 'selected' : '' }}>Flatbed</option>
+                            <option value="rgn" {{ old('service_category', $truck->service_category ?? '') === 'rgn' ? 'selected' : '' }}>RGN</option>
+                        </select>
                         </div>
 
                         <div class="col-xxl-6">

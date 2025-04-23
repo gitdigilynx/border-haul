@@ -30,6 +30,7 @@ class StoreAddressBook extends FormRequest
                 'postal_code' => 'nullable|string|max:20',
                 'country' => 'nullable|string|max:100',
                 'type' => 'nullable',
-        ];
+                'contact_person_name' => 'nullable|string|max:25',
+           ];
     }
 }

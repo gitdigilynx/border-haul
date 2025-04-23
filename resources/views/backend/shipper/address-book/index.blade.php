@@ -28,17 +28,15 @@
                             <h5 class="mb-0 card-title">Address Book List</h5>
                             {{-- <button type="button" class="btn btn-success">Add Users</button> --}}
                             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addressBook">
-                               + Address Book
+                               + Add New Address
                             </button>
                         </div>
                         <div class="card-body responsive-datatable">
                             <table id="datatable-basic" class="table table-bordered dt-responsive nowrap table-flush">
                                 <thead>
                                     <tr>
-                                        <th>Sr #</th>
-                                        <th>Name</th>
-                                        <th>Street</th>
-                                        <th>City</th>
+                                        <th>Company Name</th>
+                                        <th>Address</th>
                                         <th>County</th>
                                         <th>Type</th>
                                         <th>Phone</th>
@@ -48,10 +46,9 @@
                                 <tbody>
                                     @foreach ($addressBook as $address)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
+                                        {{-- <td>{{ $loop->iteration }}</td> --}}
                                         <td>{{ $address->name }}</td>
                                         <td>{{ $address->street_address }}</td>
-                                        <td>{{ $address->city }}</td>
                                         <td>{{ $address->country }}</td>
                                         <td>{{ $address->type }}</td>
                                         <td>{{ $address->phone }}</td>

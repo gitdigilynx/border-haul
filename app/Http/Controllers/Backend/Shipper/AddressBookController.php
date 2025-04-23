@@ -13,6 +13,10 @@ class AddressBookController extends Controller
     public function index()
     {
         $user = auth()->user();
+
+        if (!$user || !$user->shipper) {
+            abort(403, 'No associated shipper found.');
+        }
         $addressBook = AddressBook::with('shipper')
             ->where('shipper_id', $user->shipper->id)
             ->orderBy('created_at', 'desc')
@@ -44,12 +48,13 @@ class AddressBookController extends Controller
                 'postal_code' => $request->postal_code,
                 'country' => $request->country,
                 'type' => $request->type,
+                'contact_person_name' => $request->contact_person_name,
             ]);
 
-            return to_route('shipper.address-book')->with('success', 'Address created successfully!');;
+        return redirect()->back()->with('success', 'Address created successfully!');
         } catch (\Exception $e) {
             flash()->error('Something went wrong: ' . $e->getMessage());
-            return to_route('shipper.address-book');
+            return redirect()->back();
         }
     }
 
@@ -71,6 +76,7 @@ class AddressBookController extends Controller
                 'postal_code' => 'nullable|string|max:20',
                 'country' => 'nullable|string|max:100',
                 'type' => 'required|in:pickup,delivery',
+                'contact_person_name' => 'nullable|string|max:25',
             ]);
 
             // Find the address record
@@ -86,12 +92,14 @@ class AddressBookController extends Controller
                 'postal_code' => $request->postal_code,
                 'country' => $request->country,
                 'type' => $request->type,
+                'contact_person_name' => $request->contact_person_name,
             ]);
 
-            return to_route('shipper.address-book')->with('success', 'Address updated successfully!');
+            return redirect()->back()->with('success', 'Address updated successfully!');
+
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
-            return to_route('shipper.address-book');
+           flash()->error('Something went wrong: ' . $e->getMessage());
+            return redirect()->back();
         }
     }
 
@@ -108,6 +116,7 @@ class AddressBookController extends Controller
             $addressBook->delete();
         } catch (\Exception $e) {
             flash()->error('Something went wrong: ' . $e->getMessage());
+            return redirect()->back();
         }
     }
 }

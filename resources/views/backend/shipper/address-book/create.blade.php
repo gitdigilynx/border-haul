@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="subUserModalLabel">Add Address Book</h5>
+          <h5 class="modal-title" id="subUserModalLabel">Add New Address</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
 
@@ -16,13 +16,8 @@
                 </div>
          --}}
                 <div class="col-md-6">
-                    <label for="name" class="form-label">Contact Name</label>
+                    <label for="name" class="form-label">Company Name</label>
                     <input type="text" class="form-control" name="name" placeholder="Full Name" required>
-                </div>
-
-                <div class="col-md-6">
-                    <label for="phone" class="form-label">Phone</label>
-                    <input type="number" class="form-control" name="phone" placeholder="Phone" required>
                 </div>
 
                 <div class="col-md-6">
@@ -30,35 +25,53 @@
                     <input type="text" class="form-control" name="street_address" placeholder="Street Address" required>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-6 mt-2">
                     <label for="city" class="form-label">City</label>
                     <input type="text" class="form-control" name="city" placeholder="City" required>
                 </div>
 
-                <div class="col-md-6">
-                    <label for="state" class="form-label">State</label>
-                    <input type="text" class="form-control" name="state" placeholder="State" >
+                <div class="col-md-6 mt-2">
+                    <label for="state" class="form-label">State/Province</label>
+                    <input type="text" class="form-control" name="state" placeholder="State" required>
                 </div>
 
-                <div class="col-md-6">
-                    <label for="postal_code" class="form-label">Postal Code</label>
-                    <input type="number" class="form-control" name="postal_code" placeholder="Postal Code" >
+                <div class="col-md-6 mt-2">
+                    <label for="postal_code" class="form-label">ZIP/Postal Code</label>
+                    <input type="number" class="form-control" name="postal_code" placeholder="Postal Code" required>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-6 mt-2">
                     <label for="country" class="form-label">Country</label>
-                    <input type="text" class="form-control" name="country" placeholder="Country" >
+                    <select class="form-control" name="country" required>
+                        <option selected>Select Country</option>
+                        <option value="mexico">Mexico</option>
+                        <option value="us">US</option>
+                        <option value="germany">Germany</option>
+                        <option value="paris">Paris</option>
+                        <option value="dubai">Dubai</option>
+                    </select>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-6 mt-2">
                     <label for="type" class="form-label">Type</label>
                     <select class="form-control" name="type" required>
+                        <option selected>Select Country</option>
                         <option value="pickup">Pickup</option>
                         <option value="delivery">Delivery</option>
                     </select>
                 </div>
-            </div>
 
+                <div class="col-md-6 mt-2">
+                    <label for="contact_person_name" class="form-label">Contact Person Name</label>
+                    <input type="text" class="form-control" name="contact_person_name" placeholder="Contact Person Name" required>
+                </div>
+
+                 <div class="col-md-6 mt-2">
+                    <label for="phone" class="form-label">Phone</label>
+                    <input type="number" class="form-control" name="phone" placeholder="Phone" required>
+                </div>
+
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-success">Save</button>

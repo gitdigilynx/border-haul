@@ -18,7 +18,8 @@ class AddressBook extends Model
         'state',
         'postal_code',
         'country',
-        'type'
+        'type',
+        'contact_person_name'
     ];
 
     public function shipper()

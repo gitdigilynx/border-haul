@@ -10,12 +10,14 @@ class Truck extends Model
     use HasFactory;
 
     protected $fillable = [
-        'trucker_number',
-        'plate_number',
-        'service_category',
-        'location',
-        'carrier_id',
+    'trucker_number',
+    'plate_number',
+    'service_category',
+    'location',
+    'carrier_id',
+    'in_service',
     ];
+
 
     public function carrier()
     {
