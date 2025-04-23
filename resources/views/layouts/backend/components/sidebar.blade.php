@@ -94,52 +94,24 @@
                             <span> Trucks </span>
                         </a>
                     </li>
-
-                    <hr style="margin-top: 80px;">
-
-                    <li>
-                        <a href="#">
-                            <i class="fas fa-headset"></i>
-                            <span> Help & Support </span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="{{ route('profile.list') }}">
-                            <i class="fas fa-cog"></i>
-                            <span> Settings </span>
-                        </a>
-                    </li>
-                    {{-- <li>
-
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-                             <a href="{{ route('logout') }}">
-                                <i class="fas fa-sign-out-alt"></i>
-                                <span> Logout </span>
-                            </a>
-                        </form>
-                    </li> --}}
-
-
                 @endhasrole
 
-                      <hr style="margin-top: 80px;">
+                <hr style="margin-top: 80px;">
 
-                    <li>
-                        <a href="#">
-                            <i class="fas fa-headset"></i>
-                            <span> Help & Support </span>
-                        </a>
-                    </li>
+                <li>
+                    <a href="#">
+                        <i class="fas fa-headset"></i>
+                        <span> Help & Support </span>
+                    </a>
+                </li>
 
-                    <li>
-                        <a href="{{ route('profile.list') }}">
-                            <i class="fas fa-cog"></i>
-                            <span> Settings </span>
-                        </a>
-                    </li>
-                    {{-- <li>
+                <li>
+                    <a href="{{ route('profile.list') }}">
+                        <i class="fas fa-cog"></i>
+                        <span> Settings </span>
+                    </a>
+                </li>
+                {{-- <li>
 
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
