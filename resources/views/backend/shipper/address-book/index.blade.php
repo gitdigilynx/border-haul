@@ -88,8 +88,8 @@
 
 @include('backend.shipper.address-book.create')
 @foreach($addressBook as $address)
-   @include('backend.shipper.address-book.show', ['document' => $address])
-   @include('backend.shipper.address-book.edit', ['document' => $address])
+   @include('backend.shipper.address-book.show', ['address' => $address])
+   @include('backend.shipper.address-book.edit', ['address' => $address])
 @endforeach
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

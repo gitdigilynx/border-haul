@@ -29,17 +29,18 @@
                             <table id="datatable-basic" class="table table-bordered dt-responsive nowrap table-flush">
                                 <thead>
                                     <tr>
+                                        <th>Driver Name</th>
                                         <th>Trucker Number</th>
                                         <th>Plate Number</th>
                                         <th>Service Category</th>
                                         <th>In Service</th>
-                                        <th>Location</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($trucks as $truck)
                                         <tr>
+                                            <td>{{ $truck->driver->name }}</td>
                                             <td>{{ $truck->trucker_number }}</td>
                                             <td>{{ $truck->plate_number }}</td>
                                             <td>{{ $truck->service_category }}</td>
@@ -56,16 +57,15 @@
                                                             {{ $truck->in_service ? 'checked' : '' }}
                                                         >
                                                         <label class="form-check-label">
-                                                            {{ $truck->in_service ? 'ON' : 'OFF' }}
+                                                            {{ $truck->in_service ? 'On' : 'Off' }}
                                                         </label>
                                                     </div>
                                                 </form>
                                             </td>
-                                            <td>{{ $truck->location }}</td>
                                             <td>
                                                 <!-- View Button -->
                                                 <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-primary"
-                                                    data-bs-toggle="modal"data-id="{{ $truck->id }}"
+                                                    data-bs-toggle="modal" data-id="{{ $truck->id }}"
                                                     data-bs-target="#truckShow{{ $truck->id }}">
                                                     <i class="p-1 text-white fa fa-eye text-secondary"></i>
                                                 </a>
@@ -78,8 +78,9 @@
                                                 </a>
 
                                                 <!-- Delete Button -->
-                                                <a href="javascript:void(0);" class="p-0 mb-0 delete-truck btn bg-danger rounded-circle"  data-id="{{ $truck->id }}"
-                                                        data-url="{{ route('carrier.trucks.destroy', $truck->id) }}">
+                                                <a href="javascript:void(0);" class="p-0 mb-0 delete-truck btn bg-danger rounded-circle"
+                                                   data-id="{{ $truck->id }}"
+                                                   data-url="{{ route('carrier.trucks.destroy', $truck->id) }}">
                                                     <i class="p-1 text-white fa fa-trash"></i>
                                                 </a>
                                             </td>
@@ -128,13 +129,13 @@
                             _token: '{{ csrf_token() }}'
                         },
                         success: function (response) {
-                            Swal.fire('Deleted!', 'The document entry has been deleted.', 'success')
+                            Swal.fire('Deleted!', 'Document entry deleted.', 'success')
                                 .then(() => {
                                     location.reload();
                                 });
                         },
                         error: function (xhr) {
-                            Swal.fire('Error', 'Something went wrong.', 'error');
+                            Swal.fire('Error!', 'Something went wrong.', 'error');
                         }
                     });
                 }

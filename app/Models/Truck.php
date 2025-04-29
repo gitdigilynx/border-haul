@@ -16,17 +16,18 @@ class Truck extends Model
     'location',
     'carrier_id',
     'in_service',
+    'driver_id',
     ];
 
 
     public function carrier()
     {
-        return $this->belongsTo(Carrier::class, 'carrier_id');
+        return $this->belongsTo(Carrier::class);
     }
 
     public function driver()
     {
-        return $this->hasMany(Driver::class);
+        return $this->belongsTo(Driver::class);
     }
 
 }

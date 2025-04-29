@@ -55,4 +55,9 @@ class Carrier extends Model
     {
         return $this->hasMany(Driver::class);
     }
+
+    public function carrierSubUsers()
+    {
+        return $this->hasMany(CarrierSubUser::class);
+    }
 }

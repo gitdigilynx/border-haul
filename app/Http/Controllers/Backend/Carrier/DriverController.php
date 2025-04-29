@@ -11,15 +11,18 @@ class DriverController extends Controller
 {
     public function index()
     {
-
-        $user = auth()->user();
+       try {
+            $user = auth()->user();
             $drivers = Driver::with('carrier')
                 ->where('carrier_id', $user->carrier->id)
                 ->orderBy('created_at', 'desc')
                 ->get();
 
             return view('backend.carrier.driver.index', compact('drivers'));
-
+        } catch (\Exception $e) {
+            flash()->error('Something went wrong: ' . $e->getMessage());
+            return redirect()->back();
+        }
 
     }
 

@@ -88,6 +88,7 @@ class CarrierRegisterController extends Controller
     }
     public function login(Request $request)
     {
+
         $credentials = $request->validate([
             'email' => 'required|string|email',
             'password' => 'required|string|min:6',
@@ -98,12 +99,19 @@ class CarrierRegisterController extends Controller
 
             $user = Auth::user();
             if ($user->role === RoleEnum::SHIPPER->value) {
-                return redirect()->route('shipper.home')->with('success', 'Login successful');
-            } elseif ($user->role === RoleEnum::CARRIER->value) {
-                return redirect()->route('carrier.home')->with('success', 'Login successful');
+                return redirect()->route('home')->with('success', 'Login successful');
+            }
+            elseif ($user->role === RoleEnum::CARRIER->value) {
+                return redirect()->route('home')->with('success', 'Login successful');
+            }
+            elseif ($user->role === RoleEnum::ADMIN->value) {
+                return redirect()->route('home')->with('success', 'Login successful');
+            }
+            elseif ($user->role === RoleEnum::subAdmin->value) {
+                return redirect()->route('home')->with('success', 'Login successful');
             }
 
-            return redirect('/')->with('success', 'Login successful'); // fallback
+            return redirect('/')->with('success', 'Login successful');
         }
 
         return back()->withErrors([

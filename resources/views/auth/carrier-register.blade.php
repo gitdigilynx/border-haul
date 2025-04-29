@@ -168,7 +168,7 @@
                                             </form>
                                             <div class="mt-3 text-center text-muted">
                                                 <p class="mb-0">Already have an account?
-                                                    <a class="text-primary ms-2 fw-medium" href="{{ route('login') }}">Login here</a>
+                                                    <a class="text-primary ms-2 fw-medium" href="{{ route('carrier.login') }}">Login here</a>
                                                 </p>
                                             </div>
                                         </div>

@@ -72,18 +72,27 @@ class RegisteredUserController extends Controller
             'password' => 'required|string|min:6',
         ]);
 
-        if (Auth::attempt($credentials)) {
+
+         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
+            $user = Auth::user();
             if ($user->role === RoleEnum::SHIPPER->value) {
-                return redirect()->route('shipper.home')->with('success', 'Login successful');
-            } elseif ($user->role === RoleEnum::CARRIER->value) {
-                return redirect()->route('carrier.home')->with('success', 'Login successful');
-            } elseif ($user->role === RoleEnum::ADMIN->value) {
-                return redirect()->route('admin.home')->with('success', 'Login successful');
+                return redirect()->route('home')->with('success', 'Login successful');
+            }
+            elseif ($user->role === RoleEnum::CARRIER->value) {
+                return redirect()->route('home')->with('success', 'Login successful');
+            }
+            elseif ($user->role === RoleEnum::ADMIN->value) {
+                return redirect()->route('home')->with('success', 'Login successful');
+            }
+             elseif ($user->role === RoleEnum::subAdmin->value) {
+                return redirect()->route('home')->with('success', 'Login successful');
             }
 
-            return redirect('/')->with('success', 'Login successful');        }
+            return redirect('/')->with('success', 'Login successful');
+        }
+
 
         return back()->withErrors([
             'email' => 'Invalid credentials.',

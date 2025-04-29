@@ -14,12 +14,13 @@ return new class extends Migration
         Schema::create('trucks', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('carrier_id');
+            $table->unsignedBigInteger('driver_id');
             $table->string('plate_number');
             $table->string('trucker_number')->nullable();
             $table->string('service_category');
             $table->boolean('in_service');
             $table->string('location');
-            $table->foreignId('truck_id')->nullable()->constrained('trucks')->onDelete('set null');
+            $table->foreign('driver_id')->references('id')->on('drivers')->onDelete('cascade');
             $table->foreign('carrier_id')->references('id')->on('carriers')->onDelete('cascade');
             $table->timestamps();
         });

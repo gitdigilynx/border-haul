@@ -31,5 +31,9 @@ class Shipper extends Authenticatable
         return $this->hasMany(AddressBook::class, 'shipper_id');
     }
 
+    public function shipperSubUsers()
+    {
+        return $this->hasMany(ShipperSubUser::class);
+    }
 
 }

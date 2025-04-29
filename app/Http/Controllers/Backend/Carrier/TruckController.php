@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend\Carrier;
 use App\Http\Controllers\Controller;
 use App\Models\Truck;
 use App\Models\Carrier;
+use App\Models\Driver;
 use Illuminate\Http\Request;
 
 class TruckController extends Controller
@@ -13,11 +14,14 @@ class TruckController extends Controller
     {
         try {
             $user = auth()->user();
-            $trucks = Truck::with('carrier')
-                ->where('carrier_id', $user->carrier->id)
+            $trucks = Truck::with(['driver', 'carrier'])
+                ->where('carrier_id', auth()->user()->carrier->id)
                 ->orderBy('created_at', 'desc')
                 ->get();
-        return view('backend.carrier.truck.index', compact('trucks'));
+
+            // dd($trucks);
+
+            return view('backend.carrier.truck.index', compact('trucks'));
         } catch (\Exception $e) {
             flash()->error('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
@@ -30,19 +34,30 @@ class TruckController extends Controller
     public function store(Request $request)
     {
         try {
+
             $request->validate([
                 'plate_number' => 'required|unique:trucks,plate_number',
                 'trucker_number' => 'required|unique:trucks,trucker_number',
                 'service_category' => 'required|string',
                 'location' => 'required|string',
                 'in_service' => 'required|boolean',
+
+                'name' => 'required|string',
+                'phone_number' => 'required|unique:drivers,phone_number',
             ]);
 
             $user = auth()->user();
             $carrier = $user->carrier;
 
+            $driver = Driver::create([
+                'carrier_id' => $carrier->id,
+                'name' => $request->name,
+                'phone_number' => $request->phone_number,
+            ]);
+
             Truck::create([
                 'carrier_id' => $carrier->id,
+                'driver_id' => $driver->id,
                 'plate_number' => $request->plate_number,
                 'trucker_number' => $request->trucker_number,
                 'service_category' => $request->service_category,
@@ -50,12 +65,13 @@ class TruckController extends Controller
                 'in_service' => $request->in_service,
             ]);
 
-            return redirect()->route('carrier.trucks')->with('success', 'Truck created successfully!');
+            return redirect()->route('carrier.trucks')->with('success', 'Truck and driver created successfully!');
         } catch (\Exception $e) {
             flash()->error('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
+
 
     public function edit($id)
     {
@@ -68,34 +84,44 @@ class TruckController extends Controller
         }
     }
 
-    public function update(Request $request, $id)
-    {
-        try {
+   public function update(Request $request, $id)
+{
+    try {
+        $truck = Truck::findOrFail($id);
+        $driver = $truck->driver; // Assuming a relationship exists between Truck and Driver
 
-            $truck = Truck::findOrFail($id);
+        // Validate truck and driver data
+        $request->validate([
+            'plate_number' => 'required|unique:trucks,plate_number,' . $truck->id,
+            'trucker_number' => 'required|unique:trucks,trucker_number,' . $truck->id,
+            'service_category' => 'required|string',
+            'location' => 'required|string',
+            'in_service' => 'required|boolean',
+            'name' => 'required|string',
+            'phone_number' => 'required|unique:drivers,phone_number,' . $driver->id,
+        ]);
 
-            $request->validate([
-                'plate_number' => 'required|unique:trucks,plate_number,' . $truck->id,
-                'trucker_number' => 'required|unique:trucks,trucker_number,' . $truck->id,
-                'service_category' => 'required|string',
-                'location' => 'required|string',
-                'in_service' => 'required|boolean'
-            ]);
+        // Update truck data
+        $truck->update([
+            'plate_number' => $request->plate_number,
+            'trucker_number' => $request->trucker_number,
+            'service_category' => $request->service_category,
+            'location' => $request->location,
+            'in_service' => $request->in_service,
+        ]);
 
-            $truck->update([
-                'plate_number' => $request->plate_number,
-                'trucker_number' => $request->trucker_number,
-                'service_category' => $request->service_category,
-                'location' => $request->location,
-                'in_service' => $request->in_service,
-            ]);
+        // Update driver data
+        $driver->update([
+            'name' => $request->name,
+            'phone_number' => $request->phone_number,
+        ]);
 
-            return redirect()->route('carrier.trucks')->with('success', 'Truck update successfully!');
-        } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
-            return redirect()->back();
-        }
+        return redirect()->route('carrier.trucks')->with('success', 'Truck and driver updated successfully!');
+    } catch (\Exception $e) {
+        flash()->error('Something went wrong: ' . $e->getMessage());
+        return redirect()->back();
     }
+}
 
     public function destroy($id)
     {

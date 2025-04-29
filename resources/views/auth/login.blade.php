@@ -82,7 +82,7 @@
 
                                                 <div class="text-center text-muted mb-7">
                                                     <p class="mb-1">Don't have an Shipper account ?<a class='text-primary ms-2 fw-medium' href='{{ route('register') }}'>Create Account</a></p>
-                                                    <p class="mb-0">Carrier Partner?<a class='text-primary ms-2 fw-medium' href='{{ route('carrier.register') }}'>Create Carrier Partner Account</a></p>
+                                                    {{-- <p class="mb-0">Carrier Partner?<a class='text-primary ms-2 fw-medium' href='{{ route('carrier.register') }}'>Create Carrier Partner Account</a></p> --}}
                                                 </div>
                                               </form>
                                             </div>

@@ -1,5 +1,5 @@
 @extends('layouts.backend.master')
-@section('title', 'Dashboard')
+@section('title', 'Permission Listing')
 @section('content')
 <div class="content-page">
     <div class="content">
@@ -9,13 +9,13 @@
 
             <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
                 <div class="flex-grow-1">
-                    <h4 class="m-0 fs-18 fw-semibold">Users</h4>
+                    <h4 class="m-0 fs-18 fw-semibold">Permission</h4>
                 </div>
 
                 <div class="text-end">
                     <ol class="py-0 m-0 breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Users</li>
+                        <li class="breadcrumb-item active">Permission</li>
 
                     </ol>
                 </div>
@@ -25,10 +25,10 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0 card-title">Users List</h5>
+                            <h5 class="mb-0 card-title">Permission List</h5>
                             {{-- <button type="button" class="btn btn-success">Add Users</button> --}}
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#carrierUserCreate">
-                                + Invite Users
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#permissionCreate">
+                                + Add Permission
                             </button>
                         </div>
                         <div class="card-body responsive-datatable">
@@ -36,50 +36,40 @@
                                 <thead>
                                     <tr>
                                         {{-- <th>Sr #</th> --}}
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
-                                        <th>Email</th>
-                                        <th>Role</th>
+                                        <th>Name</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($carrierUsers as $user)
+                                    @foreach ($permissions as $permission)
                                         <tr>
-                                            {{-- <td>{{ $loop->iteration }}</td> --}}
-                                            <td>{{ $user->first_name }}</td>
-                                            <td>{{ $user->last_name }}</td>
-                                            <td>{{ $user->users->email }}</td>
-                                            <td>{{ $user->users->role }}</td>
+                                            <td>{{ $permission->name }}</td>
                                             <td>
-
                                                 <!-- View Button -->
-                                                <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-primary"
-                                                    data-bs-toggle="modal"data-id="{{ $user->id }}"
-                                                    data-bs-target="#carrierShowModal{{ $user->id }}">
-                                                    <i class="p-1 text-white fa fa-eye text-secondary"></i>
+                                               <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-primary"
+                                                    data-bs-toggle="modal" data-id="{{ $permission->id }}"
+                                                    data-bs-target="#permissionShowModal{{ $permission->id }}">
+                                                        <i class="p-1 text-white fa fa-eye text-secondary"></i>
                                                 </a>
 
-                                                {{-- <!-- Edit Button -->
+                                                <!-- Edit Button -->
+
                                                 <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-success"
-                                                    data-bs-toggle="modal" data-id="{{ $user->id }}"
-                                                    data-bs-target="#shipperEditModal{{ $user->id }}">
+                                                    data-bs-toggle="modal" data-id="{{ $permission->id }}" data-bs-target="#permissionEditModal">
                                                     <i class="p-1 text-white fa fa-edit text-secondary"></i>
-                                                </a> --}}
+                                                </a>
 
                                                   <!-- Delete Button -->
-                                                <a href="javascript:void(0);" class="p-0 mb-0 delete-carrier-user btn bg-danger rounded-circle"  data-id="{{ $user->id }}"
-                                                        data-url="{{ route('carrier.carrier-users.destroy', $user->id) }}">
+                                                <a href="javascript:void(0);" class="p-0 mb-0 delete-permissions btn bg-danger rounded-circle"  data-id="{{ $permission->id }}"
+                                                        data-url="{{ route('admin.permissions.destroy', $permission->id) }}">
                                                     <i class="p-1 text-white fa fa-trash"></i>
                                                 </a>
                                             </td>
                                         </tr>
                                     @endforeach
                                 </tbody>
-
                             </table>
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -87,16 +77,18 @@
     </div>
 </div>
 
-@include('backend.carrier.sub-user.create')
-@foreach($carrierUsers as $user)
-    @include('backend.carrier.sub-user.show', ['document' => $user])
+@include('backend.admin.permissions.create')
+
+@foreach($permissions as $permission)
+    @include('backend.admin.permissions.show', ['permission' => $permission])
+    @include('backend.admin.permissions.edit', ['permission' => $permission])
 @endforeach
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
     $(document).ready(function () {
-        $('.delete-carrier-user').click(function () {
+        $('.delete-permissions').click(function () {
             const button = $(this);
             const deleteUrl = button.data('url');
 

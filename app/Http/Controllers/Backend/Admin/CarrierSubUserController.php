@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Backend\Shipper;
+namespace App\Http\Controllers\Backend\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Shipper;
-use App\Models\ShipperSubUser;
 use Illuminate\Http\Request;
+use App\Models\CarrierSubUser;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\SendPasswordToShipperUser;
+use App\Mail\SendPasswordToCarrierUser;
+use Illuminate\Support\Str;
 
-class SubUserController extends Controller
+class CarrierSubUserController extends Controller
 {
     public function __construct()
     {
@@ -21,57 +20,64 @@ class SubUserController extends Controller
 
     public function index()
     {
-        $shipperId = auth()->id();
-        $subUsers = ShipperSubUser::with('users')
-            ->where('shipper_id', $shipperId)
-            ->orderBy('created_at', 'desc')
-            ->get();
-
-        return view('backend.shipper.sub-user.index', compact('subUsers'));
-    }
-    public function create()
-    {
-        return view('backend.shipper.sub-user.create');
-    }
-
-    public function store(Request $request)
-    {
         try {
-            $shipper = auth()->user();
+            $carrierUsers = CarrierSubUser::with('users')
+                ->orderBy('created_at', 'desc')
+                ->get();
+            return view('backend.admin.carrier.carrier-user.index', compact('carrierUsers'));
 
-            $rawPassword = Str::random(8);
-
-            $user = User::create([
-                'email' => $request->email,
-                'password' => Hash::make($rawPassword),
-                'role' => 'ShipperUser',
-            ]);
-
-
-            ShipperSubUser::create([
-                'user_id' => $user->id,
-                'shipper_id' => $shipper->id,
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'phone' => $request->email,
-            ]);
-
-            // Send credentials via email
-            Mail::to($request->email)->send(new SendPasswordToShipperUser($request->email, $rawPassword));
-
-            return redirect()->route('shipper.sub-users')->with('success', 'Sub-user created successfully!');
         } catch (\Exception $e) {
             flash()->error('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
 
+    public function create()
+    {
+        try {
+            return view('backend.carrier.sub-user.create');
+        } catch (\Exception $e) {
+            flash()->error('Something went wrong: ' . $e->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    public function store(Request $request)
+    {
+        try {
+            $carrier = auth()->user();
+
+            $rawPassword = Str::random(8);
+            $user = User::create([
+                'email' => $request->email,
+                'password' => Hash::make($rawPassword),
+                'role' => 'CarrierUser',
+            ]);
+
+            CarrierSubUser::create([
+                'user_id' => $user->id,
+                'carrier_id' => $carrier->id,
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'phone' => $request->email,
+            ]);
+
+            // Send credentials via email
+             Mail::to($request->email)->send(new SendPasswordToCarrierUser($request->email, $rawPassword));
+
+            return redirect()->route('carrier.carrier-users')->with('success', 'User created successfully!');
+        } catch (\Exception $e) {
+            flash()->error('Something went wrong: ' . $e->getMessage());
+            return redirect()->back();
+        }
+    }
 
     public function show($id)
     {
         try {
-            $user = ShipperSubUser::with('users')->findOrFail($id);
-            return view('backend.shipper.sub-user.show', compact('user'));
+
+            $user = CarrierSubUser::with('users')->findOrFail($id);
+            return view('backend.carrier.sub-user.show', compact('user'));
         } catch (\Exception $e) {
             flash()->error('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
@@ -81,7 +87,7 @@ class SubUserController extends Controller
     public function edit(Request $request)
     {
         try {
-            return view('backend.shipper.sub-users.edit');
+            return view('backend.carrier.sub-user.edit');
         } catch (\Exception $e) {
             flash()->error('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
@@ -97,7 +103,7 @@ class SubUserController extends Controller
             ]);
 
             $request->update($validated);
-            return redirect()->route('shipper.sub-users.index');
+            return redirect()->route('carrier.carrier-users.index');
         } catch (\Exception $e) {
             flash()->error('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
@@ -107,7 +113,7 @@ class SubUserController extends Controller
     public function destroy($id)
     {
         try {
-            $subUser = ShipperSubUser::findOrFail($id);
+            $subUser = CarrierSubUser::findOrFail($id);
             $subUser->delete();
 
             return response()->json(['message' => 'Deleted successfully']);

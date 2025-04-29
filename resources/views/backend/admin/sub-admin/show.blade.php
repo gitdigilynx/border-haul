@@ -1,9 +1,8 @@
-<!-- Modal -->
-<div class="modal fade" id="driverShow{{ $driver->id }}" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="subAdminShowModal{{ $admin->id }}" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalgridLabel">Driver Details</h5>
+                <h5 class="modal-title" id="exampleModalgridLabel">Admin Details</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -11,11 +10,15 @@
                     <tbody>
                         <tr>
                             <th scope="row">Name</th>
-                            <td>{{ $driver->name ?? '-' }}</td>
+                            <td>{{ $admin->name ?? '-' }}</td>
                         </tr>
                         <tr>
-                            <th scope="row">Phone Number</th>
-                            <td>{{ $driver->phone_number ?? '-' }}</td>
+                            <th scope="row">Email</th>
+                            <td>{{ $admin->email ?? '-' }}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Role</th>
+                            <td>{{ $admin->role ?? '-' }}</td>
                         </tr>
                     </tbody>
                 </table>

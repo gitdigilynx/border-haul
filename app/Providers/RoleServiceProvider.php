@@ -23,6 +23,7 @@ class RoleServiceProvider extends ServiceProvider
     {
         // Share role constants globally
         View::share('adminRole', RoleEnum::ADMIN->value);
+        View::share('subAdminRole', RoleEnum::subAdmin->value);
         View::share('shipperRole', RoleEnum::SHIPPER->value);
         View::share('carrierRole', RoleEnum::CARRIER->value);
     }

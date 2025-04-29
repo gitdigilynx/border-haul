@@ -35,7 +35,7 @@
                             <table id="datatable-basic" class="table table-bordered dt-responsive nowrap table-flush">
                                 <thead>
                                     <tr>
-                                        <th>Sr #</th>
+                                        {{-- <th>Sr #</th> --}}
                                         <th>Document Type</th>
                                         <th>Date</th>
                                         <th>Status</th>
@@ -45,7 +45,7 @@
                                 <tbody>
                                     @foreach ($documents as $document)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
+                                        {{-- <td>{{ $loop->iteration }}</td> --}}
                                         <td>{{ $document->document_type }}</td>
                                         <td>{{ $document->expires_at }}</td>
                                         <td>

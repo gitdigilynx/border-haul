@@ -22,4 +22,9 @@ class ShipperSubUser extends Model
         return  $this->belongsTo(User::class,'user_id');
     }
 
+     public function shipper()
+    {
+        return $this->belongsTo(Shipper::class);
+    }
+
 }

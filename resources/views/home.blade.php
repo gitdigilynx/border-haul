@@ -16,10 +16,13 @@
             <div class="row">
 
 
+
+
                 <div class="col-md-12 col-xl-12">
                     <div class="row g-3">
 
-                        @hasrole($carrierRole)
+                         @if(auth()->user()->hasRole('Carrier') || auth()->user()->hasRole('Admin')|| auth()->user()->hasRole('subAdmin'))
+
                         <div class="col-md-6 col-xl-6">
                             <div class="mb-0 card">
                                 <div class="card-body">
@@ -40,8 +43,8 @@
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h3 class="mb-0 text-black fs-22 me-3">{{ $totalCarriers }}</h3>
                                             <div class="text-center">
-                                                <span class="text-primary fs-14"><i class="mdi mdi-trending-up fs-14"></i> +5%</span>
-                                                <p class="mb-0 text-dark fs-13">Last 7 days</p>
+                                                {{-- <span class="text-primary fs-14"><i class="mdi mdi-trending-up fs-14"></i> +5%</span>
+                                                <p class="mb-0 text-dark fs-13">Last 7 days</p> --}}
                                             </div>
                                         </div>
 
@@ -64,16 +67,16 @@
                                                     </svg>
                                                 </div>
                                             </div>
-                                            <p class="mb-0 text-dark fs-15 fw-bold">Total Carrier Users</p>
+                                            <p class="mb-0 text-dark fs-15 fw-bold">Total Sub Users</p>
                                         </div>
 
 
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h3 class="mb-0 text-black fs-22 me-3">{{ $totalSubCarriers }}</h3>
 
-                                            <div class="text-muted">
-                                                <span class="text-danger fs-14 me-2"><i class="mdi mdi-trending-down fs-14"></i> 18%</span>
-                                                <p class="mb-0 text-dark fs-13">Last 7 days</p>
+                                             <div class="text-muted">
+                                                {{-- <span class="text-danger fs-14 me-2"><i class="mdi mdi-trending-down fs-14"></i> 18%</span>
+                                                <p class="mb-0 text-dark fs-13">Last 7 days</p> --}}
                                             </div>
                                         </div>
 
@@ -81,9 +84,10 @@
                                 </div>
                             </div>
                         </div>
-                    @endhasrole
+                    @endif
 
-                     @hasrole($shipperRole)
+                    @if(auth()->user()->hasRole('Shipper') || auth()->user()->hasRole('Admin') || auth()->user()->hasRole('subAdmin'))
+
                         <div class="col-md-6 col-xl-6">
                             <div class="mb-0 card">
                                 <div class="card-body">
@@ -103,17 +107,16 @@
 
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h3 class="mb-0 text-black fs-22 me-3">{{ $totalShippers }}</h3>
-                                            <div class="text-center">
+                                            {{-- <div class="text-center">
                                                 <span class="text-success fs-14"><i class="mdi mdi-trending-up fs-14"></i> +3%</span>
                                                 <p class="mb-0 text-dark fs-13">Last 7 days</p>
-                                            </div>
+                                            </div> --}}
                                         </div>
 
                                     </div>
                                 </div>
                             </div>
                         </div>
-
 
                         <div class="col-md-6 col-xl-6">
                             <div class="mb-0 card">
@@ -129,24 +132,25 @@
                                                     </svg>
                                                 </div>
                                             </div>
-                                            <p class="mb-0 text-dark fs-15 fw-bold">Total Shipper Users</p>
+                                            <p class="mb-0 text-dark fs-15 fw-bold">Total Sub Users</p>
                                         </div>
 
                                         <div class="d-flex justify-content-between align-items-center">
                                             <h3 class="mb-0 text-black fs-22 me-3">{{ $totalSubShippers }}</h3>
-                                            <div class="text-center">
+                                            {{-- <div class="text-center">
                                                 <span class="text-primary fs-14 me-2"><i class="mdi mdi-trending-up fs-14"></i> 12.8%</span>
                                                 <p class="mb-0 text-dark fs-13">Last 7 days</p>
-                                            </div>
+                                            </div> --}}
                                         </div>
 
                                     </div>
                                 </div>
                             </div>
                         </div>
-                     @endhasrole
+                     @endif
                     </div>
                 </div>
+
             </div>
             <!-- end start -->
         </div> <!-- container-fluid -->
@@ -157,7 +161,8 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="text-center col fs-13 text-muted">
-                    &copy; <script>document.write(new Date().getFullYear())</script> - Made with <span class="mdi mdi-heart text-danger"></span> by <a href="https://digilynx.dev/" class="text-reset fw-semibold">Digilynx</a>
+                &copy; <script>document.write(new Date().getFullYear())</script> - {{ translater('Made with') }} <span class="mdi mdi-heart text-danger"></span> {{ translater('by') }} <a href="https://digilynx.dev/" class="text-reset fw-semibold">{{ translater('digilynx') }}</a>
+
                 </div>
             </div>
         </div>

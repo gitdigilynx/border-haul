@@ -21,4 +21,9 @@ class CarrierSubUser extends Model
     {
         return  $this->belongsTo(User::class,'user_id');
     }
+
+    public function carrier()
+    {
+        return $this->belongsTo(Carrier::class);
+    }
 }

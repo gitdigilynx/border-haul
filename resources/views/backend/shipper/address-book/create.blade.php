@@ -15,32 +15,32 @@
                     <input type="number" class="form-control" name="shipper_id" placeholder="Shipper ID" required>
                 </div>
          --}}
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label for="name" class="form-label">Company Name</label>
                     <input type="text" class="form-control" name="name" placeholder="Full Name" required>
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-md-4">
                     <label for="street_address" class="form-label">Street Address</label>
                     <input type="text" class="form-control" name="street_address" placeholder="Street Address" required>
                 </div>
 
-                <div class="col-md-6 mt-2">
+                <div class="col-md-4">
                     <label for="city" class="form-label">City</label>
                     <input type="text" class="form-control" name="city" placeholder="City" required>
                 </div>
 
-                <div class="col-md-6 mt-2">
+                <div class="mt-2 col-md-4">
                     <label for="state" class="form-label">State/Province</label>
                     <input type="text" class="form-control" name="state" placeholder="State" required>
                 </div>
 
-                <div class="col-md-6 mt-2">
+                <div class="mt-2 col-md-4">
                     <label for="postal_code" class="form-label">ZIP/Postal Code</label>
                     <input type="number" class="form-control" name="postal_code" placeholder="Postal Code" required>
                 </div>
 
-                <div class="col-md-6 mt-2">
+                <div class="mt-2 col-md-4">
                     <label for="country" class="form-label">Country</label>
                     <select class="form-control" name="country" required>
                         <option selected>Select Country</option>
@@ -52,7 +52,7 @@
                     </select>
                 </div>
 
-                <div class="col-md-6 mt-2">
+                <div class="mt-2 col-md-4">
                     <label for="type" class="form-label">Type</label>
                     <select class="form-control" name="type" required>
                         <option selected>Select Country</option>
@@ -61,12 +61,12 @@
                     </select>
                 </div>
 
-                <div class="col-md-6 mt-2">
+                <div class="mt-2 col-md-4">
                     <label for="contact_person_name" class="form-label">Contact Person Name</label>
                     <input type="text" class="form-control" name="contact_person_name" placeholder="Contact Person Name" required>
                 </div>
 
-                 <div class="col-md-6 mt-2">
+                 <div class="mt-2 col-md-4">
                     <label for="phone" class="form-label">Phone</label>
                     <input type="number" class="form-control" name="phone" placeholder="Phone" required>
                 </div>

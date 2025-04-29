@@ -12,6 +12,8 @@ use App\Http\Controllers\Backend\Carrier\CarrierSubUserController;
 use App\Http\Controllers\Backend\Carrier\CarrierDocumentController;
 use App\Http\Controllers\Backend\Carrier\TruckController;
 use App\Http\Controllers\Backend\Carrier\DriverController;
+use App\Http\Controllers\Backend\Admin\SubAdminController;
+use App\Http\Controllers\Backend\Admin\PermissionController;
 
 // ---------------------------
 // 🔐 Public Auth Routes
@@ -30,32 +32,61 @@ Route::prefix('carrier')->group(function () {
 });
 
 
-// ---------------------------
-// 🔐 Authenticated Routes
-// ---------------------------
+
 Route::middleware(['auth'])->group(function () {
 
     // Redirect / to /home
     Route::get('/', fn () => to_route('home'));
 
-    // Common Roles (Admin + Shipper + Carrier)
+    // Common Roles
     Route::middleware(['role:' . RoleEnum::ADMIN->value . '|' . RoleEnum::SHIPPER->value . '|' . RoleEnum::CARRIER->value])
         ->group(function () {
 
-        // Home Dashboard
-        Route::get('/home', [HomeController::class, 'index'])->name('home');
+            // Home Dashboard
+            Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-        // Profile
-        Route::controller(ProfileController::class)->group(function () {
-            Route::get('/profile', 'list')->name('profile.list');
-            Route::get('/profile/edit', 'edit')->name('profile.edit');
-            Route::patch('/profile', 'update')->name('profile.update');
-            Route::delete('/profile', 'destroy')->name('profile.destroy');
+            // Profile
+            Route::controller(ProfileController::class)->group(function () {
+                Route::get('/profile', 'list')->name('profile.list');
+                Route::get('/profile/edit', 'edit')->name('profile.edit');
+                Route::patch('/profile', 'update')->name('profile.update');
+                Route::delete('/profile', 'destroy')->name('profile.destroy');
+            });
+        });
+
+    // ---------------------------
+    // 🚢 Admin Routes
+    // ---------------------------
+ Route::prefix('admin')
+    ->name('admin.')
+    ->middleware(['role:' . RoleEnum::ADMIN->value . '|' . RoleEnum::subAdmin->value])
+    ->group(function () {
+        // Sub Admin
+        Route::controller(SubAdminController::class)->group(function () {
+            Route::get('/sub-admin', 'index')->name('sub-admin');
+            Route::post('/sub-admin', 'store')->name('sub-admin.store');
+            Route::get('/sub-admin/{id}/edit', 'edit')->name('sub-admin.edit');
+            Route::get('/sub-admin/{id}', 'show')->name('sub-admin.show');
+            Route::post('/sub-admin/{id}', 'update')->name('sub-admin.update');
+            Route::delete('/sub-admin/{id}', 'destroy')->name('sub-admin.destroy');
+            Route::get('/sub-admin/{id}/assign-permissions', 'editPermission')->name('sub-admin.permissions.edit');
+            Route::post('/sub-admin/{id}/assign-permissions', 'updatePermission')->name('sub-admin.permissions.update');
+        });
+
+        // Permissions
+        Route::controller(PermissionController::class)->group(function () {
+            Route::get('/permissions', 'index')->name('permissions.index');
+            Route::get('/permissions/create', 'create')->name('permissions.create');
+            Route::post('/permissions', 'store')->name('permissions.store');
+            Route::get('/permissions/{id}/edit', 'edit')->name('permissions.edit');
+            Route::get('/permissions/{id}', 'show')->name('permissions.show');
+            Route::post('/permissions/{id}', 'update')->name('permissions.update');
+            Route::delete('/permissions/{id}', 'destroy')->name('permissions.destroy');
         });
     });
 
     // ---------------------------
-    // 🚢 Shipper Routes
+    // 🏢 Shipper Routes
     // ---------------------------
     Route::prefix('shipper')->name('shipper.')->middleware(['role:' . RoleEnum::SHIPPER->value])->group(function () {
 
@@ -65,7 +96,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/sub-users/create', 'create')->name('sub-users.create');
             Route::post('/sub-users', 'store')->name('sub-users.store');
             Route::get('/sub-users/{id}/edit', 'edit')->name('sub-users.edit');
-            Route::get('/sub-users/{id}/show', 'show')->name('sub-users.show');
+            Route::get('/sub-users/{id}', 'show')->name('sub-users.show');
             Route::post('/sub-users/{id}', 'update')->name('sub-users.update');
             Route::delete('/sub-users/{id}', 'destroy')->name('sub-users.destroy');
         });
@@ -76,7 +107,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/address-book/create', 'create')->name('address-book.create');
             Route::post('/address-book', 'store')->name('address-book.store');
             Route::get('/address-book/{id}/edit', 'edit')->name('address-book.edit');
-            Route::get('/address-book/{id}/show', 'show')->name('address-book.show');
+            Route::get('/address-book/{id}', 'show')->name('address-book.show');
             Route::post('/address-book/{id}', 'update')->name('address-book.update');
             Route::delete('/address-book/{id}', 'destroy')->name('address-book.destroy');
         });
@@ -92,7 +123,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/carrier-users', 'index')->name('carrier-users');
             Route::post('/carrier-users', 'store')->name('carrier-users.store');
             Route::get('/carrier-users/{id}/edit', 'edit')->name('carrier-users.edit');
-            Route::get('/carrier-users/{id}/show', 'show')->name('carrier-users.show');
+            Route::get('/carrier-users/{id}', 'show')->name('carrier-users.show');
             Route::post('/carrier-users/{id}', 'update')->name('carrier-users.update');
             Route::delete('/carrier-users/{id}', 'destroy')->name('carrier-users.destroy');
         });
@@ -104,34 +135,36 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/documents', 'store')->name('documents.store');
             Route::get('/documents/{id}/edit', 'edit')->name('documents.edit');
             Route::post('/documents/{id}', 'update')->name('documents.update');
-            Route::get('/documents/{id}/show', 'show')->name('documents.show');
+            Route::get('/documents/{id}', 'show')->name('documents.show');
             Route::get('/documents/{id}/download', 'download')->name('documents.download');
             Route::delete('/documents/{id}', 'destroy')->name('documents.destroy');
         });
 
+        // Trucks
         Route::controller(TruckController::class)->group(function () {
             Route::get('/trucks', 'index')->name('trucks');
             Route::get('/trucks/create', 'create')->name('trucks.create');
             Route::post('/trucks', 'store')->name('trucks.store');
             Route::get('/trucks/{id}/edit', 'edit')->name('trucks.edit');
             Route::post('/trucks/{id}', 'update')->name('trucks.update');
-            Route::get('/trucks/{id}/show', 'show')->name('trucks.show');
+            Route::get('/trucks/{id}', 'show')->name('trucks.show');
             Route::delete('/trucks/{id}', 'destroy')->name('trucks.destroy');
-            Route::patch('/trucks/{truck}/toggle-truck',  'toggleTruck')->name('trucks.toggleTruck');
+            Route::patch('/trucks/{truck}/toggle-truck', 'toggleTruck')->name('trucks.toggleTruck');
         });
 
+        // Drivers
         Route::controller(DriverController::class)->group(function () {
             Route::get('/drivers', 'index')->name('drivers');
             Route::get('/drivers/create', 'create')->name('drivers.create');
             Route::post('/drivers', 'store')->name('drivers.store');
             Route::get('/drivers/{id}/edit', 'edit')->name('drivers.edit');
             Route::post('/drivers/{id}', 'update')->name('drivers.update');
-            Route::get('/drivers/{id}/show', 'show')->name('drivers.show');
+            Route::get('/drivers/{id}', 'show')->name('drivers.show');
             Route::delete('/drivers/{id}', 'destroy')->name('drivers.destroy');
         });
-
     });
 });
+
 
 // Auth routes (login, register, etc. from Laravel Breeze/Fortify/etc.)
 require __DIR__.'/auth.php';

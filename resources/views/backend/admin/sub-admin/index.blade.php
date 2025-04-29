@@ -1,65 +1,79 @@
 @extends('layouts.backend.master')
-@section('title', 'Driver Listing')
+@section('title', 'Admin Listing')
 @section('content')
 <div class="content-page">
     <div class="content">
+
         <!-- Start Content-->
         <div class="container-fluid">
+
             <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
                 <div class="flex-grow-1">
-                    <h4 class="m-0 fs-18 fw-semibold">Drivers</h4>
+                    <h4 class="m-0 fs-18 fw-semibold">Sub Admin</h4>
                 </div>
+
                 <div class="text-end">
                     <ol class="py-0 m-0 breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Drivers</li>
+                        <li class="breadcrumb-item active">Sub Admin</li>
+
                     </ol>
                 </div>
+
             </div>
             <div class="row">
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0 card-title">Drivers List</h5>
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#driverUserModal">
-                               + Add Driver
+                            <h5 class="mb-0 card-title">Admin List</h5>
+                            {{-- <button type="button" class="btn btn-success">Add Users</button> --}}
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#subAdmin">
+                                + Invite Sub Admin
                             </button>
                         </div>
                         <div class="card-body responsive-datatable">
                             <table id="datatable-basic" class="table table-bordered dt-responsive nowrap table-flush">
                                 <thead>
                                     <tr>
-                                        <th>Driver Name</th>
-                                        <th>Phone Number</th>
-                                        <th style="width: 100px;">Action</th>
+                                        {{-- <th>Sr #</th> --}}
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($drivers as $driver)
+                                    @foreach ($subAdmins as $admin)
                                         <tr>
-                                            {{-- <td>{{ $loop->iteration }}</td> --}}
-                                            <td>{{ $driver->name }}</td>
-                                            <td>{{ $driver->phone_number }}</td>
+                                            <td>{{ $admin->name }}</td>
+                                            <td>{{ $admin->email }}</td>
+                                            <td>{{ $admin->role }}</td>
                                             <td>
+
                                                 <!-- View Button -->
-                                                <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-primary"
-                                                    data-bs-toggle="modal"data-id="{{ $driver->id }}"
-                                                    data-bs-target="#driverShow{{ $driver->id }}">
-                                                    <i class="p-1 text-white fa fa-eye text-secondary"></i>
+                                               <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-primary"
+                                                    data-bs-toggle="modal" data-id="{{ $admin->id }}"
+                                                    data-bs-target="#subAdminShowModal{{ $admin->id }}">
+                                                        <i class="p-1 text-white fa fa-eye text-secondary"></i>
                                                 </a>
 
-                                                <!-- Edit Button -->
+
+                                                   <!-- Edit Button -->
                                                 <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-success"
-                                                    data-bs-toggle="modal" data-id="{{ $driver->id }}"
-                                                    data-bs-target="#driverEdit{{ $driver->id }}">
+                                                    data-bs-toggle="modal" data-id="{{ $admin->id }}" data-bs-target="#subAdminEditModal">
                                                     <i class="p-1 text-white fa fa-edit text-secondary"></i>
                                                 </a>
 
-                                                <!-- Delete Button -->
-                                                <a href="javascript:void(0);" class="p-0 mb-0 delete-driver btn bg-danger rounded-circle"  data-id="{{ $driver->id }}"
-                                                        data-url="{{ route('carrier.drivers.destroy', $driver->id) }}">
+                                                  <!-- Delete Button -->
+                                                <a href="javascript:void(0);" class="p-0 mb-0 delete-sub-admin btn bg-danger rounded-circle"  data-id="{{ $admin->id }}"
+                                                        data-url="{{ route('admin.sub-admin.destroy', $admin->id) }}">
                                                     <i class="p-1 text-white fa fa-trash"></i>
                                                 </a>
+
+                                                <a href="{{ route('admin.sub-admin.permissions.edit', $admin->id) }}">
+                                                    <i class="fa-solid fa-lock "></i>
+                                                </a>
+
                                             </td>
                                         </tr>
                                     @endforeach
@@ -73,18 +87,18 @@
     </div>
 </div>
 
-@include('backend.carrier.driver.create')
-@foreach($drivers as $driver)
-    @include('backend.carrier.driver.show', ['driver' => $driver])
-    @include('backend.carrier.driver.edit', ['driver' => $driver])
-@endforeach
+@include('backend.admin.sub-admin.create')
 
+@foreach($subAdmins as $admin)
+    @include('backend.admin.sub-admin.show', ['admin' => $admin])
+    @include('backend.admin.sub-admin.edit', ['admin' => $admin])
+@endforeach
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
     $(document).ready(function () {
-        $('.delete-driver').click(function () {
+        $('.delete-sub-admin').click(function () {
             const button = $(this);
             const deleteUrl = button.data('url');
 
@@ -120,7 +134,6 @@
         });
     });
 </script>
-
 <script>
     $(document).ready(function () {
         $('#datatable-basic').DataTable({
