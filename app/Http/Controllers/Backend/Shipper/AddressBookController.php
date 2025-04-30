@@ -5,29 +5,30 @@ namespace App\Http\Controllers\Backend\Shipper;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\AddressBook;
-use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreAddressBook;
+use Flasher\Laravel\Facade\Flasher;
 
 class AddressBookController extends Controller
 {
     public function index()
     {
-        $user = auth()->user();
+        // $user = auth()->user();
 
-        if (!$user || !$user->shipper) {
-            abort(403, 'No associated shipper found.');
-        }
-        $addressBook = AddressBook::with('shipper')
-            ->where('shipper_id', $user->shipper->id)
-            ->orderBy('created_at', 'desc')
-            ->get();
+        // if (!$user || !$user->shipper) {
+        //     abort(403, 'No associated shipper found.');
+        // }
+        // $addressBook = AddressBook::with('shipper')
+        //     ->where('shipper_id', $user->shipper->id)
+        //     ->orderBy('created_at', 'desc')
+        //     ->get();
 
-             //  $shipperId = auth()->id();
+        // $shipperId = auth()->id();
         // $addressBook = AddressBook::with('users')
         //     ->where('shipper_id', $shipperId)
         //     ->orderBy('created_at', 'desc')
         //     ->get();
 
+        $addressBook = AddressBook::get();
         return view('backend.shipper.address-book.index', compact('addressBook'));
     }
 
@@ -37,15 +38,14 @@ class AddressBookController extends Controller
         //
     }
 
-    public function store(StoreAddressBook $request)
+   public function store(StoreAddressBook $request)
     {
         try {
-
             $user = auth()->user();
-            $shipper = $user->shipper;
+            $shipperId = $user && $user->shipper ? $user->shipper->id : $request->shipper_id;
 
             AddressBook::create([
-                'shipper_id' => $shipper->id,
+                'shipper_id' => $shipperId,
                 'name' => $request->name,
                 'phone' => $request->phone,
                 'street_address' => $request->street_address,
@@ -59,7 +59,7 @@ class AddressBookController extends Controller
 
             return redirect()->back()->with('success', 'Address created successfully!');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }

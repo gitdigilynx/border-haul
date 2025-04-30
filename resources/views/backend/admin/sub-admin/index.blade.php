@@ -44,38 +44,38 @@
                                 </thead>
                                 <tbody>
                                     @foreach ($subAdmins as $admin)
-                                        <tr>
-                                            <td>{{ $admin->name }}</td>
-                                            <td>{{ $admin->email }}</td>
-                                            <td>{{ $admin->role }}</td>
-                                            <td>
+                                    <tr>
+                                        <td>{{ $admin->name }}</td>
+                                        <td>{{ $admin->email }}</td>
+                                        <td>{{ $admin->role }}</td>
+                                        <td>
+                                            <!-- View Button -->
+                                            <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-primary"
+                                                data-bs-toggle="modal" data-bs-target="#subAdminShowModal{{ $admin->id }}">
+                                                <i class="p-1 text-white fa fa-eye text-secondary"></i>
+                                            </a>
 
-                                                <!-- View Button -->
-                                               <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-primary"
-                                                    data-bs-toggle="modal" data-id="{{ $admin->id }}"
-                                                    data-bs-target="#subAdminShowModal{{ $admin->id }}">
-                                                        <i class="p-1 text-white fa fa-eye text-secondary"></i>
-                                                </a>
+                                            <!-- Edit Button -->
 
-
-                                                   <!-- Edit Button -->
-                                                <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-success"
-                                                    data-bs-toggle="modal" data-id="{{ $admin->id }}" data-bs-target="#subAdminEditModal">
+                                            <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-success"
+                                                data-bs-toggle="modal" data-bs-target="#subAdminEditModal{{ $admin->id }}">
                                                     <i class="p-1 text-white fa fa-edit text-secondary"></i>
-                                                </a>
+                                            </a>
 
-                                                  <!-- Delete Button -->
-                                                <a href="javascript:void(0);" class="p-0 mb-0 delete-sub-admin btn bg-danger rounded-circle"  data-id="{{ $admin->id }}"
-                                                        data-url="{{ route('admin.sub-admin.destroy', $admin->id) }}">
-                                                    <i class="p-1 text-white fa fa-trash"></i>
-                                                </a>
+                                            <!-- Delete Button -->
+                                            <a href="javascript:void(0);" class="p-0 mb-0 delete-sub-admin btn bg-danger rounded-circle"
+                                                data-id="{{ $admin->id }}"
+                                                data-url="{{ route('admin.sub-admin.destroy', $admin->id) }}">
+                                                <i class="p-1 text-white fa fa-trash"></i>
+                                            </a>
 
-                                                <a href="{{ route('admin.sub-admin.permissions.edit', $admin->id) }}">
-                                                    <i class="fa-solid fa-lock "></i>
-                                                </a>
-
-                                            </td>
-                                        </tr>
+                                            <!-- Permissions Button -->
+                                            <a href="{{ route('admin.sub-admin.permissions.edit', $admin->id) }}"
+                                                class="p-0 mb-0 btn bg-primary rounded-circle">
+                                                <i class="p-1 text-white fa-solid fa-lock"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
                                     @endforeach
                                 </tbody>
                             </table>
@@ -87,14 +87,19 @@
     </div>
 </div>
 
+
+<!-- Create Modal -->
 @include('backend.admin.sub-admin.create')
 
+<!-- Show & Edit Modals -->
 @foreach($subAdmins as $admin)
     @include('backend.admin.sub-admin.show', ['admin' => $admin])
     @include('backend.admin.sub-admin.edit', ['admin' => $admin])
 @endforeach
 
+
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 
 <script>
     $(document).ready(function () {

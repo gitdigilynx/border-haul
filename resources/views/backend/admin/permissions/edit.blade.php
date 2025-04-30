@@ -1,5 +1,6 @@
 
-<div class="modal fade" id="permissionEditModal" tabindex="-1" aria-labelledby="exampleModalgridLabel" aria-hidden="true">
+@foreach ($permissions as $permission)
+<div class="modal fade" id="permissionEditModal{{ $permission->id }}" tabindex="-1" aria-labelledby="exampleModalgridLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -34,3 +35,5 @@
             </div>
         </div>
     </div>
+</div>
+@endforeach

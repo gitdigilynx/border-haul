@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\SendPasswordToCarrierUser;
 use Illuminate\Support\Str;
 use Spatie\Permission\Models\Permission;
-
+use Flasher\Laravel\Facade\Flasher;
 
 class SubAdminController extends Controller
 {
@@ -81,7 +81,7 @@ class SubAdminController extends Controller
         try {
             return view('backend.admin.sub-admin.edit');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+             Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -98,9 +98,9 @@ class SubAdminController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
             ]);
-            return redirect()->route('admin.sub-admin.index');
+            return redirect()->route('admin.sub-admin');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+             Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -114,7 +114,7 @@ class SubAdminController extends Controller
 
             return response()->json(['message' => 'Sub Admin deleted successfully']);
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -132,6 +132,7 @@ class SubAdminController extends Controller
 
     public function updatePermission(Request $request, $id)
     {
+
         $admin = User::findOrFail($id);
         $admin->syncPermissions($request->permissions ?? []);
 

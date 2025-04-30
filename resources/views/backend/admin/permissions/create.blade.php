@@ -10,7 +10,6 @@
                 <form id="permissionForm" method="POST" action="{{ route('admin.permissions.store') }}">
                     @csrf
                     <div class="row g-3">
-
                         <div class="col-xxl-6">
                             <div>
                                 <label for="first_name" class="form-label">Name <span class="text-danger">*</span></label>
@@ -21,7 +20,7 @@
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-success">Save</button>
+                            <button type="submit" class="btn btn-success">Generate Permissions</button>
                         </div>
                     </div>
                 </form>

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('address_books', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('shipper_id');
+            $table->unsignedBigInteger('shipper_id')->nullable();
             $table->string('name')->nullable();
             $table->string('phone')->nullable();
             $table->string('street_address');
@@ -23,8 +23,10 @@ return new class extends Migration
             $table->string('country');
             $table->string('type');
             $table->string('contact_person_name')->nullable();
-            $table->foreign('shipper_id')->references('id')->on('shippers')->onDelete('cascade');
-
+            $table->foreign('shipper_id')
+                ->references('id')
+                ->on('shippers')
+                ->onDelete('set null');
             $table->timestamps();
         });
     }

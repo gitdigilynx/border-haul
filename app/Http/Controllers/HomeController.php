@@ -16,7 +16,10 @@ class HomeController extends Controller
 
         $totalCarriers = User::where('role', 'Carrier')->count();
         $totalSubCarriers = User::where('role', 'CarrierUser')->count();
-        return view('home', compact('totalShippers', 'totalSubShippers','totalCarriers','totalSubCarriers'));
+
+        $totalSubAdmin = User::where('role', 'subAdmin')->count();
+
+        return view('home', compact('totalShippers', 'totalSubShippers','totalCarriers','totalSubCarriers','totalSubAdmin'));
     }
 
 

@@ -60,10 +60,15 @@
                                                     <i class="p-1 text-white fa fa-eye text-secondary"></i>
                                                 </a>
 
-                                            <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-success"
+                                             <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-success"
+                                                data-bs-toggle="modal" data-bs-target="#addressBookEdit{{ $address->id }}">
+                                                    <i class="p-1 text-white fa fa-edit text-secondary"></i>
+                                            </a>
+
+                                            {{-- <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-success"
                                                 data-bs-toggle="modal" data-id="{{ $address->id }}" data-bs-target="#addressBookEdit">
                                                 <i class="p-1 text-white fa fa-edit text-secondary"></i>
-                                            </a>
+                                            </a> --}}
 
                                             <a href="javascript:void(0);"
                                                 class="p-0 mb-0 delete-address-book btn bg-danger rounded-circle"

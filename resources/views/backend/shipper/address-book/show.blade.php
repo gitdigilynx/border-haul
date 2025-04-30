@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="ShipperAddressBookModal{{ $document->id }}" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="ShipperAddressBookModal{{ $address->id }}" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

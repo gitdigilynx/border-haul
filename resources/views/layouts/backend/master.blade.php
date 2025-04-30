@@ -38,8 +38,7 @@
 
         <div class="main-content">
             <div class="container-fluid">
-
-
+              @flasher_render
                 {{-- SweetAlert Notifications --}}
                 @if(session('success'))
                     <script>

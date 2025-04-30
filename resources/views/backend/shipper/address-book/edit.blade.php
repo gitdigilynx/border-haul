@@ -1,4 +1,7 @@
-<div class="modal fade" id="addressBookEdit" tabindex="-1" aria-labelledby="subUserModalLabel" aria-hidden="true">
+
+@foreach($addressBook as $address)
+
+<div class="modal fade" id="addressBookEdit{{ $address->id }}" tabindex="-1" aria-labelledby="subUserModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
@@ -82,3 +85,5 @@
       </div>
     </div>
   </div>
+
+  @endforeach

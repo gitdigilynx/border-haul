@@ -45,25 +45,22 @@
                                         <tr>
                                             <td>{{ $permission->name }}</td>
                                             <td>
-                                                <!-- View Button -->
-                                               <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-primary"
-                                                    data-bs-toggle="modal" data-id="{{ $permission->id }}"
-                                                    data-bs-target="#permissionShowModal{{ $permission->id }}">
-                                                        <i class="p-1 text-white fa fa-eye text-secondary"></i>
-                                                </a>
-
-                                                <!-- Edit Button -->
-
-                                                <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-success"
-                                                    data-bs-toggle="modal" data-id="{{ $permission->id }}" data-bs-target="#permissionEditModal">
+                                            <!-- View Button -->
+                                            <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-primary "
+                                                data-bs-toggle="modal" data-bs-target="#permissionShowModal{{ $permission->id }}">
+                                                <i class="p-1 text-white fa fa-eye text-secondary"></i>
+                                            </a>
+                                            <!-- Edit Button -->
+                                            <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-success"
+                                                data-bs-toggle="modal" data-bs-target="#permissionEditModal{{ $permission->id }}">
                                                     <i class="p-1 text-white fa fa-edit text-secondary"></i>
-                                                </a>
+                                            </a>
 
-                                                  <!-- Delete Button -->
-                                                <a href="javascript:void(0);" class="p-0 mb-0 delete-permissions btn bg-danger rounded-circle"  data-id="{{ $permission->id }}"
-                                                        data-url="{{ route('admin.permissions.destroy', $permission->id) }}">
-                                                    <i class="p-1 text-white fa fa-trash"></i>
-                                                </a>
+                                            <!-- Delete Button -->
+                                            <a href="javascript:void(0);" class="p-0 mb-0 delete-permissions btn bg-danger rounded-circle"  data-id="{{ $permission->id }}"
+                                                    data-url="{{ route('admin.permissions.destroy', $permission->id) }}">
+                                                <i class="p-1 text-white fa fa-trash"></i>
+                                            </a>
                                             </td>
                                         </tr>
                                     @endforeach

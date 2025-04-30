@@ -36,7 +36,7 @@
                 </li>
 
                 {{-- Shipper Menu --}}
-                @if (auth()->user()->hasRole('Shipper') || auth()->user()->hasRole('Admin'))
+                @if (auth()->user()->hasRole('Shipper'))
 
                     {{-- <li>
                     <a href="#sidebarDashboards">
@@ -77,7 +77,8 @@
 
                 {{-- Carrier Menu --}}
 
-                @if (auth()->user()->hasRole('Carrier') || auth()->user()->hasRole('Admin'))
+                {{-- @if (auth()->user()->hasRole('Carrier') || auth()->user()->hasRole('Admin')) --}}
+                @if (auth()->user()->hasRole('Carrier'))
 
                     <li>
                         <a href="{{ route('carrier.carrier-users') }}">
@@ -85,7 +86,6 @@
                             <span>Carrier Users</span>
                         </a>
                     </li>
-
 
                     <li>
                         <a href="{{ route('carrier.documents') }}">
@@ -120,80 +120,6 @@
                     </li>
                 @endhasrole
 
-                @hasrole('subAdmin')
-                    @can('manage-request-truck')
-                        <li>
-                            <a href="#sidebarDashboards">
-                                <i class="fa-solid fa-truck-moving"></i>
-                                <span>Request Truck</span>
-                            </a>
-                        </li>
-                    @endcan
-
-                    @can('manage-my-delivery')
-                        <li>
-                            <a href="#sidebarAuth" data-bs-toggle="collapse">
-                                <i class="fa-solid fa-briefcase"></i>
-                                <span>My Delivery</span>
-                            </a>
-                        </li>
-                    @endcan
-
-                    @can('manage-address')
-                        <li>
-                            <a href="{{ route('shipper.address-book') }}">
-                                <i class="fa-solid fa-house-chimney"></i>
-                                <span>Address Book</span>
-                            </a>
-                        </li>
-                    @endcan
-
-                    @can('manage-payment-system')
-                        <li>
-                            <a href="#sidebarExpages" data-bs-toggle="collapse">
-                                <i class="fa-solid fa-money-check-dollar"></i>
-                                <span>Payment System</span>
-                            </a>
-                        </li>
-                    @endcan
-
-
-                    @can('manage-carrier-documents')
-                        <li>
-                            <a href="{{ route('carrier.documents') }}">
-                                <i class="fa-solid fa-file"></i>
-                                <span>Carrier Document</span>
-                            </a>
-                        </li>
-                    @endcan
-
-                    @can('manage-request-truck')
-                        <li>
-                            <a href="{{ route('carrier.trucks') }}">
-                                <i class="fa-solid fa-truck"></i>
-                                <span>Truck Drivers</span>
-                            </a>
-                        </li>
-                    @endcan
-
-                    @can('manage-shipper-users')
-                        <li>
-                            <a href="{{ route('shipper.sub-users') }}">
-                                <i class="fa-solid fa-user"></i>
-                                <span>Shipper Users</span>
-                            </a>
-                        </li>
-                    @endcan
-                    @can('manage-carrier-users')
-                        <li>
-                            <a href="{{ route('carrier.carrier-users') }}">
-                                <i class="fa-solid fa-user"></i>
-                                <span>Carrier Users</span>
-                            </a>
-                        </li>
-                    @endcan
-
-                @endhasrole
 
                 <hr style="margin-top: 40px;">
 
