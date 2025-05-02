@@ -23,11 +23,13 @@ class SubUserController extends Controller
 
     public function index()
     {
-        $shipperId = auth()->id();
-        $subUsers = ShipperSubUser::with('users')
-            ->where('shipper_id', $shipperId)
-            ->orderBy('created_at', 'desc')
-            ->get();
+        // $shipperId = auth()->id();
+        // $subUsers = ShipperSubUser::with('users')
+        //     ->where('shipper_id', $shipperId)
+        //     ->orderBy('created_at', 'desc')
+        //     ->get();
+
+        $subUsers = ShipperSubUser::get();
 
         return view('backend.shipper.sub-user.index', compact('subUsers'));
     }
