@@ -11,6 +11,8 @@ use Illuminate\Support\Str;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendPasswordToShipperUser;
+use Flasher\Laravel\Facade\Flasher;
+
 
 class SubUserController extends Controller
 {
@@ -112,8 +114,24 @@ class SubUserController extends Controller
 
             return response()->json(['message' => 'Deleted successfully']);
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+           Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
+
+    public function toggleSubUser(Request $request, $id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            $user->is_active = $request->has('is_active');
+            $user->save();
+
+            return back()->with('status', 'User status updated.');
+         } catch (\Exception $e) {
+           Flasher::addError('Something went wrong: ' . $e->getMessage());
+            return redirect()->back();
+        }
+
+    }
+
 }

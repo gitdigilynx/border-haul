@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendPasswordToCarrierUser;
 use Illuminate\Support\Str;
+use Flasher\Laravel\Facade\Flasher;
 
 class CarrierSubUserController extends Controller
 {
@@ -21,11 +22,15 @@ class CarrierSubUserController extends Controller
     public function index()
     {
         try {
-            $carrierId = auth()->id();
-            $carrierUsers = CarrierSubUser::with('users')
-                ->where('carrier_id', $carrierId)
-                ->orderBy('created_at', 'desc')
-                ->get();
+
+            //  $user = auth()->user();
+            // $carrierUsers = CarrierSubUser::with( 'user')
+            //     ->where('carrier_id', auth()->user()->carrier->id)
+            //     ->orderBy('created_at', 'desc')
+            //     ->get();
+
+            $carrierUsers = CarrierSubUser::get();
+
             return view('backend.carrier.sub-user.index', compact('carrierUsers'));
         } catch (\Exception $e) {
             flash()->error('Something went wrong: ' . $e->getMessage());
@@ -122,5 +127,20 @@ class CarrierSubUserController extends Controller
             flash()->error('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
+    }
+
+    public function toggleCarrierUser(Request $request, $id)
+    {
+        try {
+            $user = User::findOrFail($id);
+            $user->is_active = $request->has('is_active');
+            $user->save();
+
+            return back()->with('status', 'User status updated.');
+         } catch (\Exception $e) {
+           Flasher::addError('Something went wrong: ' . $e->getMessage());
+            return redirect()->back();
+        }
+
     }
 }

@@ -10,20 +10,16 @@
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
-                            <th scope="row">First Name</th>
-                            <td>{{ $user->first_name ?? '-' }}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Last Name</th>
-                            <td>{{ $user->last_name ?? '-' }}</td>
+                            <th scope="row">Name</th>
+                            <td>{{ $user->name ?? '-' }}</td>
                         </tr>
                         <tr>
                             <th scope="row">Email</th>
-                            <td>{{ $user->users->email ?? '-' }}</td>
+                            <td>{{ $user->email ?? '-' }}</td>
                         </tr>
                         <tr>
                             <th scope="row">Role</th>
-                            <td>{{ ucfirst($user->users->role ?? '-') }}</td>
+                            <td>{{ ucfirst($user->role ?? '-') }}</td>
                         </tr>
                     </tbody>
                 </table>

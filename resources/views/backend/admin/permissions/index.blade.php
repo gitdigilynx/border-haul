@@ -37,14 +37,35 @@
                                     <tr>
                                         {{-- <th>Sr #</th> --}}
                                         <th>Name</th>
-                                        <th>Action</th>
+                                        <th>Status</th>
+                                        <th style="text-align: center">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($permissions as $permission)
                                         <tr>
                                             <td>{{ $permission->name }}</td>
-                                            <td>
+                                             <td >
+                                            <form method="POST" action="{{ route('admin.sub-users.togglePermission', $permission->id) }}">
+                                                @csrf
+                                                @method('PATCH')
+                                                <div class="form-check form-switch">
+                                                    <input
+                                                        class="form-check-input"
+                                                        type="checkbox"
+                                                        name="is_active"
+                                                        onchange="this.form.submit()"
+                                                        {{ $permission->is_active ? 'checked' : '' }}
+                                                    >
+                                                    <label class="form-check-label px-1 rounded text-white
+                                                        {{ $permission->is_active ? 'bg-success' : 'bg-danger' }}">
+                                                        {{ $permission->is_active ? 'Active' : 'Inactive' }}
+                                                    </label>
+
+                                                </div>
+                                            </form>
+                                        </td>
+                                            <td style="text-align: center">
                                             <!-- View Button -->
                                             <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-primary "
                                                 data-bs-toggle="modal" data-bs-target="#permissionShowModal{{ $permission->id }}">

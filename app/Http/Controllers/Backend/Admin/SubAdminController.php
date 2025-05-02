@@ -132,11 +132,30 @@ class SubAdminController extends Controller
 
     public function updatePermission(Request $request, $id)
     {
-
         $admin = User::findOrFail($id);
-        $admin->syncPermissions($request->permissions ?? []);
+        $request->validate([
+            'permissions' => 'array',
+            'permissions.*' => 'string|exists:permissions,name',
+        ]);
 
-        return redirect()->route('admin.sub-admin', $admin->id)
+        $admin->syncPermissions($request->input('permissions', []));
+
+        return redirect()
+            ->route('admin.sub-admin', $admin->id)
             ->with('success', 'Permissions updated successfully.');
     }
+
+    public function toggleAdmin(Request $request, $id)
+    {
+        try {
+            $subUser = User::findOrFail($id);
+            $subUser->is_active = $request->has('is_active');
+            $subUser->save();
+
+            return back()->with('status', 'User status updated.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Something went wrong: ' . $e->getMessage());
+        }
+    }
+
 }

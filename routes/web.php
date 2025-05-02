@@ -14,6 +14,7 @@ use App\Http\Controllers\Backend\Carrier\TruckController;
 use App\Http\Controllers\Backend\Carrier\DriverController;
 use App\Http\Controllers\Backend\Admin\SubAdminController;
 use App\Http\Controllers\Backend\Admin\PermissionController;
+use App\Http\Controllers\Backend\Admin\AdminCarrierUserController;
 
 // ---------------------------
 // 🔐 Public Auth Routes
@@ -69,8 +70,11 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/sub-admin/{id}', 'show')->name('sub-admin.show');
             Route::post('/sub-admin/{id}', 'update')->name('sub-admin.update');
             Route::delete('/sub-admin/{id}', 'destroy')->name('sub-admin.destroy');
+
+            //Assign Permissions
             Route::get('/sub-admin/{id}/assign-permissions', 'editPermission')->name('sub-admin.permissions.edit');
             Route::post('/sub-admin/{id}/assign-permissions', 'updatePermission')->name('sub-admin.permissions.update');
+            Route::patch('/sub-users/{id}/toggle-admin',  'toggleAdmin')->name('sub-users.toggleAdmin');
         });
 
         // Permissions
@@ -82,7 +86,20 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/permissions/{id}', 'show')->name('permissions.show');
             Route::post('/permissions/{id}', 'update')->name('permissions.update');
             Route::delete('/permissions/{id}', 'destroy')->name('permissions.destroy');
+            Route::patch('/sub-users/{id}/toggle-permission',  'togglePermission')->name('sub-users.togglePermission');
+
         });
+
+        // Carriers
+        Route::controller(AdminCarrierUserController::class)->group(function () {
+            Route::get('/carriers', 'index')->name('carriers');
+            Route::post('/carriers', 'store')->name('carriers.store');
+            Route::get('/carriers/{id}/edit', 'edit')->name('carriers.edit');
+            Route::get('/carriers/{id}', 'show')->name('carriers.show');
+            Route::post('/carriers/{id}', 'update')->name('carriers.update');
+            Route::delete('/carriers/{id}', 'destroy')->name('carriers.destroy');
+        });
+
     });
 
     // ---------------------------
@@ -98,7 +115,9 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/sub-users/{id}/edit', 'edit')->name('sub-users.edit');
             Route::get('/sub-users/{id}', 'show')->name('sub-users.show');
             Route::post('/sub-users/{id}', 'update')->name('sub-users.update');
-            Route::delete('/sub-users/{id}', 'destroy')->name('sub-users.destroy');
+            Route::delete('/sub-users/{id}', 'destroy')->name(name: 'sub-users.destroy');
+            Route::patch('/sub-users/{id}/toggle-user', 'toggleSubUser')->name('sub-users.toggleSubUser');
+
         });
 
         // Address Book
@@ -126,6 +145,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/carrier-users/{id}', 'show')->name('carrier-users.show');
             Route::post('/carrier-users/{id}', 'update')->name('carrier-users.update');
             Route::delete('/carrier-users/{id}', 'destroy')->name('carrier-users.destroy');
+            Route::patch('/carrier-users/{id}/toggle-user', 'toggleCarrierUser')->name('sub-users.toggleCarrierUser');
+
         });
 
         // Carrier Documents

@@ -8,6 +8,7 @@ use App\Models\CarrierDocument;
 use App\Services\DocumentUploadService;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateDocumentRequest;
+use Flasher\Laravel\Facade\Flasher;
 
 class CarrierDocumentController extends Controller
 {
@@ -21,14 +22,16 @@ class CarrierDocumentController extends Controller
     {
         try {
             $user = auth()->user();
-            $documents = CarrierDocument::with('carrier')
-                ->where('carrier_id', $user->carrier->id)
-                ->orderBy('created_at', 'desc')
-                ->get();
-
+            $documents = collect();
+            if ($user->carrier) {
+                $documents = CarrierDocument::with('carrier')
+                    ->where('carrier_id', $user->carrier->id)
+                    ->orderBy('created_at', 'desc')
+                    ->get();
+            }
             return view('backend.carrier.document.index', compact('documents'));
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -56,7 +59,8 @@ class CarrierDocumentController extends Controller
 
             return redirect()->back()->with('success', 'Document uploaded successfully.');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
+
             return redirect()->back();
         }
     }

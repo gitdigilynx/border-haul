@@ -59,4 +59,17 @@ class PermissionController extends Controller
             return redirect()->back();
         }
     }
+
+    public function togglePermission(Request $request, $id)
+    {
+        try {
+            $permission = Permission::findOrFail($id);
+            $permission->is_active = $request->has('is_active');
+            $permission->save();
+
+            return back()->with('status', 'User status updated.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Something went wrong: ' . $e->getMessage());
+        }
+    }
 }

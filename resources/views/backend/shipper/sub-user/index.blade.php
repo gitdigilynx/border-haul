@@ -40,6 +40,7 @@
                                         <th>Last Name</th>
                                         <th>Email</th>
                                         <th>Role</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -52,7 +53,23 @@
                                             <td>{{ $user->users->email }}</td>
                                             <td>{{ $user->users->role }}</td>
                                             <td>
-
+                                            <form method="POST"
+                                                    action="{{ route('shipper.sub-users.toggleSubUser', $user->users->id) }}">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <div class="form-check form-switch">
+                                                        <input class="form-check-input" type="checkbox" name="is_active"
+                                                            onchange="this.form.submit()"
+                                                            {{ $user->users->is_active ? 'checked' : '' }}>
+                                                        <label
+                                                            class="form-check-label px-1 rounded text-white
+                                                            {{ $user->users->is_active ? 'bg-success' : 'bg-danger' }}">
+                                                            {{ $user->users->is_active ? 'Active' : 'Inactive' }}
+                                                        </label>
+                                                    </div>
+                                                    </form>
+                                                </td>
+                                            <td>
                                                   <!-- View Button -->
                                                 <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-primary"
                                                     data-bs-toggle="modal"data-id="{{ $user->id }}"

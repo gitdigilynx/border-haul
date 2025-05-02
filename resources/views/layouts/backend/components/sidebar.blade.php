@@ -118,6 +118,12 @@
                             <span>Permissions</span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('admin.carriers') }}">
+                            <i class="fa-solid fa-user"></i>
+                            <span>Carriers</span>
+                        </a>
+                    </li>
                 @endhasrole
 
 
@@ -136,7 +142,6 @@
                         <span>Settings</span>
                     </a>
                 </li>
-
 
 
                 {{-- Logout (Uncomment if needed) --}}

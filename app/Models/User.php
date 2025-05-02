@@ -72,6 +72,7 @@ class User extends Authenticatable
         return $this->hasOne(Carrier::class);
     }
 
+
     public function carrierUsers()
     {
         return $this->hasMany(User::class, 'carrier_id');

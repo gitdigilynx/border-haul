@@ -25,7 +25,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0 card-title">Users List</h5>
+                            <h5 class="mb-0 card-title">Carrier Users List</h5>
                             {{-- <button type="button" class="btn btn-success">Add Users</button> --}}
                             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#carrierUserCreate">
                                 + Invite Users
@@ -36,8 +36,7 @@
                                 <thead>
                                     <tr>
                                         {{-- <th>Sr #</th> --}}
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
+                                        <th>Name</th>
                                         <th>Email</th>
                                         <th>Role</th>
                                         <th>Action</th>
@@ -47,10 +46,10 @@
                                     @foreach ($carrierUsers as $user)
                                         <tr>
                                             {{-- <td>{{ $loop->iteration }}</td> --}}
-                                            <td>{{ $user->first_name }}</td>
-                                            <td>{{ $user->last_name }}</td>
-                                            <td>{{ $user->users->email }}</td>
-                                            <td>{{ $user->users->role }}</td>
+
+                                            <td>{{ $user->name }}</td>
+                                            <td>{{ $user->email }}</td>
+                                            <td>{{ $user->role }}</td>
                                             <td>
 
                                                 <!-- View Button -->
@@ -87,9 +86,9 @@
     </div>
 </div>
 
-@include('backend.carrier.sub-user.create')
+@include('backend.admin.carrier.carrier-user.create')
 @foreach($carrierUsers as $user)
-    @include('backend.carrier.sub-user.show', ['document' => $user])
+    @include('backend.admin.carrier.carrier-user.show', ['user' => $user])
 @endforeach
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
