@@ -110,11 +110,17 @@
 
                                                 <!-- Mexico & CAAT Code -->
                                                 <div class="mb-2 row">
+
                                                     <div class="col-md-6">
-                                                        <label for="mexico" class="form-label">Mexico <span class="text-danger">*</span></label>
-                                                        <input type="text" name="mexico" id="mexico" class="form-control" placeholder="Mexico">
-                                                        <div class="invalid-feedback"></div>
+                                                        <label for="mexico" class="form-label">Country <span class="text-danger">*</span></label>
+                                                        <select name="mexico" id="mexico" class="form-control" required>
+                                                            <option value="">Select Country</option>
+                                                            <option value="us">US</option>
+                                                            <option value="mexico">Mexico</option>
+                                                        </select>
+                                                        <div class="invalid-feedback">Please select a country.</div>
                                                     </div>
+
                                                     <div class="col-md-6">
                                                         <label for="caat_code" class="form-label">CAAT Code <span class="text-danger">*</span></label>
                                                         <input type="number" name="caat_code" id="caat_code" class="form-control" placeholder="CAAT Code">

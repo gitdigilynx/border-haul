@@ -14,14 +14,14 @@ return new class extends Migration
     Schema::create('carriers', function (Blueprint $table) {
         $table->id();
         $table->unsignedBigInteger('user_id');
-        $table->string('company_address', 255);
-        $table->string('authority');
-        $table->string('dot');
-        $table->string('mc');
-        $table->string('scac_code');
-        $table->string('mexico');
-        $table->string('caat_code');
-        $table->string('service_category');
+        $table->string('company_address', 255)->nullable();
+        $table->string('authority')->nullable();
+        $table->string('dot')->nullable();
+        $table->string('mc')->nullable();
+        $table->string('scac_code')->nullable();
+        $table->string('mexico')->nullable();
+        $table->string('caat_code')->nullable();
+        $table->string('service_category')->nullable();
         $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         $table->timestamps();
     });

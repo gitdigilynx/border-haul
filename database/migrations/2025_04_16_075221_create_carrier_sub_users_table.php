@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('carrier_sub_users', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('user_id'); // Links to users table
-            $table->unsignedBigInteger('carrier_id'); // Links to the Carrier (user)
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('phone');
+            $table->unsignedBigInteger('user_id');
+            $table->unsignedBigInteger('carrier_id')->nullable();
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('phone')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('carrier_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

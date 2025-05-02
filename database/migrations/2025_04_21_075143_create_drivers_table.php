@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('drivers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('carrier_id');
-            $table->string('name');
+            $table->string('name')->nullable();
             $table->string('phone_number')->unique();
               // $table->foreignId('truck_id')->nullable()->constrained('trucks')->onDelete('set null');
             $table->foreign('carrier_id')->references('id')->on('carriers')->onDelete('cascade');

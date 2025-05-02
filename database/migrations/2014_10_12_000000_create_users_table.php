@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->unsignedBigInteger('shipper_id')->nullable();
-            $table->string('role');
+            $table->string('role')->nullable();
             $table->string('is_active')->default('0');
             // $table->enum('role', ['admin', 'shipper', 'carrier', 'sub_user']);
             $table->string('password');

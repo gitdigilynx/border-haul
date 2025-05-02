@@ -10,9 +10,9 @@ class CreateShippersTable extends Migration
         Schema::create('shippers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('company_name');
-            $table->string('company_address');
-            $table->string('phone');
+            $table->string('company_name')->nullable();
+            $table->string('company_address')->nullable();
+            $table->string('phone')->nullable();;
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });

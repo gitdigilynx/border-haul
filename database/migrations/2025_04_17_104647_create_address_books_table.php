@@ -17,11 +17,11 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('phone')->nullable();
             $table->string('street_address');
-            $table->string('city');
+            $table->string('city')->nullable();
             $table->string('state')->nullable();
             $table->string('postal_code')->nullable();
-            $table->string('country');
-            $table->string('type');
+            $table->string('country')->nullable();
+            $table->string('type')->nullable();
             $table->string('contact_person_name')->nullable();
             $table->foreign('shipper_id')
                 ->references('id')

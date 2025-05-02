@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('carrier_documents', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('carrier_id');
-            $table->string('document_type');
-            $table->string('file_path');
+            $table->string('document_type')->nullable();
+            $table->string('file_path')->nullable();
             $table->date('expires_at')->nullable();
-            $table->string('status');
+            $table->string('status')->nullable();
             $table->text('notes')->nullable();
             $table->foreign('carrier_id')->references('id')->on('carriers')->onDelete('cascade');
 

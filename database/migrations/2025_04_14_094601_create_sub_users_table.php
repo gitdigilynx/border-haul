@@ -15,9 +15,9 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id'); // Links to users table
             $table->unsignedBigInteger('shipper_id'); // Links to the shipper (user)
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('phone');
+            $table->string('first_name')->nullable();
+            $table->string('last_name')->nullable();
+            $table->string('phone')->nullable();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->foreign('shipper_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();

@@ -88,7 +88,7 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
-                                                        <input type="text" name="phone" id="phone" class="form-control" placeholder="Phone" >
+                                                        <input type="number" name="phone" id="phone" class="form-control" placeholder="Phone" >
                                                         <div class="invalid-feedback"></div>
                                                     </div>
                                                 </div>
