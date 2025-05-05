@@ -51,21 +51,21 @@
                                                 {{-- <td>{{ $loop->iteration }}</td> --}}
                                                 <td>{{ $user->first_name }}</td>
                                                 <td>{{ $user->last_name }}</td>
-                                                <td>{{ $user->user->email }}</td>
-                                                <td>{{ $user->user->role }}</td>
+                                                <td>{{ $user->users->email }}</td>
+                                                <td>{{ $user->users->role }}</td>
                                                 <td>
                                                     <form method="POST"
-                                                        action="{{ route('shipper.sub-users.toggleSubUser', $user->user->id) }}">
+                                                        action="{{ route('shipper.sub-users.toggleSubUser', $user->users->id) }}">
                                                         @csrf
                                                         @method('PATCH')
                                                         <div class="form-check form-switch">
                                                             <input class="form-check-input" type="checkbox" name="is_active"
                                                                 onchange="this.form.submit()"
-                                                                {{ $user->user->is_active ? 'checked' : '' }}>
+                                                                {{ $user->users->is_active ? 'checked' : '' }}>
                                                             <label
                                                                 class="form-check-label px-1 rounded text-white
-                                                                {{ $user->user->is_active ? 'bg-success' : 'bg-danger' }}">
-                                                                {{ $user->user->is_active ? 'Active' : 'Inactive' }}
+                                                                {{ $user->users->is_active ? 'bg-success' : 'bg-danger' }}">
+                                                                {{ $user->users->is_active ? 'Active' : 'Inactive' }}
                                                             </label>
                                                         </div>
                                                     </form>

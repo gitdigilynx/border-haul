@@ -14,6 +14,7 @@ use App\Http\Controllers\Backend\Carrier\TruckController;
 use App\Http\Controllers\Backend\Carrier\DriverController;
 use App\Http\Controllers\Backend\Admin\SubAdminController;
 use App\Http\Controllers\Backend\Admin\PermissionController;
+use App\Http\Controllers\Backend\Admin\SubCarrierUserController;
 use App\Http\Controllers\Backend\Admin\AdminCarrierUserController;
 
 // ---------------------------
@@ -91,7 +92,16 @@ Route::middleware(['auth'])->group(function () {
         });
 
         // Carriers
-        Route::controller(AdminCarrierUserController::class)->group(function () {
+        Route::controller(SubCarrierUserController::class)->group(function () {
+            Route::get('/sub-carriers', 'index')->name('sub-carriers');
+            Route::post('/sub-carriers', 'store')->name('sub-carriers.store');
+            Route::get('/sub-carriers/{id}/edit', 'edit')->name('sub-carriers.edit');
+            Route::get('/sub-carriers/{id}', 'show')->name('sub-carriers.show');
+            Route::post('/sub-carriers/{id}', 'update')->name('sub-carriers.update');
+            Route::delete('/sub-carriers/{id}', 'destroy')->name('sub-carriers.destroy');
+        });
+
+          Route::controller(AdminCarrierUserController::class)->group(function () {
             Route::get('/carriers', 'index')->name('carriers');
             Route::post('/carriers', 'store')->name('carriers.store');
             Route::get('/carriers/{id}/edit', 'edit')->name('carriers.edit');

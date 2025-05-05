@@ -11,7 +11,7 @@ use App\Mail\SendPasswordToCarrier;
 use App\Models\Carrier;
 use Illuminate\Support\Str;
 use Illuminate\Http\RedirectResponse;
-
+use PhpParser\Node\NullableType;
 
 class AdminCarrierUserController extends Controller
 {
@@ -24,7 +24,6 @@ class AdminCarrierUserController extends Controller
     {
         try {
            $carrierUsers = User::where('role', 'Carrier')
-
                 ->orderBy('created_at', 'desc')
                 ->get();
 
@@ -49,14 +48,31 @@ class AdminCarrierUserController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        try {
+           $request->validate([
+            'name' => 'required|string|max:255',
+            'role' => 'required|in:shipper,carrier',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|confirmed|min:6',
+            'is_active' => '0',
 
-            $rawPassword = Str::random(8);
+            // Carrier-specific validations
+            'company_address' => 'required|string|max:255',
+            'authority' => 'required|string|max:255',
+            'dot' => 'required|string|max:255',
+            'mc' => 'required|string|max:255',
+            'scac_code' => 'required|string|max:255',
+            'country' => 'required|string|max:255',
+            'caat_code' => 'required|string|max:255',
+            'service_category' => 'required|string|max:255',
+            'transfer_approval_documents' => 'required|string|max:255',
+            'insurance_certificate' => 'required|string|max:255',
+        ]);
 
-            $user = User::create([
+        // Create the user
+        $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => Hash::make($rawPassword),
+            'password' => Hash::make($request->password),
             'role' => 'Carrier',
         ]);
 
@@ -67,30 +83,24 @@ class AdminCarrierUserController extends Controller
             'dot' => $request->dot,
             'mc' => $request->mc,
             'scac_code' => $request->scac_code,
-            'mexico' => $request->mexico,
+            'country' => $request->country,
             'caat_code' => $request->caat_code,
             'service_category' => $request->service_category,
             'phone' => $request->phone,
-            // 'transfer_approval_documents ' => $request->transfer_approval_documents,
-            // 'insurance_certificate ' => $request->insurance_certificate,
+            'transfer_approval_documents ' => $request->transfer_approval_documents,
+            'insurance_certificate ' => $request->insurance_certificate,
         ]);
 
         // Send credentials via email
         Mail::to($request->email)->send(new SendPasswordToCarrier($request->email, $rawPassword));
 
-         return redirect()->route('admins.carriers')->with('success', 'Carrier User created successfully!');
-        } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
-            return redirect()->back();
-        }
+         return redirect()->route('admin.carriers')->with('success', 'Carrier created successfully!');
 
     }
-
 
     public function show($id)
     {
         try {
-
             $user = Carrier::with('users')->findOrFail($id);
             return view('backend.admin.carrier.carrier-user.show', compact('user'));
         } catch (\Exception $e) {
@@ -108,17 +118,27 @@ class AdminCarrierUserController extends Controller
             return redirect()->back();
         }
     }
-
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         try {
-            $validated = $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:sub_users,email,' . $request->id,
+            // Validate inputs
+            $request->validate([
+                'name'  => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email,' . $request->id,
+                'role'  => 'required|string|max:255',
             ]);
 
-            $request->update($validated);
-            return redirect()->route('carrier.carrier-users.index');
+            // Find user by ID
+            $carrier = User::findOrFail($id);
+
+            // Update the user
+            $carrier->update([
+                'name'  => $request['name'],
+                'email' => $request['email'],
+                'role'  => $request['role'],
+            ]);
+
+            return redirect()->route('admin.carriers')->with('success', 'Carrier updated successfully.');
         } catch (\Exception $e) {
             flash()->error('Something went wrong: ' . $e->getMessage());
             return redirect()->back();

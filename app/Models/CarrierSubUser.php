@@ -12,18 +12,17 @@ class CarrierSubUser extends Model
     protected $fillable = [
         'user_id',
         'carrier_id',
-        'first_name',
-        'last_name',
+        'name',
         'phone',
     ];
 
-    public function user()
+    public function users()
     {
-        return  $this->belongsTo(User::class);
+        return  $this->belongsTo(User::class,'user_id');
     }
 
      public function carrier()
     {
-        return $this->belongsTo(Carrier::class, 'carrier_id');
+        return $this->belongsTo(Carrier::class);
     }
 }

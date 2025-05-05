@@ -15,7 +15,7 @@
                 <div class="text-end">
                     <ol class="py-0 m-0 breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Users</li>
+                        <li class="breadcrumb-item active">Carrier Users</li>
 
                     </ol>
                 </div>
@@ -59,12 +59,12 @@
                                                     <i class="p-1 text-white fa fa-eye text-secondary"></i>
                                                 </a>
 
-                                                {{-- <!-- Edit Button -->
+                                                <!-- Edit Button -->
                                                 <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-success"
                                                     data-bs-toggle="modal" data-id="{{ $user->id }}"
-                                                    data-bs-target="#shipperEditModal{{ $user->id }}">
+                                                    data-bs-target="#carrierEditModal{{ $user->id }}">
                                                     <i class="p-1 text-white fa fa-edit text-secondary"></i>
-                                                </a> --}}
+                                                </a>
 
                                                   <!-- Delete Button -->
                                                 <a href="javascript:void(0);" class="p-0 mb-0 delete-carrier-user btn bg-danger rounded-circle"  data-id="{{ $user->id }}"
@@ -86,9 +86,10 @@
     </div>
 </div>
 
-@include('backend.admin.carrier.carrier-user.create')
+@include('backend.admin.carrier.sub-carrier.create')
 @foreach($carrierUsers as $user)
-    @include('backend.admin.carrier.carrier-user.show', ['user' => $user])
+    @include('backend.admin.carrier.sub-carrier.show', ['user' => $user])
+    @include('backend.admin.carrier.sub-carrier.edit', ['user' => $user])
 @endforeach
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

@@ -22,14 +22,11 @@ class CarrierSubUserController extends Controller
     public function index()
     {
         try {
-
-            //  $user = auth()->user();
-            // $carrierUsers = CarrierSubUser::with( 'user')
-            //     ->where('carrier_id', auth()->user()->carrier->id)
-            //     ->orderBy('created_at', 'desc')
-            //     ->get();
-
-            $carrierUsers = CarrierSubUser::get();
+            $shipperId = auth()->id();
+            $carrierUsers = CarrierSubUser::with('users')
+              ->where('carrier_id', $shipperId)
+              ->orderBy('created_at', 'desc')
+              ->get();
 
             return view('backend.carrier.sub-user.index', compact('carrierUsers'));
         } catch (\Exception $e) {

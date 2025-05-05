@@ -118,17 +118,29 @@
                             <span>Permissions</span>
                         </a>
                     </li>
+
                     <li>
-                        <a href="{{ route('admin.carriers') }}">
-                            <i class="fa-solid fa-user"></i>
-                            <span>Carriers</span>
+                        <a href="#sidebarForms" data-bs-toggle="collapse">
+                            <i class="fa-solid fa-user-shield"></i>
+                            <span> Carriers </span>
+                            <span class="menu-arrow"></span>
                         </a>
+                        <div class="collapse" id="sidebarForms">
+                            <ul class="nav-second-level">
+                                <li>
+                                    <a href="{{ route('admin.sub-carriers') }}" class="tp-link">Carrier</a>
+                                </li>
+
+                                <li>
+                                    <a href="#" class="tp-link">Carrier Users</a>
+                                </li>
+                            </ul>
+                        </div>
                     </li>
+
                 @endhasrole
 
-
                 <hr style="margin-top: 40px;">
-
                 <li>
                     <a href="#">
                         <i class="fas fa-headset"></i>
