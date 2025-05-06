@@ -52,6 +52,7 @@ class CarrierSubUserController extends Controller
 
             $rawPassword = Str::random(8);
             $user = User::create([
+                'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($rawPassword),
                 'role' => 'CarrierUser',
@@ -60,8 +61,6 @@ class CarrierSubUserController extends Controller
             CarrierSubUser::create([
                 'user_id' => $user->id,
                 'carrier_id' => $carrier->id,
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
                 'phone' => $request->email,
             ]);
 

@@ -36,8 +36,7 @@
                                 <thead>
                                     <tr>
                                         {{-- <th>Sr #</th> --}}
-                                        <th>First Name</th>
-                                        <th>Last Name</th>
+                                        <th>Name</th>
                                         <th>Email</th>
                                         <th>Role</th>
                                         <th>Status</th>
@@ -48,23 +47,22 @@
                                     @foreach ($subUsers as $user)
                                         <tr>
                                             {{-- <td>{{ $loop->iteration }}</td> --}}
-                                            <td>{{ $user->first_name }}</td>
-                                            <td>{{ $user->last_name }}</td>
-                                            <td>{{ $user->users->email }}</td>
-                                            <td>{{ $user->users->role }}</td>
+                                            <td>{{ $user->name }}</td>
+                                            <td>{{ $user->email }}</td>
+                                            <td>{{ $user->role }}</td>
                                             <td>
                                             <form method="POST"
-                                                    action="{{ route('shipper.sub-users.toggleSubUser', $user->users->id) }}">
+                                                    action="{{ route('shipper.sub-users.toggleSubUser', $user->id) }}">
                                                     @csrf
                                                     @method('PATCH')
                                                     <div class="form-check form-switch">
                                                         <input class="form-check-input" type="checkbox" name="is_active"
                                                             onchange="this.form.submit()"
-                                                            {{ $user->users->is_active ? 'checked' : '' }}>
+                                                            {{ $user->is_active ? 'checked' : '' }}>
                                                         <label
                                                             class="form-check-label px-1 rounded text-white
-                                                            {{ $user->users->is_active ? 'bg-success' : 'bg-danger' }}">
-                                                            {{ $user->users->is_active ? 'Active' : 'Inactive' }}
+                                                            {{ $user->is_active ? 'bg-success' : 'bg-danger' }}">
+                                                            {{ $user->is_active ? 'Active' : 'Inactive' }}
                                                         </label>
                                                     </div>
                                                     </form>

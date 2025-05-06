@@ -37,8 +37,7 @@
                                     <thead>
                                         <tr>
                                             {{-- <th>Sr #</th> --}}
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
+                                            <th>Name</th>
                                             <th>Email</th>
                                             <th>Role</th>
                                             <th>Status</th>
@@ -49,8 +48,7 @@
                                         @foreach ($carrierUsers as $user)
                                             <tr>
                                                 {{-- <td>{{ $loop->iteration }}</td> --}}
-                                                <td>{{ $user->first_name }}</td>
-                                                <td>{{ $user->last_name }}</td>
+                                                <td>{{ $user->users->name }}</td>
                                                 <td>{{ $user->users->email }}</td>
                                                 <td>{{ $user->users->role }}</td>
                                                 <td>

@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('company_address', 255)->nullable();
+            $table->string('phone')->nullable();
             $table->string('authority')->nullable();
             $table->string('dot')->nullable();
             $table->string('mc')->nullable();

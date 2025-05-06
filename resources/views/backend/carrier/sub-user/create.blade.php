@@ -10,19 +10,16 @@
             <form id="carrierUserForm" class="px-3 py-2 row g-3" method="POST" action="{{ route('carrier.carrier-users.store') }}">
                 @csrf
                 <div class="modal-body row">
-                    <div class="col-md-6">
-                        <label for="first_name" class="form-label">First name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="first_name" name="first_name" placeholder="First Name" required>
+                    <div class="col-md-12">
+                        <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
                     </div>
-                    <div class="col-md-6">
-                        <label for="last_name" class="form-label">Last name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Last Name" required>
-                    </div>
-                    <div class="col-md-6">
+
+                    <div class="col-md-12">
                         <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="email" name="email" placeholder="Email" required>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-12">
                         <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" required>
                     </div>

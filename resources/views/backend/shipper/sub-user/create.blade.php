@@ -11,12 +11,8 @@
             @csrf
             <div class="modal-body row">
                 <div class="col-md-6">
-                    <label for="first_name" class="form-label">First name</label>
-                    <input type="text" class="form-control" name="first_name" placeholder="First Name" required>
-                </div>
-                <div class="col-md-6">
-                    <label for="last_name" class="form-label">Last name</label>
-                    <input type="text" class="form-control" name="last_name" placeholder="Last Name" required>
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" name="name" placeholder="Name" required>
                 </div>
                 <div class="col-md-6">
                     <label for="email" class="form-label">Email</label>
