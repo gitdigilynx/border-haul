@@ -121,18 +121,18 @@
 
                     <li>
                         <a href="#sidebarForms" data-bs-toggle="collapse">
-                            <i class="fa-solid fa-user-shield"></i>
+                            <i class="fa-solid fa-users"></i>
                             <span> Carriers </span>
                             <span class="menu-arrow"></span>
                         </a>
                         <div class="collapse" id="sidebarForms">
                             <ul class="nav-second-level">
-                                <li>
-                                    <a href="{{ route('admin.sub-carriers') }}" class="tp-link">Carrier</a>
-                                </li>
 
                                 <li>
-                                    <a href="#" class="tp-link">Carrier Users</a>
+                                    <a href="{{route('admin.carriers')}}" class="tp-link">Carrier </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('admin.sub-carriers') }}" class="tp-link">Carrier Users</a>
                                 </li>
                             </ul>
                         </div>

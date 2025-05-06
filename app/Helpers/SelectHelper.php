@@ -9,6 +9,14 @@ function documentStatus()
     ];
 }
 
+function isStatus()
+{
+    return [
+        'Active' => 'Active',
+        'Inactive' => 'Inactive',
+    ];
+}
+
 function serviceCategory()
 {
     return [

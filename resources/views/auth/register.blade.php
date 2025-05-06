@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <title>Register - Border Haul</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Register to Border Haul platform."/>
-    <meta name="author" content="Zoyothemes"/>
+    <meta name="description" content="Register to Border Haul platform." />
+    <meta name="author" content="Zoyothemes" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
     <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style" />
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
     <style>
         .is-invalid {
-        border-color: #dc3545;
+            border-color: #dc3545;
         }
+
         .invalid-feedback {
             color: #dc3545;
             font-size: 0.875em;
@@ -21,8 +23,132 @@
     </style>
 </head>
 
-<body class="bg-primary-subtle">
-    <div class="account-page">
+<div class="bg-white container-fluid d-flex align-items-center justify-content-center">
+    <div class="overflow-hidden row rounded-4" style="max-width: 1000px;">
+
+        <!-- Left Column: Login Form -->
+        <div class=" col-md-6 d-flex flex-column">
+            <div class="mb-4 text-left">
+                <img src="{{ asset('assets/images/logo/Border-Haul-logo.png') }}" alt="Logo" height="70">
+            </div>
+            <h4 class="mb-3 text-left text-black text-uppercase fw-bold">Join Us & Ship Smarter</h4>
+            <form id="registrationForm" method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
+                @csrf
+
+                <!-- User Type -->
+                <div class="mb-3 row">
+                    <div class="col-md-6">
+                        <label for="user_type" class="form-label">Shipper Name <span
+                                class="text-danger">*</span></label>
+                        <input type="text" name="name" id="name" class="form-control"
+                            placeholder="Company Name">
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                    <!-- Service Category -->
+                    <div class="col-md-6">
+                        <label for="service_category" class="form-label">Service Category <span
+                                class="text-danger">*</span></label>
+                        <select name="service_category" id="service_category" class="form-control">
+                            <option value="" selected="">Select</option>
+                            @foreach (serviceCategory() as $key => $services_category)
+                                <option value="{{ $key }}">{{ $services_category }}</option>
+                            @endforeach
+                        </select>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+
+                <!-- Company Name & Address -->
+                <div class="mb-3 row">
+                    <div class="col-md-6">
+                        <label for="company_name" class="form-label">Company Name <span
+                                class="text-danger">*</span></label>
+                        <input type="text" name="company_name" id="company_name" class="form-control"
+                            placeholder="Company Name">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="company_address" class="form-label">Company Address <span
+                                class="text-danger">*</span></label>
+                        <input type="text" name="company_address" id="company_address" class="form-control"
+                            placeholder="Company Address">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+
+                <!-- Email & Phone -->
+                <div class="mb-3 row">
+                    <div class="col-md-6">
+                        <label for="email" class="form-label">Email Address <span
+                                class="text-danger">*</span></label>
+                        <input type="email" name="email" id="email" class="form-control"
+                            placeholder="Email Address">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
+                        <input type="number" name="phone" id="phone" class="form-control" placeholder="Phone">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+
+                <!-- Password & Confirm Password -->
+                <div class="mb-3 row">
+                    <div class="col-md-6">
+                        <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                        <input type="password" name="password" id="password" class="form-control"
+                            placeholder="Password">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="password_confirmation" class="form-label">Confirm Password <span
+                                class="text-danger">*</span></label>
+                        <input type="password" name="password_confirmation" id="password_confirmation"
+                            class="form-control" placeholder="Confirm Password">
+                        <div class="invalid-feedback"></div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="mb-3">
+                        <button class="btn btn-primary w-100" type="submit">Register</button>
+                    </div>
+            </form>
+
+            <div class="mt-auto text-center">
+                <p>Don't have a Shipper account?
+                    <a href="{{ route('register') }}" class="text-primary">Create Partner account</a><br>
+                    Transfer Courier Partner?
+                    <a href="#" class="mb-2 text-primary">Create Carrier Partner account</a>
+                </p>
+            </div>
+        </div>
+
+        <!-- Right Column: Image & Caption -->
+        <div class="col-md-6 d-none d-md-block" style="height: 95vh; margin-top: 70px;">
+            <div class="h-100 w-100 position-relative">
+                <img src="{{ asset('assets/shipper/shipper_login.png') }}" alt="World Trade Bridge" class="img-fluid"
+                    style="border-radius: 22px; object-fit: cover; height: 100%; width: 100%;">
+
+                <div class="bottom-0 p-2 m-4 text-white position-absolute start-0"
+                    style="
+                        background: rgba(0, 0, 0, 0.4);
+                        backdrop-filter: blur(2px);
+                        border-radius: 10px;
+                        max-width: 90%;">
+                    <img src="{{ asset('assets/shipper/shipper_logo.png') }}" alt="Logo" style="height: 30px;"
+                        class="mb-2">
+                    <h5 class="fw-bold">Ship with Confidence.</h5>
+                    <p class="mb-0 small">Manage, track, and deliver shipments with powerful tools built for speed,
+                        reliability, and control.</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+{{-- <div class="account-page">
         <div class="p-0 container-fluid">
             <div class="row align-items-center g-0">
                 <div class="col-xl-12">
@@ -37,7 +163,7 @@
                                             </a>
                                         </div>
                                         <div class="text-center auth-title-section">
-                                            {{-- <h3 class="mb-2 text-dark fs-20 fw-medium">Welcome to Border Haul</h3> --}}
+
                                             <h4 class="mb-4 text-dark text-uppercase" style="font-weight: bold;">Shipper Register</h4>
                                         </div>
                                         <div class="pt-0">
@@ -121,30 +247,19 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div> <!-- card end -->
-                        </div> <!-- col end -->
-                    </div> <!-- row end -->
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> --}}
 
-    <!-- Scripts -->
+<!-- Scripts -->
 @include('backend.components.js-validations.shipper-users.shipper-register')
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
 
 
 {{-- <x-guest-layout>
@@ -199,7 +314,3 @@
         </div>
     </form>
 </x-guest-layout> --}}
-
-
-
-

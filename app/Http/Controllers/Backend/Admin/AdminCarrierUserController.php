@@ -11,27 +11,33 @@ use App\Mail\SendPasswordToCarrier;
 use App\Models\Carrier;
 use Illuminate\Support\Str;
 use Illuminate\Http\RedirectResponse;
-use PhpParser\Node\NullableType;
+use App\Services\DocumentUploadService;
+use App\Http\Requests\AdminCarrierUserRequest;
+use App\Http\Requests\AdminCarrierUserUpdateRequest;
+use Flasher\Laravel\Facade\Flasher;
+
 
 class AdminCarrierUserController extends Controller
 {
-    public function __construct()
+    protected $uploadService;
+    public function __construct(DocumentUploadService $uploadService)
     {
-        $this->middleware('auth');
+        $this->uploadService = $uploadService;
     }
 
     public function index()
     {
         try {
-           $carrierUsers = User::where('role', 'Carrier')
-                ->orderBy('created_at', 'desc')
-                ->get();
+            $carriers = User::where('role', 'Carrier')
+            ->whereHas('carrier')
+            ->with('carrier')
+            // ->where('is_active', 1)
+            ->orderByDesc('created_at')
+            ->get();
 
-            // dd($carrierUsers);
-            return view('backend.admin.carrier.carrier-user.index', compact('carrierUsers'));
-
+            return view('backend.admin.carrier.carrier-user.index', compact('carriers'));
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -41,62 +47,55 @@ class AdminCarrierUserController extends Controller
         try {
             return view('backend.admin.carrier.carrier-user.create');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
 
-    public function store(Request $request): RedirectResponse
+    public function store(AdminCarrierUserRequest $request): RedirectResponse
     {
-           $request->validate([
-            'name' => 'required|string|max:255',
-            'role' => 'required|in:shipper,carrier',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed|min:6',
-            'is_active' => '0',
+        try {
+            $user = auth()->user();
+            $rawPassword = Str::random(8);
 
-            // Carrier-specific validations
-            'company_address' => 'required|string|max:255',
-            'authority' => 'required|string|max:255',
-            'dot' => 'required|string|max:255',
-            'mc' => 'required|string|max:255',
-            'scac_code' => 'required|string|max:255',
-            'country' => 'required|string|max:255',
-            'caat_code' => 'required|string|max:255',
-            'service_category' => 'required|string|max:255',
-            'transfer_approval_documents' => 'required|string|max:255',
-            'insurance_certificate' => 'required|string|max:255',
-        ]);
+            // Create the new carrier user
+            $newUser = User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => Hash::make($rawPassword),
+                'role' => 'Carrier',
+            ]);
 
-        // Create the user
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'Carrier',
-        ]);
+            // Handle file uploads
+            $transferApprovalPath = $request->file('transfer_approval_documents')->store('carrier-documents', 'public');
+            $insuranceCertificatePath = $request->file('insurance_certificate')->store('carrier-documents', 'public');
 
-        Carrier::create([
-            'user_id' => $user->id,
-            'company_address' => $request->company_address,
-            'authority' => $request->authority,
-            'dot' => $request->dot,
-            'mc' => $request->mc,
-            'scac_code' => $request->scac_code,
-            'country' => $request->country,
-            'caat_code' => $request->caat_code,
-            'service_category' => $request->service_category,
-            'phone' => $request->phone,
-            'transfer_approval_documents ' => $request->transfer_approval_documents,
-            'insurance_certificate ' => $request->insurance_certificate,
-        ]);
+            Carrier::create([
+                'carrier_id' => $user->id,
+                'user_id' => $newUser->id,
+                'company_address' => $request->company_address,
+                'authority' => $request->authority,
+                'dot' => $request->dot,
+                'mc' => $request->mc,
+                'scac_code' => $request->scac_code,
+                'country' => $request->country,
+                'caat_code' => $request->caat_code,
+                'service_category' => $request->service_category,
+                'phone' => $request->phone,
+                'transfer_approval_documents' => $transferApprovalPath,
+                'insurance_certificate' => $insuranceCertificatePath,
+            ]);
 
-        // Send credentials via email
-        Mail::to($request->email)->send(new SendPasswordToCarrier($request->email, $rawPassword));
 
-         return redirect()->route('admin.carriers')->with('success', 'Carrier created successfully!');
+            Mail::to($request->email)->send(new SendPasswordToCarrier($request->email, $rawPassword));
 
+            return redirect()->route('admin.carriers')->with('success', 'Carrier created successfully!');
+        } catch (\Exception $e) {
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
+            return redirect()->back();
+        }
     }
+
 
     public function show($id)
     {
@@ -104,7 +103,7 @@ class AdminCarrierUserController extends Controller
             $user = Carrier::with('users')->findOrFail($id);
             return view('backend.admin.carrier.carrier-user.show', compact('user'));
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+           Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -114,47 +113,84 @@ class AdminCarrierUserController extends Controller
         try {
             return view('backend.admin.carrier.carrier-user.edit');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
-    public function update(Request $request, $id)
+   public function update(Request $request, $id)
     {
         try {
-            // Validate inputs
-            $request->validate([
-                'name'  => 'required|string|max:255',
-                'email' => 'required|email|unique:users,email,' . $request->id,
-                'role'  => 'required|string|max:255',
+            $user = User::findOrFail($id);
+
+            // Update user fields
+            $user->update([
+                'name' => $request->name,
+                'email' => $request->email,
+                'is_active' => $request->is_active,
             ]);
 
-            // Find user by ID
-            $carrier = User::findOrFail($id);
+            // Find related carrier
+            $carrier = $user->carrier;
 
-            // Update the user
-            $carrier->update([
-                'name'  => $request['name'],
-                'email' => $request['email'],
-                'role'  => $request['role'],
+            // Prepare carrier update data
+            $carrierData = $request->only([
+                'company_address',
+                'authority',
+                'dot',
+                'mc',
+                'scac_code',
+                'country',
+                'caat_code',
+                'service_category',
+                'phone',
             ]);
+
+            // Handle file uploads
+            if ($request->hasFile('transfer_approval_documents')) {
+                $carrierData['transfer_approval_documents'] = $request->file('transfer_approval_documents')->store('documents');
+            }
+
+            if ($request->hasFile('insurance_certificate')) {
+                $carrierData['insurance_certificate'] = $request->file('insurance_certificate')->store('documents');
+            }
+
+            // Update carrier
+            if ($carrier) {
+                $carrier->update($carrierData);
+            }
 
             return redirect()->route('admin.carriers')->with('success', 'Carrier updated successfully.');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
+
 
     public function destroy($id)
     {
         try {
-            $subUser = Carrier::findOrFail($id);
-            $subUser->delete();
+            $carrier = User::findOrFail($id);
+            $carrier->delete();
 
-            return response()->json(['message' => 'Deleted successfully']);
+            return response()->json(['message' => 'Carrier deleted successfully']);
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
+
+    public function toggleCarrier(Request $request, $id)
+    {
+        try {
+            $Carrier = User::findOrFail($id);
+            $Carrier->is_active = $request->has('is_active');
+            $Carrier->save();
+
+            return back()->with('status', 'User status updated.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Something went wrong: ' . $e->getMessage());
+        }
+    }
+
 }

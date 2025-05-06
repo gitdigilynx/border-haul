@@ -26,9 +26,10 @@ class Carrier extends Model
         'mexico',
         'caat_code',
         'service_category',
-        'Phone',
-        // 'transfer_approval_documents',
-        // 'insurance_certificate',
+        'phone',
+        'country',
+        'transfer_approval_documents',
+        'insurance_certificate',
     ];
 
    public function user()

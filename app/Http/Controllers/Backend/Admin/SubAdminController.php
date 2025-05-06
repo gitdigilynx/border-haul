@@ -27,7 +27,7 @@ class SubAdminController extends Controller
             $subAdmins = User::where('role', 'subadmin')->get();
             return view('backend.admin.sub-admin.index', compact('subAdmins'));
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+      Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -37,7 +37,7 @@ class SubAdminController extends Controller
         try {
             return view('backend.admin.sub-admin.create');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+      Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -60,7 +60,7 @@ class SubAdminController extends Controller
 
             return redirect()->route('admin.sub-admin')->with('success', 'Sub Admin created successfully!');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+      Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -71,7 +71,7 @@ class SubAdminController extends Controller
             $admin = User::findOrFail($id);
             return view('backend.admin.sub-admin.show', compact('admin'));
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+      Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -105,7 +105,6 @@ class SubAdminController extends Controller
         }
     }
 
-
     public function destroy($id)
     {
         try {
@@ -118,8 +117,6 @@ class SubAdminController extends Controller
             return redirect()->back();
         }
     }
-
-
 
      public function editPermission($id)
     {

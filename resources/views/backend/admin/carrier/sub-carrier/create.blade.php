@@ -1,38 +1,43 @@
 <!-- Modal -->
-<div class="modal fade" id="carrierUserCreate" tabindex="-1" aria-labelledby="subUserModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+<div class="modal fade" id="carrierUserCreate" tabindex="-1" aria-labelledby="exampleModalgridLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add User</h5>
+                <h5 class="modal-title">Invite User</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <div class="modal-body">
+                <form id="carrierUserForm" method="POST" action="{{ route('admin.sub-carriers.store') }}">
+                    @csrf
+                    <div class="row g-3">
+                        <div class="col-xxl-6">
+                            <div>
+                                <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+                            </div>
+                        </div>
 
-            <form id="carrierUserForm" class="px-3 py-2 row g-3" method="POST" action="{{ route('admin.sub-carriers.store') }}">
-                @csrf
-                <div class="modal-body row">
-                    <div class="col-md-6">
-                        <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
-                    </div>
+                        <div class="col-xxl-6">
+                            <div>
+                            <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="email" name="email" placeholder="Email" required>
+                            </div>
+                        </div>
 
-                    <div class="col-md-6">
-                        <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="email" name="email" placeholder="Email" required>
+                        <div class="col-xxl-6">
+                            <div>
+                                <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" required>
+                            </div>
+                        </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-success">Invite</button>
                     </div>
-                    <div class="col-md-6">
-                        <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" id="phone" name="phone" placeholder="Phone" required>
                     </div>
-                    {{-- <div class="col-md-6">
-                        <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
-                    </div> --}}
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">Invite</button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
 </div>

@@ -11,19 +11,19 @@
                 action="{{ isset($user) ? route('admin.sub-carriers.update', $user->id) : route('admin.sub-carriers.store') }}">
                 @csrf
                 <div class="modal-body row">
-                    <div class="mb-3 col-md-6">
+                    <div class="mb-3 col-md-12">
                         <label for="name" class="form-label">Name</label>
                         <input type="text" class="form-control" name="name" placeholder="Name"
                             value="{{ old('name', $user->name ?? '') }}" required>
                     </div>
 
-                    <div class="mb-3 col-md-6">
+                    <div class="mb-3 col-md-12">
                         <label for="email" class="form-label">Email</label>
                         <input type="text" class="form-control" name="email" placeholder="Email"
                             value="{{ old('email', $user->email ?? '') }}" required>
                     </div>
 
-                    <div class="mb-3 col-md-6">
+                    <div class="mb-3 col-md-12">
                         <label for="role" class="form-label">Role</label>
                         <input type="text" class="form-control" name="role" placeholder="Role"
                             value="{{ old('role', $user->role ?? '') }}">

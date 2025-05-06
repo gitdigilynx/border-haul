@@ -23,12 +23,12 @@ class SubCarrierUserController extends Controller
     public function index()
     {
         try {
-           $carrierUsers = User::where('role', 'CarrierUser')
+           $subCarrier = User::where('role', 'CarrierUser')
                 ->orderBy('created_at', 'desc')
                 ->get();
 
             // dd($carrierUsers);
-            return view('backend.admin.carrier.sub-carrier.index', compact('carrierUsers'));
+            return view('backend.admin.carrier.sub-carrier.index', compact('subCarrier'));
 
         } catch (\Exception $e) {
             flash()->error('Something went wrong: ' . $e->getMessage());
@@ -49,7 +49,7 @@ class SubCarrierUserController extends Controller
     public function store(Request $request): RedirectResponse
     {
         try {
-            $carrier = auth()->user();
+            $subCarrier = auth()->user();
 
             $rawPassword = Str::random(8);
 
@@ -61,17 +61,16 @@ class SubCarrierUserController extends Controller
         ]);
         CarrierSubUser::create([
             'user_id' => $user->id,
-                'carrier_id' => $carrier->id,
-                'phone' => $request->email,
-            ]);
-
+            'carrier_id' => $subCarrier->id,
+            'phone' => $request->phone,
+        ]);
 
         // Send credentials via email
         Mail::to($request->email)->send(new SendPasswordToCarrier($request->email, $rawPassword));
 
          return redirect()->route('admin.sub-carriers')->with('success', 'Carrier Users created successfully!');
         } catch (\Exception $e) {
-        dd('Something went wrong: ' . $e->getMessage());
+        flash()->error('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
 
@@ -109,10 +108,10 @@ class SubCarrierUserController extends Controller
             ]);
 
             // Find user by ID
-            $carrier = User::findOrFail($id);
+            $subCarrier = User::findOrFail($id);
 
             // Update the user
-            $carrier->update([
+            $subCarrier->update([
                 'name'  => $request['name'],
                 'email' => $request['email'],
                 'role'  => $request['role'],
@@ -129,13 +128,26 @@ class SubCarrierUserController extends Controller
     public function destroy($id)
     {
         try {
-            $subUser = CarrierSubUser::findOrFail($id);
-            $subUser->delete();
+            $subCarrier = User::findOrFail($id);
+            $subCarrier->delete();
 
             return response()->json(['message' => 'Deleted successfully']);
         } catch (\Exception $e) {
             flash()->error('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
+        }
+    }
+
+    public function toggleSubCarrier(Request $request, $id)
+    {
+        try {
+            $subCarrier = User::findOrFail($id);
+            $subCarrier->is_active = $request->has('is_active');
+            $subCarrier->save();
+
+            return back()->with('status', 'User status updated.');
+        } catch (\Exception $e) {
+            return back()->with('error', 'Something went wrong: ' . $e->getMessage());
         }
     }
 }

@@ -12,7 +12,6 @@ class CarrierSubUser extends Model
     protected $fillable = [
         'user_id',
         'carrier_id',
-        'name',
         'phone',
     ];
 

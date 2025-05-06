@@ -25,7 +25,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0 card-title">Sub Carrier Users List</h5>
+                            <h5 class="mb-0 card-title">Sub Users List</h5>
                             {{-- <button type="button" class="btn btn-success">Add Users</button> --}}
                             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#carrierUserCreate">
                                 + Invite Users
@@ -39,11 +39,12 @@
                                         <th>Name</th>
                                         <th>Email</th>
                                         <th>Role</th>
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($carrierUsers as $user)
+                                    @foreach ($subCarrier as $user)
                                         <tr>
                                             {{-- <td>{{ $loop->iteration }}</td> --}}
 
@@ -51,7 +52,27 @@
                                             <td>{{ $user->email }}</td>
                                             <td>{{ $user->role }}</td>
                                             <td>
+                                            <form method="POST" action="{{ route('admin.sub-carriers.toggleSubCarrier', $user->id) }}">
+                                                @csrf
+                                                @method('PATCH')
+                                                <div class="form-check form-switch">
+                                                    <input
+                                                        class="form-check-input"
+                                                        type="checkbox"
+                                                        name="is_active"
+                                                        onchange="this.form.submit()"
+                                                        {{ $user->is_active ? 'checked' : '' }}
+                                                    >
+                                                    <label class="form-check-label px-1 rounded text-white
+                                                        {{ $user->is_active ? 'bg-success' : 'bg-danger' }}">
+                                                        {{ $user->is_active ? 'Active' : 'Inactive' }}
+                                                    </label>
 
+                                                </div>
+                                            </form>
+                                        </td>
+
+                                            <td>
                                                 <!-- View Button -->
                                                 <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-primary"
                                                     data-bs-toggle="modal"data-id="{{ $user->id }}"
@@ -68,7 +89,7 @@
 
                                                   <!-- Delete Button -->
                                                 <a href="javascript:void(0);" class="p-0 mb-0 delete-carrier-user btn bg-danger rounded-circle"  data-id="{{ $user->id }}"
-                                                        data-url="{{ route('carrier.carrier-users.destroy', $user->id) }}">
+                                                        data-url="{{ route('admin.sub-carriers.destroy', $user->id) }}">
                                                     <i class="p-1 text-white fa fa-trash"></i>
                                                 </a>
                                             </td>
@@ -87,7 +108,7 @@
 </div>
 
 @include('backend.admin.carrier.sub-carrier.create')
-@foreach($carrierUsers as $user)
+@foreach($subCarrier as $user)
     @include('backend.admin.carrier.sub-carrier.show', ['user' => $user])
     @include('backend.admin.carrier.sub-carrier.edit', ['user' => $user])
 @endforeach

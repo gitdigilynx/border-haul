@@ -24,7 +24,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role'
+        'role',
+        'is_active'
     ];
 
     /**
@@ -48,6 +49,10 @@ class User extends Authenticatable
 
     ];
 
+    public function scopeActive($query)
+    {
+        return $query->where('status', 1);
+    }
     public function hasRole($role)
     {
         return $this->role === $role;

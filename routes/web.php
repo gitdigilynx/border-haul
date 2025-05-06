@@ -99,6 +99,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/sub-carriers/{id}', 'show')->name('sub-carriers.show');
             Route::post('/sub-carriers/{id}', 'update')->name('sub-carriers.update');
             Route::delete('/sub-carriers/{id}', 'destroy')->name('sub-carriers.destroy');
+            Route::patch('/sub-carriers/{id}/toggle-user', 'toggleSubCarrier')->name('sub-carriers.toggleSubCarrier');
+
         });
 
           Route::controller(AdminCarrierUserController::class)->group(function () {
@@ -108,6 +110,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/carriers/{id}', 'show')->name('carriers.show');
             Route::post('/carriers/{id}', 'update')->name('carriers.update');
             Route::delete('/carriers/{id}', 'destroy')->name('carriers.destroy');
+            Route::patch('/carriers/{id}/toggle-user', 'toggleCarrier')->name('carriers.toggleCarrier');
         });
 
     });
