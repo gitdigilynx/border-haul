@@ -153,8 +153,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/sub-users/{id}', 'show')->name('sub-users.show');
             Route::post('/sub-users/{id}', 'update')->name('sub-users.update');
             Route::delete('/sub-users/{id}', 'destroy')->name(name: 'sub-users.destroy');
-            Route::patch('/sub-users/{id}/toggle-user', 'toggleSubUser')->name('sub-users.toggleSubUser');
-
+            Route::patch('/sub-users/{id}/toggle-user',  'toggleSubUser')->name('sub-users.toggleSubUser');
         });
 
         // Address Book

@@ -16,7 +16,6 @@
                     <ol class="py-0 m-0 breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
                         <li class="breadcrumb-item active">Users</li>
-
                     </ol>
                 </div>
 
@@ -51,21 +50,20 @@
                                             <td>{{ $user->users->email }}</td>
                                             <td>{{ $user->users->role }}</td>
                                             <td>
-                                            <form method="POST"
-                                                    action="{{ route('shipper.sub-users.toggleSubUser', $user->id) }}">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <div class="form-check form-switch">
-                                                        <input class="form-check-input" type="checkbox" name="is_active"
-                                                            onchange="this.form.submit()"
-                                                            {{ $user->is_active ? 'checked' : '' }}>
-                                                        <label
-                                                            class="form-check-label px-1 rounded text-white
-                                                            {{ $user->is_active ? 'bg-success' : 'bg-danger' }}">
-                                                            {{ $user->is_active ? 'Active' : 'Inactive' }}
-                                                        </label>
-                                                    </div>
-                                                    </form>
+                                           <form method="POST" action="{{ route('shipper.sub-users.toggleSubUser', $user->users->id) }}">
+                                                @csrf
+                                                @method('PATCH')
+                                                <div class="form-check form-switch">
+                                                    <input class="form-check-input" type="checkbox" name="is_active"
+                                                        onchange="this.form.submit()"
+                                                        {{ $user->users->is_active ? 'checked' : '' }}>
+                                                    <label class="form-check-label px-1 rounded text-white
+                                                        {{ $user->users->is_active ? 'bg-success' : 'bg-danger' }}">
+                                                        {{ $user->users->is_active ? 'Active' : 'Inactive' }}
+                                                    </label>
+                                                </div>
+                                            </form>
+
                                                 </td>
                                             <td>
                                                   <!-- View Button -->
@@ -73,6 +71,13 @@
                                                     data-bs-toggle="modal"data-id="{{ $user->id }}"
                                                     data-bs-target="#shipperUsertShow{{ $user->id }}">
                                                     <i class="p-1 text-white fa fa-eye text-secondary"></i>
+                                                </a>
+
+                                                <!-- Edit Button -->
+                                                <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-success"
+                                                    data-bs-toggle="modal" data-id="{{ $user->id }}"
+                                                    data-bs-target="#subShipperEditModal{{ $user->id }}">
+                                                    <i class="p-1 text-white fa fa-edit text-secondary"></i>
                                                 </a>
 
                                                 <!-- Delete Button -->
@@ -101,7 +106,8 @@
 
 @include('backend.shipper.sub-user.create')
 @foreach($subUsers as $user)
-    @include('backend.shipper.sub-user.show')
+    @include('backend.shipper.sub-user.show', ['user' => $user])
+    @include('backend.shipper.sub-user.edit', ['user' => $user])
 @endforeach
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

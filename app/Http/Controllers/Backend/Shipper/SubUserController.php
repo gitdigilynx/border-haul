@@ -29,6 +29,7 @@ class SubUserController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
 
+            // dd($subUsers);
         return view('backend.shipper.sub-user.index', compact('subUsers'));
     }
     public function create()
@@ -80,23 +81,33 @@ class SubUserController extends Controller
 
     public function edit(Request $request)
     {
+
         try {
-            return view('backend.shipper.sub-users.edit');
+            return view('backend.shipper.sub-user.edit');
         } catch (\Exception $e) {
             flash()->error('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
 
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
         try {
-            $validated = $request->validate([
-                'name' => 'required|string|max:255',
-                'email' => 'required|email|unique:sub_users,email,' . $request->id,
+              $request->validate([
+                'name'  => 'required|string|max:255',
+                'email' => 'required|email|unique:users,email,' . $request->id,
+                'role'  => 'required|string|max:255',
             ]);
 
-            $request->update($validated);
+            // Find user by ID
+            $subShipper = User::findOrFail($id);
+
+            // Update the user
+            $subShipper->update([
+                'name'  => $request['name'],
+                'email' => $request['email'],
+                'role'  => $request['role'],
+            ]);
             return redirect()->route('shipper.sub-users.index');
         } catch (\Exception $e) {
             flash()->error('Something went wrong: ' . $e->getMessage());
@@ -125,11 +136,10 @@ class SubUserController extends Controller
             $user->save();
 
             return back()->with('status', 'User status updated.');
-         } catch (\Exception $e) {
-           Flasher::addError('Something went wrong: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
-
     }
 
 }

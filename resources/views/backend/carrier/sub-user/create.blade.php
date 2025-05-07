@@ -1,13 +1,13 @@
 <!-- Modal -->
-<div class="modal fade" id="carrierUserCreate" tabindex="-1" aria-labelledby="subUserModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
+<div class="modal fade" id="carrierUserCreate" tabindex="-1" aria-labelledby="exampleModalgridLabel" aria-hidden="true">
+    <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Add User</h5>
+                <h5 class="modal-title">Invite User</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
-            <form id="carrierUserForm" class="px-3 py-2 row g-3" method="POST" action="{{ route('carrier.carrier-users.store') }}">
+            <form id="carrierUserForm" method="POST" action="{{ route('carrier.carrier-users.store') }}">
                 @csrf
                 <div class="modal-body row">
                     <div class="col-md-12">

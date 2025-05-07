@@ -43,9 +43,10 @@
                                         @foreach ($carrierUsers as $user)
                                             <tr>
                                                 {{-- <td>{{ $loop->iteration }}</td> --}}
-                                                <td>{{ $user->users->name }}</td>
-                                                <td>{{ $user->users->email }}</td>
-                                                <td>{{ $user->users->role }}</td>
+                                                <td>{{ optional($user->users)->name }}</td>
+                                                <td>{{ optional($user->users)->email }}</td>
+                                                <td>{{ optional($user->users)->role }}</td>
+
                                                 <td>
                                                     <form method="POST"
                                                         action="{{ route('shipper.sub-users.toggleSubUser', $user->users->id) }}">
@@ -76,7 +77,7 @@
                                                 <!-- Edit Button -->
                                                 <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-success"
                                                     data-bs-toggle="modal" data-id="{{ $user->id }}"
-                                                    data-bs-target="#shipperEditModal{{ $user->id }}">
+                                                    data-bs-target="#carrierEditModal{{ $user->id }}">
                                                     <i class="p-1 text-white fa fa-edit text-secondary"></i>
                                                 </a>
 
@@ -105,6 +106,7 @@
     @include('backend.carrier.sub-user.create')
     @foreach ($carrierUsers as $user)
         @include('backend.carrier.sub-user.show', ['document' => $user])
+        @include('backend.carrier.sub-user.edit', ['document' => $user])
     @endforeach
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

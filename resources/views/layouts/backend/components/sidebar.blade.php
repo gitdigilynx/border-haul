@@ -97,7 +97,7 @@
                     <li>
                         <a href="{{ route('carrier.trucks') }}">
                             <i class="fa-solid fa-truck"></i>
-                            <span>Truck Drivers</span>
+                            <span>Truck/Drivers</span>
                         </a>
                     </li>
                 @endhasrole
