@@ -16,6 +16,8 @@ use App\Http\Controllers\Backend\Admin\SubAdminController;
 use App\Http\Controllers\Backend\Admin\PermissionController;
 use App\Http\Controllers\Backend\Admin\SubCarrierUserController;
 use App\Http\Controllers\Backend\Admin\AdminCarrierUserController;
+use App\Http\Controllers\Backend\Admin\SubShippperUserController;
+use App\Http\Controllers\Backend\Admin\ShippperUserController;
 
 // ---------------------------
 // 🔐 Public Auth Routes
@@ -111,6 +113,28 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/carriers/{id}', 'update')->name('carriers.update');
             Route::delete('/carriers/{id}', 'destroy')->name('carriers.destroy');
             Route::patch('/carriers/{id}/toggle-user', 'toggleCarrier')->name('carriers.toggleCarrier');
+        });
+
+          Route::controller(SubShippperUserController::class)->group(function () {
+            Route::get('/sub-shippers', 'index')->name('sub-shippers');
+            Route::get('/sub-shippers/create', 'create')->name('sub-shippers.create');
+            Route::post('/sub-shippers', 'store')->name('sub-shippers.store');
+            Route::get('/sub-shippers/{id}/edit', 'edit')->name('sub-shippers.edit');
+            Route::get('/sub-shippers/{id}', 'show')->name('sub-shippers.show');
+            Route::post('/sub-shippers/{id}', 'update')->name('sub-shippers.update');
+            Route::delete('/sub-shippers/{id}', 'destroy')->name(name: 'sub-shippers.destroy');
+            Route::patch('/sub-shippers/{id}/toggle-user', 'toggleSubShipper')->name('sub-shippers.toggleSubUser');
+        });
+
+          Route::controller(ShippperUserController::class)->group(function () {
+            Route::get('/shippers', 'index')->name('shippers');
+            Route::get('/shippers/create', 'create')->name('shippers.create');
+            Route::post('/shippers', 'store')->name('shippers.store');
+            Route::get('/shippers/{id}/edit', 'edit')->name('shippers.edit');
+            Route::get('/shippers/{id}', 'show')->name('shippers.show');
+            Route::post('/shippers/{id}', 'update')->name('shippers.update');
+            Route::delete('/shippers/{id}', 'destroy')->name(name: 'shippers.destroy');
+            Route::patch('/shippers/{id}/toggle-user', 'toggleShipper')->name('shippers.toggleSubUser');
         });
 
     });

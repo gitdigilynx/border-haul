@@ -17,80 +17,126 @@
 
     <!-- Icons -->
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+<style>
+    @media (max-width: 767px) {
+        /* Adjust the padding on mobile */
+        .p-md-5 {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+
+        /* Image adjustments for small screens */
+        .position-relative img {
+            object-fit: cover;
+            max-height: 100vh;
+        }
+
+        /* Adjust the bottom caption */
+        .position-relative .bottom-0 {
+            max-width: 100%;
+            font-size: 14px;
+        }
+    }
+
+    @media (max-width: 575px) {
+        /* Adjust column widths for extra small screens */
+        .col-12 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .text-center {
+            text-align: center !important;
+        }
+    }
+
+      @media (max-width: 375px) {
+        /* Adjust column widths for extra small screens */
+        .col-12 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .text-center {
+            text-align: center !important;
+        }
+    }
+</style>
 
 </head>
 
-<body class="bg-info-subtle">
+<body class="bg-white">
 
 
-    <div class="bg-white container-fluid d-flex align-items-center justify-content-center">
-        <div class="overflow-hidden row rounded-4" style="width: 100%; max-width: 1000px;">
+<div class="bg-white container-fluid d-flex align-items-center justify-content-center min-vh-100">
+    <div class="overflow-hidden row w-100 rounded-4" style="max-width: 1000px;">
 
-            <!-- Left Column: Login Form -->
-            <div class="p-5 col-md-6 d-flex flex-column">
-                <div class="mb-4 text-left">
-                    <img src="{{ asset('assets/images/logo/Border-Haul-logo.png') }}" alt="Logo" height="70">
-                </div>
-                <h4 class="mb-3 text-left text-black text-uppercase fw-bold">Shipper Log In</h4>
-                <form id="loginForm" method="POST" action="{{ route('login') }}">
-                    @csrf
-                    <div class="mb-3">
-                        <label for="emailaddress" class="form-label">Email</label>
-                        <input class="form-control" type="email" id="emailaddress" name="email"
-                            placeholder="Enter Email Address">
-                    </div>
-                    <div class="mb-3">
-                        <label for="password" class="form-label">Password</label>
-                        <input class="form-control" type="password" id="password" name="password"
-                            placeholder="Enter Password">
-                    </div>
-
-                    @include('backend.components.alerts.errors')
-
-                    <div class="mb-3 d-flex justify-content-between align-items-center">
-                        <div class="form-check">
-                            <input type="checkbox" class="form-check-input" id="remember" name="remember">
-                            <label class="form-check-label" for="remember">Remember me</label>
-                        </div>
-                        <a href="{{ route('password.request') }}" class="text-muted">Forgot your password?</a>
-                    </div>
-
-                    <div class="mb-3">
-                        <button class="btn btn-primary w-100" type="submit">Sign in</button>
-                    </div>
-                </form>
-
-                <div class="mt-auto text-center">
-                    <p>Don't have a Shipper account?
-                        <a href="{{ route('register') }}" class="text-primary">Create Partner account</a><br>
-                        Transfer Courier Partner?
-                        <a href="#" class="mb-2 text-primary">Create Carrier Partner account</a>
-                    </p>
-                </div>
+        <!-- Left Column: Login Form -->
+        <div class="p-4 col-12 col-md-6 p-md-5 d-flex flex-column justify-content-center">
+            <div class="mb-4">
+                <img src="{{ asset('assets/images/logo/Border-Haul-logo.png') }}" alt="Logo" height="70">
             </div>
 
-            <!-- Right Column: Image & Caption -->
-            <div class="col-md-6 d-none d-md-block" style="height: 90vh; margin-top: 50px;">
-                <div class="h-100 w-90 position-relative">
-                    <img src="{{ asset('assets/shipper/shipper_login.png') }}" alt="World Trade Bridge"
-                        class="img-fluid" style="border-radius: 22px; object-fit: cover; height: 100%; width: 80%;">
+            <h4 class="mb-3 text-black text-uppercase fw-bold">Shipper Log In</h4>
 
-                    <div class="bottom-0 p-2 m-4 text-white position-absolute start-0" style="
-                        background: rgba(0, 0, 0, 0.4);
-                        backdrop-filter: blur(2px);
-                        border-radius: 10px;
-                        max-width: 69%;">
-                        <img src="{{ asset('assets/shipper/shipper_logo.png') }}" alt="Logo" style="height: 30px;"
-                            class="mb-2">
-                        <h5 class="fw-bold">Ship with Confidence.</h5>
-                        <p class="mb-0 small">Manage, track, and deliver shipments with powerful tools built for speed,
-                            reliability, and control.</p>
-                    </div>
+            <form id="loginForm" method="POST" action="{{ route('login') }}">
+                @csrf
+
+                <div class="mb-3">
+                    <label for="emailaddress" class="form-label">Email</label>
+                    <input class="form-control" type="email" id="emailaddress" name="email" placeholder="Enter Email Address" required>
                 </div>
-            </div>
 
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input class="form-control" type="password" id="password" name="password" placeholder="Enter Password" required>
+                </div>
+
+                @include('backend.components.alerts.errors')
+
+                <div class="flex-wrap mb-3 d-flex justify-content-between align-items-center">
+                    <div class="form-check">
+                        <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                        <label class="form-check-label" for="remember">Remember me</label>
+                    </div>
+                    <a href="{{ route('password.request') }}" class="mt-2 text-muted mt-md-0">Forgot your password?</a>
+                </div>
+
+                <div class="mb-3">
+                    <button class="btn btn-primary w-100" type="submit">Sign in</button>
+                </div>
+            </form>
+
+            <div class="text-center">
+                <p class="mb-1">Don't have a Shipper account?
+                    <a href="{{ route('register') }}" class="text-primary">Create Partner account</a>
+                </p>
+                <p class="mb-0">Transfer Courier Partner?
+                    <a href="#" class="text-primary">Create Carrier Partner account</a>
+                </p>
+            </div>
         </div>
+
+        <!-- Right Column: Image & Caption -->
+        <div class="mt-4 col-12 col-md-6 d-flex align-items-center justify-content-center mt-md-0" style="padding-right: 50px;">
+            <div class="position-relative w-100" style="max-height: 90vh;">
+                <img src="{{ asset('assets/shipper/shipper_login.png') }}" alt="World Trade Bridge"
+                    class="img-fluid w-100 rounded-4" style="object-fit: cover; max-height: 90vh;">
+
+                <div class="bottom-0 p-3 m-3 text-white position-absolute start-0"
+                    style="background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(2px); border-radius: 10px; max-width: 85%;">
+                    <img src="{{ asset('assets/shipper/shipper_logo.png') }}" alt="Logo" class="mb-2" style="height: 30px;">
+                    <h5 class="fw-bold">Ship with Confidence.</h5>
+                    <p class="mb-0 small">Manage, track, and deliver shipments with powerful tools built for speed, reliability, and control.</p>
+                </div>
+            </div>
+        </div>
+
     </div>
+</div>
+
+<!-- Add custom media queries if needed -->
+
 
     @include('backend.components.js-validations.shipper-users.shipper-login')
 </body>

@@ -1,29 +1,29 @@
 <!-- Modal -->
-<div class="modal fade" id="carrierShowModal{{ $user->id }}" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="shipperUsertShow{{ $user->id }}" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">User View</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <h5 class="modal-title" id="exampleModalgridLabel">User Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
                 <table class="table table-bordered">
                     <tbody>
                         <tr>
                             <th scope="row">Name</th>
-                            <td>{{ $user->users->name ?? '-' }}</td>
+                            <td>{{ $user->name ?? '-' }}</td>
                         </tr>
                         <tr>
                             <th scope="row">Email</th>
-                            <td>{{ $user->users->email ?? '-' }}</td>
+                            <td>{{ $user->email ?? '-' }}</td>
                         </tr>
-                         <tr>
+                         {{-- <tr>
                             <th scope="row">Phone</th>
-                            <td>{{ $user->phone ?? '-' }}</td>
-                        </tr>
+                            <td>{{ $user->shipper->phone ?? '-' }}</td>
+                        </tr> --}}
                         <tr>
                             <th scope="row">Role</th>
-                            <td>{{ ucfirst($user->users->role ?? '-') }}</td>
+                            <td>{{ ucfirst($user->role ?? '-') }}</td>
                         </tr>
                     </tbody>
                 </table>

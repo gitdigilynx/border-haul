@@ -1,5 +1,5 @@
 @extends('layouts.backend.master')
-@section('title', 'Users Listing')
+@section('title', 'Dashboard')
 @section('content')
 <div class="content-page">
     <div class="content">
@@ -15,7 +15,7 @@
                 <div class="text-end">
                     <ol class="py-0 m-0 breadcrumb">
                         <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Users</li>
+                        <li class="breadcrumb-item active">Carrier Users</li>
 
                     </ol>
                 </div>
@@ -25,10 +25,10 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0 card-title">Users List</h5>
+                            <h5 class="mb-0 card-title">Carrier Users List</h5>
                             {{-- <button type="button" class="btn btn-success">Add Users</button> --}}
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#subUserModal">
-                               + Invite User
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#ShipperUserCreate">
+                                + Invite Users
                             </button>
                         </div>
                         <div class="card-body responsive-datatable">
@@ -36,54 +36,65 @@
                                 <thead>
                                     <tr>
                                         {{-- <th>Sr #</th> --}}
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Role</th>
+                                        <th>Company Name</th>
+                                        <th>DOT</th>
+                                        <th>MC</th>
+                                        <th>SCAC Code</th>
+                                        {{-- <th>Email</th> --}}
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($subUsers as $user)
+                                    @foreach ($carriers as $user)
                                         <tr>
                                             {{-- <td>{{ $loop->iteration }}</td> --}}
-                                            <td>{{ $user->users->name }}</td>
-                                            <td>{{ $user->users->email }}</td>
-                                            <td>{{ $user->users->role }}</td>
+
+                                            <td>{{ $user->name }}</td>
+                                            <td>{{ optional($user->carrier)->dot ?? 'N/A' }}</td>
+                                            <td>{{ optional($user->carrier)->mc ?? 'N/A' }}</td>
+                                            <td>{{ optional($user->carrier)->scac_code ?? 'N/A' }}</td>
+                                            {{-- <td>{{ $user->email }}</td> --}}
                                             <td>
-                                            <form method="POST"
-                                                    action="{{ route('shipper.sub-users.toggleSubUser', $user->id) }}">
+                                                <form method="POST" action="{{ route('admin.carriers.toggleCarrier', $user->id) }}">
                                                     @csrf
                                                     @method('PATCH')
                                                     <div class="form-check form-switch">
-                                                        <input class="form-check-input" type="checkbox" name="is_active"
+                                                        <input
+                                                            class="form-check-input"
+                                                            type="checkbox"
+                                                            name="is_active"
                                                             onchange="this.form.submit()"
-                                                            {{ $user->is_active ? 'checked' : '' }}>
-                                                        <label
-                                                            class="form-check-label px-1 rounded text-white
+                                                            {{ $user->is_active ? 'checked' : '' }}
+                                                        >
+                                                        <label class="form-check-label px-1 rounded text-white
                                                             {{ $user->is_active ? 'bg-success' : 'bg-danger' }}">
                                                             {{ $user->is_active ? 'Active' : 'Inactive' }}
                                                         </label>
+
                                                     </div>
-                                                    </form>
-                                                </td>
+                                                </form>
+                                            </td>
                                             <td>
-                                                  <!-- View Button -->
+                                                <!-- View Button -->
                                                 <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-primary"
                                                     data-bs-toggle="modal"data-id="{{ $user->id }}"
-                                                    data-bs-target="#shipperUsertShow{{ $user->id }}">
+                                                    data-bs-target="#carrierShowModal{{ $user->id }}">
                                                     <i class="p-1 text-white fa fa-eye text-secondary"></i>
                                                 </a>
 
-                                                <!-- Delete Button -->
-                                                <a href="javascript:void(0);" class="p-0 mb-0 delete-user btn bg-danger rounded-circle"  data-id="{{ $user->id }}"
-                                                        data-url="{{ route('shipper.sub-users.destroy', $user->id) }}">
-                                                    <i class="p-1 text-white fa fa-trash"></i>
+                                                <!-- Edit Button -->
+                                                <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-success"
+                                                    data-bs-toggle="modal" data-id="{{ $user->id }}"
+                                                    data-bs-target="#carrierEditModal{{ $user->id }}">
+                                                    <i class="p-1 text-white fa fa-edit text-secondary"></i>
                                                 </a>
 
-                                                {{-- <a href="{{ route('sub-users.edit', $user->id) }}" class="p-0 mb-0 rounded-circle btn bg-success">
-                                                    <i class="p-1 text-white fa fa-edit text-secondary"></i>
-                                                </a> --}}
+                                                  <!-- Delete Button -->
+                                                <a href="javascript:void(0);" class="p-0 mb-0 delete-carriers btn bg-danger rounded-circle"  data-id="{{ $user->id }}"
+                                                        data-url="{{ route('admin.carriers.destroy', $user->id) }}">
+                                                    <i class="p-1 text-white fa fa-trash"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -99,15 +110,17 @@
     </div>
 </div>
 
-@include('backend.shipper.sub-user.create')
-@foreach($subUsers as $user)
-    @include('backend.shipper.sub-user.show')
+@include('backend.admin.carrier.carrier-user.create')
+@foreach($carriers as $user)
+    @include('backend.admin.carrier.carrier-user.show', ['user' => $user])
+    @include('backend.admin.carrier.carrier-user.edit', ['user' => $user])
 @endforeach
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     $(document).ready(function () {
-        $('.delete-user').click(function () {
+        $('.delete-carriers').click(function () {
             const button = $(this);
             const deleteUrl = button.data('url');
 
@@ -143,7 +156,6 @@
         });
     });
 </script>
-
 <script>
     $(document).ready(function () {
         $('#datatable-basic').DataTable({

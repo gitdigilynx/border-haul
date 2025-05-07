@@ -20,35 +20,79 @@
             color: #dc3545;
             font-size: 0.875em;
         }
+
+
+    @media (max-width: 767px) {
+        /* Adjust the padding on mobile */
+        .p-md-5 {
+            padding-left: 1.5rem;
+            padding-right: 1.5rem;
+        }
+
+        /* Image adjustments for small screens */
+        .position-relative img {
+            object-fit: cover;
+            max-height: 100vh;
+        }
+
+        /* Adjust the bottom caption */
+        .position-relative .bottom-0 {
+            max-width: 100%;
+            font-size: 14px;
+        }
+    }
+
+    @media (max-width: 575px) {
+        /* Adjust column widths for extra small screens */
+        .col-12 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .text-center {
+            text-align: center !important;
+        }
+    }
+
+      @media (max-width: 375px) {
+        /* Adjust column widths for extra small screens */
+        .col-12 {
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        .text-center {
+            text-align: center !important;
+        }
+    }
     </style>
 </head>
 
-<div class="bg-white container-fluid d-flex align-items-center justify-content-center">
-    <div class="overflow-hidden row rounded-4" style="max-width: 1000px;">
+<div class="bg-white container-fluid d-flex align-items-center justify-content-center min-vh-100">
+    <div class="overflow-hidden row" style="max-width: 1000px;">
 
         <!-- Left Column: Login Form -->
-        <div class=" col-md-6 d-flex flex-column">
-            <div class="mb-4 text-left">
+        <div class="p-4 col-12 col-md-6 d-flex flex-column justify-content-center">
+            <div class="mb-4">
                 <img src="{{ asset('assets/images/logo/Border-Haul-logo.png') }}" alt="Logo" height="70">
             </div>
-            <h4 class="mb-3 text-left text-black text-uppercase fw-bold">Join Us & Ship Smarter</h4>
+
+            <h4 class="mb-3 text-black text-uppercase fw-bold">Join Us & Ship Smarter</h4>
+
             <form id="registrationForm" method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
                 @csrf
 
                 <!-- User Type -->
                 <div class="mb-3 row">
                     <div class="col-md-6">
-                        <label for="user_type" class="form-label">Shipper Name <span
-                                class="text-danger">*</span></label>
-                        <input type="text" name="name" id="name" class="form-control"
-                            placeholder="Company Name">
+                        <label for="user_type" class="form-label">Shipper Name <span class="text-danger">*</span></label>
+                        <input type="text" name="name" id="name" class="form-control" placeholder="Company Name">
                         <div class="invalid-feedback"></div>
                     </div>
 
                     <!-- Service Category -->
                     <div class="col-md-6">
-                        <label for="service_category" class="form-label">Service Category <span
-                                class="text-danger">*</span></label>
+                        <label for="service_category" class="form-label">Service Category <span class="text-danger">*</span></label>
                         <select name="service_category" id="service_category" class="form-control">
                             <option value="" selected="">Select</option>
                             @foreach (serviceCategory() as $key => $services_category)
@@ -62,17 +106,13 @@
                 <!-- Company Name & Address -->
                 <div class="mb-3 row">
                     <div class="col-md-6">
-                        <label for="company_name" class="form-label">Company Name <span
-                                class="text-danger">*</span></label>
-                        <input type="text" name="company_name" id="company_name" class="form-control"
-                            placeholder="Company Name">
+                        <label for="company_name" class="form-label">Company Name <span class="text-danger">*</span></label>
+                        <input type="text" name="company_name" id="company_name" class="form-control" placeholder="Company Name">
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="col-md-6">
-                        <label for="company_address" class="form-label">Company Address <span
-                                class="text-danger">*</span></label>
-                        <input type="text" name="company_address" id="company_address" class="form-control"
-                            placeholder="Company Address">
+                        <label for="company_address" class="form-label">Company Address <span class="text-danger">*</span></label>
+                        <input type="text" name="company_address" id="company_address" class="form-control" placeholder="Company Address">
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
@@ -80,10 +120,8 @@
                 <!-- Email & Phone -->
                 <div class="mb-3 row">
                     <div class="col-md-6">
-                        <label for="email" class="form-label">Email Address <span
-                                class="text-danger">*</span></label>
-                        <input type="email" name="email" id="email" class="form-control"
-                            placeholder="Email Address">
+                        <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
+                        <input type="email" name="email" id="email" class="form-control" placeholder="Email Address">
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="col-md-6">
@@ -97,23 +135,20 @@
                 <div class="mb-3 row">
                     <div class="col-md-6">
                         <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
-                        <input type="password" name="password" id="password" class="form-control"
-                            placeholder="Password">
+                        <input type="password" name="password" id="password" class="form-control" placeholder="Password">
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="col-md-6">
-                        <label for="password_confirmation" class="form-label">Confirm Password <span
-                                class="text-danger">*</span></label>
-                        <input type="password" name="password_confirmation" id="password_confirmation"
-                            class="form-control" placeholder="Confirm Password">
+                        <label for="password_confirmation" class="form-label">Confirm Password <span class="text-danger">*</span></label>
+                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="Confirm Password">
                         <div class="invalid-feedback"></div>
                     </div>
                 </div>
 
                 <!-- Submit Button -->
                 <div class="mb-3">
-                        <button class="btn btn-primary w-100" type="submit">Register</button>
-                    </div>
+                    <button class="btn btn-primary w-100" type="submit">Register</button>
+                </div>
             </form>
 
             <div class="mt-auto text-center">
@@ -126,28 +161,22 @@
         </div>
 
         <!-- Right Column: Image & Caption -->
-        <div class="col-md-6 d-none d-md-block" style="height: 95vh; margin-top: 70px;">
-            <div class="h-100 w-100 position-relative">
-                <img src="{{ asset('assets/shipper/shipper_login.png') }}" alt="World Trade Bridge" class="img-fluid"
-                    style="border-radius: 22px; object-fit: cover; height: 100%; width: 100%;">
+        <div class="col-12 col-md-6 d-flex align-items-center justify-content-center" style=" padding-right: 50px;">
+            <div class="position-relative w-100" style="max-height: 100vh;">
+                <img src="{{ asset('assets/shipper/shipper_login.png') }}" alt="World Trade Bridge"
+                    class="img-fluid w-100 rounded-4" style="object-fit: cover;">
 
-                <div class="bottom-0 p-2 m-4 text-white position-absolute start-0"
-                    style="
-                        background: rgba(0, 0, 0, 0.4);
-                        backdrop-filter: blur(2px);
-                        border-radius: 10px;
-                        max-width: 90%;">
-                    <img src="{{ asset('assets/shipper/shipper_logo.png') }}" alt="Logo" style="height: 30px;"
-                        class="mb-2">
+                <div class="bottom-0 p-3 m-3 text-white position-absolute start-0"
+                    style="background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(2px); border-radius: 10px; max-width: 85%;">
+                    <img src="{{ asset('assets/shipper/shipper_logo.png') }}" alt="Logo" class="mb-2" style="height: 30px;">
                     <h5 class="fw-bold">Ship with Confidence.</h5>
-                    <p class="mb-0 small">Manage, track, and deliver shipments with powerful tools built for speed,
-                        reliability, and control.</p>
+                    <p class="mb-0 small">Manage, track, and deliver shipments with powerful tools built for speed, reliability, and control.</p>
                 </div>
             </div>
         </div>
-
     </div>
 </div>
+
 {{-- <div class="account-page">
         <div class="p-0 container-fluid">
             <div class="row align-items-center g-0">

@@ -3,23 +3,18 @@
 @section('content')
     <div class="content-page">
         <div class="content">
-
             <!-- Start Content-->
             <div class="container-fluid">
-
                 <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
                     <div class="flex-grow-1">
                         <h4 class="m-0 fs-18 fw-semibold">Users</h4>
                     </div>
-
                     <div class="text-end">
                         <ol class="py-0 m-0 breadcrumb">
                             <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
                             <li class="breadcrumb-item active">Users</li>
-
                         </ol>
                     </div>
-
                 </div>
                 <div class="row">
                     <div class="col-12">
@@ -78,12 +73,12 @@
                                                         <i class="p-1 text-white fa fa-eye text-secondary"></i>
                                                     </a>
 
-                                                    {{-- <!-- Edit Button -->
+                                                <!-- Edit Button -->
                                                 <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-success"
                                                     data-bs-toggle="modal" data-id="{{ $user->id }}"
                                                     data-bs-target="#shipperEditModal{{ $user->id }}">
                                                     <i class="p-1 text-white fa fa-edit text-secondary"></i>
-                                                </a> --}}
+                                                </a>
 
                                                     <!-- Delete Button -->
                                                     <a href="javascript:void(0);"

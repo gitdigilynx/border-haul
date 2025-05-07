@@ -175,11 +175,11 @@
                     </div> --}}
 
                     <!-- Submit Button -->
-                    <div class="mb-2 text-center" style="padding: 0 100px; margin-top: 20px;">
+                    <div class="mb-3 text-center" style="padding: 0 100px; margin-top: 20px;">
                         <button type="submit" class="btn btn-primary w-100">Register</button>
                     </div>
                 </form>
-                <div class="mt-3 text-center text-muted">
+                <div class="mb-3 text-center text-muted">
                     <p class="mb-0">Already have an account?
                         <a class="text-primary ms-2 fw-medium" href="{{ route('carrier.login') }}">Login here</a>
                     </p>
@@ -187,7 +187,7 @@
             </div>
 
             <!-- Right Column: Image & Caption -->
-            <div class="col-md-5 d-none d-md-block" style="height: 95vh; margin-top: 70px;">
+            <div class="col-md-5" style="height: 95vh; margin-top: 70px;">
                 <div class="h-100 w-100 position-relative">
                     <img src="{{ asset('assets/carrier/shipper_image.png') }}" alt="World Trade Bridge"
                         class="img-fluid" style="border-radius: 22px; object-fit: cover; height: 100%; width: 100%;">

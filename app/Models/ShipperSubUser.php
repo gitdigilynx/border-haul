@@ -12,8 +12,6 @@ class ShipperSubUser extends Model
     protected $fillable = [
         'user_id',
         'shipper_id',
-        'first_name',
-        'last_name',
         'phone',
     ];
 

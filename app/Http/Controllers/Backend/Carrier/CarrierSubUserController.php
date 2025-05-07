@@ -61,7 +61,7 @@ class CarrierSubUserController extends Controller
             CarrierSubUser::create([
                 'user_id' => $user->id,
                 'carrier_id' => $carrier->id,
-                'phone' => $request->email,
+                'phone' => $request->phone,
             ]);
 
             // Send credentials via email

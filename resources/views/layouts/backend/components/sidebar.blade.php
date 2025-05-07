@@ -138,6 +138,25 @@
                         </div>
                     </li>
 
+                    <li>
+                        <a href="#sidebarExpages" data-bs-toggle="collapse">
+                            <i class="fa-solid fa-users"></i>
+                            <span> Shipper </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebarExpages">
+                            <ul class="nav-second-level">
+
+                                <li>
+                                    <a href="#" class="tp-link">Shipper </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('admin.sub-shippers') }}" class="tp-link">Shipper Users</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
+
                 @endhasrole
 
                 <hr style="margin-top: 40px;">

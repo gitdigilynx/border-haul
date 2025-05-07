@@ -6,16 +6,16 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\ShipperSubUser;
 use Illuminate\Support\Facades\Mail;
-use App\Mail\SendPasswordToCarrier;
+use App\Mail\SendPasswordToShipperUser;
 use App\Models\CarrierSubUser;
 use Illuminate\Support\Str;
 use Illuminate\Http\RedirectResponse;
 
-
-class SubCarrierUserController extends Controller
+class SubShippperUserController extends Controller
 {
-    public function __construct()
+     public function __construct()
     {
         $this->middleware('auth');
     }
@@ -23,11 +23,11 @@ class SubCarrierUserController extends Controller
     public function index()
     {
         try {
-           $subCarrier = User::where('role', 'CarrierUser')
+           $subShipper = User::where('role', 'ShipperUser')
                 ->get();
 
-            // dd($carrierUsers);
-            return view('backend.admin.carrier.sub-carrier.index', compact('subCarrier'));
+            // dd($subShipper);
+            return view('backend.admin.shipper.sub-shipper.index', compact('subShipper'));
 
         } catch (\Exception $e) {
             flash()->error('Something went wrong: ' . $e->getMessage());
@@ -38,7 +38,7 @@ class SubCarrierUserController extends Controller
     public function create()
     {
         try {
-            return view('backend.admin.carrier.sub-carrier.create');
+            return view('backend.admin.shipper.sub-shipper.create');
         } catch (\Exception $e) {
             flash()->error('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
@@ -47,8 +47,9 @@ class SubCarrierUserController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        try {
-            $subCarrier = auth()->user();
+
+            $subShipper = auth()->user();
+
 
             $rawPassword = Str::random(8);
 
@@ -56,31 +57,28 @@ class SubCarrierUserController extends Controller
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($rawPassword),
-            'role' => 'CarrierUser',
+            'role' => 'ShipperUser',
         ]);
-        CarrierSubUser::create([
+
+        $user = ShipperSubUser::create([
             'user_id' => $user->id,
-            'carrier_id' => $subCarrier->id,
+            'shipper_id' => $subShipper->id,
             'phone' => $request->phone,
         ]);
 
         // Send credentials via email
-        Mail::to($request->email)->send(new SendPasswordToCarrier($request->email, $rawPassword));
+        Mail::to($request->email)->send(new SendPasswordToShipperUser($request->email, $rawPassword));
 
-         return redirect()->route('admin.sub-carriers')->with('success', 'Carrier Users created successfully!');
-        } catch (\Exception $e) {
-        flash()->error('Something went wrong: ' . $e->getMessage());
-            return redirect()->back();
-        }
+         return redirect()->route('admin.sub-shippers')->with('success', 'Shipper Users created successfully!');
+
 
     }
-
 
     public function show($id)
     {
         try {
-            $user = CarrierSubUser::with('users')->findOrFail($id);
-            return view('backend.admin.carrier.sub-carrier.show', compact('user'));
+            $user = ShipperSubUser::with('users')->findOrFail($id);
+            return view('backend.admin.shipper.sub-shipper.show', compact('user'));
         } catch (\Exception $e) {
             flash()->error('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
@@ -90,7 +88,7 @@ class SubCarrierUserController extends Controller
     public function edit(Request $request)
     {
         try {
-            return view('backend.admin.carrier.sub-carrier.edit');
+            return view('backend.admin.shipper.sub-shipper.edit');
         } catch (\Exception $e) {
             flash()->error('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
@@ -107,16 +105,16 @@ class SubCarrierUserController extends Controller
             ]);
 
             // Find user by ID
-            $subCarrier = User::findOrFail($id);
+            $subShipper = User::findOrFail($id);
 
             // Update the user
-            $subCarrier->update([
+            $subShipper->update([
                 'name'  => $request['name'],
                 'email' => $request['email'],
                 'role'  => $request['role'],
             ]);
 
-            return redirect()->route('admin.sub-carriers')->with('success', 'Carrier Users updated successfully.');
+            return redirect()->route('admin.sub-shippers')->with('success', 'Shipper Users updated successfully.');
         } catch (\Exception $e) {
             flash()->error('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
@@ -127,8 +125,8 @@ class SubCarrierUserController extends Controller
     public function destroy($id)
     {
         try {
-            $subCarrier = User::findOrFail($id);
-            $subCarrier->delete();
+            $subShipper = User::findOrFail($id);
+            $subShipper->delete();
 
             return response()->json(['message' => 'Deleted successfully']);
         } catch (\Exception $e) {
@@ -137,12 +135,12 @@ class SubCarrierUserController extends Controller
         }
     }
 
-    public function toggleSubCarrier(Request $request, $id)
+    public function toggleSubShipper(Request $request, $id)
     {
         try {
-            $subCarrier = User::findOrFail($id);
-            $subCarrier->is_active = $request->has('is_active');
-            $subCarrier->save();
+            $subShipper = User::findOrFail($id);
+            $subShipper->is_active = $request->has('is_active');
+            $subShipper->save();
 
             return back()->with('status', 'User status updated.');
         } catch (\Exception $e) {

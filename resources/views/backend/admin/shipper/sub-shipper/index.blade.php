@@ -25,7 +25,7 @@
                 <div class="col-12">
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0 card-title">Users List</h5>
+                            <h5 class="mb-0 card-title">Sub Users List</h5>
                             {{-- <button type="button" class="btn btn-success">Add Users</button> --}}
                             <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#subUserModal">
                                + Invite User
@@ -44,15 +44,15 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($subUsers as $user)
+                                    @foreach ($subShipper as $user)
                                         <tr>
                                             {{-- <td>{{ $loop->iteration }}</td> --}}
-                                            <td>{{ $user->users->name }}</td>
-                                            <td>{{ $user->users->email }}</td>
-                                            <td>{{ $user->users->role }}</td>
+                                            <td>{{ $user->name }}</td>
+                                            <td>{{ $user->email }}</td>
+                                            <td>{{ $user->role }}</td>
                                             <td>
                                             <form method="POST"
-                                                    action="{{ route('shipper.sub-users.toggleSubUser', $user->id) }}">
+                                                    action="{{ route('admin.sub-shippers.toggleSubUser', $user->id) }}">
                                                     @csrf
                                                     @method('PATCH')
                                                     <div class="form-check form-switch">
@@ -75,15 +75,18 @@
                                                     <i class="p-1 text-white fa fa-eye text-secondary"></i>
                                                 </a>
 
-                                                <!-- Delete Button -->
-                                                <a href="javascript:void(0);" class="p-0 mb-0 delete-user btn bg-danger rounded-circle"  data-id="{{ $user->id }}"
-                                                        data-url="{{ route('shipper.sub-users.destroy', $user->id) }}">
-                                                    <i class="p-1 text-white fa fa-trash"></i>
+                                                 <!-- Edit Button -->
+                                                <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-success"
+                                                    data-bs-toggle="modal" data-id="{{ $user->id }}"
+                                                    data-bs-target="#subShipperEditModal{{ $user->id }}">
+                                                    <i class="p-1 text-white fa fa-edit text-secondary"></i>
                                                 </a>
 
-                                                {{-- <a href="{{ route('sub-users.edit', $user->id) }}" class="p-0 mb-0 rounded-circle btn bg-success">
-                                                    <i class="p-1 text-white fa fa-edit text-secondary"></i>
-                                                </a> --}}
+                                                <!-- Delete Button -->
+                                                <a href="javascript:void(0);" class="p-0 mb-0 delete-user btn bg-danger rounded-circle"  data-id="{{ $user->id }}"
+                                                        data-url="{{ route('admin.sub-shippers.destroy', $user->id) }}">
+                                                    <i class="p-1 text-white fa fa-trash"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -99,9 +102,10 @@
     </div>
 </div>
 
-@include('backend.shipper.sub-user.create')
-@foreach($subUsers as $user)
-    @include('backend.shipper.sub-user.show')
+@include('backend.admin.shipper.sub-shipper.create')
+@foreach($subShipper as $user)
+    @include('backend.admin.shipper.sub-shipper.show', ['user' => $user])
+    @include('backend.admin.shipper.sub-shipper.edit', ['user' => $user])
 @endforeach
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

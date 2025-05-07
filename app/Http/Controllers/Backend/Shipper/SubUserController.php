@@ -44,18 +44,16 @@ class SubUserController extends Controller
             $rawPassword = Str::random(8);
 
             $user = User::create([
+                'name' => $request->name,
                 'email' => $request->email,
                 'password' => Hash::make($rawPassword),
                 'role' => 'ShipperUser',
             ]);
 
-
             ShipperSubUser::create([
                 'user_id' => $user->id,
                 'shipper_id' => $shipper->id,
-                'first_name' => $request->first_name,
-                'last_name' => $request->last_name,
-                'phone' => $request->email,
+                'phone' => $request->phone,
             ]);
 
             // Send credentials via email
