@@ -63,7 +63,7 @@ class CarrierRegisterController extends Controller
             'dot' => $request->dot,
             'mc' => $request->mc,
             'scac_code' => $request->scac_code,
-            'mexico' => $request->mexico,
+            'country' => $request->country,
             'caat_code' => $request->caat_code,
             'service_category' => $request->service_category,
             'phone' => $request->phone,
