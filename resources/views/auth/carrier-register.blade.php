@@ -38,37 +38,33 @@
                     @csrf
                     <!-- Authority & DOT -->
                     <div class="mb-2 row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="name" class="form-label">Company Name <span class="text-danger">*</span></label>
                             <input type="text" name="name" id="name" class="form-control" placeholder="Company Name">
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="company_address" class="form-label">Company Address <span
                                     class="text-danger">*</span></label>
                             <input type="text" name="company_address" id="company_address" class="form-control"
                                 placeholder="Company Address">
                             <div class="invalid-feedback"></div>
                         </div>
-
-                    </div>
-
-                    <div class="mb-2 row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
                             <input type="email" name="email" id="email" class="form-control" placeholder="Email">
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="col-md-6">
+                    </div>
+
+                    <div class="mb-2 row">
+
+                        <div class="col-md-4">
                             <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
                             <input type="number" name="phone" id="phone" class="form-control" placeholder="Phone">
                             <div class="invalid-feedback"></div>
                         </div>
-
-                    </div>
-
-                    <div class="mb-2 row">
-                        <div class="col-md-6">
+                       <div class="col-md-4">
                             <label for="service_category" class="form-label">Service Category <span
                                     class="text-danger">*</span></label>
                             <select name="service_category" id="service_category" class="form-control">
@@ -79,37 +75,29 @@
                             </select>
                             <div class="invalid-feedback"></div>
                         </div>
-
-                        <div class="col-md-6">
+                           <div class="col-md-4">
                             <label for="authority" class="form-label">Authority <span
                                     class="text-danger">*</span></label>
                             <input type="text" name="authority" id="authority" class="form-control"
                                 placeholder="Authority">
                             <div class="invalid-feedback"></div>
                         </div>
-
                     </div>
 
-                    <!-- MC & SCAC Code -->
                     <div class="mb-2 row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="mc" class="form-label">MC <span class="text-danger">*</span></label>
                             <input type="text" name="mc" id="mc" class="form-control" placeholder="MC">
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="scac_code" class="form-label">SCAC Code <span
                                     class="text-danger">*</span></label>
                             <input type="number" name="scac_code" id="scac_code" class="form-control"
                                 placeholder="SCAC Code">
                             <div class="invalid-feedback"></div>
                         </div>
-                    </div>
-
-                    <!-- Mexico & CAAT Code -->
-                    <div class="mb-2 row">
-
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="mexico" class="form-label">Country <span class="text-danger">*</span></label>
                             <select name="mexico" id="mexico" class="form-control" required>
                                 <option value="">Select Country</option>
@@ -118,25 +106,24 @@
                             </select>
                             <div class="invalid-feedback">Please select a country.</div>
                         </div>
+                    </div>
 
-                        <div class="col-md-6">
+                    <!-- Mexico & CAAT Code -->
+                    <div class="mb-2 row">
+                        <div class="col-md-4">
                             <label for="caat_code" class="form-label">CAAT Code <span
                                     class="text-danger">*</span></label>
                             <input type="number" name="caat_code" id="caat_code" class="form-control"
                                 placeholder="CAAT Code">
                             <div class="invalid-feedback"></div>
                         </div>
-                    </div>
-
-                    <!-- Service Category & Phone -->
-                    <div class="mb-2 row">
-                        <div class="col-md-6">
+                         <div class="col-md-4">
                             <label for="dot" class="form-label">DOT <span class="text-danger">*</span></label>
                             <input type="text" name="dot" id="dot" class="form-control" placeholder="DOT">
                             <div class="invalid-feedback"></div>
                         </div>
 
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
                             <input type="password" name="password" id="password" class="form-control"
                                 placeholder="Password">
@@ -145,34 +132,31 @@
                     </div>
 
                     <div class="mb-2 row">
-                        <div class="col-md-6">
+                        <div class="col-md-4">
                             <label for="password_confirmation" class="form-label">Confirm Password <span
                                     class="text-danger">*</span></label>
                             <input type="password" name="password_confirmation" id="password_confirmation"
                                 class="form-control" placeholder="Confirm Password">
                             <div class="invalid-feedback"></div>
                         </div>
-                    </div>
 
-
-
-                    <!-- Transfer Approval Documents & Insurance Certificate -->
-                    {{-- <div class="mb-3 row">
-                        <div class="col-md-6">
-                            <label for="transfer_approval_documents" class="form-label">Transfer Approval Documents
+                         <div class="col-md-4">
+                            <label for="transfer_approval_documents" class="form-label">Transfer Approval Document
                                 <span class="text-danger">*</span></label>
                             <input type="file" name="transfer_approval_documents" id="transfer_approval_documents"
                                 class="form-control">
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="col-md-6">
+                         <div class="col-md-4">
                             <label for="insurance_certificate" class="form-label">Insurance Certificate <span
                                     class="text-danger">*</span></label>
                             <input type="file" name="insurance_certificate" id="insurance_certificate"
                                 class="form-control">
                             <div class="invalid-feedback"></div>
                         </div>
-                    </div> --}}
+                    </div>
+
+
 
                     <!-- Submit Button -->
                     <div class="mb-3 text-center" style="padding: 0 100px; margin-top: 20px;">

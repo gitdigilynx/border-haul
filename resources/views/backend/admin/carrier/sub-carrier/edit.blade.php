@@ -3,7 +3,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="driverModalLabel">
-                    {{ isset($user) ? 'Update Carrier' : 'Add Carrier' }}
+                    {{ isset($user) ? 'Update Sub User' : 'Add Sub User' }}
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>

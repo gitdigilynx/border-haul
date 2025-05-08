@@ -152,8 +152,7 @@
             </form>
 
             <div class="mt-auto text-center">
-                <p>Don't have a Shipper account?
-                    <a href="{{ route('register') }}" class="text-primary">Create Partner account</a><br>
+                <p>
                     Transfer Courier Partner?
                     <a href="#" class="mb-2 text-primary">Create Carrier Partner account</a>
                 </p>

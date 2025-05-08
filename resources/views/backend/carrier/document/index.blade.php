@@ -23,6 +23,42 @@
             </div>
             <div class="row">
                 <div class="col-12">
+                     <!-- Start Content-->
+                    <div class="container-fluid">
+
+                       <div class="row">
+    @foreach ($documents as $document)
+        <div class="mb-4 col-sm-6 col-xl-4">
+            <div class="shadow card d-block">
+                @php
+                    $extension = pathinfo($document->file_path, PATHINFO_EXTENSION);
+                    $filename = pathinfo($document->file_path, PATHINFO_FILENAME);
+                @endphp
+
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {{ ucwords(str_replace(['-', '_'], ' ', $filename)) }} <small class="text-muted">.{{ $extension }}</small>
+                    </h5>
+                    <p class="text-muted small">Edited {{ $document->updated_at->diffForHumans() }}</p>
+
+                    @if(in_array(strtolower($extension), ['jpg', 'jpeg', 'png', 'gif', 'webp']))
+                        <img class="rounded img-fluid" src="{{ asset('storage/' . $document->file_path) }}" alt="Document image">
+                    @elseif(strtolower($extension) === 'pdf')
+                        <iframe src="{{ asset('storage/' . $document->file_path) }}" width="100%" height="200px"></iframe>
+                    @else
+                        <div class="p-3 text-center border rounded text-muted">
+                            <i class="bi bi-file-earmark-text" style="font-size: 2rem;"></i>
+                            <p class="mt-2 mb-0">Unsupported preview for .{{ $extension }}</p>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+    @endforeach
+</div>
+
+
+                    </div> <!-- container-fluid -->
                     <div class="card">
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <h5 class="mb-0 card-title">Documents List</h5>

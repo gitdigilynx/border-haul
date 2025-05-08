@@ -18,7 +18,7 @@
                     <!-- File Upload -->
                     <div class="col-md-6">
                         <label for="file" class="form-label">Upload Document</label>
-                        <input type="file" class="form-control" name="file" accept=".pdf,.jpg,.jpeg,.png" required>
+                        <input type="file" class="form-control" name="file_path" accept=".pdf,.jpg,.jpeg,.png" required>
                     </div>
 
                     <!-- Expiration Date -->

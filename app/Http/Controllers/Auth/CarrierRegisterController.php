@@ -10,11 +10,10 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 use Illuminate\View\View;
-use App\Models\Shipper;
 use App\Models\Carrier;
 use App\Enums\RoleEnum;
+use Illuminate\Support\Str;
 
 
 class CarrierRegisterController extends Controller
@@ -56,6 +55,14 @@ class CarrierRegisterController extends Controller
             'role' => 'Carrier',
         ]);
 
+         $originalName = $request->file('file_path')->getClientOriginalName();
+            $filename = pathinfo($originalName, PATHINFO_FILENAME);
+            $extension = $request->file('file_path')->getClientOriginalExtension();
+            $safeName = Str::slug($filename) . '.' . $extension;
+
+        $transferDocPath = $request->file('transfer_approval_documents')->storeAs('approval_documents', $safeName,'public');
+        $insuranceCertPath = $request->file('insurance_certificate')->storeAs('certificates', $safeName, 'public');
+
         Carrier::create([
             'user_id' => $user->id,
             'company_address' => $request->company_address,
@@ -67,10 +74,12 @@ class CarrierRegisterController extends Controller
             'caat_code' => $request->caat_code,
             'service_category' => $request->service_category,
             'phone' => $request->phone,
-            // 'transfer_approval_documents ' => $request->transfer_approval_documents,
-            // 'insurance_certificate ' => $request->insurance_certificate,
+            'transfer_approval_documents' => $transferDocPath,
+            'insurance_certificate' => $insuranceCertPath,
         ]);
 
+
+        // dd($carrier);
         // Optionally assign role using spatie/laravel-permission
         // $user->assignRole($request->role);
 

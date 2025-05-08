@@ -9,6 +9,7 @@ use App\Services\DocumentUploadService;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateDocumentRequest;
 use Flasher\Laravel\Facade\Flasher;
+use Illuminate\Support\Str;
 
 class CarrierDocumentController extends Controller
 {
@@ -39,23 +40,30 @@ class CarrierDocumentController extends Controller
     public function store(Request $request)
     {
         try {
-            $user = auth()->user();
-            $carrier = $user->carrier;
+              $user = auth()->user();
+              $carrier = $user->carrier;
 
-            $path = $this->uploadService->upload(
-                $request->file('file'),
-                'asssts/carrier-documents',
-                $user->id
-            );
+            // $path = $this->uploadService->upload(
+            //     $request->file('file'),
+            //     'asssts/carrier-documents',
+            //     $user->id
+            // );
 
-            CarrierDocument::create([
-                'carrier_id' => $carrier->id,
-                'document_type' => $request->document_type,
-                'file_path' => $path,
-                'expires_at' => $request->expires_at,
-                'status' => $request->status,
-                'notes' => $request->notes
-            ]);
+                $originalName = $request->file('file_path')->getClientOriginalName();
+                $filename = pathinfo($originalName, PATHINFO_FILENAME);
+                $extension = $request->file('file_path')->getClientOriginalExtension();
+                $safeName = Str::slug($filename) . '.' . $extension;
+
+                $documentPath = $request->file('file_path')->storeAs('documents', $safeName, 'public');
+
+             CarrierDocument::create([
+                    'carrier_id' => $carrier->id,
+                    'document_type' => $request->document_type,
+                    'expires_at' => $request->expires_at,
+                    'status' => $request->status,
+                    'notes' => $request->notes,
+                    'file_path' => $documentPath,
+                ]);
 
             return redirect()->back()->with('success', 'Document uploaded successfully.');
         } catch (\Exception $e) {
