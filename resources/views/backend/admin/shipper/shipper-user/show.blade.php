@@ -1,5 +1,5 @@
 <!-- Modal -->
-<div class="modal fade" id="carrierShowModal{{ $user->id }}" tabindex="-1" aria-hidden="true">
+<div class="modal fade" id="shipperShowModal{{ $user->id }}" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -21,35 +21,26 @@
                             <th scope="row">Role</th>
                             <td>{{ ucfirst($user->role ?? '-') }}</td>
                         </tr>
-                        <tr>
-                            <th scope="row">Compnay Address</th>
-                            <td>{{ ucfirst($user->carrier->company_address ?? '-') }}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Phone</th>
-                            <td>{{ ucfirst($user->carrier->phone ?? '-') }}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">Authority</th>
-                            <td>{{ ucfirst($user->carrier->authority ?? '-') }}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">DOT</th>
-                            <td>{{ ucfirst($user->carrier->dot ?? '-') }}</td>
-                        </tr>
-                        <tr>
-                            <th scope="row">MC</th>
-                            <td>{{ ucfirst($user->carrier->mc ?? '-') }}</td>
+                         <tr>
+                            <th scope="row">Company Name</th>
+                            <td>{{ ucfirst($user->shipper->company_name ?? '-') }}</td>
                         </tr>
 
                         <tr>
-                            <th scope="row">SCAC Code</th>
-                            <td>{{ ucfirst($user->carrier->scac_code ?? '-') }}</td>
+                            <th scope="row">Compnay Address</th>
+                            <td>{{ ucfirst($user->shipper->company_address ?? '-') }}</td>
                         </tr>
+
                         <tr>
-                            <th scope="row">Country</th>
-                            <td>{{ ucfirst($user->carrier->country ?? '-') }}</td>
+                            <th scope="row">Phone</th>
+                            <td>{{ ucfirst($user->shipper->phone ?? '-') }}</td>
                         </tr>
+
+                         <tr>
+                            <th scope="row">Phone</th>
+                            <td>{{ ucfirst($user->shipper->phone ?? '-') }}</td>
+                        </tr>
+
                          <tr>
                             <th scope="row">Status</th>
                             <td>

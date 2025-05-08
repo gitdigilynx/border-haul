@@ -87,7 +87,7 @@ class CarrierDocumentController extends Controller
 
             return redirect()->back()->with('success', 'Document updated successfully.');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -99,7 +99,7 @@ class CarrierDocumentController extends Controller
             $document->delete();
             return redirect()->back()->with('success', 'Document deleted successfully.');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -115,7 +115,7 @@ class CarrierDocumentController extends Controller
 
             return response()->download(storage_path('app/' . $document->file_path));
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }

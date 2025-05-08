@@ -148,7 +148,7 @@
                             <ul class="nav-second-level">
 
                                 <li>
-                                    <a href="#" class="tp-link">Shipper </a>
+                                    <a href="{{ route('admin.shippers') }}" class="tp-link">Shipper </a>
                                 </li>
                                 <li>
                                     <a href="{{ route('admin.sub-shippers') }}" class="tp-link">Shipper Users</a>

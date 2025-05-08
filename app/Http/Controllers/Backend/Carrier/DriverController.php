@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Driver;
 use App\Models\Truck;
 use Illuminate\Http\Request;
+use Flasher\Laravel\Facade\Flasher;
 
 class DriverController extends Controller
 {
@@ -20,7 +21,7 @@ class DriverController extends Controller
 
             return view('backend.carrier.driver.index', compact('drivers'));
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
 
@@ -51,7 +52,7 @@ class DriverController extends Controller
 
             return redirect()->back()->with('success', 'Driver created successfully.');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -62,7 +63,7 @@ class DriverController extends Controller
             $driver = Driver::findOrFail($id);
             return view('backend.carrier.driver.edit', compact('driver'));
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -81,7 +82,7 @@ class DriverController extends Controller
 
             return redirect()->back()->with('success', 'Driver updated successfully.');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -93,7 +94,7 @@ class DriverController extends Controller
             $driver->delete();
             return redirect()->back()->with('success', 'Driver deleted successfully.');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }

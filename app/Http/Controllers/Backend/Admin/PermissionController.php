@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend\Admin;
 use App\Http\Controllers\Controller;
 use Spatie\Permission\Models\Permission;
 use Illuminate\Http\Request;
+use Flasher\Laravel\Facade\Flasher;
 
 class PermissionController extends Controller
 {
@@ -55,7 +56,7 @@ class PermissionController extends Controller
             $permission->delete();
             return redirect()->back()->with('success', 'Permission deleted successfully.');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }

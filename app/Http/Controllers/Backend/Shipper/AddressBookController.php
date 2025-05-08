@@ -70,7 +70,7 @@ class AddressBookController extends Controller
             $address = AddressBook::findOrFail($id);
             return view('backend.shipper.address-book.edit', compact('address'));
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -108,7 +108,7 @@ class AddressBookController extends Controller
 
             return redirect()->back()->with('success', 'Address updated successfully!');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -119,7 +119,7 @@ class AddressBookController extends Controller
             $address = AddressBook::findOrFail($id);
             return view('backend.shipper.address-book.show', compact('address'));
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -130,7 +130,7 @@ class AddressBookController extends Controller
             $addressBook = AddressBook::findOrFail($id);
             $addressBook->delete();
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }

@@ -62,7 +62,7 @@ class SubUserController extends Controller
 
             return redirect()->route('shipper.sub-users')->with('success', 'Sub-user created successfully!');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -74,7 +74,7 @@ class SubUserController extends Controller
             $user = ShipperSubUser::with('users')->findOrFail($id);
             return view('backend.shipper.sub-user.show', compact('user'));
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -85,7 +85,7 @@ class SubUserController extends Controller
         try {
             return view('backend.shipper.sub-user.edit');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -110,7 +110,7 @@ class SubUserController extends Controller
             ]);
             return redirect()->route('shipper.sub-users.index');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }

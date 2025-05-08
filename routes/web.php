@@ -179,7 +179,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/carrier-users', 'store')->name('carrier-users.store');
             Route::get('/carrier-users/{id}/edit', 'edit')->name('carrier-users.edit');
             Route::get('/carrier-users/{id}', 'show')->name('carrier-users.show');
-            Route::post('/carrier-users/{id}', 'update')->name('carrier-users.update');
+            Route::put('/carrier-users/{id}', 'update')->name('carrier-users.update');
             Route::delete('/carrier-users/{id}', 'destroy')->name('carrier-users.destroy');
             Route::patch('/carrier-users/{id}/toggle-user', 'toggleCarrierUser')->name('sub-users.toggleCarrierUser');
 

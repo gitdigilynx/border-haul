@@ -11,7 +11,7 @@ use App\Mail\SendPasswordToCarrier;
 use App\Models\CarrierSubUser;
 use Illuminate\Support\Str;
 use Illuminate\Http\RedirectResponse;
-
+use Flasher\Laravel\Facade\Flasher;
 
 class SubCarrierUserController extends Controller
 {
@@ -30,7 +30,7 @@ class SubCarrierUserController extends Controller
             return view('backend.admin.carrier.sub-carrier.index', compact('subCarrier'));
 
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -40,7 +40,7 @@ class SubCarrierUserController extends Controller
         try {
             return view('backend.admin.carrier.sub-carrier.create');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -69,7 +69,7 @@ class SubCarrierUserController extends Controller
 
          return redirect()->route('admin.sub-carriers')->with('success', 'Carrier Users created successfully!');
         } catch (\Exception $e) {
-        flash()->error('Something went wrong: ' . $e->getMessage());
+        Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
 
@@ -82,7 +82,7 @@ class SubCarrierUserController extends Controller
             $user = CarrierSubUser::with('users')->findOrFail($id);
             return view('backend.admin.carrier.sub-carrier.show', compact('user'));
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -92,7 +92,7 @@ class SubCarrierUserController extends Controller
         try {
             return view('backend.admin.carrier.sub-carrier.edit');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -118,7 +118,7 @@ class SubCarrierUserController extends Controller
 
             return redirect()->route('admin.sub-carriers')->with('success', 'Carrier Users updated successfully.');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -132,7 +132,7 @@ class SubCarrierUserController extends Controller
 
             return response()->json(['message' => 'Deleted successfully']);
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }

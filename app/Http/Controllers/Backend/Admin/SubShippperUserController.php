@@ -12,6 +12,7 @@ use App\Mail\SendPasswordToShipperUser;
 use App\Models\CarrierSubUser;
 use Illuminate\Support\Str;
 use Illuminate\Http\RedirectResponse;
+use Flasher\Laravel\Facade\Flasher;
 
 class SubShippperUserController extends Controller
 {
@@ -30,7 +31,7 @@ class SubShippperUserController extends Controller
             return view('backend.admin.shipper.sub-shipper.index', compact('subShipper'));
 
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -40,17 +41,15 @@ class SubShippperUserController extends Controller
         try {
             return view('backend.admin.shipper.sub-shipper.create');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
 
     public function store(Request $request): RedirectResponse
     {
-
+        try {
             $subShipper = auth()->user();
-
-
             $rawPassword = Str::random(8);
 
             $user = User::create([
@@ -70,7 +69,10 @@ class SubShippperUserController extends Controller
         Mail::to($request->email)->send(new SendPasswordToShipperUser($request->email, $rawPassword));
 
          return redirect()->route('admin.sub-shippers')->with('success', 'Shipper Users created successfully!');
-
+         } catch (\Exception $e) {
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
+            return redirect()->back();
+        }
 
     }
 
@@ -80,7 +82,7 @@ class SubShippperUserController extends Controller
             $user = ShipperSubUser::with('users')->findOrFail($id);
             return view('backend.admin.shipper.sub-shipper.show', compact('user'));
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -90,7 +92,7 @@ class SubShippperUserController extends Controller
         try {
             return view('backend.admin.shipper.sub-shipper.edit');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -116,7 +118,7 @@ class SubShippperUserController extends Controller
 
             return redirect()->route('admin.sub-shippers')->with('success', 'Shipper Users updated successfully.');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -130,7 +132,7 @@ class SubShippperUserController extends Controller
 
             return response()->json(['message' => 'Deleted successfully']);
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }

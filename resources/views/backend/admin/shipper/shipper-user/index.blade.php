@@ -36,27 +36,27 @@
                                 <thead>
                                     <tr>
                                         {{-- <th>Sr #</th> --}}
+                                        <th>Shipper Name</th>
                                         <th>Company Name</th>
-                                        <th>DOT</th>
-                                        <th>MC</th>
-                                        <th>SCAC Code</th>
-                                        {{-- <th>Email</th> --}}
+                                        <th>Phone</th>
+                                        <th>Email</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($carriers as $user)
+                                    @foreach ($shippers as $user)
                                         <tr>
                                             {{-- <td>{{ $loop->iteration }}</td> --}}
 
                                             <td>{{ $user->name }}</td>
-                                            <td>{{ optional($user->carrier)->dot ?? 'N/A' }}</td>
-                                            <td>{{ optional($user->carrier)->mc ?? 'N/A' }}</td>
-                                            <td>{{ optional($user->carrier)->scac_code ?? 'N/A' }}</td>
+                                            <td>{{ optional($user->shipper)->company_name ?? 'N/A' }}</td>
+                                            <td>{{ optional($user->shipper)->phone ?? 'N/A' }}</td>
+                                            <td>{{ $user->email ?? 'N/A' }}</td>
+
                                             {{-- <td>{{ $user->email }}</td> --}}
                                             <td>
-                                                <form method="POST" action="{{ route('admin.carriers.toggleCarrier', $user->id) }}">
+                                                <form method="POST" action="{{ route('admin.shippers.toggleSubUser', $user->id) }}">
                                                     @csrf
                                                     @method('PATCH')
                                                     <div class="form-check form-switch">
@@ -79,20 +79,20 @@
                                                 <!-- View Button -->
                                                 <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-primary"
                                                     data-bs-toggle="modal"data-id="{{ $user->id }}"
-                                                    data-bs-target="#carrierShowModal{{ $user->id }}">
+                                                    data-bs-target="#shipperShowModal{{ $user->id }}">
                                                     <i class="p-1 text-white fa fa-eye text-secondary"></i>
                                                 </a>
 
                                                 <!-- Edit Button -->
                                                 <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-success"
                                                     data-bs-toggle="modal" data-id="{{ $user->id }}"
-                                                    data-bs-target="#carrierEditModal{{ $user->id }}">
+                                                    data-bs-target="#shipperEditModal{{ $user->id }}">
                                                     <i class="p-1 text-white fa fa-edit text-secondary"></i>
                                                 </a>
 
                                                   <!-- Delete Button -->
-                                                <a href="javascript:void(0);" class="p-0 mb-0 delete-carriers btn bg-danger rounded-circle"  data-id="{{ $user->id }}"
-                                                        data-url="{{ route('admin.carriers.destroy', $user->id) }}">
+                                                <a href="javascript:void(0);" class="p-0 mb-0 delete-shippers btn bg-danger rounded-circle"  data-id="{{ $user->id }}"
+                                                        data-url="{{ route('admin.shippers.destroy', $user->id) }}">
                                                     <i class="p-1 text-white fa fa-trash"></i>
                                                 </a>
                                             </td>
@@ -110,17 +110,17 @@
     </div>
 </div>
 
-@include('backend.admin.carrier.carrier-user.create')
-@foreach($carriers as $user)
-    @include('backend.admin.carrier.carrier-user.show', ['user' => $user])
-    @include('backend.admin.carrier.carrier-user.edit', ['user' => $user])
+@include('backend.admin.shipper.shipper-user.create')
+@foreach($shippers as $user)
+    @include('backend.admin.shipper.shipper-user.show', ['user' => $user])
+    @include('backend.admin.shipper.shipper-user.edit', ['user' => $user])
 @endforeach
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
     $(document).ready(function () {
-        $('.delete-carriers').click(function () {
+        $('.delete-shippers').click(function () {
             const button = $(this);
             const deleteUrl = button.data('url');
 

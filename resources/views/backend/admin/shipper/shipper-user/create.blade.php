@@ -16,6 +16,11 @@
                         <input type="text" class="form-control" name="name" placeholder="Name" required>
                     </div>
 
+                     <div class="mb-2 col-md-6">
+                        <label for="name" class="form-label">Compnay Name <span class="text-danger">*</span></label>
+                        <input type="text" class="form-control" name="company_name" placeholder="Company Name" required>
+                    </div>
+
                     <div class="mb-2 col-md-6">
                         <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" name="email" placeholder="Email" required>
@@ -24,11 +29,6 @@
                     <div class="mb-2 col-md-6">
                         <label for="company_address" class="form-label">Company Addres <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" name="company_address" placeholder="Company Address" required>
-                    </div>
-
-                     <div class="mb-2 col-md-6">
-                        <label for="company_name" class="form-label">Company Name <span class="text-danger">*</span></label>
-                        <input type="text" class="form-control" name="company_name" placeholder="Company Name" required>
                     </div>
 
                     <div class="mb-2 col-md-6">

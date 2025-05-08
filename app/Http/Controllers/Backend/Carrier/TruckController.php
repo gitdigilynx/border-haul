@@ -7,6 +7,7 @@ use App\Models\Truck;
 use App\Models\Carrier;
 use App\Models\Driver;
 use Illuminate\Http\Request;
+use Flasher\Laravel\Facade\Flasher;
 
 class TruckController extends Controller
 {
@@ -23,7 +24,7 @@ class TruckController extends Controller
 
             return view('backend.carrier.truck.index', compact('trucks'));
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -67,7 +68,7 @@ class TruckController extends Controller
 
             return redirect()->route('carrier.trucks')->with('success', 'Truck and driver created successfully!');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -79,7 +80,7 @@ class TruckController extends Controller
             $truck = Truck::findOrFail($id);
             return view('backend.carrier.truck.edit', compact('truck'));
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -118,7 +119,7 @@ class TruckController extends Controller
 
         return redirect()->route('carrier.trucks')->with('success', 'Truck and driver updated successfully!');
     } catch (\Exception $e) {
-        flash()->error('Something went wrong: ' . $e->getMessage());
+        Flasher::addError('Something went wrong: ' . $e->getMessage());
         return redirect()->back();
     }
 }
@@ -130,7 +131,7 @@ class TruckController extends Controller
             $truck->delete();
             return redirect()->back()->with('success', 'Truck deleted successfully.');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -142,7 +143,7 @@ class TruckController extends Controller
 
             return back()->with('status', 'Truck service status updated.');
         } catch (\Exception $e) {
-            flash()->error('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
