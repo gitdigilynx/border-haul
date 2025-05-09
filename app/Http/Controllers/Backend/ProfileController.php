@@ -34,29 +34,27 @@ class ProfileController extends Controller
      */
 
      public function update(Request $request, $id)
-{
-    try {
-        // Validate inputs
-        $request->validate([
-            'name'  => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email,' . $id,
-        ]);
+    {
+        try {
+            // Validate inputs
+            $request->validate([
+                'name'  => 'required|string|max:255',
+            ]);
 
-        // Find user by ID
-        $user = User::findOrFail($id);
+            // Find user by ID
+            $user = User::findOrFail($id);
 
-        // Update the user
-        $user->update([
-            'name'  => $request->name,
-            'email' => $request->email,
-        ]);
+            // Update the user
+            $user->update([
+                'name'  => $request->name,
+            ]);
 
-        return redirect()->route('profile.list')->with('success', 'Profile updated successfully.');
-    } catch (\Exception $e) {
-        Flasher::addError('Something went wrong: ' . $e->getMessage());
-        return redirect()->back();
+            return redirect()->route('profile.list')->with('success', 'Profile updated successfully.');
+        } catch (\Exception $e) {
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
+            return redirect()->back();
+        }
     }
-}
 
     // public function update(ProfileUpdateRequest $request): RedirectResponse
     // {

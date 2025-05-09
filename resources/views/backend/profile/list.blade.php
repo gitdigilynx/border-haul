@@ -83,7 +83,7 @@
                                                                 <div class="col-lg-12 col-xl-12">
                                                                     <div class="input-group">
                                                                         <span class="input-group-text"><i class="mdi mdi-email"></i></span>
-                                                                        <input type="text" class="form-control" name="email" value="{{ Auth::user()->email }}" placeholder="Email" aria-describedby="basic-addon1">
+                                                                        <input type="text" class="form-control" name="email" value="{{ Auth::user()->email }}" placeholder="Email" aria-describedby="basic-addon1" disabled>
                                                                     </div>
                                                                 </div>
                                                             </div>
