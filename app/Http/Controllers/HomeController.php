@@ -23,25 +23,4 @@ class HomeController extends Controller
     }
 
 
-    // public function index()
-    // {
-    //     if (Auth::check()) {
-    //         $user = Auth::user();
-
-    //         if ($user->hasRole('shipper')) {
-    //             return view('home'); // Use a separate view for shippers
-    //         }
-
-    //         if ($user->hasRole('carrier')) {
-    //             return view('home'); // Use a separate view for carriers
-    //         }
-
-    //         if ($user->hasRole('admin')) {
-    //             return view('home'); // Optional: separate admin dashboard
-    //         }
-    //     }
-    //     return redirect()->route('home');
-    // }
-
-
 }

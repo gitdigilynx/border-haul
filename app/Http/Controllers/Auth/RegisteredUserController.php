@@ -75,7 +75,7 @@ class RegisteredUserController extends Controller
 
     public function shipperLogin(): View
     {
-       return view('auth.login');
+       return view('auth.shipper-login');
     }
     public function login(Request $request)
     {
@@ -109,7 +109,7 @@ class RegisteredUserController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('shipper.login'); // ✅ Proper named route
+        return redirect()->route('shipper.login');
     }
 
 }
