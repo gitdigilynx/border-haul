@@ -18,6 +18,7 @@ use App\Http\Controllers\Backend\Admin\SubCarrierUserController;
 use App\Http\Controllers\Backend\Admin\AdminCarrierUserController;
 use App\Http\Controllers\Backend\Admin\SubShippperUserController;
 use App\Http\Controllers\Backend\Admin\ShippperUserController;
+use App\Http\Controllers\Backend\Admin\RolesPermissionController;
 
 // ---------------------------
 // 🔐 Public Auth Routes
@@ -36,7 +37,6 @@ Route::prefix('carrier')->group(function () {
 });
 
 
-
 Route::middleware(['auth'])->group(function () {
 
     // Redirect / to /home
@@ -53,7 +53,7 @@ Route::middleware(['auth'])->group(function () {
             Route::controller(ProfileController::class)->group(function () {
                 Route::get('/profile', 'list')->name('profile.list');
                 Route::get('/profile/edit', 'edit')->name('profile.edit');
-                Route::patch('/profile', 'update')->name('profile.update');
+                Route::post('/profile/{id}', 'update')->name('profile.update');
                 Route::delete('/profile', 'destroy')->name('profile.destroy');
             });
         });
@@ -78,6 +78,16 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/sub-admin/{id}/assign-permissions', 'editPermission')->name('sub-admin.permissions.edit');
             Route::post('/sub-admin/{id}/assign-permissions', 'updatePermission')->name('sub-admin.permissions.update');
             Route::patch('/sub-users/{id}/toggle-admin',  'toggleAdmin')->name('sub-users.toggleAdmin');
+        });
+
+         Route::controller(RolesPermissionController::class)->group(function () {
+            Route::get('/role-permissions', 'index')->name('role-permissions');
+            Route::delete('/role-permissions/{id}', 'destroy')->name('role-permissions.destroy');
+              //Assign Permissions
+            Route::get('/role-permissions/{id}/assign-permissions', 'editPermission')->name('role-permissions.edit');
+            Route::post('/role-permissions/{id}/assign-permissions', 'updatePermission')->name('role-permissions.update');
+            Route::patch('/role-permissions/{id}/toggle-permission',  'toggleRolePermission')->name('role-permissions.togglePermission');
+
         });
 
         // Permissions

@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use App\Models\User;
+use Flasher\Laravel\Facade\Flasher;
 
 class ProfileController extends Controller
 {
@@ -30,19 +32,45 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
-    {
 
-                $request->user()->fill($request->validated());
+     public function update(Request $request, $id)
+{
+    try {
+        // Validate inputs
+        $request->validate([
+            'name'  => 'required|string|max:255',
+            'email' => 'required|email|unique:users,email,' . $id,
+        ]);
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
-        }
+        // Find user by ID
+        $user = User::findOrFail($id);
 
-        $request->user()->save();
+        // Update the user
+        $user->update([
+            'name'  => $request->name,
+            'email' => $request->email,
+        ]);
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return redirect()->route('profile.list')->with('success', 'Profile updated successfully.');
+    } catch (\Exception $e) {
+        Flasher::addError('Something went wrong: ' . $e->getMessage());
+        return redirect()->back();
     }
+}
+
+    // public function update(ProfileUpdateRequest $request): RedirectResponse
+    // {
+
+    //             $request->user()->fill($request->validated());
+
+    //     if ($request->user()->isDirty('email')) {
+    //         $request->user()->email_verified_at = null;
+    //     }
+
+    //     $request->user()->save();
+
+    //     return Redirect::route('profile.edit')->with('status', 'profile-updated');
+    // }
 
     /**
      * Delete the user's account.

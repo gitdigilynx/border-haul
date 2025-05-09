@@ -49,14 +49,15 @@
                                                             </div><!--end col-->
                                                         </div>
                                                     </div>
-                                                    <form method="post" action="{{ route('profile.update') }}" class="mt-6 space-y-6">
+                                                  <form method="post" action="{{ route('profile.update', Auth::user()->id) }}" class="mt-6 space-y-6">
+
                                                         @csrf
-                                                        @method('patch')
+
                                                         <div class="card-body">
                                                             <div class="mb-3 form-group row">
                                                                 <label class="form-label">Company Name</label>
                                                                 <div class="col-lg-12 col-xl-12">
-                                                                    <input class="form-control" type="text" value="{{ Auth::user()->name }}">
+                                                                    <input class="form-control" type="text" name="name"  value="{{ Auth::user()->name }}">
                                                                 </div>
                                                             </div>
 
@@ -82,7 +83,7 @@
                                                                 <div class="col-lg-12 col-xl-12">
                                                                     <div class="input-group">
                                                                         <span class="input-group-text"><i class="mdi mdi-email"></i></span>
-                                                                        <input type="text" class="form-control" value="{{ Auth::user()->email }}" placeholder="Email" aria-describedby="basic-addon1">
+                                                                        <input type="text" class="form-control" name="email" value="{{ Auth::user()->email }}" placeholder="Email" aria-describedby="basic-addon1">
                                                                     </div>
                                                                 </div>
                                                             </div>

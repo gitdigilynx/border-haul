@@ -26,7 +26,7 @@
                     </div>
                 </li>
 
-                <li class="mt-1 menu-title">Menu</li>
+                <li class="mt-1 menu-title">Dashboard</li>
 
                 <li>
                     <a href="{{ route('home') }}">
@@ -34,6 +34,8 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
+
+                <li class="mt-1 menu-title">Menu</li>
 
                 {{-- Shipper Menu --}}
                 @if (auth()->user()->hasRole('Shipper'))
@@ -107,55 +109,87 @@
 
                     <li>
                         <a href="{{ route('admin.sub-admin') }}">
-                            <i class="fa-solid fa-user"></i>
+                            <i class="fas fa-ticket-alt"></i>
                             <span>Sub Admins</span>
                         </a>
                     </li>
 
                     <li>
-                        <a href="{{ route('admin.permissions.index') }}">
-                            <i class="fa-solid fa-user-shield"></i>
-                            <span>Permissions</span>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a href="#sidebarForms" data-bs-toggle="collapse">
+                        <a href="#sidebarBaseui" data-bs-toggle="collapse">
                             <i class="fa-solid fa-users"></i>
-                            <span> Carriers </span>
+
+                            <span> Company Users </span>
                             <span class="menu-arrow"></span>
                         </a>
-                        <div class="collapse" id="sidebarForms">
+                        <div class="collapse" id="sidebarBaseui">
                             <ul class="nav-second-level">
+                                <li>
+                                    <a href="#sidebarForms" data-bs-toggle="collapse">
+                                        <span> Carriers </span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse" id="sidebarForms">
+                                        <ul class="nav-second-level">
+
+                                            <li>
+                                                <a href="{{ route('admin.carriers') }}" class="tp-link">Carrier
+                                                    Users</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ route('admin.sub-carriers') }}" class="tp-link">Sub
+                                                    Users</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
 
                                 <li>
-                                    <a href="{{route('admin.carriers')}}" class="tp-link">Carrier </a>
+                                    <a href="#sidebarExpages" data-bs-toggle="collapse">
+                                        <span> Shipper </span>
+                                        <span class="menu-arrow"></span>
+                                    </a>
+                                    <div class="collapse" id="sidebarExpages">
+                                        <ul class="nav-second-level">
+
+                                            <li>
+                                                <a href="{{ route('admin.shippers') }}" class="tp-link">Shipper
+                                                    Users</a>
+                                            </li>
+                                            <li>
+                                                <a href="{{ route('admin.sub-shippers') }}" class="tp-link">Sub
+                                                    Users</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </li>
+                    <li>
+                        <a href="#sidebarIcons" data-bs-toggle="collapse">
+
+                            <i class="fas fa-user-lock"></i>
+
+                            <span> Role & Permissions </span>
+                            <span class="menu-arrow"></span>
+                        </a>
+                        <div class="collapse" id="sidebarIcons">
+                            <ul class="nav-second-level">
+                                <li>
+                                    <a href="{{ route('admin.permissions.index') }}">
+
+                                        <span>Permissions</span>
+                                    </a>
                                 </li>
                                 <li>
-                                    <a href="{{ route('admin.sub-carriers') }}" class="tp-link">Carrier Users</a>
+                                    <a href="{{ route('admin.role-permissions') }}" class="tp-link">Assign
+                                        Permission</a>
                                 </li>
                             </ul>
                         </div>
                     </li>
 
-                    <li>
-                        <a href="#sidebarExpages" data-bs-toggle="collapse">
-                            <i class="fa-solid fa-users"></i>
-                            <span> Shipper </span>
-                            <span class="menu-arrow"></span>
-                        </a>
-                        <div class="collapse" id="sidebarExpages">
-                            <ul class="nav-second-level">
-
-                                <li>
-                                    <a href="{{ route('admin.shippers') }}" class="tp-link">Shipper </a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('admin.sub-shippers') }}" class="tp-link">Shipper Users</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </li>
 
                 @endhasrole
 

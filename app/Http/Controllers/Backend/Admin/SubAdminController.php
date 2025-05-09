@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Backend\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\CarrierSubUser;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
@@ -27,7 +26,7 @@ class SubAdminController extends Controller
             $subAdmins = User::where('role', 'subadmin')->get();
             return view('backend.admin.sub-admin.index', compact('subAdmins'));
         } catch (\Exception $e) {
-      Flasher::addError('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -37,7 +36,7 @@ class SubAdminController extends Controller
         try {
             return view('backend.admin.sub-admin.create');
         } catch (\Exception $e) {
-      Flasher::addError('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -58,9 +57,11 @@ class SubAdminController extends Controller
             // Send credentials via email
             Mail::to($request->email)->send(new SendPasswordToCarrierUser($request->email, $rawPassword));
 
-            return redirect()->route('admin.sub-admin')->with('success', 'Sub Admin created successfully!');
+            return redirect()
+              ->route('admin.sub-admin')
+              ->with('success', 'Sub Admin created successfully!');
         } catch (\Exception $e) {
-      Flasher::addError('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -71,7 +72,7 @@ class SubAdminController extends Controller
             $admin = User::findOrFail($id);
             return view('backend.admin.sub-admin.show', compact('admin'));
         } catch (\Exception $e) {
-      Flasher::addError('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -98,7 +99,8 @@ class SubAdminController extends Controller
                 'name' => $request->name,
                 'email' => $request->email,
             ]);
-            return redirect()->route('admin.sub-admin');
+            return redirect()->route('admin.sub-admin')
+               ->with('success', 'Sub Admin updated successfully.');
         } catch (\Exception $e) {
              Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
