@@ -35,7 +35,7 @@ use App\Http\Controllers\Backend\Shipper\ShipperProfileController;
 
 // Shipper Register & Login
 Route::prefix('shipper')->middleware(['web'])->group(function () {
-    Route::get('/shipper/login', [RegisteredUserController::class, 'shipperLogin'])->name('shipper.login');
+    Route::get('/login', [RegisteredUserController::class, 'shipperLogin'])->name('shipper.login');
     Route::post('/login', [RegisteredUserController::class, 'login'])->name('shipper.login');
     Route::post('logout', [RegisteredUserController::class, 'logout'])->name('shipper.logout');
 });

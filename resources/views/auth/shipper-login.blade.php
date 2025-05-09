@@ -99,7 +99,8 @@
                         <input type="checkbox" class="form-check-input" id="remember" name="remember">
                         <label class="form-check-label" for="remember">Remember me</label>
                     </div>
-                    <a href="{{ route('password.request') }}" class="mt-2 text-muted mt-md-0">Forgot your password?</a>
+                    <a href="#" class="mt-2 text-muted mt-md-0">Forgot your password?</a>
+                    {{-- <a href="{{ route('password.request') }}" class="mt-2 text-muted mt-md-0">Forgot your password?</a> --}}
                 </div>
 
                 <div class="mb-3">
