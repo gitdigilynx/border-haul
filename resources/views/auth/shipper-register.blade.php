@@ -79,7 +79,7 @@
 
             <h4 class="mb-3 text-black text-uppercase fw-bold">Join Us & Ship Smarter</h4>
 
-            <form id="registrationForm" method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
+            <form id="registrationForm" method="POST" action="{{ route('shipper.register') }}" enctype="multipart/form-data">
                 @csrf
 
                 <!-- User Type -->

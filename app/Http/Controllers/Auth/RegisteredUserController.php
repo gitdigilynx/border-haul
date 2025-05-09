@@ -20,17 +20,12 @@ class RegisteredUserController extends Controller
 {
     public function create(): View
     {
-        return view('auth.register');
-    }
-
- public function carrierRegister(): View
-    {
         return view('auth.shipper-register');
     }
 
+
     public function store(Request $request): RedirectResponse
     {
-
         // $request->validate([
         //     'name' => 'required|string|max:255',
         //     'role' => 'required', 'exists:roles,role',

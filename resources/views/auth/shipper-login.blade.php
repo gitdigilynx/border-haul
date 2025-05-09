@@ -109,7 +109,7 @@
 
             <div class="text-center">
                 <p class="mb-1">Don't have a Shipper account?
-                    <a href="{{ route('register') }}" class="text-primary">Create Partner account</a>
+                    <a href="{{ route('shipper.register') }}" class="text-primary">Create Partner account</a>
                 </p>
                 <p class="mb-0">Transfer Courier Partner?
                     <a href="{{ url('carrier/register') }}" class="text-primary">Create Carrier Partner account</a>
