@@ -55,13 +55,13 @@ class CarrierRegisterController extends Controller
             'role' => 'Carrier',
         ]);
 
-         $originalName = $request->file('file_path')->getClientOriginalName();
-            $filename = pathinfo($originalName, PATHINFO_FILENAME);
-            $extension = $request->file('file_path')->getClientOriginalExtension();
-            $safeName = Str::slug($filename) . '.' . $extension;
+        //  $originalName = $request->file('file_path')->getClientOriginalName();
+        //     $filename = pathinfo($originalName, PATHINFO_FILENAME);
+        //     $extension = $request->file('file_path')->getClientOriginalExtension();
+        //     $safeName = Str::slug($filename) . '.' . $extension;
 
-        $transferDocPath = $request->file('transfer_approval_documents')->storeAs('approval_documents', $safeName,'public');
-        $insuranceCertPath = $request->file('insurance_certificate')->storeAs('certificates', $safeName, 'public');
+        // $transferDocPath = $request->file('transfer_approval_documents')->storeAs('approval_documents', $safeName,'public');
+        // $insuranceCertPath = $request->file('insurance_certificate')->storeAs('certificates', $safeName, 'public');
 
         Carrier::create([
             'user_id' => $user->id,
@@ -74,27 +74,24 @@ class CarrierRegisterController extends Controller
             'caat_code' => $request->caat_code,
             'service_category' => $request->service_category,
             'phone' => $request->phone,
-            'transfer_approval_documents' => $transferDocPath,
-            'insurance_certificate' => $insuranceCertPath,
+            // 'transfer_approval_documents' => $transferDocPath,
+            // 'insurance_certificate' => $insuranceCertPath,
         ]);
-
-
-        // dd($carrier);
-        // Optionally assign role using spatie/laravel-permission
-        // $user->assignRole($request->role);
-
-        // flash()->success(ucfirst($request->role) . ' registered successfully!');
 
         event(new Registered($user));
         Auth::login($user);
 
+            if ($user->role === 'Carrier') {
+                return redirect()->route('carrier.dashboard');
+            }
+
         return redirect(RouteServiceProvider::HOME);
     }
 
-    public function carrierLogin(): View
-    {
-        return view('auth.carrier-login');
-    }
+        public function carrierLogin(): View
+        {
+            return view('auth.carrier-login');
+        }
     public function login(Request $request)
     {
 
@@ -107,17 +104,8 @@ class CarrierRegisterController extends Controller
             $request->session()->regenerate();
 
             $user = Auth::user();
-            if ($user->role === RoleEnum::SHIPPER->value) {
-                return redirect()->route('home')->with('success', 'Login successful');
-            }
-            elseif ($user->role === RoleEnum::CARRIER->value) {
-                return redirect()->route('home')->with('success', 'Login successful');
-            }
-            elseif ($user->role === RoleEnum::ADMIN->value) {
-                return redirect()->route('home')->with('success', 'Login successful');
-            }
-            elseif ($user->role === RoleEnum::subAdmin->value) {
-                return redirect()->route('home')->with('success', 'Login successful');
+            if ($user->role === RoleEnum::CARRIER->value) {
+                return redirect()->route('carrier.dashboard')->with('success', 'Login successful');
             }
 
             return redirect('/')->with('success', 'Login successful');
@@ -127,4 +115,17 @@ class CarrierRegisterController extends Controller
             'email' => 'Invalid credentials.',
         ])->onlyInput('email');
     }
+
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('carrier.login'); // ✅ Proper named route
+    }
+
+
 }

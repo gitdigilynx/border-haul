@@ -19,13 +19,26 @@ use App\Http\Controllers\Backend\Admin\AdminCarrierUserController;
 use App\Http\Controllers\Backend\Admin\SubShippperUserController;
 use App\Http\Controllers\Backend\Admin\ShippperUserController;
 use App\Http\Controllers\Backend\Admin\RolesPermissionController;
+use App\Http\Controllers\Backend\Carrier\CarrierDashboardController;
+use App\Http\Controllers\Backend\Carrier\CarrierProfileController;
+use App\Http\Controllers\Backend\Shipper\ShipperDashboardController;
+use App\Http\Controllers\Backend\Shipper\ShipperProfileController;
+
+
+
 
 // ---------------------------
 // 🔐 Public Auth Routes
 // ---------------------------
 
 // Shipper Login
-Route::post('/login', [RegisteredUserController::class, 'login'])->name('login');
+
+Route::prefix('shipper')->group(function () {
+
+    Route::get('/login', [RegisteredUserController::class, 'shipperLogin'])->name('shipper.login');
+    Route::post('/login', [RegisteredUserController::class, 'login'])->name('login');
+    Route::post('logout', [RegisteredUserController::class, 'logout'])->name('shipper.logout');
+});
 
 // Carrier Register & Login
 Route::prefix('carrier')->group(function () {
@@ -34,6 +47,8 @@ Route::prefix('carrier')->group(function () {
 
     Route::get('login', [CarrierRegisterController::class, 'carrierLogin'])->name('carrier.login');
     Route::post('login', [CarrierRegisterController::class, 'login']);
+    Route::post('logout', [CarrierRegisterController::class, 'logout'])->name('carrier.logout');
+
 });
 
 
@@ -49,7 +64,7 @@ Route::middleware(['auth'])->group(function () {
             // Home Dashboard
             Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-            // Profile
+            // // Profile
             Route::controller(ProfileController::class)->group(function () {
                 Route::get('/profile', 'list')->name('profile.list');
                 Route::get('/profile/edit', 'edit')->name('profile.edit');
@@ -154,6 +169,16 @@ Route::middleware(['auth'])->group(function () {
     // ---------------------------
     Route::prefix('shipper')->name('shipper.')->middleware(['role:' . RoleEnum::SHIPPER->value])->group(function () {
 
+        Route::controller(ShipperDashboardController::class)->group(function () {
+            Route::get('/dashboard', 'index')->name('dashboard');
+        });
+
+         Route::controller(ShipperProfileController::class)->group(function () {
+                Route::get('/profile', 'list')->name('profile.list');
+                Route::get('/profile/edit', 'edit')->name('profile.edit');
+                Route::post('/profile/{id}', 'update')->name('profile.update');
+                Route::delete('/profile', 'destroy')->name('profile.destroy');
+            });
         // Sub Users
         Route::controller(SubUserController::class)->group(function () {
             Route::get('/sub-users', 'index')->name('sub-users');
@@ -182,6 +207,17 @@ Route::middleware(['auth'])->group(function () {
     // 🚚 Carrier Routes
     // ---------------------------
     Route::prefix('carrier')->name('carrier.')->middleware(['role:' . RoleEnum::CARRIER->value])->group(function () {
+
+        Route::controller(CarrierDashboardController::class)->group(function () {
+            Route::get('/dashboard', 'index')->name('dashboard');
+        });
+
+         Route::controller(CarrierProfileController::class)->group(function () {
+                Route::get('/profile', 'list')->name('profile.list');
+                Route::get('/profile/edit', 'edit')->name('profile.edit');
+                Route::post('/profile/{id}', 'update')->name('profile.update');
+                Route::delete('/profile', 'destroy')->name('profile.destroy');
+            });
 
         // Carrier Sub Users
         Route::controller(CarrierSubUserController::class)->group(function () {

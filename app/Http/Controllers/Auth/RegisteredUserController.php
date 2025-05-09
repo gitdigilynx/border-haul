@@ -23,6 +23,10 @@ class RegisteredUserController extends Controller
         return view('auth.register');
     }
 
+ public function carrierRegister(): View
+    {
+        return view('auth.shipper-register');
+    }
 
     public function store(Request $request): RedirectResponse
     {
@@ -59,12 +63,20 @@ class RegisteredUserController extends Controller
             flash()->success('User created successfully!');
 
             event(new Registered($user));
-            Auth::login($user);
+             Auth::login($user);
+
+            if ($user->role === 'Shipper') {
+                return redirect()->route('shipper.dashboard');
+            }
 
             return redirect(RouteServiceProvider::HOME);
 
     }
 
+    public function shipperLogin(): View
+    {
+       return view('auth.login');
+    }
     public function login(Request $request)
     {
         $credentials = $request->validate([
@@ -78,18 +90,9 @@ class RegisteredUserController extends Controller
 
             $user = Auth::user();
             if ($user->role === RoleEnum::SHIPPER->value) {
-                return redirect()->route('home')->with('success', 'Login successful');
-            }
-            elseif ($user->role === RoleEnum::CARRIER->value) {
-                return redirect()->route('home')->with('success', 'Login successful');
-            }
-            elseif ($user->role === RoleEnum::ADMIN->value) {
-                return redirect()->route('home')->with('success', 'Login successful');
-            }
-             elseif ($user->role === RoleEnum::subAdmin->value) {
-                return redirect()->route('home')->with('success', 'Login successful');
-            }
+                return redirect()->route('shipper.dashboard')->with('success', 'Login successful');
 
+            }
             return redirect('/')->with('success', 'Login successful');
         }
 
@@ -98,4 +101,15 @@ class RegisteredUserController extends Controller
             'email' => 'Invalid credentials.',
         ])->onlyInput('email');
     }
+
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('shipper.login'); // ✅ Proper named route
+    }
+
 }

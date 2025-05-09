@@ -79,7 +79,7 @@
 
             <h4 class="mb-3 text-black text-uppercase fw-bold">Shipper Log In</h4>
 
-            <form id="loginForm" method="POST" action="{{ route('login') }}">
+            <form id="loginForm" method="POST" action="{{ route('shipper.login') }}">
                 @csrf
 
                 <div class="mb-3">

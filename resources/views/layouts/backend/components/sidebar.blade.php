@@ -28,12 +28,33 @@
 
                 <li class="mt-1 menu-title">Dashboard</li>
 
+                @if (auth()->user()->hasRole('Admin'))
                 <li>
                     <a href="{{ route('home') }}">
                         <i class="fas fa-tachometer-alt"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
+                @endif
+
+                @if (auth()->user()->hasRole('Shipper'))
+                <li>
+                    <a href="{{ route('shipper.dashboard') }}">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                @endif
+
+                @if (auth()->user()->hasRole('Carrier'))
+                 <li>
+                    <a href="{{ route('carrier.dashboard') }}">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                @endif
+
 
                 <li class="mt-1 menu-title">Menu</li>
 
@@ -200,13 +221,25 @@
                         <span>Help Support</span>
                     </a>
                 </li>
+                @hasrole('Shipper')
 
                 <li>
-                    <a href="{{ route('profile.list') }}">
+                    <a href="{{ route('shipper.profile.list') }}">
                         <i class="fas fa-cog"></i>
                         <span>Settings</span>
                     </a>
                 </li>
+                @endhasrole
+
+                @hasrole('Carrier')
+
+                <li>
+                    <a href="{{ route('carrier.profile.list') }}">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+                @endhasrole
 
 
                 {{-- Logout (Uncomment if needed) --}}
