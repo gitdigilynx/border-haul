@@ -21,6 +21,7 @@ use App\Http\Controllers\Backend\Admin\ShippperUserController;
 use App\Http\Controllers\Backend\Admin\RolesPermissionController;
 use App\Http\Controllers\Backend\Carrier\CarrierDashboardController;
 use App\Http\Controllers\Backend\Carrier\CarrierProfileController;
+use App\Http\Controllers\Backend\Shipper\DeliveryController;
 use App\Http\Controllers\Backend\Shipper\ShipperDashboardController;
 use App\Http\Controllers\Backend\Shipper\ShipperProfileController;
 
@@ -173,6 +174,15 @@ Route::middleware(['auth'])->group(function () {
                 Route::post('/profile/{id}', 'update')->name('profile.update');
                 Route::delete('/profile', 'destroy')->name('profile.destroy');
             });
+
+        Route::controller(DeliveryController::class)->group(function () {
+            Route::get('/deliveries', 'index')->name('deliveries');
+            Route::get('/deliveries/create', 'create')->name('deliveries.create');
+            Route::post('/deliveries', 'store')->name('deliveries.store');
+            Route::get('/deliveries/{id}/edit', 'edit')->name('deliveries.edit');
+            Route::get('/deliveries/{id}', 'show')->name('deliveries.show');
+            Route::put('/deliveries/{id}', 'update')->name('deliveries.update');
+        });
         // Sub Users
         Route::controller(SubUserController::class)->group(function () {
             Route::get('/sub-users', 'index')->name('sub-users');

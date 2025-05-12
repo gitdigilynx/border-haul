@@ -23,7 +23,6 @@ class Carrier extends Model
         'dot',
         'mc',
         'scac_code',
-        'mexico',
         'caat_code',
         'service_category',
         'phone',

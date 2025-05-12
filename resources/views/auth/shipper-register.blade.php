@@ -11,6 +11,10 @@
     <link rel="shortcut icon" href="{{ asset('assets/images/favicon.ico') }}">
     <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style" />
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+   <link href="https://fonts.cdnfonts.com/css/staatliches" rel="stylesheet">
     <style>
         .is-invalid {
             border-color: #dc3545;
@@ -20,8 +24,68 @@
             color: #dc3545;
             font-size: 0.875em;
         }
+        .reg-h4{
+            font-weight: 400 !important;
+            font-size: 28px;
+            line-height: 100%;
+            color: #111827 !important;
+        }
+        input,select{
+            padding: 16px 30px 16px 30px !important;
+            border-radius: 8px !important;
+            }
+        button{
+            padding: 16px 30px 16px 30px !important;
+            border-radius: 10px !important;
+            font-family: Poppins;
+            font-weight: 600 !important;
+            font-size: 16px !important;
+        }
+        button:hover{
+            background-color: #093C7C !important;
+        }
+        label{
+            font-weight: 400 !important;
+            font-size: 16px !important;
+            color: #202225 !important;
+             font-family: staatliches;
+        }
+        h4{
+            font-weight: 400 !important;
+            font-size: 28px !important;
+        }
+        .custom-font{
+            font-family: staatliches;
+        }
+        .custom-font2{
+        font-family: Plus Jakarta Sans;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 35px;
 
+    }
+    .subline{
+        font-family: Poppins, sans-serif;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 26px;
+        letter-spacing: 1.2px;
+        word-spacing: 1px;
 
+    }
+     .loginbg{
+        background: url('{{ asset('assets/shipper/shipper_login.png') }}') no-repeat top center;
+        background-size: cover;
+        /* max-height: 100vh; */
+        /* width: 100%; */
+        border-radius: 0 0 20px 20px;
+    }
+    .question{
+        color: #68696C !important;
+    }
+    .question a{
+        color: #093C7C !important;
+    }
     @media (max-width: 767px) {
         /* Adjust the padding on mobile */
         .p-md-5 {
@@ -68,16 +132,16 @@
     </style>
 </head>
 
-<div class="bg-white container-fluid d-flex align-items-center justify-content-center min-vh-100">
-    <div class="overflow-hidden row" style="max-width: 1000px;">
+<div class="pt-4 pb-4 bg-white container-fluid d-flex align-items-center justify-content-center min-vh-100">
+    <div class="overflow-hidden row justify-content-around" style="/*max-width: 1000px;*/">
 
         <!-- Left Column: Login Form -->
-        <div class="p-4 col-12 col-md-6 d-flex flex-column justify-content-center">
-            <div class="mb-4">
+        <div class="p-4 col-12 col-md-6 pt-md-0 p-md-5 d-flex flex-column ">
+            <div class="mb-5">
                 <img src="{{ asset('assets/images/logo/Border-Haul-logo.png') }}" alt="Logo" height="70">
             </div>
 
-            <h4 class="mb-3 text-black text-uppercase fw-bold">Join Us & Ship Smarter</h4>
+            <h4 class="mb-3 text-black text-uppercase fw-bold reg-h4 custom-font">Join Us & Ship Smarter</h4>
 
             <form id="registrationForm" method="POST" action="{{ route('shipper.register') }}" enctype="multipart/form-data">
                 @csrf
@@ -147,20 +211,19 @@
 
                 <!-- Submit Button -->
                 <div class="mb-3">
-                    <button class="btn btn-primary w-100" type="submit">Register</button>
+                    <button class="btn btn-primary w-100" type="submit">Sign Up</button>
                 </div>
             </form>
 
-            <div class="mt-auto text-center">
-                <p>
-                    Transfer Courier Partner?
-                    <a href="#" class="mb-2 text-primary">Create Carrier Partner account</a>
+            <div class="mb-3 text-center text-muted">
+                <p class="mb-0 question">Already have an account?
+                    <a class="text-primary ms-2 fw-medium" href="{{ route('shipper.login') }}">Login here</a>
                 </p>
             </div>
         </div>
 
         <!-- Right Column: Image & Caption -->
-        <div class="col-12 col-md-6 d-flex align-items-center justify-content-center" style=" padding-right: 50px;">
+        {{-- <div class="col-12 col-md-6 d-flex align-items-center justify-content-center" style=" padding-right: 50px;">
             <div class="position-relative w-100" style="max-height: 100vh;">
                 <img src="{{ asset('assets/shipper/shipper_login.png') }}" alt="World Trade Bridge"
                     class="img-fluid w-100 rounded-4" style="object-fit: cover;">
@@ -172,6 +235,19 @@
                     <p class="mb-0 small">Manage, track, and deliver shipments with powerful tools built for speed, reliability, and control.</p>
                 </div>
             </div>
+        </div> --}}
+                <!-- Right Column: Image & Caption -->
+        <div class="mt-4 col-12 col-md-5 d-flex align-items-end justify-content-center mt-md-0 loginbg" style="/*padding-right: 50px;*/ ">
+            {{-- <div class="position-relative w-100" style="/*max-height: 90vh;*/">
+                <img src="{{ asset('assets/shipper/loginNewglob.png') }}" alt="World Trade Bridge"
+                    class="img-fluid w-100 rounded-4" style="object-fit: contain; max-width:690px;max-height: 800px;"> --}}
+
+                <div class="bottom-0 p-4 m-3 text-white start-0" style="background: linear-gradient(180deg, rgba(106, 106, 106, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%);backdrop-filter: blur(16.600000381469727px);border-radius: 10px; max-width: 95%;">
+                    <img src="{{ asset('assets/shipper/shipper_logo.png') }}" alt="Logo" class="mb-2" style="height: 30px;">
+                    <h5 class="fw-bold custom-font2">Ship with Confidence.</h5>
+                    <p class="mb-0 small subline">Manage, track, and deliver shipments with powerful tools built for speed, reliability, and control.</p>
+                </div>
+
         </div>
     </div>
 </div>

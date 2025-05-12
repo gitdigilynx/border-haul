@@ -20,7 +20,165 @@
                 </div>
             </div>
 
+            <div class="row">
+                <div class="col-12">
+                        <div class="card">
+                            <div class="pt-0 card-body">
+                                <ul class="pt-2 nav nav-underline border-bottom" id="pills-tab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <a class="p-2 nav-link active" id="profile_about_tab" data-bs-toggle="tab" href="#profile_about" role="tab">
+                                            <span class="d-block d-sm-none"><i class="mdi mdi-information"></i></span>
+                                            <span class="d-none d-sm-block">About</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="p-2 nav-link" id="profile_setting_tab" data-bs-toggle="tab" href="#profile_setting" role="tab">
+                                            <span class="d-block d-sm-none"><i class="mdi mdi-sitemap-outline"></i></span>
+                                            <span class="d-none d-sm-block">Setting</span>
+                                        </a>
+                                    </li>
+                                </ul>
 
+                                <div class="bg-white tab-content text-muted">
+
+                                    <div class="pt-4 tab-pane fade show active" id="profile_about" role="tabpanel">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <div class="border card">
+                                                    <div class="card-header">
+                                                        <h4 class="mb-0 card-title">Personal Information</h4>
+                                                    </div>
+                                                    <form method="post" action="{{ route('carrier.profile.update', Auth::user()->id) }}">
+                                                        @csrf
+                                                        <div class="card-body">
+                                                            <div class="row">
+
+                                                                <div class="mb-3 col-lg-6">
+                                                                    <label class="form-label">Company Name</label>
+                                                                    <input class="form-control" type="text" name="name" value="{{ Auth::user()->name }}">
+                                                                </div>
+
+                                                                <div class="mb-3 col-lg-6">
+                                                                    <label class="form-label">Cell Phone</label>
+                                                                    <input class="form-control" type="number" name="phone" value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->phone : '' }}">
+                                                                </div>
+
+                                                                <div class="mb-3 col-lg-6">
+                                                                    <label class="form-label">Email Address</label>
+                                                                    <div class="input-group">
+                                                                        <span class="input-group-text"><i class="mdi mdi-email"></i></span>
+                                                                        <input type="text" class="form-control" name="email" value="{{ Auth::user()->email }}" disabled>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div class="mb-3 col-lg-6">
+                                                                    <label class="form-label">Company Address</label>
+                                                                    <input class="form-control" type="text" name="company_address" value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->company_address : '' }}">
+                                                                </div>
+
+                                                                <div class="mb-3 col-lg-6">
+                                                                    <label class="form-label">Service Category</label>
+                                                                    <input class="form-control" type="text" name="service_category" value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->service_category : '' }}">
+                                                                </div>
+
+                                                                <div class="mb-3 col-lg-6">
+                                                                    <label class="form-label">Country</label>
+                                                                    <input class="form-control" type="text" name="country" value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->country : '' }}">
+                                                                </div>
+
+                                                                <div class="mb-3 col-lg-6">
+                                                                    <label class="form-label">Authority</label>
+                                                                    <input class="form-control" type="text" name="authority" value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->authority : '' }}">
+                                                                </div>
+
+                                                                <div class="mb-3 col-lg-6">
+                                                                    <label class="form-label">DOT</label>
+                                                                    <input class="form-control" type="text" name="dot" value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->dot : '' }}">
+                                                                </div>
+
+                                                                <div class="mb-3 col-lg-6">
+                                                                    <label class="form-label">MC</label>
+                                                                    <input class="form-control" type="text" name="mc" value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->mc : '' }}">
+                                                                </div>
+
+                                                                <div class="mb-3 col-lg-6">
+                                                                    <label class="form-label">SCAC Code</label>
+                                                                    <input class="form-control" type="number" name="scac_code" value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->scac_code : '' }}">
+                                                                </div>
+
+                                                                <div class="mb-3 col-lg-6">
+                                                                    <label class="form-label">CAAT Code</label>
+                                                                    <input class="form-control" type="text" name="caat_code" value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->caat_code : '' }}">
+                                                                </div>
+
+
+                                                                <div class="mb-3 col-lg-6">
+                                                                    <label class="form-label">Role</label>
+                                                                    <input class="form-control" type="text" value="{{ Auth::user()->role }}" disabled>
+                                                                </div>
+
+                                                                <div class="text-left col-lg-12">
+                                                                    <button type="submit" class="mb-2 btn btn-primary">Update Information</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Setting Tab -->
+                                    <div class="pt-4 tab-pane fade" id="profile_setting" role="tabpanel">
+                                        <div class="d-flex justify-content-center"> <!-- Center content -->
+                                            <div class="col-lg-6 col-xl-6">
+                                                <div class="mb-0 border card">
+                                                    <div class="card-header">
+                                                        <h4 class="mb-0 text-center card-title">Change Password</h4>
+                                                    </div>
+                                                    <form method="post" action="{{ route('password.update') }}">
+                                                        @csrf
+                                                        @method('put')
+                                                        <div class="card-body">
+                                                            <div class="mb-3 form-group row">
+                                                                <label class="form-label">Old Password</label>
+                                                                <div class="col-lg-12 col-xl-12">
+                                                                    <input class="form-control" type="password" name="current_password" placeholder="Old Password">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="mb-3 form-group row">
+                                                                <label class="form-label">New Password</label>
+                                                                <div class="col-lg-12 col-xl-12">
+                                                                    <input class="form-control" type="password" name="password" placeholder="New Password">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="mb-3 form-group row">
+                                                                <label class="form-label">Confirm Password</label>
+                                                                <div class="col-lg-12 col-xl-12">
+                                                                    <input class="form-control" type="password" name="password_confirmation" placeholder="Confirm Password">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group row">
+                                                                <div class="col-lg-12 col-xl-12">
+                                                                    <button type="submit" class="btn btn-primary">Change Password</button>
+                                                                    <button type="button" class="btn btn-danger">Cancel</button>
+                                                                </div>
+                                                            </div>
+                                                        </div><!-- end card-body -->
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!-- end tab-content -->
+                            </div>
+                    </div>
+                </div>
+        </div>
+{{--
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -61,22 +219,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            {{-- <div class="mb-3 form-group row">
-                                                                <label class="form-label">Last Name</label>
-                                                                <div class="col-lg-12 col-xl-12">
-                                                                    <input class="form-control" type="text" value="Buncle">
-                                                                </div>
-                                                            </div> --}}
-                                                            {{-- <div class="mb-3 form-group row">
-                                                                <label class="form-label">Contact Phone</label>
-                                                                <div class="col-lg-12 col-xl-12">
-                                                                    <div class="input-group">
-                                                                        <span class="input-group-text"><i class="mdi mdi-phone-outline"></i></span>
-                                                                        <input class="form-control" type="text" placeholder="Phone" aria-describedby="basic-addon1"
-                                                                        value="{{ Auth::user()->role == 'shipper' ? Auth::user()->shipper->phone : (Auth::user()->role == 'carrier' ? Auth::user()->carrier->phone : (Auth::user()->role == 'admin' ? Auth::user()->admin->phone : '')) }}">
-                                                                    </div>
-                                                                </div>
-                                                            </div> --}}
+
 
                                                             <div class="mb-3 form-group row">
                                                                 <label class="form-label">Email Address</label>
@@ -88,20 +231,7 @@
                                                                 </div>
                                                             </div>
 
-                                                            {{-- <div class="mb-3 form-group row">
-                                                                <label class="form-label">City</label>
-                                                                <div class="col-lg-12 col-xl-12">
-                                                                    <input class="form-control" type="text" value="{{ Auth::user()->company_name }}">
-                                                                </div>
-                                                            </div> --}}
 
-                                                            {{-- <div class="mb-3 form-group row">
-                                                                <label class="form-label">Address</label>
-                                                                <div class="col-lg-12 col-xl-12">
-                                                                    <input class="form-control" type="text"
-                                                                    value="{{ Auth::user()->role == 'shipper' ? Auth::user()->shipper->company_address : (Auth::user()->role == 'carrier' ? Auth::user()->carrier->company_address : (Auth::user()->role == 'admin' ? Auth::user()->admin->company_address : '')) }}">
-                                                                </div>
-                                                            </div> --}}
 
                                                             <div class="mb-3 form-group row">
                                                                 <label class="form-label">Role</label>
@@ -176,7 +306,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> --}}
 
         </div>
         <!-- container-fluid -->

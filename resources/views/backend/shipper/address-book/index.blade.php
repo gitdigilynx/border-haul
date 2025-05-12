@@ -8,38 +8,30 @@
         <div class="container-fluid">
 
             <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
+
                 <div class="flex-grow-1">
-                    <h4 class="m-0 fs-18 fw-semibold">Address Book</h4>
+                    <h4 class="m-0 fs-26" style="font-family: 'Staatliches', sans-serif; color: black;">ADDRESS BOOK</h4>
                 </div>
 
-                <div class="text-end">
-                    <ol class="py-0 m-0 breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">AddressBook</li>
+                <div class="card-header d-flex justify-content-between align-items-center" style="border-bottom: none;">
 
-                    </ol>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addressBook"
+                    style="background-color: #06367B; color: white; border: none;  font-size: 1rem; font-weight: bold; border-radius: 6px; ">
+                    + Add New Address
+                    </button>
                 </div>
 
             </div>
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0 card-title">Address Book List</h5>
-                            {{-- <button type="button" class="btn btn-success">Add Users</button> --}}
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addressBook">
-                               + Add New Address
-                            </button>
-                        </div>
-                        <div class="card-body responsive-datatable">
-                            <table id="datatable-basic" class="table table-bordered dt-responsive nowrap table-flush">
+                        <div class="card-body">
+                            <table id="responsive-datatable" class="table table-bordered dt-responsive nowrap">
                                 <thead>
                                     <tr>
                                         <th>Company Name</th>
                                         <th>Address</th>
-                                        <th>County</th>
-                                        <th>Type</th>
-                                        <th>Phone</th>
+                                        <th>Phone#</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -49,8 +41,8 @@
                                         {{-- <td>{{ $loop->iteration }}</td> --}}
                                         <td>{{ $address->name }}</td>
                                         <td>{{ $address->street_address }}</td>
-                                        <td>{{ $address->country }}</td>
-                                        <td>{{ $address->type }}</td>
+                                        {{-- <td>{{ $address->country }}</td>
+                                        <td>{{ $address->type }}</td> --}}
                                         <td>{{ $address->phone }}</td>
                                         <td>
                                             <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-primary"

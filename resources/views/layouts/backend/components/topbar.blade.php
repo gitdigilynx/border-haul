@@ -12,12 +12,11 @@
                 </li> --}}
             </ul>
 
-            <ul class="mb-0 list-unstyled topnav-menu d-flex align-items-center">
+            <ul class="list-unstyled topnav-menu d-flex align-items-center">
 
                 <li class="d-none d-lg-block">
                     <div class="position-relative topbar-search">
-                        <input type="text" class="bg-opacity-75 form-control bg-light border-light ps-4"
-                            placeholder="Search...">
+                        <input style="border-radius: 10px" type="text" class="bg-white form-control bg-light ps-4" placeholder="Search...">
                         <i
                             class="mdi mdi-magnify fs-16 position-absolute text-muted top-50 translate-middle-y ms-2"></i>
                     </div>

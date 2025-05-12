@@ -61,7 +61,7 @@ class RegisteredUserController extends Controller
              Auth::login($user);
 
             if ($user->role === 'Shipper') {
-                return redirect()->route('shipper.dashboard');
+                return redirect()->route('shipper.deliveries');
             }
 
             return redirect(RouteServiceProvider::HOME);
@@ -85,7 +85,7 @@ class RegisteredUserController extends Controller
 
             $user = Auth::user();
             if ($user->role === RoleEnum::SHIPPER->value) {
-                return redirect()->route('shipper.dashboard')->with('success', 'Login successful');
+                return redirect()->route('shipper.deliveries')->with('success', 'Login successful');
 
             }
             return redirect('/')->with('success', 'Login successful');

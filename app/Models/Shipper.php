@@ -14,6 +14,7 @@ class Shipper extends Authenticatable
         'user_id',
         'company_name',
         'company_address',
+        'service_category',
         'phone',
     ];
 

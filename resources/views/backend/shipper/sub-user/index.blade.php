@@ -2,43 +2,34 @@
 @section('title', 'Users Listing')
 @section('content')
 <div class="content-page">
-    <div class="content">
-
         <!-- Start Content-->
         <div class="container-fluid">
-
             <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
                 <div class="flex-grow-1">
-                    <h4 class="m-0 fs-18 fw-semibold">Users</h4>
+                    <h4 class="m-0 fs-26" style="font-family: 'Staatliches', sans-serif; color: black;">COMPANY USERs</h4>
                 </div>
-
-                <div class="text-end">
-                    <ol class="py-0 m-0 breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Users</li>
-                    </ol>
+                <div class="card-header d-flex justify-content-between align-items-center" style="border-bottom: none;">
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#subUserModal"
+                    style="background-color: #06367B; color: white; border: none;  font-size: 1rem; font-weight: bold; border-radius: 6px; ">
+                       + Invite Users
+                    </button>
                 </div>
-
             </div>
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0 card-title">Users List</h5>
-                            {{-- <button type="button" class="btn btn-success">Add Users</button> --}}
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#subUserModal">
-                               + Invite User
-                            </button>
+                        <div class="card-header d-flex justify-content-between align-items-center" style="border-bottom: none;">
+                            <h3 style="font-family: 'Staatliches', sans-serif; color: black;font-size: 1.2rem; margin-bottom:-20px">Users</h3>
                         </div>
-                        <div class="card-body responsive-datatable">
-                            <table id="datatable-basic" class="table table-bordered dt-responsive nowrap table-flush">
+                        <div class="card-body">
+                            <table id="responsive-datatable" class="table table-bordered dt-responsive nowrap">
                                 <thead>
                                     <tr>
                                         {{-- <th>Sr #</th> --}}
-                                        <th>Name</th>
+                                        <th>Driver Name</th>
                                         <th>Email</th>
-                                        <th>Role</th>
-                                        <th>Status</th>
+                                        <th>User Role</th>
+                                        {{-- <th>Status</th> --}}
                                         <th>Action</th>
                                     </tr>
                                 </thead>
@@ -46,11 +37,11 @@
                                     @foreach ($subUsers as $user)
                                         <tr>
                                             {{-- <td>{{ $loop->iteration }}</td> --}}
-                                            <td>{{ $user->users->name }}</td>
+                                            <td>{{ $user->users->name }} {{ $user->users->last_name }}</td>
                                             <td>{{ $user->users->email }}</td>
                                             <td>{{ $user->users->role }}</td>
-                                            <td>
-                                           <form method="POST" action="{{ route('shipper.sub-users.toggleSubUser', $user->users->id) }}">
+                                            {{-- <td> --}}
+                                           {{-- <form method="POST" action="{{ route('shipper.sub-users.toggleSubUser', $user->users->id) }}">
                                                 @csrf
                                                 @method('PATCH')
                                                 <div class="form-check form-switch">
@@ -62,9 +53,9 @@
                                                         {{ $user->users->is_active ? 'Active' : 'Inactive' }}
                                                     </label>
                                                 </div>
-                                            </form>
+                                            </form> --}}
 
-                                                </td>
+                                                {{-- </td> --}}
                                             <td>
                                                   <!-- View Button -->
                                                 <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-primary"
@@ -74,17 +65,17 @@
                                                 </a>
 
                                                 <!-- Edit Button -->
-                                                <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-success"
+                                                {{-- <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-success"
                                                     data-bs-toggle="modal" data-id="{{ $user->id }}"
                                                     data-bs-target="#subShipperEditModal{{ $user->id }}">
                                                     <i class="p-1 text-white fa fa-edit text-secondary"></i>
-                                                </a>
+                                                </a> --}}
 
                                                 <!-- Delete Button -->
-                                                <a href="javascript:void(0);" class="p-0 mb-0 delete-user btn bg-danger rounded-circle"  data-id="{{ $user->id }}"
+                                                {{-- <a href="javascript:void(0);" class="p-0 mb-0 delete-user btn bg-danger rounded-circle"  data-id="{{ $user->id }}"
                                                         data-url="{{ route('shipper.sub-users.destroy', $user->id) }}">
                                                     <i class="p-1 text-white fa fa-trash"></i>
-                                                </a>
+                                                </a> --}}
 
                                                 {{-- <a href="{{ route('sub-users.edit', $user->id) }}" class="p-0 mb-0 rounded-circle btn bg-success">
                                                     <i class="p-1 text-white fa fa-edit text-secondary"></i>
@@ -93,9 +84,10 @@
                                         </tr>
                                     @endforeach
                                 </tbody>
-
                             </table>
                         </div>
+
+
 
                     </div>
                 </div>

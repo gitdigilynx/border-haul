@@ -20,164 +20,137 @@
                 </div>
             </div>
 
-
             <div class="row">
                 <div class="col-12">
-                    <div class="card">
-                        <div class="pt-0 card-body">
-                            <ul class="pt-2 nav nav-underline border-bottom" id="pills-tab" role="tablist">
-                                <li class="nav-item" role="presentation">
-                                    <a class="p-2 nav-link active" id="setting_tab" data-bs-toggle="tab" href="#profile_setting" role="tab">
-                                        <span class="d-block d-sm-none"><i class="mdi mdi-information"></i></span>
-                                        <span class="d-none d-sm-block">Setting</span>
-                                    </a>
-                                </li>
+                        <div class="card">
+                            <div class="pt-0 card-body">
+                                <ul class="pt-2 nav nav-underline border-bottom" id="pills-tab" role="tablist">
+                                    <li class="nav-item" role="presentation">
+                                        <a class="p-2 nav-link active" id="profile_about_tab" data-bs-toggle="tab" href="#profile_about" role="tab">
+                                            <span class="d-block d-sm-none"><i class="mdi mdi-information"></i></span>
+                                            <span class="d-none d-sm-block">About</span>
+                                        </a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="p-2 nav-link" id="profile_setting_tab" data-bs-toggle="tab" href="#profile_setting" role="tab">
+                                            <span class="d-block d-sm-none"><i class="mdi mdi-sitemap-outline"></i></span>
+                                            <span class="d-none d-sm-block">Setting</span>
+                                        </a>
+                                    </li>
+                                </ul>
 
-                            </ul>
+                                <div class="bg-white tab-content text-muted">
 
-                            <div class="bg-white tab-content text-muted">
-                                <div class="pt-4 tab-pane active" id="profile_setting" role="tabpanel">
-                                    <div class="row">
+                                    <div class="pt-4 tab-pane fade show active" id="profile_about" role="tabpanel">
                                         <div class="row">
-                                            <div class="col-lg-6 col-xl-6">
+                                            <div class="col-lg-12">
                                                 <div class="border card">
-
                                                     <div class="card-header">
-                                                        <div class="row align-items-center">
-                                                            <div class="col">
-                                                                <h4 class="mb-0 card-title">Personal Information</h4>
-                                                            </div><!--end col-->
-                                                        </div>
+                                                        <h4 class="mb-0 card-title">Personal Information</h4>
                                                     </div>
-                                                  <form method="post" action="{{ route('shipper.profile.update', Auth::user()->id) }}" class="mt-6 space-y-6">
-
+                                                    <form method="post" action="{{ route('shipper.profile.update', Auth::user()->id) }}">
                                                         @csrf
-
                                                         <div class="card-body">
-                                                            <div class="mb-3 form-group row">
-                                                                <label class="form-label">Company Name</label>
-                                                                <div class="col-lg-12 col-xl-12">
-                                                                    <input class="form-control" type="text" name="name"  value="{{ Auth::user()->name }}">
-                                                                </div>
-                                                            </div>
+                                                            <div class="row">
 
-                                                            {{-- <div class="mb-3 form-group row">
-                                                                <label class="form-label">Last Name</label>
-                                                                <div class="col-lg-12 col-xl-12">
-                                                                    <input class="form-control" type="text" value="Buncle">
+                                                                <div class="mb-3 col-lg-6">
+                                                                    <label class="form-label">Company Name</label>
+                                                                    <input class="form-control" type="text" name="name" value="{{ Auth::user()->name }}">
                                                                 </div>
-                                                            </div> --}}
-                                                            {{-- <div class="mb-3 form-group row">
-                                                                <label class="form-label">Contact Phone</label>
-                                                                <div class="col-lg-12 col-xl-12">
-                                                                    <div class="input-group">
-                                                                        <span class="input-group-text"><i class="mdi mdi-phone-outline"></i></span>
-                                                                        <input class="form-control" type="text" placeholder="Phone" aria-describedby="basic-addon1"
-                                                                        value="{{ Auth::user()->role == 'shipper' ? Auth::user()->shipper->phone : (Auth::user()->role == 'carrier' ? Auth::user()->carrier->phone : (Auth::user()->role == 'admin' ? Auth::user()->admin->phone : '')) }}">
-                                                                    </div>
-                                                                </div>
-                                                            </div> --}}
 
-                                                            <div class="mb-3 form-group row">
-                                                                <label class="form-label">Email Address</label>
-                                                                <div class="col-lg-12 col-xl-12">
+                                                                <div class="mb-3 col-lg-6">
+                                                                    <label class="form-label">Cell Phone</label>
+                                                                    <input class="form-control" type="text" name="phone" value="{{ Auth::user()->role == 'Shipper' ? Auth::user()->shipper->phone : '' }}">
+                                                                </div>
+
+                                                                <div class="mb-3 col-lg-6">
+                                                                    <label class="form-label">Email Address</label>
                                                                     <div class="input-group">
                                                                         <span class="input-group-text"><i class="mdi mdi-email"></i></span>
-                                                                        <input type="text" class="form-control" name="email" value="{{ Auth::user()->email }}" placeholder="Email" aria-describedby="basic-addon1" disabled>
+                                                                        <input type="text" class="form-control" name="email" value="{{ Auth::user()->email }}" disabled>
                                                                     </div>
+                                                                </div>
+
+                                                                <div class="mb-3 col-lg-6">
+
+                                                                    <label class="form-label">Company Address</label>
+                                                                    <input class="form-control" type="text" name="company_address" value="{{ Auth::user()->role == 'Shipper' ? Auth::user()->shipper->company_address : '' }}">
+                                                                </div>
+
+                                                                <div class="mb-3 col-lg-6">
+                                                                    <label class="form-label">Service Category</label>
+                                                                    <input class="form-control" type="text" name="service_category" value="{{ Auth::user()->role == 'Shipper' ? Auth::user()->shipper->service_category : '' }}">
+                                                                </div>
+
+
+                                                                <div class="mb-3 col-lg-6">
+                                                                    <label class="form-label">Role</label>
+                                                                    <input class="form-control" type="text" value="{{ Auth::user()->role }}" disabled>
+                                                                </div>
+
+                                                                <div class="text-left col-lg-12">
+                                                                    <button type="submit" class="mb-2 btn btn-primary">Update Information</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- Setting Tab -->
+                                    <div class="pt-4 tab-pane fade" id="profile_setting" role="tabpanel">
+                                        <div class="d-flex justify-content-center"> <!-- Center content -->
+                                            <div class="col-lg-6 col-xl-6">
+                                                <div class="mb-0 border card">
+                                                    <div class="card-header">
+                                                        <h4 class="mb-0 text-center card-title">Change Password</h4>
+                                                    </div>
+                                                    <form method="post" action="{{ route('password.update') }}">
+                                                        @csrf
+                                                        @method('put')
+                                                        <div class="card-body">
+                                                            <div class="mb-3 form-group row">
+                                                                <label class="form-label">Old Password</label>
+                                                                <div class="col-lg-12 col-xl-12">
+                                                                    <input class="form-control" type="password" name="current_password" placeholder="Old Password">
                                                                 </div>
                                                             </div>
 
-                                                            {{-- <div class="mb-3 form-group row">
-                                                                <label class="form-label">City</label>
+                                                            <div class="mb-3 form-group row">
+                                                                <label class="form-label">New Password</label>
                                                                 <div class="col-lg-12 col-xl-12">
-                                                                    <input class="form-control" type="text" value="{{ Auth::user()->company_name }}">
+                                                                    <input class="form-control" type="password" name="password" placeholder="New Password">
                                                                 </div>
-                                                            </div> --}}
-
-                                                            {{-- <div class="mb-3 form-group row">
-                                                                <label class="form-label">Address</label>
-                                                                <div class="col-lg-12 col-xl-12">
-                                                                    <input class="form-control" type="text"
-                                                                    value="{{ Auth::user()->role == 'shipper' ? Auth::user()->shipper->company_address : (Auth::user()->role == 'carrier' ? Auth::user()->carrier->company_address : (Auth::user()->role == 'admin' ? Auth::user()->admin->company_address : '')) }}">
-                                                                </div>
-                                                            </div> --}}
+                                                            </div>
 
                                                             <div class="mb-3 form-group row">
-                                                                <label class="form-label">Role</label>
+                                                                <label class="form-label">Confirm Password</label>
                                                                 <div class="col-lg-12 col-xl-12">
-                                                                    <input class="form-control" type="text" value="{{ Auth::user()->role}}" disabled>
+                                                                    <input class="form-control" type="password" name="password_confirmation" placeholder="Confirm Password">
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group row">
                                                                 <div class="col-lg-12 col-xl-12">
-                                                                    <button type="submit" class="mb-2 btn btn-primary mb-md-0">Update Information</button>
+                                                                    <button type="submit" class="btn btn-primary">Change Password</button>
+                                                                    <button type="button" class="btn btn-danger">Cancel</button>
                                                                 </div>
                                                             </div>
-
-                                                        </div><!--end card-body-->
+                                                        </div><!-- end card-body -->
                                                     </form>
                                                 </div>
                                             </div>
-
-                                                <div class="col-lg-6 col-xl-6">
-                                                    <div class="mb-0 border card">
-
-                                                        <div class="card-header">
-                                                            <div class="row align-items-center">
-                                                                <div class="col">
-                                                                    <h4 class="mb-0 card-title">Change Password</h4>
-                                                                </div><!--end col-->
-                                                            </div>
-                                                        </div>
-                                                        <form id="#updatePassword" method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
-                                                            @csrf
-                                                            @method('put')
-                                                            <div class="mb-0 card-body">
-                                                                <div class="mb-3 form-group row">
-                                                                    <label class="form-label">Old Password</label>
-                                                                    <div class="col-lg-12 col-xl-12">
-                                                                        <input class="form-control" type="password" name="current_password" placeholder="Old Password">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-3 form-group row">
-                                                                    <label class="form-label">New Password</label>
-                                                                    <div class="col-lg-12 col-xl-12">
-                                                                        <input class="form-control" type="password" name="password" placeholder="New Password">
-                                                                        <div class="invalid-feedback"></div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="mb-3 form-group row">
-                                                                    <label class="form-label">Confirm Password</label>
-                                                                    <div class="col-lg-12 col-xl-12">
-                                                                        <input class="form-control" type="password" name="password_confirmation" placeholder="Confirm Password">
-                                                                        <div class="invalid-feedback"></div>
-
-                                                                    </div>
-                                                                </div>
-
-                                                                <div class="form-group row">
-                                                                    <div class="col-lg-12 col-xl-12">
-                                                                        <button type="submit" class="mb-2 btn btn-primary mb-md-0">Change Password</button>
-                                                                        <button type="button" class="btn btn-danger">Cancel</button>
-                                                                    </div>
-                                                                </div>
-
-                                                            </div><!--end card-body-->
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </form>
                                         </div>
                                     </div>
-                                </div> <!-- end education -->
-                            </div> <!-- Tab panes -->
-                        </div>
+
+                                </div><!-- end tab-content -->
+                            </div>
+
                     </div>
                 </div>
-            </div>
-
         </div>
         <!-- container-fluid -->
     </div>

@@ -17,7 +17,105 @@
 
     <!-- Icons -->
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+   <link href="https://fonts.cdnfonts.com/css/staatliches" rel="stylesheet">
+   <!-- Normalize.css: keeps useful defaults but normalizes the rest -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css" />
+
 <style>
+    /* Custom styles for the login page */
+    .forgot-pwd {
+        text-decoration: none;
+        color: #093C7C !important;
+        font-family: poppins, sans-serif;
+        font-weight: 400;
+        font-size: 14px;
+        letter-spacing: 0.9px;
+    }
+    input{
+       padding: 16px 30px 16px 30px !important;
+        border-radius: 8px !important;
+    }
+    button{
+        padding: 16px 30px 16px 30px !important;
+        border-radius: 10px !important;
+        font-family: Poppins;
+        font-weight: 600;
+        font-size: 16px;
+    }
+    button:hover{
+        background-color: #093C7C !important;
+    }
+    label{
+        font-weight: 400 !important;
+        font-size: 16px !important;
+        color: #202225 !important;
+    }
+    h4{
+        font-weight: 400 !important;
+        font-size: 28px !important;
+    }
+    .custom-font{
+        font-family: staatliches;
+    }
+    .question{
+        color: #68696C !important;
+    }
+    .question a{
+        color: #093C7C !important;
+    }
+    .custom-font2{
+        font-family: Plus Jakarta Sans;
+        font-weight: 700;
+        font-size: 24px;
+        line-height: 35px;
+
+    }
+    .subline{
+        font-family: Poppins, sans-serif;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 26px;
+        letter-spacing: 1.2px;
+        word-spacing: 1px;
+
+    }
+    .loginbg{
+        background: url('{{ asset('assets/shipper/shipper_login.png') }}') no-repeat top center;
+        background-size: cover;
+        /* max-height: 100vh; */
+        /* width: 100%; */
+        border-radius: 0 0 20px 20px;
+    }
+    .divider {
+    display: flex;
+    width: 12%;
+    align-self: center;
+    align-items: center;
+    text-align: center;
+    margin: 20px 0;
+    }
+    .divider span {
+        font-family: Poppins , sans-serif;
+        color: #68696C;
+        font-weight: 400;
+        font-size: 16px;
+    }
+    .divider::before,
+    .divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #68696C;
+    }
+
+    .divider:not(:empty)::before {
+    margin-right: 5px;
+    }
+    .divider:not(:empty)::after {
+    margin-left: 5px;
+    }
     @media (max-width: 767px) {
         /* Adjust the padding on mobile */
         .p-md-5 {
@@ -60,6 +158,7 @@
         .text-center {
             text-align: center !important;
         }
+
     }
 </style>
 
@@ -68,69 +167,70 @@
 <body class="bg-white">
 
 
-<div class="bg-white container-fluid d-flex align-items-center justify-content-center min-vh-100">
-    <div class="overflow-hidden row w-100 rounded-4" style="max-width: 1000px;">
+<div class="pt-4 pb-4 bg-white container-fluid d-flex align-items-center justify-content-center min-vh-100">
+    <div class="overflow-hidden row w-100 rounded-4 justify-content-around" style="/*max-width: 1000px;*/">
 
         <!-- Left Column: Login Form -->
-        <div class="p-4 col-12 col-md-6 p-md-5 d-flex flex-column justify-content-center">
-            <div class="mb-4">
+        <div class="p-4 col-12 col-md-6 pt-md-0 p-md-5 d-flex flex-column ">
+
+            <div class="mb-5 ">
                 <img src="{{ asset('assets/images/logo/Border-Haul-logo.png') }}" alt="Logo" height="70">
             </div>
-
-            <h4 class="mb-3 text-black text-uppercase fw-bold">Shipper Log In</h4>
+            <h4 class="mb-3 text-black text-uppercase custom-font">Shipper Log In</h4>
 
             <form id="loginForm" method="POST" action="{{ route('shipper.login') }}">
                 @csrf
 
                 <div class="mb-3">
-                    <label for="emailaddress" class="form-label">Email</label>
-                    <input class="form-control" type="email" id="emailaddress" name="email" placeholder="Enter Email Address" required>
+                    <label for="emailaddress" class="form-label custom-font">Email</label>
+                    <input class="form-control " type="email" id="emailaddress" name="email" placeholder="Enter Email Address" required>
                 </div>
 
                 <div class="mb-3">
-                    <label for="password" class="form-label">Password</label>
-                    <input class="form-control" type="password" id="password" name="password" placeholder="Enter Password" required>
+                    <label for="password" class="form-label custom-font">Password</label>
+                    <input class="form-control " type="password" id="password" name="password" placeholder="Enter Password" required>
                 </div>
 
                 @include('backend.components.alerts.errors')
 
                 <div class="flex-wrap mb-3 d-flex justify-content-between align-items-center">
-                    <div class="form-check">
+                    {{-- <div class="form-check">
                         <input type="checkbox" class="form-check-input" id="remember" name="remember">
                         <label class="form-check-label" for="remember">Remember me</label>
-                    </div>
-                    {{-- <a href="#" class="mt-2 text-muted mt-md-0">Forgot your password?</a> --}}
-                    <a href="{{ route('password.request') }}" class="mt-2 text-muted mt-md-0">Forgot your password?</a>
+                    </div> --}}
+                    <a href="#" class="mt-2 text-muted mt-md-0 forgot-pwd">Forgot your password?</a>
+                    {{-- <a href="{{ route('password.request') }}" class="mt-2 text-muted mt-md-0">Forgot your password?</a> --}}
                 </div>
 
                 <div class="mb-3">
                     <button class="btn btn-primary w-100" type="submit">Sign in</button>
                 </div>
             </form>
-
+            <div class="divider">
+            <span>or</span>
+            </div>
             <div class="text-center">
-                <p class="mb-1">Don't have a Shipper account?
+                <p class="mb-1 question">Don't have a Shipper account?
                     <a href="{{ route('shipper.register') }}" class="text-primary">Create Partner account</a>
                 </p>
-                <p class="mb-0">Transfer Courier Partner?
+                <p class="mb-0 question">Transfer Courier Partner?
                     <a href="{{ url('carrier/register') }}" class="text-primary">Create Carrier Partner account</a>
                 </p>
             </div>
         </div>
 
         <!-- Right Column: Image & Caption -->
-        <div class="mt-4 col-12 col-md-6 d-flex align-items-center justify-content-center mt-md-0" style="padding-right: 50px;">
-            <div class="position-relative w-100" style="max-height: 90vh;">
-                <img src="{{ asset('assets/shipper/shipper_login.png') }}" alt="World Trade Bridge"
-                    class="img-fluid w-100 rounded-4" style="object-fit: cover; max-height: 90vh;">
+        <div class="mt-4 col-12 col-md-5 d-flex align-items-end justify-content-center mt-md-0 loginbg" style="/*padding-right: 50px;*/ ">
+            {{-- <div class="position-relative w-100" style="/*max-height: 90vh;*/">
+                <img src="{{ asset('assets/shipper/loginNewglob.png') }}" alt="World Trade Bridge"
+                    class="img-fluid w-100 rounded-4" style="object-fit: contain; max-width:690px;max-height: 800px;"> --}}
 
-                <div class="bottom-0 p-3 m-3 text-white position-absolute start-0"
-                    style="background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(2px); border-radius: 10px; max-width: 85%;">
+                <div class="bottom-0 p-4 m-3 text-white start-0" style="background: linear-gradient(180deg, rgba(106, 106, 106, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%);backdrop-filter: blur(16.600000381469727px);border-radius: 10px; max-width: 95%;">
                     <img src="{{ asset('assets/shipper/shipper_logo.png') }}" alt="Logo" class="mb-2" style="height: 30px;">
-                    <h5 class="fw-bold">Ship with Confidence.</h5>
-                    <p class="mb-0 small">Manage, track, and deliver shipments with powerful tools built for speed, reliability, and control.</p>
+                    <h5 class="fw-bold custom-font2">Ship with Confidence.</h5>
+                    <p class="mb-0 small subline">Manage, track, and deliver shipments with powerful tools built for speed, reliability, and control.</p>
                 </div>
-            </div>
+
         </div>
 
     </div>
