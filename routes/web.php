@@ -25,12 +25,6 @@ use App\Http\Controllers\Backend\Shipper\ShipperDashboardController;
 use App\Http\Controllers\Backend\Shipper\ShipperProfileController;
 
 
-
-
-// ---------------------------
-// 🔐 Public Auth Routes
-// ---------------------------
-
 // Shipper Login
 
 // Shipper Register & Login
@@ -74,7 +68,7 @@ Route::middleware(['auth'])->group(function () {
         });
 
     // ---------------------------
-    // 🚢 Admin Routes
+    // Admin Routes
     // ---------------------------
  Route::prefix('admin')
     ->name('admin.')
@@ -165,7 +159,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // ---------------------------
-    // 🏢 Shipper Routes
+    // Shipper Routes
     // ---------------------------
     Route::prefix('shipper')->name('shipper.')->middleware(['role:' . RoleEnum::SHIPPER->value])->group(function () {
 
@@ -204,7 +198,7 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // ---------------------------
-    // 🚚 Carrier Routes
+    // Carrier Routes
     // ---------------------------
     Route::prefix('carrier')->name('carrier.')->middleware(['role:' . RoleEnum::CARRIER->value])->group(function () {
 

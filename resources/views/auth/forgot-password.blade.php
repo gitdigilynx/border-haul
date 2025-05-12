@@ -12,7 +12,7 @@
         <!-- Email Address -->
         <div>
             <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+            <x-text-input id="email" class="block w-full mt-1" type="email" name="email" :value="old('email')" required autofocus />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
 
@@ -46,20 +46,20 @@
 
     </head>
     <div class="account-page">
-        <div class="container-fluid min-vh-100 d-flex justify-content-center align-items-center p-0">
+        <div class="p-0 container-fluid min-vh-100 d-flex justify-content-center align-items-center">
             <div class="row w-100 justify-content-center">
 
                 <div class="col-xl-6">
                     <div class="row">
-                        <div class="col-md-8 mx-auto">
-                            <div class="card p-3 mb-0">
+                        <div class="mx-auto col-md-8">
+                            <div class="p-3 mb-0 card">
                                 <div class="card-body">
 
-                                    <div class="mb-0 border-0 p-md-5 p-lg-0 p-4">
+                                    <div class="p-4 mb-0 border-0 p-md-5 p-lg-0">
 
-                                        <div class="auth-title-section mb-3 text-center">
-                                            <h3 class="text-dark fs-20 fw-medium mb-2">Forget Password</h3>
-                                            <p class="text-dark text-capitalize fs-14 mb-0">Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.</p>
+                                        <div class="mb-3 text-center auth-title-section">
+                                            <h3 class="mb-2 text-dark fs-20 fw-medium">Forget Password</h3>
+                                            <p class="mb-0 text-dark text-capitalize fs-14">Forgot your password? No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.</p>
                                         </div>
 
                                         <div class="pt-0">
@@ -72,7 +72,7 @@
                                             <form method="POST" action="{{ route('password.email') }}">
                                                 @csrf
 
-                                                <div class="form-group mb-3">
+                                                <div class="mb-3 form-group">
                                                     <label for="email" class="form-label">Email address</label>
                                                     <input id="email" type="email" name="email" class="form-control @error('email') is-invalid @enderror"
                                                         value="{{ old('email') }}" required autofocus placeholder="Enter your email">
@@ -84,7 +84,7 @@
                                                     @enderror
                                                 </div>
 
-                                                <div class="form-group mb-0 row">
+                                                <div class="mb-0 form-group row">
                                                     <div class="col-12">
                                                         <div class="d-grid">
                                                             <button class="btn btn-primary" type="submit">
@@ -96,7 +96,7 @@
                                             </form>
 
                                             <div class="text-center text-muted">
-                                                <p class="mb-0">Change the mind  ?<a class='text-primary ms-2 fw-medium' href='{{ route('login') }}'>Back to Login</a></p>
+                                                <p class="mt-3">Change the mind  ?<a class='text-primary ms-2 fw-medium' href='{{ route('shipper.login') }}'>Back to Login</a></p>
                                             </div>
                                         </div>
                                     </div>

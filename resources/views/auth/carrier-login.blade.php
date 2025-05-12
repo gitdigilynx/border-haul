@@ -53,8 +53,8 @@
                         <input type="checkbox" class="form-check-input" id="checkbox-signin" name="remember">
                         <label class="form-check-label" for="checkbox-signin">{{ __('Remember me') }}</label>
                     </div>
-                    <a class="mt-2 text-muted fs-14 mt-md-0" href="#">Forgot password?</a>
-                    {{-- <a class="mt-2 text-muted fs-14 mt-md-0" href="{{ route('password.request') }}">Forgot password?</a> --}}
+                    {{-- <a class="mt-2 text-muted fs-14 mt-md-0" href="#">Forgot password?</a> --}}
+                    <a class="mt-2 text-muted fs-14 mt-md-0" href="{{ route('password.request') }}">Forgot password?</a>
                 </div>
 
                 <div class="mb-4 form-group row">
