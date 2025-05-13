@@ -136,7 +136,7 @@
                     <li>
                         <a href="{{ route('carrier.trucks') }}" class="tp-link">
                             <img src="{{ asset('assets/icons/carrier/truck.svg') }}" alt="Truck Icon" style="width: 25px; height: 25px; margin-right: 8px;">
-                            <span style="color:black; font-weight: 600;">Truck/Drivers</span>
+                            <span style="color:black; font-weight: 600;">Drivers/Truck</span>
                         </a>
                     </li>
 

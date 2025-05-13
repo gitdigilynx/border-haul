@@ -10,10 +10,6 @@
                 {{-- <li class="d-none d-lg-block">
                     <h5 class="mb-0">   <div>{{ Auth::user()->user_type }}</div></h5>
                 </li> --}}
-            </ul>
-
-            <ul class="list-unstyled topnav-menu d-flex align-items-center">
-
                 <li class="d-none d-lg-block">
                     <div class="position-relative topbar-search">
                         <input style="border-radius: 10px" type="text" class="bg-white form-control bg-light ps-4" placeholder="Search...">
@@ -21,6 +17,11 @@
                             class="mdi mdi-magnify fs-16 position-absolute text-muted top-50 translate-middle-y ms-2"></i>
                     </div>
                 </li>
+            </ul>
+
+            <ul class="list-unstyled topnav-menu d-flex align-items-center">
+
+
 
                 <li class="d-none d-sm-flex">
                     <button type="button" class="btn nav-link" data-toggle="fullscreen">

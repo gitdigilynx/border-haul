@@ -82,7 +82,7 @@ class CarrierRegisterController extends Controller
         Auth::login($user);
 
             if ($user->role === 'Carrier') {
-                return redirect()->route('carrier.dashboard');
+                return redirect()->route('carrier.carrier-users');
             }
 
         return redirect(RouteServiceProvider::HOME);
@@ -105,7 +105,7 @@ class CarrierRegisterController extends Controller
 
             $user = Auth::user();
             if ($user->role === RoleEnum::CARRIER->value) {
-                return redirect()->route('carrier.dashboard')->with('success', 'Login successful');
+                return redirect()->route('carrier.carrier-users')->with('success', 'Login successful');
             }
 
             return redirect('/')->with('success', 'Login successful');
