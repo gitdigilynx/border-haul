@@ -168,7 +168,7 @@
                         </div>
                         <div class="col-md-4">
                             <label for="country" class="form-label">Country <span class="text-danger">*</span></label>
-                            <select name="country" id="mexico" class="form-control" required>
+                            <select name="country" id="country" class="form-control" required>
                                 <option value="">Select Country</option>
                                 <option value="us">US</option>
                                 <option value="mexico">Mexico</option>

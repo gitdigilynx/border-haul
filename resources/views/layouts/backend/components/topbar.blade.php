@@ -1,4 +1,4 @@
-<div class="topbar-custom" style="margin-top: -70px;">
+<div class="topbar-custom" style="margin-top: -70px; background-color: #FAFAFA;" >
     <div class="container-fluid">
         <div class="d-flex justify-content-between">
             <ul class="mb-0 list-unstyled topnav-menu d-flex align-items-center">

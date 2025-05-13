@@ -39,13 +39,13 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<body data-menu-color="light" data-sidebar="default">
+<body data-menu-color="light" data-sidebar="default" style="background-color:white">
     @include('layouts.backend.components.topbar')
 
     <div class="wrapper">
         @include('layouts.backend.components.sidebar')
 
-        <div class="main-content">
+        <div class="bg-white main-content" >
             <div class="container-fluid">
               @flasher_render
                 {{-- SweetAlert Notifications --}}

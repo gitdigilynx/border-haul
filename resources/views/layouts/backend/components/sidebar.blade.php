@@ -1,5 +1,5 @@
 <!-- Left Sidebar Start -->
-<div class="app-sidebar-menu">
+<div class="app-sidebar-menu" style="background-color:#FAFAFA">
     <div class="h-100" data-simplebar>
 
         <!-- Sidebar -->
