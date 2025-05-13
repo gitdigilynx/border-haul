@@ -12,15 +12,17 @@ class AddressBookController extends Controller
 {
     public function index()
     {
-        $user = auth()->user();
+        // $user = auth()->user();
 
-        if (!$user || !$user->shipper) {
-            abort(403, 'No associated shipper found.');
-        }
-        $addressBook = AddressBook::with('shipper')
-            ->where('shipper_id', $user->shipper->id)
-            ->orderBy('created_at', 'desc')
-            ->get();
+        // if (!$user || !$user->shipper) {
+        //     abort(403, 'No associated shipper found.');
+        // }
+        // $addressBook = AddressBook::with('shipper')
+        //     ->where('shipper_id', $user->shipper->id)
+        //     ->orderBy('created_at', 'desc')
+        //     ->get();
+
+        $addressBook = AddressBook::get();
 
         return view('backend.shipper.address-book.index', compact('addressBook'));
     }

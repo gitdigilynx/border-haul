@@ -1,51 +1,6 @@
 @extends('layouts.backend.master')
 @section('title', 'Address Book List')
 @section('content')
-
-    <style>
-        .custom-pagination-btn {
-            border: 1px solid #d1d5db;
-            /* light gray */
-            border-radius: 8px;
-            font-weight: 500;
-            background-color: #fff;
-            color: #111827;
-            padding: 6px 16px;
-            font-size: 14px;
-            transition: all 0.2s ease-in-out;
-        }
-
-        .custom-pagination-btn:hover {
-            background-color: #f3f4f6;
-            /* light hover effect */
-            color: #000;
-        }
-
-        .custom-pagination-btn.disabled {
-            color: #9ca3af;
-            border-color: #d1d5db;
-            background-color: #fff;
-            pointer-events: none;
-            cursor: not-allowed;
-        }
-
-        .dataTables_paginate {
-            display: none !important;
-        }
-
-        @media (min-width: 992px) {
-            .responsive-search {
-                max-width: 140px !important;
-            }
-        }
-
-        @media (max-width: 991.98px) {
-            .responsive-search {
-                max-width: 300px !important;
-            }
-        }
-    </style>
-
     <div class="content-page">
         <div class="content">
 
@@ -72,24 +27,24 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-body">
-                                <div class="row align-items-center justify-content-between px-2">
+                                <div class="px-2 row align-items-center justify-content-between">
                                     <!-- Left: Company Details -->
-                                    <div class="col-md-6 col-12 mb-2 mb-md-0">
+                                    <div class="mb-2 col-md-6 col-12 mb-md-0">
                                         <h3 style="
                                         font-family: Poppins;
                                         font-weight: 600;
-                                        font-size: 20px;
+                                        font-size: 18px;
                                         line-height: 100%;
                                         letter-spacing: 0%;
                                         color: #000000;
                                     "
-                                            class="" style="font-family: 'Staatliches', sans-serif; color: black;">
+                                            class="" style="font-family: 'Poppins', sans-serif; color: black;">
                                             Company Name</h3>
                                     </div>
 
                                     <!-- Right: Search Input -->
                                     <div class="input-group responsive-search float-end">
-                                        <span class="input-group-text bg-white border-end-0">
+                                        <span class="bg-white input-group-text border-end-0">
                                             <i class="fa fa-search text-muted"></i>
                                         </span>
                                         <input type="text" id="customSearch" class="form-control border-start-0"
@@ -109,13 +64,11 @@
                                     <tbody>
                                         @foreach ($addressBook as $address)
                                             <tr>
-                                                {{-- <td>{{ $loop->iteration }}</td> --}}
                                                 <td>{{ $address->name }}</td>
                                                 <td>{{ $address->street_address }}</td>
-                                                {{-- <td>{{ $address->country }}</td>
-                                        <td>{{ $address->type }}</td> --}}
+
                                                 <td>{{ $address->phone }}</td>
-                                                <td class=" text-center">
+                                                <td class="text-center ">
                                                     <a href="javascript:void(0)" style="background-color: #E0F3FF; "
                                                         class="p-0 mb-0 btn" data-bs-toggle="modal"
                                                         data-id="{{ $address->id }}"
@@ -126,7 +79,7 @@
                                                     <a href="javascript:void(0)" style="background-color: #EFEFEF; "
                                                         class="p-0 mb-0 btn" data-bs-toggle="modal"
                                                         data-bs-target="#addressBookEdit{{ $address->id }}">
-                                                        <i style="color:#9F9F9F" class="fa fa-edit p-2"></i>
+                                                        <i style="color:#9F9F9F" class="p-2 fa fa-edit"></i>
                                                     </a>
 
                                                     <a href="javascript:void(0);" style="background: #D2232A1A;  "
@@ -135,19 +88,6 @@
                                                         data-url="{{ route('shipper.address-book.destroy', $address->id) }}">
                                                         <i style="color:#D2232A" class="p-2 fa fa-trash-can"></i>
                                                     </a>
-                                                    {{-- <a href="javascript:void(0)"
-                                                        class="p-0 mb-0 rounded-circle btn bg-success"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target="#addressBookEdit{{ $address->id }}">
-                                                        <i class="p-1 text-white fa fa-edit text-secondary"></i>
-                                                    </a> --}}
-
-                                                    {{-- <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-success"
-                                                data-bs-toggle="modal" data-id="{{ $address->id }}" data-bs-target="#addressBookEdit">
-                                                <i class="p-1 text-white fa fa-edit text-secondary"></i>
-                                            </a> --}}
-
-
 
                                                 </td>
                                             </tr>
@@ -155,12 +95,12 @@
                                     </tbody>
                                 </table>
 
-                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                <div class="mt-3 d-flex justify-content-between align-items-center">
                                     <!-- Left: Info Text -->
                                     <div id="customInfoText" class="text-muted small"></div>
 
                                     <!-- Right: Custom Buttons -->
-                                    <div class="d-flex justify-content-end align-items-center mt-4 gap-2">
+                                    <div class="gap-2 mt-4 d-flex justify-content-end align-items-center">
                                         <button id="prevPage" class="btn custom-pagination-btn disabled">
                                             <i class="fa fa-arrow-left me-1"></i> Previous
                                         </button>
@@ -276,4 +216,48 @@
         });
     </script>
 
+
+<style>
+    .custom-pagination-btn {
+        border: 1px solid #d1d5db;
+        /* light gray */
+        border-radius: 8px;
+        font-weight: 500;
+        background-color: #fff;
+        color: #111827;
+        padding: 6px 16px;
+        font-size: 14px;
+        transition: all 0.2s ease-in-out;
+    }
+
+    .custom-pagination-btn:hover {
+        background-color: #f3f4f6;
+        /* light hover effect */
+        color: #000;
+    }
+
+    .custom-pagination-btn.disabled {
+        color: #9ca3af;
+        border-color: #d1d5db;
+        background-color: #fff;
+        pointer-events: none;
+        cursor: not-allowed;
+    }
+
+    .dataTables_paginate {
+        display: none !important;
+    }
+
+    @media (min-width: 992px) {
+        .responsive-search {
+            max-width: 140px !important;
+        }
+    }
+
+    @media (max-width: 991.98px) {
+        .responsive-search {
+            max-width: 300px !important;
+        }
+    }
+</style>
 @endsection
