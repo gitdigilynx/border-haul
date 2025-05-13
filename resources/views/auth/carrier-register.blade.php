@@ -97,7 +97,7 @@
         <div class="overflow-hidden row rounded-4 justify-content-around pb-4 pt-4">
 
             <!-- Left Column: Login Form -->
-            <div class=" col-md-6 d-flex flex-column p-md-0 p-4">
+            <div class=" col-md-6 d-flex flex-column ">
                 <div class="mb-5 text-left">
                     <img src="{{ asset('assets/images/logo/Border-Haul-logo.png') }}" alt="Logo" height="70">
                 </div>

@@ -167,8 +167,8 @@
 <body class="bg-white">
 
 
-<div class="bg-white container-fluid d-flex align-items-center justify-content-center min-vh-100 pb-4 pt-4">
-    <div class="overflow-hidden row rounded-4 justify-content-around" style="/*max-width: 1000px;*/">
+<div class="pt-4 pb-4 bg-white container-fluid d-flex align-items-center justify-content-center min-vh-100">
+    <div class="overflow-hidden row w-100 rounded-4 justify-content-around" style="/*max-width: 1000px;*/">
 
         <!-- Left Column: Login Form -->
         <div class="p-4 col-12 col-md-6 pt-md-0 p-md-5 d-flex flex-column ">

@@ -132,7 +132,7 @@
     </style>
 </head>
 
-<div class="pt-4 pb-4 bg-white container-fluid d-flex align-items-center justify-content-center min-vh-100">
+<div class="bg-white container-fluid  min-vh-100 pb-4 pt-4">
     <div class="overflow-hidden row justify-content-around" style="/*max-width: 1000px;*/">
 
         <!-- Left Column: Login Form -->

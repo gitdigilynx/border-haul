@@ -85,7 +85,7 @@
 <body class="bg-white">
 
  <div class="bg-white container-fluid d-flex align-items-center justify-content-center min-vh-100">
-    <div class="overflow-hidden row  rounded-4 justify-content-around" >
+    <div class="overflow-hidden row w-100 rounded-4 justify-content-around" >
 
         <!-- Left Column: Login Form -->
         <div class="p-4 col-12 col-md-6 pt-md-0 p-md-5 d-flex flex-column">
