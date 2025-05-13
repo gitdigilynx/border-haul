@@ -63,7 +63,7 @@
 
                 <li>
                     <a href="#sidebarDashboards">
-                        <img src="{{ asset('assets/icons/shipper/black.svg') }}" alt="Truck Icon" style="width: 25px; height: 25px; margin-right: 8px;">
+                        <img src="{{ asset('assets/icons/shipper/truck.svg') }}" alt="Truck Icon" style="width: 25px; height: 25px; margin-right: 8px;">
                         <span style="color:black; font-weight: 600;">Request Truck</span>
                     </a>
                 </li>

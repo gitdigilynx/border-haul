@@ -70,7 +70,7 @@
               </div>
 
               <div class="mt-3 text-center">
-                <button type="submit" class="submit-btn">Save</button>
+                <button type="submit" class="submit-btn">UPDATE</button>
               </div>
             </div>
           </form>

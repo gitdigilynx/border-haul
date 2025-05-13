@@ -51,7 +51,6 @@ class SubUserController extends Controller
                 'password' => Hash::make($rawPassword),
                 'role' => 'ShipperUser',
             ]);
-            dd($user);
 
             ShipperSubUser::create([
                 'user_id' => $user->id,

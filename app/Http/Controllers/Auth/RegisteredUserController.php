@@ -53,6 +53,7 @@ class RegisteredUserController extends Controller
                 'company_name' => $request->company_name,
                 'company_address' => $request->company_address,
                 'phone' => $request->phone,
+                'service_category' => $request->service_category,
             ]);
 
             flash()->success('User created successfully!');

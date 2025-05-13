@@ -3,9 +3,9 @@
 function documentStatus()
 {
     return [
-        'pending' => 'Pending',
-        'approved' => 'Approved',
-        'rejected' => 'Rejectd'
+        'Pending' => 'Pending',
+        'Approved' => 'Approved',
+        'Rejected' => 'Rejectd'
     ];
 }
 
@@ -20,18 +20,18 @@ function isStatus()
 function serviceCategory()
 {
     return [
-        'trucking_companies' => 'Trucking Companies',
-        'logistics_companies' => 'Logistics Companies',
-        'warehouses' => 'Warehouses',
-        'customs_brokers' => 'Customs Brokers'
+        'Trucking Company' => 'Trucking Company',
+        'Logistics Company' => 'Logistics Companies',
+        'Warehouses' => 'Warehouses',
+        'Customs Brokers' => 'Customs Brokers'
     ];
 }
 function statusBadge(string $status): string
 {
     return match ($status) {
-        'approved' => 'badge bg-success',
-        'rejected' => 'badge bg-danger',
-        'pending'  => 'badge bg-warning text-dark',
+        'Approved' => 'badge bg-success',
+        'Rejected' => 'badge bg-danger',
+        'Pending'  => 'badge bg-warning text-dark',
     };
 }
 
