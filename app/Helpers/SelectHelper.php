@@ -3,9 +3,8 @@
 function documentStatus()
 {
     return [
-        'Pending' => 'Pending',
-        'Approved' => 'Approved',
-        'Rejected' => 'Rejectd'
+        'Completed' => 'Completed',
+        'Pending' => 'Pending'
     ];
 }
 
@@ -34,6 +33,16 @@ function statusBadge(string $status): string
         'Pending'  => 'badge bg-warning text-dark',
     };
 }
+
+
+function statusDocument(string $statusDocument): string
+{
+    return match ($statusDocument) {
+        'Completed' => 'badge bg-success',
+        'Pending'   => 'badge bg-danger',
+    };
+}
+
 
 
 function statusInService($in_service): string

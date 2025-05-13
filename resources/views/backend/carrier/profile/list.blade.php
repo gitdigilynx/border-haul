@@ -28,7 +28,7 @@
                                     <li class="nav-item" role="presentation">
                                         <a class="p-2 nav-link active" id="profile_about_tab" data-bs-toggle="tab" href="#profile_about" role="tab">
                                             <span class="d-block d-sm-none"><i class="mdi mdi-information"></i></span>
-                                            <span class="d-none d-sm-block">About</span>
+                                            <span class="d-none d-sm-block">Profile</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">

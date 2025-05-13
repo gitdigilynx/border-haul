@@ -1,34 +1,42 @@
 <!-- Modal -->
-<div class="modal fade" id="carrierDocuments" tabindex="-1" aria-labelledby="subUserModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title" id="subUserModalLabel">Add Document</h5>
-               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="modal fade" id="carrierDocuments" tabindex="-1" aria-labelledby="exampleModalgridLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content custom-modal">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+            <div class="modal-header" style="border-bottom: none;margin-bottom: -15px;">
+                <h5 class="text-center modal-title w-100" id="subUserModalLabel">ADD DOCUMENTS</h5>
             </div>
 
-            <form id="documents" class="px-3 py-2 row g-3" method="POST" action="{{ route('carrier.documents.store') }}" enctype="multipart/form-data">
+            <form id="documents" method="POST" action="{{ route('carrier.documents.store') }}" enctype="multipart/form-data">
                 @csrf
-                <div class="modal-body row">
+                <div class="modal-body">
+                    <div class="row">
                     <!-- Document Type -->
-                    <div class="col-md-6">
-                        <label for="document_type" class="form-label">Document Type</label>
-                        <input type="text" class="form-control" name="document_type" placeholder="Insurance Certificate" required>
-                    </div>
-
-                    <!-- File Upload -->
-                    <div class="col-md-6">
-                        <label for="file" class="form-label">Upload Document</label>
-                        <input type="file" class="form-control" name="file_path" accept=".pdf,.jpg,.jpeg,.png" required>
+                    <div class="mb-2 col-md-12">
+                        <div>
+                            <label for="serviceCategory" class="form-label">Document Type</label>
+                            <select class="form-select" name="document_type" id="document_type">
+                                <option value="" selected>Select</option>
+                                <option value="Docx">DOCX</option>
+                                <option value="doc">DOC</option>
+                                <option value="Pdf">PDF</option>
+                                <option value="xls">XLS</option>
+                                <option value="jpg">JPG</option>
+                                <option value="jpeg">JPEG</option>
+                                <option value="png">PNG</option>
+                                <option value="gif">GIF</option>
+                            </select>
+                        </div>
                     </div>
 
                     <!-- Expiration Date -->
-                    <div class="col-md-6">
+                    <div class="mb-2 col-md-12">
                         <label for="expires_at" class="form-label">Expiration Date</label>
                         <input type="date" class="form-control" name="expires_at">
                     </div>
 
-                    <div class="col-md-6">
+                    <div class="mb-2 col-md-12">
                         <label for="expires_at" class="form-label">Status</label>
                         <select class="form-select" name="status">
                             <option value="" selected="">Select</option>
@@ -39,10 +47,10 @@
                     </div>
 
                     <!-- Notes -->
-                    <div class="col-md-12">
+                    {{-- <div class="col-md-12">
                         <label for="notes" class="form-label">Notes</label>
                         <textarea class="form-control" name="notes" rows="3" placeholder="Optional notes..."></textarea>
-                    </div>
+                    </div> --}}
                     <!-- File Upload -->
                     <div class="col-md-12">
                         <label for="file" class="form-label">Upload Document</label>
@@ -59,13 +67,10 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-success">Save</button>
+                <div class="mt-3 text-center">
+                    <button type="submit" class="submit-btn">Save</button>
+                  </div>
                 </div>
             </form>
       </div>

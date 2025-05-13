@@ -167,8 +167,8 @@
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="col-md-4">
-                            <label for="mexico" class="form-label">Country <span class="text-danger">*</span></label>
-                            <select name="mexico" id="mexico" class="form-control" required>
+                            <label for="country" class="form-label">Country <span class="text-danger">*</span></label>
+                            <select name="country" id="mexico" class="form-control" required>
                                 <option value="">Select Country</option>
                                 <option value="us">US</option>
                                 <option value="mexico">Mexico</option>

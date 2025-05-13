@@ -148,15 +148,14 @@
                     </li>
 
                     <li>
-                        <a href="{{ route('carrier.carrier-users') }}">
+                        <a href="{{ route('carrier.carrier-users') }}"class="tp-link">
                             <img src="{{ asset('assets/icons/carrier/user.svg') }}" alt="Truck Icon" style="width: 25px; height: 25px; margin-right: 8px;">
                             <span style="color:black; font-weight: 600;">Company User</span>
                         </a>
                     </li>
 
                     <li>
-                        <a href="">
-                            <img src="{{ asset('assets/icons/carrier/user.svg') }}" alt="Truck Icon" style="width: 25px; height: 25px; margin-right: 8px;">
+                        <a href="{{ route('carrier.profile.list') }}" class="tp-link">                            <img src="{{ asset('assets/icons/carrier/user.svg') }}" alt="Truck Icon" style="width: 25px; height: 25px; margin-right: 8px;">
                             <span style="color:black; font-weight: 600;">Profile</span>
                         </a>
                     </li>
@@ -255,7 +254,7 @@
 
                 <hr style="margin-top: 40px;">
                 <li>
-                    <a href="#">
+                    <a href="#" class="tp-link">
                         <img src="{{ asset('assets/icons/help.svg') }}" alt="Truck Icon" style="width: 25px; height: 25px; margin-right: 8px;">
 
                         <span>Help Support</span>
@@ -265,7 +264,7 @@
                 @hasrole('Shipper')
 
                 <li>
-                    <a href="{{ route('shipper.profile.list') }}">
+                    <a href="{{ route('shipper.profile.list') }}" class="tp-link">
                         <img src="{{ asset('assets/icons/shipper/setting.svg') }}" alt="Truck Icon" style="width: 25px; height: 25px; margin-right: 8px;">
                         <span>Settings</span>
                     </a>
@@ -275,14 +274,14 @@
                 @hasrole('Carrier')
 
                 <li>
-                    <a href="{{ route('carrier.profile.list') }}">
+                    <a href="{{ route('carrier.profile.list') }}" class="tp-link">
                         <img src="{{ asset('assets/icons/carrier/setting.svg') }}" alt="Truck Icon" style="width: 25px; height: 25px; margin-right: 8px;">
                         <span>Settings</span>
                     </a>
                 </li>
                 @endhasrole
                 <li>
-                    <a href="#">
+                    <a href="#" class="tp-link">
                         <img src="{{ asset('assets/icons/login.svg') }}" alt="Truck Icon" style="width: 25px; height: 25px; margin-right: 8px;">
                         <span>Logout</span>
                     </a>
