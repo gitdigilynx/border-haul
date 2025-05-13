@@ -11,6 +11,7 @@
                 </div>
 
                 <div class="text-end">
+                   <img src="{{ asset('assets/icons/icon.svg') }}" alt="Truck Icon" style="width: 40px; height: 40px; margin-right: 8px;">
                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#subUserModal"
                         style="background-color: #06367B; color: white; border: none;  font-size: 1rem; font-weight: bold; border-radius: 6px; ">
                         + New Request

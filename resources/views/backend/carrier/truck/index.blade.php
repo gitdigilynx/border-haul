@@ -2,49 +2,52 @@
 @section('title', 'Truck Listing')
 @section('content')
 <div class="content-page">
-    <div class="content">
-        <!-- Start Content-->
-        <div class="container-fluid">
-            <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
-                <div class="flex-grow-1">
-                    <h4 class="m-0 fs-18 fw-semibold">Trucks</h4>
-                </div>
-                <div class="text-end">
-                    <ol class="py-0 m-0 breadcrumb">
-                        <li class="breadcrumb-item"><a href="{{ route('home') }}">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Trucks</li>
-                    </ol>
-                </div>
+    <div class="container-fluid">
+        <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
+            <div class="flex-grow-1">
+                <h4 class="m-0 fs-26" style="font-family: 'Staatliches', sans-serif; color: black;">DRIVERS/TRUCKS</h4>
             </div>
+            <div class="card-header d-flex justify-content-between align-items-center" style="border-bottom: none;">
+                <img src="{{ asset('assets/icons/icon.svg') }}" alt="Truck Icon" style="width: 40px; height: 40px; margin-right: 8px;">
+                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#truckUserModal"
+                style="background-color: #06367B; color: white; border: none;  font-size: 1rem; font-weight: bold; border-radius: 6px; ">
+                 + New Request
+                </button>
+
+            </div>
+        </div>
+
             <div class="row">
                 <div class="col-12">
                     <div class="card">
-                        <div class="card-header d-flex justify-content-between align-items-center">
-                            <h5 class="mb-0 card-title">Trucks List</h5>
-                            <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#truckUserModal">
-                               + Add Truck
-                            </button>
+                        <div class="card-header d-flex justify-content-between align-items-center" style="border-bottom: none;">
+                            <h3 style="font-family: 'Poppins', sans-serif; color: black;font-size: 1rem; margin-bottom:-20px; font-weight: 600;">Trucks</h3>
                         </div>
                         <div class="card-body responsive-datatable">
                             <table id="datatable-basic" class="table table-bordered dt-responsive nowrap table-flush">
                                 <thead>
                                     <tr>
-                                        <th>Driver Name</th>
-                                        <th>Trucker Number</th>
-                                        <th>Plate Number</th>
+                                        <th>Truck Plate #</th>
+                                        <th>Trucker #</th>
                                         <th>Service Category</th>
+                                        <th>Driver Name</th>
+                                        <th>Driver Phone</th>
                                         <th>In Service</th>
+                                        {{-- <th>Location</th> --}}
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($trucks as $truck)
                                         <tr>
-                                            <td>{{ $truck->driver->name }}</td>
-                                            <td>{{ $truck->trucker_number }}</td>
                                             <td>{{ $truck->plate_number }}</td>
+                                            <td>{{ $truck->trucker_number }}</td>
                                             <td>{{ $truck->service_category }}</td>
+                                            <td>{{ $truck->driver->name }}</td>
+                                            <td>{{ $truck->driver->phone_number }}</td>
+
                                             <td>
+
                                               <form method="POST" action="{{ route('carrier.trucks.toggleTruck', $truck->id) }}">
                                                     @csrf
                                                     @method('PATCH')
@@ -56,12 +59,13 @@
                                                             onchange="this.form.submit()"
                                                             {{ $truck->in_service ? 'checked' : '' }}
                                                         >
-                                                        <label class="form-check-label">
-                                                            {{ $truck->in_service ? 'On' : 'Off' }}
-                                                        </label>
+                                                        <span class="{{ statusInService($truck->in_service ? 'ON' : 'OFF') }}">
+                                                            {{ $truck->in_service ? 'ON' : 'OFF' }}
+                                                        </span>
                                                     </div>
                                                 </form>
                                             </td>
+                                            {{-- <td>{{ $truck->location }}</td> --}}
                                             <td>
                                                 <!-- View Button -->
                                                 <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-primary"

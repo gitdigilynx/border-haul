@@ -14,7 +14,7 @@
                 </div>
 
                 <div class="card-header d-flex justify-content-between align-items-center" style="border-bottom: none;">
-
+                    <img src="{{ asset('assets/icons/icon.svg') }}" alt="Truck Icon" style="width: 40px; height: 40px; margin-right: 8px;">
                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addressBook"
                     style="background-color: #06367B; color: white; border: none;  font-size: 1rem; font-weight: bold; border-radius: 6px; ">
                     + Add New Address

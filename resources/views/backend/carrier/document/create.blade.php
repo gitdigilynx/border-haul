@@ -42,6 +42,24 @@
                         <label for="notes" class="form-label">Notes</label>
                         <textarea class="form-control" name="notes" rows="3" placeholder="Optional notes..."></textarea>
                     </div>
+                    <!-- File Upload -->
+                    <div class="col-md-12">
+                        <label for="file" class="form-label">Upload Document</label>
+                        <div class="p-4 text-center border rounded upload-box" style="position: relative; background-color: #D5F2FD;">
+                            <input type="file" name="file_path" accept=".zip,.rar" class="file-input"
+                                   style="opacity: 0; position: absolute; top: 0; left: 0; height: 100%; width: 100%; cursor: pointer;" required>
+                            <div>
+                                <div class="mb-2">
+
+                                    <img src="{{ asset('assets/icons/document-icon.svg') }}" alt="Upload Icon" width="40" height="40">
+                                </div>
+                                <strong style="color: #000;">Drag and drop files, or <span style="color: #000;">Browse</span></strong>
+                                <div class="text-dark">Support zip and rar files</div>
+                            </div>
+                        </div>
+                    </div>
+
+
                 </div>
 
                 <div class="modal-footer">

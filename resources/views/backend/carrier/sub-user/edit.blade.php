@@ -1,58 +1,42 @@
-<div class="modal fade" id="carrierEditModal{{ $user->id }}" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered custom-modal-width">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="shipperEditModal">
-                    {{ isset($user) ? 'Update Sub User' : 'Add Sub User' }}
+
+<div class="modal fade"  id="carrierEditModal{{ $user->id }}" tabindex="-1" aria-labelledby="exampleModalgridLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content custom-modal">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-header" style="border-bottom: none;">
+                <h5 class="text-center modal-title w-100">
+                    UPDATE TRUCK
                 </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-           <form id="carrierForm" method="POST"
-      action="{{ isset($user) ? route('carrier.carrier-users.update', $user->id) : route('carrier.carrier-users.store') }}">
-    @csrf
-    @if(isset($user))
-        @method('PUT')
-    @endif
+            <form id="carrierForm" method="POST"
+                action="{{ route('carrier.carrier-users.update', $user->id )}}">
+                @csrf
 
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul class="mb-0">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="mb-3 col-md-12">
+                            <label for="name" class="form-label">Name</label>
+                            <input type="text" class="form-control" name="name" placeholder="Name"
+                                value="{{ old('name', $user->users->name ?? '') }}" required>
+                        </div>
 
-    <div class="modal-body row">
-        <div class="mb-3 col-md-12">
-            <label for="name" class="form-label">Name</label>
-            <input type="text" class="form-control" name="name" placeholder="Name"
-                   value="{{ old('name', $user->users->name ?? '') }}" required>
-        </div>
+                        <div class="mb-3 col-md-12">
+                            <label for="last_name" class="form-label">Name</label>
+                            <input type="text" class="form-control" name="last_name" placeholder="Last Name"
+                                value="{{ old('last_name', $user->users->last_name ?? '') }}" required>
+                        </div>
 
-        <div class="mb-3 col-md-12">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" name="email" placeholder="Email"
-                   value="{{ old('email', $user->users->email ?? '') }}" required>
-        </div>
-
-        <div class="mb-3 col-md-12">
-            <label for="role" class="form-label">Role</label>
-            <input type="text" class="form-control" name="role" placeholder="Role"
-                   value="{{ old('role', $user->users->role ?? '') }}" required>
-        </div>
-    </div>
-
-    <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-success">
-            {{ isset($user) ? 'Update' : 'Save' }}
-        </button>
-    </div>
-</form>
-
-
+                        <div class="mb-3 col-md-12">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" name="email" placeholder="Email"
+                                value="{{ old('email', $user->users->email ?? '') }}" required>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="submit-btn">UPDATE</button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
 </div>

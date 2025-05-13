@@ -52,8 +52,10 @@ class CarrierSubUserController extends Controller
             $carrier = auth()->user();
 
             $rawPassword = Str::random(8);
+
             $user = User::create([
                 'name' => $request->name,
+                'last_name' => $request->last_name,
                 'email' => $request->email,
                 'password' => Hash::make($rawPassword),
                 'role' => 'CarrierUser',
@@ -62,7 +64,6 @@ class CarrierSubUserController extends Controller
             CarrierSubUser::create([
                 'user_id' => $user->id,
                 'carrier_id' => $carrier->id,
-                'phone' => $request->phone,
             ]);
 
             // Send credentials via email
@@ -103,7 +104,7 @@ class CarrierSubUserController extends Controller
            $request->validate([
                 'name'  => 'required|string|max:255',
                 'email' => 'required|email|unique:users,email,' . $id,
-                'role'  => 'required|string|max:255',
+                'last_name'  => 'required|string|max:255',
             ]);
 
             $subCarrier = User::findOrFail($id);
@@ -111,9 +112,8 @@ class CarrierSubUserController extends Controller
             $subCarrier->update([
                 'name'  => $request->name,
                 'email' => $request->email,
-                'role'  => $request->role,
+                'last_name'  => $request->last_name,
             ]);
-
             return redirect()->route('carrier.carrier-users')->with('success', 'User updated successfully!');
         } catch (\Exception $e) {
             Flasher::addError('Something went wrong: ' . $e->getMessage());
