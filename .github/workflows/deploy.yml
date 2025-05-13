@@ -31,3 +31,5 @@ jobs:
             */.git/*
             */tests/*
             .env
+            .git*
+            .git/**
