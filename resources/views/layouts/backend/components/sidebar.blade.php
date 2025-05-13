@@ -1,4 +1,11 @@
 <!-- Left Sidebar Start -->
+<style>
+    .menuitem-active .tp-link.active span {
+    /* Your styles here */
+    color: #00a3e08c !important;
+    /* Example */
+    font-weight: bold; }
+</style>
 <div class="app-sidebar-menu" style="background-color:#FAFAFA">
     <div class="h-100" data-simplebar>
 
