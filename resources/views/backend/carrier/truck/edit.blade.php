@@ -34,19 +34,19 @@
                         <select class="form-control" name="service_category" required>
                             <option value="">Select Category</option>
                             <option
-                                value="General Cargo"{{ old('service_category', $truck->service_category ?? '') === 'general_cargo' ? 'selected' : '' }}>
+                                value="General Cargo"{{ old('service_category', $truck->service_category ?? '') === 'General Cargo' ? 'selected' : '' }}>
                                 General Cargo</option>
                             <option
-                                value="Reefer"{{ old('service_category', $truck->service_category ?? '') === 'reefer' ? 'selected' : '' }}>
+                                value="Reefer"{{ old('service_category', $truck->service_category ?? '') === 'Reefer' ? 'selected' : '' }}>
                                 Reefer</option>
                             <option
-                                value="Hazmat"{{ old('service_category', $truck->service_category ?? '') === 'hazmat' ? 'selected' : '' }}>
+                                value="Hazmat"{{ old('service_category', $truck->service_category ?? '') === 'Hazmat' ? 'selected' : '' }}>
                                 Hazmat</option>
                             <option
-                                value="Flatbed"{{ old('service_category', $truck->service_category ?? '') === 'flatbed' ? 'selected' : '' }}>
+                                value="Flatbed"{{ old('service_category', $truck->service_category ?? '') === 'Flatbed' ? 'selected' : '' }}>
                                 Flatbed</option>
                             <option
-                                value="RGN"{{ old('service_category', $truck->service_category ?? '') === 'rgn' ? 'selected' : '' }}>
+                                value="RGN"{{ old('service_category', $truck->service_category ?? '') === 'RGN' ? 'selected' : '' }}>
                                 RGN</option>
                         </select>
                     </div>

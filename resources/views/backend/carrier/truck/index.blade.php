@@ -102,7 +102,7 @@
                                         </a>
 
                                         <a href="javascript:void(0);" style="background: #D2232A1A;  "
-                                            class="p-0 mb-0 delete-address-book btn " data-id="{{ $truck->id }}"
+                                            class="p-0 mb-0 delete-truck btn " data-id="{{ $truck->id }}"
                                             data-url="{{ route('carrier.trucks.destroy', $truck->id) }}">
                                             <i style="color:#D2232A" class="p-2 fa fa-trash-can"></i>
                                         </a>

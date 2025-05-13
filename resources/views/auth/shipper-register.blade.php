@@ -74,7 +74,7 @@
 
     }
      .loginbg{
-        background: url('{{ asset('assets/shipper/shipper_login.png') }}') no-repeat top center;
+        background: url('{{ asset('assets/shipper/loginNewglob.png') }}') no-repeat top center;
         background-size: cover;
         /* max-height: 100vh; */
         /* width: 100%; */
@@ -215,9 +215,10 @@
                 </div>
             </form>
 
-            <div class="mb-3 text-center text-muted">
-                <p class="mb-0 question">Already have an account?
-                    <a class="text-primary ms-2 fw-medium" href="{{ route('shipper.login') }}">Login here</a>
+            <div class="mt-auto text-center">
+                <p class="question">
+                    Transfer Courier Partner?
+                    <a href="#" class="mb-2 text-primary">Create Carrier Partner account</a>
                 </p>
             </div>
         </div>
