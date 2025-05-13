@@ -6,6 +6,7 @@
             <h5 class="modal-title" id="subUserModalLabel">Add Document</h5>
                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+
             <form id="documents" class="px-3 py-2 row g-3" method="POST" action="{{ route('carrier.documents.store') }}" enctype="multipart/form-data">
                 @csrf
                 <div class="modal-body row">
