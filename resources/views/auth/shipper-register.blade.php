@@ -360,6 +360,8 @@
                                 <i class="fa fa-eye-slash"></i>
                             </span>
                         </div>
+                        <div class="mt-1 text-danger small" id="mismatchError" style="display:none;">Passwords do
+                            not match</div>
                         @error('password_confirmation')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -588,6 +590,8 @@
     }
 
     $('#password, #password_confirmation').on('input', function() {
+        console.log('run file');
+
         checkPasswordMatch(); // Live check for matching
     });
 </script>
