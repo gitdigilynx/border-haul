@@ -149,12 +149,21 @@
                     <!-- Authority & DOT -->
                     <div class="mb-2 row">
                         <div class="col-md-4">
-                            <label for="name" class="form-label">Company Name <span
+                            <label for="name" class="form-label">Full Name <span
                                     class="text-danger">*</span></label>
                             <input type="text" name="name" id="name" class="form-control"
                                 placeholder="Company Name" value="{{ old('name') }}">
                             <div class="invalid-feedback"></div>
                         </div>
+
+                        <div class="col-md-4">
+                            <label for="name" class="form-label">Company Name <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" name="compnay_name" id="compnay_name" class="form-control"
+                                placeholder="Company Name" value="{{ old('compnay_name') }}">
+                            <div class="invalid-feedback"></div>
+                        </div>
+
                         <div class="col-md-4">
                             <label for="name" class="form-label">Company Name <span
                                     class="text-danger">*</span></label>
@@ -287,7 +296,7 @@
                                     <i class="fa fa-eye-slash"></i>
                                 </span>
                             </div>
-                            <ul class="password-rules text-muted small mt-2 mb-0 ps-3" id="passwordRules">
+                            <ul class="mt-2 mb-0 password-rules text-muted small ps-3" id="passwordRules">
                                 <li class="rule-length">Minimum 8 characters</li>
                                 <li class="rule-uppercase">At least 1 uppercase letter</li>
                                 <li class="rule-lowercase">At least 1 lowercase letter</li>
@@ -305,7 +314,7 @@
                                     <i class="fa fa-eye-slash"></i>
                                 </span>
                             </div>
-                            <div class="text-danger small mt-1" id="mismatchError" style="display:none;">Passwords do
+                            <div class="mt-1 text-danger small" id="mismatchError" style="display:none;">Passwords do
                                 not match</div>
                         </div>
                     </div>
@@ -344,8 +353,8 @@
             </div> --}}
             <!-- Right Column: Image & Caption -->
             <div class="mt-4 col-12 pb-sm-5 col-md-5 d-flex align-items-end justify-content-center mt-md-0 loginbg"
-                style="/*padding-right: 50px;*/ ">
-                {{-- <div class="position-relative w-100" style="/*max-height: 90vh;*/">
+                style="/padding-right: 50px;/ ">
+                {{-- <div class="position-relative w-100" style="/max-height: 90vh;/">
                 <img src="{{ asset('assets/shipper/loginNewglob.png') }}" alt="World Trade Bridge"
                     class="img-fluid w-100 rounded-4" style="object-fit: contain; max-width:690px;max-height: 800px;"> --}}
 

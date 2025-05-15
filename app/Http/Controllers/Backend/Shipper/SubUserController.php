@@ -52,11 +52,6 @@ class SubUserController extends Controller
                 'role' => 'ShipperUser',
             ]);
 
-            if (User::where('email', $request->email)->exists()) {
-                return redirect()->back()
-                    ->withInput() // keeps the old input
-                    ->withErrors(['email' => 'The email address is already registered.']);
-            }
 
             ShipperSubUser::create([
                 'user_id' => $user->id,
@@ -103,10 +98,12 @@ class SubUserController extends Controller
             $request->validate([
                 'name'  => 'required|string|max:50',
                 'last_name'  => 'required|string|max:50',
-                'email' => 'required|email',
+                'email' => 'required|email|unique:users,email,' . $id,
+
             ]);
 
             $user = User::findOrFail($id);
+
 
             $user->update([
                 'name'  => $request->name,
@@ -143,6 +140,22 @@ class SubUserController extends Controller
 
             return back()->with('status', 'User status updated.');
         } catch (\Exception $e) {
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
+            return redirect()->back();
+        }
+    }
+
+    public function checkEmail(Request $request)
+    {
+        try {
+            $request->validate([
+                'email' => 'required|email'
+            ]);
+            $exists = User::where('email', $request->email)->exists();
+
+            return response()->json(['exists' => $exists]);
+        }
+        catch (\Exception $e) {
             Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }

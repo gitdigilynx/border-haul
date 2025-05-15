@@ -23,6 +23,9 @@
                 name: {
                     required: true
                 },
+                company_name: {
+                    required: true
+                },
                 company_address: {
                     required: true
                 },
@@ -68,7 +71,8 @@
                 // insurance_certificate: { required: true }
             },
             messages: {
-                name: "Please enter your company name",
+                name: "Please enter your full name",
+                company_name: "Please enter your company name",
                 company_address: "Please enter your company address",
                 email: {
                     required: "Please enter your email address",

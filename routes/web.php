@@ -193,6 +193,7 @@ Route::middleware(['auth'])->group(function () {
             Route::put('/sub-users/{id}', 'update')->name('sub-users.update');
             Route::delete('/sub-users/{id}', 'destroy')->name(name: 'sub-users.destroy');
             Route::patch('/sub-users/{id}/toggle-user',  'toggleSubUser')->name('sub-users.toggleSubUser');
+            Route::post('/check-email', 'checkEmail')->name('check.email');
         });
 
         // Address Book

@@ -15,8 +15,8 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label for="first_name" class="form-label">First Name</label>
-                            <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter First Name">
+                            <label for="name" class="form-label">First Name</label>
+                            <input type="text" class="form-control" id="name" name="name" placeholder="Enter First Name">
                         </div>
                         <div class="mb-3 col-md-6">
                             <label for="last_name" class="form-label">Last Name</label>
@@ -29,7 +29,7 @@
                         <input type="email" name="email" id="email"
                             class="form-control @error('email') is-invalid @enderror" placeholder="Email Address"
                             value="{{ old('email') }}">
-                        @error('email')
+                            @error('email')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
@@ -44,41 +44,69 @@
 
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js"></script>
+
 
 <script>
-    $(function () {
-      $('#subUserForm').on('submit', function (e) {
-        let isValid = true;
-        const fields = [
-          { id: 'first_name', name: 'First Name', maxLength: 50 },
-          { id: 'last_name', name: 'Last Name', maxLength: 50 },
-          { id: 'email', name: 'Email', email: true }
-        ];
+    $("#subUserForm").validate({
+        rules: {
+            name: {
+                required: true,
+                minlength: 2
+            },
+            last_name: {
+                required: true,
+                minlength: 2
+            },
+            email: {
+                required: true,
+                email: true
+            }
+        },
+        messages: {
+            name: {
+                required: "First name is required",
+                minlength: "First name must be at least 2 characters"
+            },
+            last_name: {
+                required: "Last name is required",
+                minlength: "Last name must be at least 2 characters"
+            },
+            email: {
+                required: "Email is required",
+                email: "Please enter a valid email address"
+            }
+        },
+        errorClass: "is-invalid",
+        validClass: "is-valid",
+        errorElement: "div",
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.mb-3').append(error);
+        },
 
-        // Clear previous errors
-        $('.invalid-feedback').remove();
-        $('input').removeClass('is-invalid');
+        submitHandler: function (form) {
+            let email = $("#email").val();
 
-        fields.forEach(({ id, name, email, maxLength }) => {
-          const $field = $('#' + id);
-          const val = $field.val().trim();
+            $.ajax({
+                url: '{{ route("shipper.check.email") }}',
+                method: 'POST',
+                data: {
+                    email: email,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function (response) {
+                    if (response.exists) {
+                        let emailField = $("#email");
+                        emailField.addClass("is-invalid");
+                        emailField.next('.invalid-feedback').remove();
+                        emailField.after('<div class="invalid-feedback">Email already exists</div>');
+                    } else {
+                        form.submit();
+                    }
+                }
+            });
+        }
 
-          if (!val) {
-            isValid = false;
-            $field.addClass('is-invalid');
-            $field.after(`<div class="invalid-feedback">${name} is required.</div>`);
-          } else if (maxLength && val.length > maxLength) {
-            isValid = false;
-            $field.addClass('is-invalid');
-            $field.after(`<div class="invalid-feedback">${name} must be at most ${maxLength} characters.</div>`);
-          } else if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) {
-            isValid = false;
-            $field.addClass('is-invalid');
-            $field.after(`<div class="invalid-feedback">Please enter a valid ${name.toLowerCase()}.</div>`);
-          }
-        });
-
-        if (!isValid) e.preventDefault();
-      });
     });
 </script>
