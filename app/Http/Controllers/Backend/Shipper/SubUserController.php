@@ -145,4 +145,20 @@ class SubUserController extends Controller
         }
     }
 
+    public function checkEmail(Request $request)
+    {
+        try {
+            $request->validate([
+                'email' => 'required|email'
+            ]);
+            $exists = User::where('email', $request->email)->exists();
+
+            return response()->json(['exists' => $exists]);
+        }
+        catch (\Exception $e) {
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
+            return redirect()->back();
+        }
+    }
+
 }

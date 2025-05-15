@@ -46,6 +46,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js"></script>
 
+
 <script>
     $("#subUserForm").validate({
         rules: {
@@ -62,7 +63,6 @@
                 email: true
             }
         },
-
         messages: {
             name: {
                 required: "First name is required",
@@ -77,7 +77,6 @@
                 email: "Please enter a valid email address"
             }
         },
-
         errorClass: "is-invalid",
         validClass: "is-valid",
         errorElement: "div",
@@ -85,8 +84,29 @@
             error.addClass('invalid-feedback');
             element.closest('.mb-3').append(error);
         },
+
         submitHandler: function (form) {
-            form.submit();
+            let email = $("#email").val();
+
+            $.ajax({
+                url: '{{ route("shipper.check.email") }}',
+                method: 'POST',
+                data: {
+                    email: email,
+                    _token: '{{ csrf_token() }}'
+                },
+                success: function (response) {
+                    if (response.exists) {
+                        let emailField = $("#email");
+                        emailField.addClass("is-invalid");
+                        emailField.next('.invalid-feedback').remove();
+                        emailField.after('<div class="invalid-feedback">Email already exists</div>');
+                    } else {
+                        form.submit();
+                    }
+                }
+            });
         }
+
     });
 </script>
