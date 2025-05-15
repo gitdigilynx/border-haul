@@ -52,11 +52,6 @@ class SubUserController extends Controller
                 'role' => 'ShipperUser',
             ]);
 
-            if (User::where('email', $request->email)->exists()) {
-                return redirect()->back()
-                    ->withInput() // keeps the old input
-                    ->withErrors(['email' => 'The email address is already registered.']);
-            }
 
             ShipperSubUser::create([
                 'user_id' => $user->id,
@@ -103,10 +98,12 @@ class SubUserController extends Controller
             $request->validate([
                 'name'  => 'required|string|max:50',
                 'last_name'  => 'required|string|max:50',
-                'email' => 'required|email',
+                'email' => 'required|email|unique:users,email,' . $id,
+
             ]);
 
             $user = User::findOrFail($id);
+
 
             $user->update([
                 'name'  => $request->name,

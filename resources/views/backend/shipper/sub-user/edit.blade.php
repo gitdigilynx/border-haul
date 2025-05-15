@@ -12,7 +12,7 @@
             </div>
 
             <!-- Changed form ID to include user->id -->
-            <form id="shipperForm{{ $user->id }}" method="POST"
+            <form id="shipperForm" method="POST"
                 action="{{ isset($user) ? route('shipper.sub-users.update', $user->id) : route('shipper.sub-users.store') }}">
                 @csrf
                 @isset($user)
@@ -53,43 +53,46 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js"></script>
 
 <script>
-    $(document).ready(function () {
-
-        // Target the unique form ID
-        $("#shipperForm{{ $user->id }}").validate({
-
-            rules: {
-                name: {
-                    required: true,
-                    minlength: 2
-                },
-                last_name: {
-                    required: true,
-                    minlength: 2
-                }
+    $("#shipperForm").validate({
+        rules: {
+            name: {
+                required: true,
+                minlength: 2
             },
-
-            messages: {
-
-                name: {
-                    required: "First name is required",
-                    minlength: "First name must be at least 2 characters"
-                },
-                last_name: {
-                    required: "Last name is required",
-                    minlength: "Last name must be at least 2 characters"
-                }
+            last_name: {
+                required: true,
+                minlength: 2
             },
-            errorClass: "is-invalid",
-            validClass: "is-valid",
-            errorElement: "div",
-            errorPlacement: function (error, element) {
-                error.addClass('invalid-feedback');
-                element.closest('.mb-3').append(error);
-            },
-            submitHandler: function (form) {
-                form.submit();
+            email: {
+                required: true,
+                email: true
             }
-        });
+        },
+
+        messages: {
+            name: {
+                required: "First name is required",
+                minlength: "First name must be at least 2 characters"
+            },
+            last_name: {
+                required: "Last name is required",
+                minlength: "Last name must be at least 2 characters"
+            },
+            // email: {
+            //     required: "Email is required",
+            //     email: "Please enter a valid email address"
+            // }
+        },
+
+        errorClass: "is-invalid",
+        validClass: "is-valid",
+        errorElement: "div",
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.mb-3').append(error);
+        },
+        submitHandler: function (form) {
+            form.submit();
+        }
     });
 </script>
