@@ -156,13 +156,6 @@
                             <div class="invalid-feedback"></div>
                         </div>
 
-                        <div class="col-md-4">
-                            <label for="name" class="form-label">Company Name <span
-                                    class="text-danger">*</span></label>
-                            <input type="text" name="compnay_name" id="compnay_name" class="form-control"
-                                placeholder="Company Name" value="{{ old('compnay_name') }}">
-                            <div class="invalid-feedback"></div>
-                        </div>
 
                         <div class="col-md-4">
                             <label for="name" class="form-label">Company Name <span
