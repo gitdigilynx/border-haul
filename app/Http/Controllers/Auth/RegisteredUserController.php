@@ -85,21 +85,32 @@ class RegisteredUserController extends Controller
             'password' => 'required|string|min:6',
         ]);
 
+         // Fetch the user first
+         $user = User::where('email', $credentials['email'])->first();
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-
-            $user = Auth::user();
-            if ($user->role === RoleEnum::SHIPPER->value) {
-                return redirect()->route('shipper.deliveries')->with('success', 'Login successful');
-            }
-            return redirect('/')->with('success', 'Login successful');
-        }
-
-
-        return back()->withErrors([
-            'email' => 'Invalid credentials.',
-        ])->onlyInput('email');
+         if (!$user) {
+             return back()->withErrors([
+                 'email' => 'No account found with this email.',
+             ])->onlyInput('email');
+         }
+ 
+         // Check if the user has the carrier role
+         if ($user->role !== \App\Enums\RoleEnum::SHIPPER->value) {
+             return back()->withErrors([
+                 'email' => 'Access restricted. Only shipper accounts can log in here.',
+             ])->onlyInput('email');
+         }
+ 
+         // Check password
+         if (!Auth::attempt($credentials)) {
+             return back()->withErrors([
+                 'email' => 'Invalid credentials.',
+             ])->onlyInput('email');
+         }
+ 
+         $request->session()->regenerate();
+         return redirect()->route('carrier.carrier-users')->with('success', 'Login successful');
+    
     }
 
     public function logout(Request $request)

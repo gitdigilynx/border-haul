@@ -88,17 +88,17 @@ class CarrierRegisterController extends Controller
         event(new Registered($user));
         Auth::login($user);
 
-            if ($user->role === 'Carrier') {
-                return redirect()->route('carrier.carrier-users');
-            }
+        if ($user->role === 'Carrier') {
+            return redirect()->route('carrier.carrier-users');
+        }
 
         return redirect(RouteServiceProvider::HOME);
     }
 
-        public function carrierLogin(): View
-        {
-            return view('auth.carrier-login');
-        }
+    public function carrierLogin(): View
+    {
+        return view('auth.carrier-login');
+    }
     public function login(Request $request)
     {
 
@@ -107,20 +107,31 @@ class CarrierRegisterController extends Controller
             'password' => 'required|string|min:6',
         ]);
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
+        // Fetch the user first
+        $user = User::where('email', $credentials['email'])->first();
 
-            $user = Auth::user();
-            if ($user->role === RoleEnum::CARRIER->value) {
-                return redirect()->route('carrier.carrier-users')->with('success', 'Login successful');
-            }
-
-            return redirect('/')->with('success', 'Login successful');
+        if (!$user) {
+            return back()->withErrors([
+                'email' => 'No account found with this email.',
+            ])->onlyInput('email');
         }
 
-        return back()->withErrors([
-            'email' => 'Invalid credentials.',
-        ])->onlyInput('email');
+        // Check if the user has the carrier role
+        if ($user->role !== \App\Enums\RoleEnum::CARRIER->value) {
+            return back()->withErrors([
+                'email' => 'Access restricted. Only carrier accounts can log in here.',
+            ])->onlyInput('email');
+        }
+
+        // Check password
+        if (!Auth::attempt($credentials)) {
+            return back()->withErrors([
+                'email' => 'Invalid credentials.',
+            ])->onlyInput('email');
+        }
+
+        $request->session()->regenerate();
+        return redirect()->route('carrier.carrier-users')->with('success', 'Login successful');
     }
 
 
@@ -133,6 +144,4 @@ class CarrierRegisterController extends Controller
 
         return redirect()->route('carrier.login'); // ✅ Proper named route
     }
-
-
 }
