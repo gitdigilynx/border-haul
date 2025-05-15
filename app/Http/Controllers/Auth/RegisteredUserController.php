@@ -31,9 +31,8 @@ class RegisteredUserController extends Controller
             'email' => 'required|email|unique:users,email',
             'password' => 'required|confirmed|min:8',
             'company_name' => 'required|string|max:255',
-            'company_address' => 'required|string|max:255',
+            'street_address' => 'required|string|max:255',
             'phone' => 'required|string|max:20',
-
         ]);
 
         // Check if email already exists
@@ -57,7 +56,7 @@ class RegisteredUserController extends Controller
         Shipper::create([
             'user_id' => $user->id,
             'company_name' => $request->company_name,
-            'company_address' => $request->company_address,
+            'street_address' => $request->street_address,
             'phone' => $request->phone,
             'service_category' => $request->service_category,
         ]);

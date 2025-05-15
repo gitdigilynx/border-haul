@@ -46,18 +46,38 @@
             name: {
                 required: true
             },
+            last_name: {
+                required: true
+            },
             email: {
                 required: true,
-                email: true
+                email: true,
+                remote: {
+                    url: '/carrier/check-email', // your route to check email availability
+                    type: 'POST',
+                    data: {
+                        _token: function() {
+                            return $('#carrierUserForm input[name="_token"]')
+                                .val(); // get CSRF token from form
+                        },
+                        email: function() {
+                            return $('#email').val(); // send current email value for validation
+                        }
+                    }
+                }
             }
         },
         messages: {
             name: {
-                required: "Name is required"
+                required: "First name is required"
+            },
+            last_name: {
+                required: "Last name is required"
             },
             email: {
                 required: "Email is required",
-                email: "Please enter a valid email"
+                email: "Please enter a valid email",
+                remote: "Email is already taken"
             }
         },
         errorClass: 'is-invalid',
@@ -79,6 +99,7 @@
         }
     });
 </script>
+
 
 <style>
     .text-danger,

@@ -43,6 +43,9 @@ Route::prefix('carrier')->middleware(['web'])->group(function () {
     Route::get('login', [CarrierRegisterController::class, 'carrierLogin'])->name('carrier.login');
     Route::post('login', [CarrierRegisterController::class, 'login']);
     Route::post('logout', [CarrierRegisterController::class, 'logout'])->name('carrier.logout');
+
+    // check email
+    Route::post('/check-email', [CarrierRegisterController::class, 'checkEmail'])->name('carrier.check-email');
 });
 
 
@@ -50,7 +53,7 @@ Route::prefix('carrier')->middleware(['web'])->group(function () {
 Route::middleware(['auth'])->group(function () {
 
     // Redirect / to /home
-    Route::get('/', fn () => to_route('home'));
+    Route::get('/', fn() => to_route('home'));
 
     // Common Roles
     Route::middleware(['role:' . RoleEnum::ADMIN->value . '|' . RoleEnum::SHIPPER->value . '|' . RoleEnum::CARRIER->value])
@@ -71,95 +74,89 @@ Route::middleware(['auth'])->group(function () {
     // ---------------------------
     // Admin Routes
     // ---------------------------
- Route::prefix('admin')
-    ->name('admin.')
-    ->middleware(['role:' . RoleEnum::ADMIN->value . '|' . RoleEnum::subAdmin->value])
-    ->group(function () {
-        // Sub Admin
-        Route::controller(SubAdminController::class)->group(function () {
-            Route::get('/sub-admin', 'index')->name('sub-admin');
-            Route::post('/sub-admin', 'store')->name('sub-admin.store');
-            Route::get('/sub-admin/{id}/edit', 'edit')->name('sub-admin.edit');
-            Route::get('/sub-admin/{id}', 'show')->name('sub-admin.show');
-            Route::post('/sub-admin/{id}', 'update')->name('sub-admin.update');
-            Route::delete('/sub-admin/{id}', 'destroy')->name('sub-admin.destroy');
+    Route::prefix('admin')
+        ->name('admin.')
+        ->middleware(['role:' . RoleEnum::ADMIN->value . '|' . RoleEnum::subAdmin->value])
+        ->group(function () {
+            // Sub Admin
+            Route::controller(SubAdminController::class)->group(function () {
+                Route::get('/sub-admin', 'index')->name('sub-admin');
+                Route::post('/sub-admin', 'store')->name('sub-admin.store');
+                Route::get('/sub-admin/{id}/edit', 'edit')->name('sub-admin.edit');
+                Route::get('/sub-admin/{id}', 'show')->name('sub-admin.show');
+                Route::post('/sub-admin/{id}', 'update')->name('sub-admin.update');
+                Route::delete('/sub-admin/{id}', 'destroy')->name('sub-admin.destroy');
 
-            //Assign Permissions
-            Route::get('/sub-admin/{id}/assign-permissions', 'editPermission')->name('sub-admin.permissions.edit');
-            Route::post('/sub-admin/{id}/assign-permissions', 'updatePermission')->name('sub-admin.permissions.update');
-            Route::patch('/sub-users/{id}/toggle-admin',  'toggleAdmin')->name('sub-users.toggleAdmin');
+                //Assign Permissions
+                Route::get('/sub-admin/{id}/assign-permissions', 'editPermission')->name('sub-admin.permissions.edit');
+                Route::post('/sub-admin/{id}/assign-permissions', 'updatePermission')->name('sub-admin.permissions.update');
+                Route::patch('/sub-users/{id}/toggle-admin',  'toggleAdmin')->name('sub-users.toggleAdmin');
+            });
+
+            Route::controller(RolesPermissionController::class)->group(function () {
+                Route::get('/role-permissions', 'index')->name('role-permissions');
+                Route::delete('/role-permissions/{id}', 'destroy')->name('role-permissions.destroy');
+                //Assign Permissions
+                Route::get('/role-permissions/{id}/assign-permissions', 'editPermission')->name('role-permissions.edit');
+                Route::post('/role-permissions/{id}/assign-permissions', 'updatePermission')->name('role-permissions.update');
+                Route::patch('/role-permissions/{id}/toggle-permission',  'toggleRolePermission')->name('role-permissions.togglePermission');
+            });
+
+            // Permissions
+            Route::controller(PermissionController::class)->group(function () {
+                Route::get('/permissions', 'index')->name('permissions.index');
+                Route::get('/permissions/create', 'create')->name('permissions.create');
+                Route::post('/permissions', 'store')->name('permissions.store');
+                Route::get('/permissions/{id}/edit', 'edit')->name('permissions.edit');
+                Route::get('/permissions/{id}', 'show')->name('permissions.show');
+                Route::post('/permissions/{id}', 'update')->name('permissions.update');
+                Route::delete('/permissions/{id}', 'destroy')->name('permissions.destroy');
+                Route::patch('/sub-users/{id}/toggle-permission',  'togglePermission')->name('sub-users.togglePermission');
+            });
+
+            // Carriers
+            Route::controller(SubCarrierUserController::class)->group(function () {
+                Route::get('/sub-carriers', 'index')->name('sub-carriers');
+                Route::post('/sub-carriers', 'store')->name('sub-carriers.store');
+                Route::get('/sub-carriers/{id}/edit', 'edit')->name('sub-carriers.edit');
+                Route::get('/sub-carriers/{id}', 'show')->name('sub-carriers.show');
+                Route::post('/sub-carriers/{id}', 'update')->name('sub-carriers.update');
+                Route::delete('/sub-carriers/{id}', 'destroy')->name('sub-carriers.destroy');
+                Route::patch('/sub-carriers/{id}/toggle-user', 'toggleSubCarrier')->name('sub-carriers.toggleSubCarrier');
+            });
+
+            Route::controller(AdminCarrierUserController::class)->group(function () {
+                Route::get('/carriers', 'index')->name('carriers');
+                Route::post('/carriers', 'store')->name('carriers.store');
+                Route::get('/carriers/{id}/edit', 'edit')->name('carriers.edit');
+                Route::get('/carriers/{id}', 'show')->name('carriers.show');
+                Route::post('/carriers/{id}', 'update')->name('carriers.update');
+                Route::delete('/carriers/{id}', 'destroy')->name('carriers.destroy');
+                Route::patch('/carriers/{id}/toggle-user', 'toggleCarrier')->name('carriers.toggleCarrier');
+            });
+
+            Route::controller(SubShippperUserController::class)->group(function () {
+                Route::get('/sub-shippers', 'index')->name('sub-shippers');
+                Route::get('/sub-shippers/create', 'create')->name('sub-shippers.create');
+                Route::post('/sub-shippers', 'store')->name('sub-shippers.store');
+                Route::get('/sub-shippers/{id}/edit', 'edit')->name('sub-shippers.edit');
+                Route::get('/sub-shippers/{id}', 'show')->name('sub-shippers.show');
+                Route::post('/sub-shippers/{id}', 'update')->name('sub-shippers.update');
+                Route::delete('/sub-shippers/{id}', 'destroy')->name(name: 'sub-shippers.destroy');
+                Route::patch('/sub-shippers/{id}/toggle-user', 'toggleSubShipper')->name('sub-shippers.toggleSubUser');
+            });
+
+            Route::controller(ShippperUserController::class)->group(function () {
+                Route::get('/shippers', 'index')->name('shippers');
+                Route::get('/shippers/create', 'create')->name('shippers.create');
+                Route::post('/shippers', 'store')->name('shippers.store');
+                Route::get('/shippers/{id}/edit', 'edit')->name('shippers.edit');
+                Route::get('/shippers/{id}', 'show')->name('shippers.show');
+                Route::post('/shippers/{id}', 'update')->name('shippers.update');
+                Route::delete('/shippers/{id}', 'destroy')->name(name: 'shippers.destroy');
+                Route::patch('/shippers/{id}/toggle-user', 'toggleShipper')->name('shippers.toggleSubUser');
+            });
         });
-
-         Route::controller(RolesPermissionController::class)->group(function () {
-            Route::get('/role-permissions', 'index')->name('role-permissions');
-            Route::delete('/role-permissions/{id}', 'destroy')->name('role-permissions.destroy');
-              //Assign Permissions
-            Route::get('/role-permissions/{id}/assign-permissions', 'editPermission')->name('role-permissions.edit');
-            Route::post('/role-permissions/{id}/assign-permissions', 'updatePermission')->name('role-permissions.update');
-            Route::patch('/role-permissions/{id}/toggle-permission',  'toggleRolePermission')->name('role-permissions.togglePermission');
-
-        });
-
-        // Permissions
-        Route::controller(PermissionController::class)->group(function () {
-            Route::get('/permissions', 'index')->name('permissions.index');
-            Route::get('/permissions/create', 'create')->name('permissions.create');
-            Route::post('/permissions', 'store')->name('permissions.store');
-            Route::get('/permissions/{id}/edit', 'edit')->name('permissions.edit');
-            Route::get('/permissions/{id}', 'show')->name('permissions.show');
-            Route::post('/permissions/{id}', 'update')->name('permissions.update');
-            Route::delete('/permissions/{id}', 'destroy')->name('permissions.destroy');
-            Route::patch('/sub-users/{id}/toggle-permission',  'togglePermission')->name('sub-users.togglePermission');
-
-        });
-
-        // Carriers
-        Route::controller(SubCarrierUserController::class)->group(function () {
-            Route::get('/sub-carriers', 'index')->name('sub-carriers');
-            Route::post('/sub-carriers', 'store')->name('sub-carriers.store');
-            Route::get('/sub-carriers/{id}/edit', 'edit')->name('sub-carriers.edit');
-            Route::get('/sub-carriers/{id}', 'show')->name('sub-carriers.show');
-            Route::post('/sub-carriers/{id}', 'update')->name('sub-carriers.update');
-            Route::delete('/sub-carriers/{id}', 'destroy')->name('sub-carriers.destroy');
-            Route::patch('/sub-carriers/{id}/toggle-user', 'toggleSubCarrier')->name('sub-carriers.toggleSubCarrier');
-
-        });
-
-          Route::controller(AdminCarrierUserController::class)->group(function () {
-            Route::get('/carriers', 'index')->name('carriers');
-            Route::post('/carriers', 'store')->name('carriers.store');
-            Route::get('/carriers/{id}/edit', 'edit')->name('carriers.edit');
-            Route::get('/carriers/{id}', 'show')->name('carriers.show');
-            Route::post('/carriers/{id}', 'update')->name('carriers.update');
-            Route::delete('/carriers/{id}', 'destroy')->name('carriers.destroy');
-            Route::patch('/carriers/{id}/toggle-user', 'toggleCarrier')->name('carriers.toggleCarrier');
-        });
-
-          Route::controller(SubShippperUserController::class)->group(function () {
-            Route::get('/sub-shippers', 'index')->name('sub-shippers');
-            Route::get('/sub-shippers/create', 'create')->name('sub-shippers.create');
-            Route::post('/sub-shippers', 'store')->name('sub-shippers.store');
-            Route::get('/sub-shippers/{id}/edit', 'edit')->name('sub-shippers.edit');
-            Route::get('/sub-shippers/{id}', 'show')->name('sub-shippers.show');
-            Route::post('/sub-shippers/{id}', 'update')->name('sub-shippers.update');
-            Route::delete('/sub-shippers/{id}', 'destroy')->name(name: 'sub-shippers.destroy');
-            Route::patch('/sub-shippers/{id}/toggle-user', 'toggleSubShipper')->name('sub-shippers.toggleSubUser');
-
-
-        });
-
-          Route::controller(ShippperUserController::class)->group(function () {
-            Route::get('/shippers', 'index')->name('shippers');
-            Route::get('/shippers/create', 'create')->name('shippers.create');
-            Route::post('/shippers', 'store')->name('shippers.store');
-            Route::get('/shippers/{id}/edit', 'edit')->name('shippers.edit');
-            Route::get('/shippers/{id}', 'show')->name('shippers.show');
-            Route::post('/shippers/{id}', 'update')->name('shippers.update');
-            Route::delete('/shippers/{id}', 'destroy')->name(name: 'shippers.destroy');
-            Route::patch('/shippers/{id}/toggle-user', 'toggleShipper')->name('shippers.toggleSubUser');
-        });
-
-    });
 
     // ---------------------------
     // Shipper Routes
@@ -170,12 +167,12 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/dashboard', 'index')->name('dashboard');
         });
 
-         Route::controller(ShipperProfileController::class)->group(function () {
-                Route::get('/profile', 'list')->name('profile.list');
-                Route::get('/profile/edit', 'edit')->name('profile.edit');
-                Route::post('/profile/{id}', 'update')->name('profile.update');
-                Route::delete('/profile', 'destroy')->name('profile.destroy');
-            });
+        Route::controller(ShipperProfileController::class)->group(function () {
+            Route::get('/profile', 'list')->name('profile.list');
+            Route::get('/profile/edit', 'edit')->name('profile.edit');
+            Route::post('/profile/{id}', 'update')->name('profile.update');
+            Route::delete('/profile', 'destroy')->name('profile.destroy');
+        });
 
         Route::controller(DeliveryController::class)->group(function () {
             Route::get('/deliveries', 'index')->name('deliveries');
@@ -220,12 +217,12 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/dashboard', 'index')->name('dashboard');
         });
 
-         Route::controller(CarrierProfileController::class)->group(function () {
-                Route::get('/profile', 'list')->name('profile.list');
-                Route::get('/profile/edit', 'edit')->name('profile.edit');
-                Route::post('/profile/{id}', 'update')->name('profile.update');
-                Route::delete('/profile', 'destroy')->name('profile.destroy');
-            });
+        Route::controller(CarrierProfileController::class)->group(function () {
+            Route::get('/profile', 'list')->name('profile.list');
+            Route::get('/profile/edit', 'edit')->name('profile.edit');
+            Route::post('/profile/{id}', 'update')->name('profile.update');
+            Route::delete('/profile', 'destroy')->name('profile.destroy');
+        });
 
         // Carrier Sub Users
         Route::controller(CarrierSubUserController::class)->group(function () {
@@ -236,7 +233,6 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/carrier-users/{id}', 'update')->name('carrier-users.update');
             Route::delete('/carrier-users/{id}', 'destroy')->name('carrier-users.destroy');
             Route::patch('/carrier-users/{id}/toggle-user', 'toggleCarrierUser')->name('sub-users.toggleCarrierUser');
-
         });
 
         // Carrier Documents
@@ -278,4 +274,4 @@ Route::middleware(['auth'])->group(function () {
 
 
 // Auth routes (login, register, etc. from Laravel Breeze/Fortify/etc.)
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
