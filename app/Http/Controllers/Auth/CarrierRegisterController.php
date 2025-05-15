@@ -47,6 +47,13 @@ class CarrierRegisterController extends Controller
         //     // 'insurance_certificate' => 'required_if:role,carrier',
         // ]);
 
+        // Check if email already exists
+        if (User::where('email', $request->email)->exists()) {
+            return redirect()->back()
+                ->withInput() // keeps the old input
+                ->withErrors(['email' => 'The email address is already registered.']);
+        }
+
         // Create the user
         $user = User::create([
             'name' => $request->name,
