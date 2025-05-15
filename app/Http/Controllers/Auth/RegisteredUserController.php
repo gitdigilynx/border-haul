@@ -36,42 +36,47 @@ class RegisteredUserController extends Controller
         //     'phone' => 'required|string|max:20',
         // ]);
 
-            // Create the user
-            $user = User::create([
-                'name' => $request->name,
-                'email' => $request->email,
-                'password' => Hash::make($request->password),
-                'role' => 'Shipper',
-            ]);
+        // Check if email already exists
+        if (User::where('email', $request->email)->exists()) {
+            return redirect()->back()
+                ->withInput() // keeps the old input
+                ->withErrors(['email' => 'The email address is already registered.']);
+        }
+        // Create the user
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => 'Shipper',
+        ]);
 
-            // Assign role
-            // $user->assignRole($request->role);
+        // Assign role
+        // $user->assignRole($request->role);
 
-            // Create shipper details
-            Shipper::create([
-                'user_id' => $user->id,
-                'company_name' => $request->company_name,
-                'company_address' => $request->company_address,
-                'phone' => $request->phone,
-                'service_category' => $request->service_category,
-            ]);
+        // Create shipper details
+        Shipper::create([
+            'user_id' => $user->id,
+            'company_name' => $request->company_name,
+            'company_address' => $request->company_address,
+            'phone' => $request->phone,
+            'service_category' => $request->service_category,
+        ]);
 
-            flash()->success('User created successfully!');
+        flash()->success('User created successfully!');
 
-            event(new Registered($user));
-             Auth::login($user);
+        event(new Registered($user));
+        Auth::login($user);
 
-            if ($user->role === 'Shipper') {
-                return redirect()->route('shipper.deliveries');
-            }
+        if ($user->role === 'Shipper') {
+            return redirect()->route('shipper.deliveries');
+        }
 
-            return redirect(RouteServiceProvider::HOME);
-
+        return redirect(RouteServiceProvider::HOME);
     }
 
     public function shipperLogin(): View
     {
-       return view('auth.shipper-login');
+        return view('auth.shipper-login');
     }
     public function login(Request $request)
     {
@@ -81,13 +86,12 @@ class RegisteredUserController extends Controller
         ]);
 
 
-         if (Auth::attempt($credentials)) {
+        if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
 
             $user = Auth::user();
             if ($user->role === RoleEnum::SHIPPER->value) {
                 return redirect()->route('shipper.deliveries')->with('success', 'Login successful');
-
             }
             return redirect('/')->with('success', 'Login successful');
         }
@@ -107,5 +111,4 @@ class RegisteredUserController extends Controller
 
         return redirect()->route('shipper.login');
     }
-
 }
