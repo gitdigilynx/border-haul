@@ -178,6 +178,8 @@
             </div>
             <h4 class="mb-3 text-black text-uppercase custom-font">Shipper Log In</h4>
 
+            @include('backend.components.alerts.errors')
+
             <form id="loginForm" method="POST" action="{{ route('shipper.login') }}">
                 @csrf
 
@@ -191,7 +193,6 @@
                     <input class="form-control " type="password" id="password" name="password" placeholder="Enter Password" required>
                 </div>
 
-                @include('backend.components.alerts.errors')
 
                 <div class="flex-wrap mb-3 d-flex justify-content-between align-items-center">
                     {{-- <div class="form-check">
