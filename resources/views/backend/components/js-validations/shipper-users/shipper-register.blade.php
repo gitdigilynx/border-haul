@@ -2,20 +2,21 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
 
 <script>
-    $(document).ready(function () {
+    $(document).ready(function() {
         $("#registrationForm").validate({
             errorClass: 'is-invalid',
             validClass: 'is-valid',
             errorElement: 'div',
-            errorPlacement: function (error, element) {
+            errorPlacement: function(error, element) {
                 error.addClass('invalid-feedback');
-                element.closest('.form-group, .col-md-6').find('.invalid-feedback').remove(); // Remove existing errors
+                element.closest('.form-group, .col-md-6').find('.invalid-feedback')
+            .remove(); // Remove existing errors
                 error.insertAfter(element);
             },
-            highlight: function (element) {
+            highlight: function(element) {
                 $(element).addClass('is-invalid').removeClass('is-valid');
             },
-            unhighlight: function (element) {
+            unhighlight: function(element) {
                 $(element).removeClass('is-invalid').addClass('is-valid');
             },
             rules: {
@@ -29,7 +30,19 @@
                 company_name: {
                     required: true
                 },
-                company_address: {
+                street_address: {
+                    required: true
+                },
+                city: {
+                    required: true
+                },
+                company_state: {
+                    required: true
+                },
+                company_zip_code: {
+                    required: true
+                },
+                company_country: {
                     required: true
                 },
                 email: {
@@ -40,14 +53,14 @@
                     required: true,
                     minlength: 10
                 },
-                password: {
-                    required: true,
-                    minlength: 6
-                },
-                password_confirmation: {
-                    required: true,
-                    equalTo: "#password"
-                }
+                // password: {
+                //     required: true,
+                //     minlength: 6
+                // },
+                // password_confirmation: {
+                //     required: true,
+                //     equalTo: "#password"
+                // }
             },
             messages: {
                 name: "Please enter your name",
