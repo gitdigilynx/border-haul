@@ -1,5 +1,5 @@
-
-<div class="modal fade"  id="carrierEditModal{{ $user->id }}" tabindex="-1" aria-labelledby="exampleModalgridLabel" aria-hidden="true">
+<div class="modal fade" id="carrierEditModal{{ $user->id }}" tabindex="-1" aria-labelledby="exampleModalgridLabel"
+    aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content custom-modal">
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -8,8 +8,7 @@
                     UPDATE TRUCK
                 </h5>
             </div>
-            <form id="carrierForm" method="POST"
-                action="{{ route('carrier.carrier-users.update', $user->id )}}">
+            <form id="carrierForm" method="POST" action="{{ route('carrier.carrier-users.update', $user->id) }}">
                 @csrf
 
                 <div class="modal-body">
@@ -29,7 +28,7 @@
                         <div class="mb-3 col-md-12">
                             <label for="email" class="form-label">Email</label>
                             <input type="email" class="form-control" name="email" placeholder="Email"
-                                value="{{ old('email', $user->users->email ?? '') }}" required>
+                                value="{{ old('email', $user->users->email ?? '') }}" required readonly>
                         </div>
                     </div>
                     <div class="text-center">

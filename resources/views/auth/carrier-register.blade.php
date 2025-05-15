@@ -156,13 +156,20 @@
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="col-md-4">
+                            <label for="name" class="form-label">Company Name <span
+                                    class="text-danger">*</span></label>
+                            <input type="text" name="company_name" id="company_name" class="form-control"
+                                placeholder="Company Name" value="{{ old('company_name') }}">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-md-4">
                             <label for="company_address" class="form-label">Company Address <span
                                     class="text-danger">*</span></label>
                             <input type="text" name="company_address" id="company_address" class="form-control"
                                 placeholder="Company Address" value="{{ old('company_address') }}">
                             <div class="invalid-feedback"></div>
                         </div>
-                        <div class="col-md-4">
+                        <div class="col-md-12">
                             <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
                             <input type="email" name="email" id="email" class="form-control" placeholder="Email"
                                 value="{{ old('email') }}">
@@ -176,8 +183,8 @@
                     <div class="mb-2 row">
                         <div class="col-md-4">
                             <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
-                            <input type="number" name="phone" id="phone" class="form-control" placeholder="Phone"
-                                value="{{ old('phone') }}">
+                            <input type="number" name="phone" id="phone" class="form-control"
+                                placeholder="Phone" value="{{ old('phone') }}">
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="col-md-4">
@@ -218,9 +225,9 @@
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="col-md-4">
-                            <label for="mexico" class="form-label">Country <span
+                            <label for="country" class="form-label">Country <span
                                     class="text-danger">*</span></label>
-                            <select name="mexico" id="mexico" class="form-control" required>
+                            <select name="country" id="country" class="form-control" required>
                                 <option value="">Select Country</option>
                                 <option value="us" {{ old('mexico') == 'us' ? 'selected' : '' }}>US</option>
                                 <option value="mexico" {{ old('mexico') == 'mexico' ? 'selected' : '' }}>Mexico
@@ -243,7 +250,7 @@
                             <label for="transfer_approval_documents" class="form-label">Transfer Approval Document
                                 <span class="text-danger">*</span></label>
                             <input type="file" name="transfer_approval_documents" id="transfer_approval_documents"
-                                class="form-control cutom-vaidation">
+                                class="form-control cutom-vaidation" accept="application/pdf,image/jpeg">
                             <small id="transfer_approval_help" class="form-text text-muted">PDF or JPG only. Max
                                 10MB.</small>
                             <div id="transfer_approval_error" class="text-danger" style="display: none;">Invalid
@@ -254,7 +261,7 @@
                             <label for="insurance_certificate" class="form-label">Insurance Certificate <span
                                     class="text-danger">*</span></label>
                             <input type="file" name="insurance_certificate" id="insurance_certificate"
-                                class="form-control cutom-vaidation">
+                                class="form-control cutom-vaidation" accept="application/pdf,image/jpeg">
                             <small id="insurance_certificate_help" class="form-text text-muted">PDF or JPG only. Max
                                 10MB.</small>
                             <div id="insurance_certificate_error" class="text-danger" style="display: none;">Invalid
