@@ -25,14 +25,13 @@
                                 <!-- Left: Company Details -->
                                 <div class="mb-2 col-md-6 col-12 mb-md-0">
                                     <h3 style="
-                                    font-family: Poppins;
+                                    font-family: Poppins !importent;
                                     font-weight: 600;
                                     font-size: 18px;
                                     line-height: 100%;
                                     letter-spacing: 0%;
-                                    color: #000000;
-                                "
-                                        class="" style="font-family: 'Poppins', sans-serif; color: black;">
+                                    color: #000000;"
+                                        class="" style="font-family: 'Poppins' !importent; color: black;">
                                         USERS</h3>
                                 </div>
 
@@ -46,26 +45,23 @@
                                 </div>
                             </div>
                             <table id="responsive-datatable" class="table dt-responsive nowrap">
-
                                 <thead>
                                     <tr>
-                                        {{-- <th>Sr #</th> --}}
-                                        <th>Driver Name</th>
+                                        <th>Company Name</th>
                                         <th>Email</th>
                                         <th>User Role</th>
-                                        {{-- <th>Status</th> --}}
+                                        <th>Status</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($subUsers as $user)
                                         <tr>
-                                            {{-- <td>{{ $loop->iteration }}</td> --}}
                                             <td>{{ $user->users->name }} {{ $user->users->last_name }}</td>
                                             <td>{{ $user->users->email }}</td>
                                             <td>{{ $user->users->role }}</td>
-                                            {{-- <td> --}}
-                                           {{-- <form method="POST" action="{{ route('shipper.sub-users.toggleSubUser', $user->users->id) }}">
+                                            <td>
+                                            <form method="POST" action="{{ route('shipper.sub-users.toggleSubUser', $user->users->id) }}">
                                                 @csrf
                                                 @method('PATCH')
                                                 <div class="form-check form-switch">
@@ -77,35 +73,35 @@
                                                         {{ $user->users->is_active ? 'Active' : 'Inactive' }}
                                                     </label>
                                                 </div>
-                                            </form> --}}
+                                            </form>
 
-                                                {{-- </td> --}}
+                                                </td>
                                             <td>
                                                   <!-- View Button -->
-
                                                 <a href="javascript:void(0)" style="background-color: #E0F3FF; "
                                                     class="p-0 mb-0 btn" data-bs-toggle="modal"
                                                     data-id="{{ $user->id }}"
-                                                    data-bs-target="#shipperUsertShow{{ $user->id }}">
+                                                    data-bs-target="#shipperUsertShow{{ $user->id }}"
+                                                    title="View" aria-label="View">
                                                     <i style="color:#007BFF" class="p-2 fa fa-eye "></i>
                                                 </a>
 
                                                 <!-- Edit Button -->
-                                                {{-- <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-success"
-                                                    data-bs-toggle="modal" data-id="{{ $user->id }}"
-                                                    data-bs-target="#subShipperEditModal{{ $user->id }}">
-                                                    <i class="p-1 text-white fa fa-edit text-secondary"></i>
-                                                </a> --}}
+                                                <a href="javascript:void(0)" style="background-color: #EFEFEF;"
+                                                    class="p-0 mb-0 btn" data-bs-toggle="modal"
+                                                    data-bs-target="#subShipperEditModal{{ $user->id }}"
+                                                    title="Edit" aria-label="Edit">
+                                                    <i style="color:#9F9F9F" class="p-2 fa fa-edit"></i>
+                                                </a>
 
                                                 <!-- Delete Button -->
-                                                {{-- <a href="javascript:void(0);" class="p-0 mb-0 delete-user btn bg-danger rounded-circle"  data-id="{{ $user->id }}"
-                                                        data-url="{{ route('shipper.sub-users.destroy', $user->id) }}">
-                                                    <i class="p-1 text-white fa fa-trash"></i>
-                                                </a> --}}
-
-                                                {{-- <a href="{{ route('sub-users.edit', $user->id) }}" class="p-0 mb-0 rounded-circle btn bg-success">
-                                                    <i class="p-1 text-white fa fa-edit text-secondary"></i>
-                                                </a> --}}
+                                                <a href="javascript:void(0);" style="background: #D2232A1A;"
+                                                    class="p-0 mb-0 delete-user btn"
+                                                    data-id="{{ $user->id }}"
+                                                    data-url="{{ route('shipper.sub-users.destroy', $user->id) }}"
+                                                    title="Delete" aria-label="Delete">
+                                                    <i style="color:#D2232A" class="p-2 fa fa-trash-can"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     @endforeach
@@ -141,6 +137,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
 <script>
     $(document).ready(function () {
         $('.delete-user').click(function () {
@@ -181,15 +178,19 @@
 </script>
 
 
+
 <script>
     $(document).ready(function() {
         var table = $('#responsive-datatable').DataTable({
             responsive: true,
             lengthChange: false,
-            pageLength: 50,
+            pageLength: 10,
             ordering: false,
             info: false,
             pagingType: 'simple',
+            language: {
+            emptyTable: "No users have been added yet. Click ‘+ Invite Users’ to add a new user."
+        }
         });
 
         $('#customSearch').on('keyup', function() {
@@ -201,10 +202,14 @@
         function updateButtons() {
             let info = table.page.info();
 
-            $('#prevPage').toggleClass('disabled', info.page === 0);
-            $('#nextPage').toggleClass('disabled', info.page === info.pages - 1);
+            if (info.recordsDisplay === 0) {
+                // No data — disable both buttons
+                $('#prevPage, #nextPage').addClass('disabled');
+            } else {
+                $('#prevPage').toggleClass('disabled', info.page === 0);
+                $('#nextPage').toggleClass('disabled', info.page === info.pages - 1);
+            }
         }
-
         function updateInfo() {
             let info = table.page.info();
             $('#customInfoText').text(

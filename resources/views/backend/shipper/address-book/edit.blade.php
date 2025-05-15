@@ -10,8 +10,10 @@
           <h5 class="text-center modal-title w-100" id="subUserModalLabel">UPDATE ADDRESS</h5>
         </div>
 
-        <form id="shipperAddressBook" method="POST" action="{{ route('shipper.address-book.update', $address->id) }}">
+        <form method="POST" action="{{ route('shipper.address-book.update', $address->id) }}">
             @csrf
+            @method('PUT')
+
             <div class="modal-body">
               <div class="row">
                 <div class="mb-3 col-md-12">

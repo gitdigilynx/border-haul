@@ -13,8 +13,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\View\View;
 use App\Models\Carrier;
 use App\Enums\RoleEnum;
-use Illuminate\Support\Str;
-
+use App\Mail\SendPasswordToCarrier;
+use Illuminate\Support\Facades\Mail;
+use Flasher\Laravel\Facade\Flasher;
 
 class CarrierRegisterController extends Controller
 {
@@ -25,27 +26,27 @@ class CarrierRegisterController extends Controller
 
     public function register(Request $request): RedirectResponse
     {
+        try {
+        $request->validate([
+            'name' => 'required|string|max:30',
+            'email' => 'required|email|unique:users,email',
 
-        // $request->validate([
-        //     'name' => 'required|string|max:255',
-        //     'role' => 'required|in:shipper,carrier',
-        //     'email' => 'required|email|unique:users,email',
-        //     'password' => 'required|confirmed|min:6',
-        //     'phone' => 'required|string|max:20',
+            // Carrier-specific validations
+            'company_address'   => 'required|string|max:50',
+            'company_name'   => 'required|string|max:50',
+            'authority'         => 'required|string|max:50',
+            'dot'               => 'required|string|min:3|max:30',
+            'mc'                => 'required|string|min:3|max:30',
+            'scac_code'         => 'required|string|min:3|max:30',
+            'country'           => 'required|string|min:1|max:30',
+            'caat_code'         => 'required|string|min:3|max:30',
+            'service_category'  => 'required|string|min:3|max:255',
+            'phone'             => 'required|string|max:11',
 
-        //     // Carrier-specific validations
-        //     'company_name' => 'required|string|max:255',
-        //     'company_address' => 'required|string|max:255',
-        //     'authority' => 'required_if:role,carrier',
-        //     'dot' => 'required_if:role,carrier',
-        //     'mc' => 'required_if:role,carrier',
-        //     'scac_code' => 'required_if:role,carrier',
-        //     'mexico' => 'required_if:role,carrier',
-        //     'caat_code' => 'required_if:role,carrier',
-        //     'service_category' => 'required_if:role,carrier',
-        //     // 'transfer_approval_documents' => 'required_if:role,carrier',
-        //     // 'insurance_certificate' => 'required_if:role,carrier',
-        // ]);
+            // 'transfer_approval_documents' => 'required|string|max:15',
+            // 'insurance_certificate' => 'required|string|max:15',
+        ]);
+
 
         // Create the user
         $user = User::create([
@@ -66,6 +67,7 @@ class CarrierRegisterController extends Controller
         Carrier::create([
             'user_id' => $user->id,
             'company_address' => $request->company_address,
+            'company_name' => $request->company_name,
             'authority' => $request->authority,
             'dot' => $request->dot,
             'mc' => $request->mc,
@@ -78,6 +80,8 @@ class CarrierRegisterController extends Controller
             // 'insurance_certificate' => $insuranceCertPath,
         ]);
 
+        Mail::to($request->email)->send(new SendPasswordToCarrier($request->email));
+
         event(new Registered($user));
         Auth::login($user);
 
@@ -86,6 +90,10 @@ class CarrierRegisterController extends Controller
             }
 
         return redirect(RouteServiceProvider::HOME);
+    } catch (\Exception $e) {
+        dd('Something went wrong: ' . $e->getMessage());
+        return redirect()->back();
+    }
     }
 
         public function carrierLogin(): View

@@ -94,10 +94,10 @@
 
 <div class="bg-white">
     <div class="container-fluid justify-content-center ">
-        <div class="overflow-hidden row rounded-4 justify-content-around pb-4 pt-4">
+        <div class="pt-4 pb-4 overflow-hidden row rounded-4 justify-content-around">
 
             <!-- Left Column: Login Form -->
-            <div class=" col-md-6 d-flex flex-column ">
+            <div class=" col-md-6 d-flex flex-column">
                 <div class="mb-5 text-left">
                     <img src="{{ asset('assets/images/logo/Border-Haul-logo.png') }}" alt="Logo" height="70">
                 </div>
@@ -108,8 +108,13 @@
                     <!-- Authority & DOT -->
                     <div class="mb-2 row">
                         <div class="col-md-4">
-                            <label for="name" class="form-label">Company Name <span class="text-danger">*</span></label>
-                            <input type="text" name="name" id="name" class="form-control" placeholder="Company Name">
+                            <label for="name" class="form-label">Full Name <span class="text-danger">*</span></label>
+                            <input type="text" name="name" id="name" class="form-control" placeholder="Full Name">
+                            <div class="invalid-feedback"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="company_name" class="form-label">Company Name <span class="text-danger">*</span></label>
+                            <input type="text" name="company_name" id="company_name" class="form-control" placeholder="Company Name">
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="col-md-4">
@@ -167,8 +172,8 @@
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="col-md-4">
-                            <label for="mexico" class="form-label">Country <span class="text-danger">*</span></label>
-                            <select name="mexico" id="mexico" class="form-control" required>
+                            <label for="country" class="form-label">Country <span class="text-danger">*</span></label>
+                            <select name="country" id="country" class="form-control" required>
                                 <option value="">Select Country</option>
                                 <option value="us">US</option>
                                 <option value="mexico">Mexico</option>

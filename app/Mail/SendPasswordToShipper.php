@@ -6,7 +6,7 @@ use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
-class SendPasswordToCarrier extends Mailable
+class SendPasswordToShipper extends Mailable
 {
     use Queueable, SerializesModels;
 
@@ -19,7 +19,7 @@ class SendPasswordToCarrier extends Mailable
 
     public function build()
     {
-        return $this->subject('Your User Account Has Been Created')
-                    ->view('emails.carrier');
+        return $this->subject('Your account has been created')
+                    ->view('emails.shipper');
     }
 }

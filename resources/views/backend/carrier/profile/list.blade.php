@@ -54,8 +54,13 @@
                                                             <div class="row">
 
                                                                 <div class="mb-3 col-lg-6">
-                                                                    <label class="form-label">Company Name</label>
+                                                                    <label class="form-label">Full Name</label>
                                                                     <input class="form-control" type="text" name="name" value="{{ Auth::user()->name }}">
+                                                                </div>
+
+                                                                <div class="mb-3 col-lg-6">
+                                                                    <label class="form-label">Company Name</label>
+                                                                    <input class="form-control" type="text" name="company_name" value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->company_name : '' }}">
                                                                 </div>
 
                                                                 <div class="mb-3 col-lg-6">

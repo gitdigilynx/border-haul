@@ -144,6 +144,8 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/sub-shippers/{id}', 'update')->name('sub-shippers.update');
             Route::delete('/sub-shippers/{id}', 'destroy')->name(name: 'sub-shippers.destroy');
             Route::patch('/sub-shippers/{id}/toggle-user', 'toggleSubShipper')->name('sub-shippers.toggleSubUser');
+
+
         });
 
           Route::controller(ShippperUserController::class)->group(function () {
@@ -190,7 +192,8 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/sub-users', 'store')->name('sub-users.store');
             Route::get('/sub-users/{id}/edit', 'edit')->name('sub-users.edit');
             Route::get('/sub-users/{id}', 'show')->name('sub-users.show');
-            Route::post('/sub-users/{id}', 'update')->name('sub-users.update');
+
+            Route::put('/sub-users/{id}', 'update')->name('sub-users.update');
             Route::delete('/sub-users/{id}', 'destroy')->name(name: 'sub-users.destroy');
             Route::patch('/sub-users/{id}/toggle-user',  'toggleSubUser')->name('sub-users.toggleSubUser');
         });
@@ -202,7 +205,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/address-book', 'store')->name('address-book.store');
             Route::get('/address-book/{id}/edit', 'edit')->name('address-book.edit');
             Route::get('/address-book/{id}', 'show')->name('address-book.show');
-            Route::post('/address-book/{id}', 'update')->name('address-book.update');
+            Route::put('/address-book/{id}', 'update')->name('address-book.update');
             Route::delete('/address-book/{id}', 'destroy')->name('address-book.destroy');
         });
     });

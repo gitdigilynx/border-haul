@@ -12,7 +12,7 @@
                     style="width: 40px; height: 40px; margin-right: 8px;">
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#truckUserModal"
                     style="background-color: #06367B; color: white; border: none;  font-size: 1rem; font-weight: bold; border-radius: 6px; ">
-                    + New Request
+                    + Add Truck
                 </button>
 
             </div>

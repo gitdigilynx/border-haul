@@ -74,15 +74,14 @@ class AddressBookController extends Controller
         try {
             // Validate the request data
             $request->validate([
-                'name' => 'nullable|string|max:255',
-                'phone' => 'nullable|string|max:15',
-                'street_address' => 'required|string|max:255',
-                'city' => 'required|string|max:100',
-                'state' => 'nullable|string|max:100',
-                'postal_code' => 'nullable|string|max:20',
-                'country' => 'nullable|string|max:100',
+                'name' => 'nullable|string|max:50',
+                'street_address' => 'required|string|max:50',
+                'city' => 'required|string|max:10',
+                'state' => 'nullable|string|max:10',
+                'postal_code' => 'nullable|string|max:10',
+                'country' => 'nullable|string|max:10',
                 'type' => 'required|in:pickup,delivery',
-                'contact_person_name' => 'nullable|string|max:25',
+                'contact_person_name' => 'nullable|string|max:50',
             ]);
 
             // Find the address record

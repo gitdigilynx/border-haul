@@ -34,6 +34,7 @@ class CarrierProfileController extends Controller
             $request->validate([
                 'name'  => 'required|string|max:255',
                 'company_address'  => 'required|string|max:255',
+                'company_name'  => 'required|string|max:15',
                 'phone'  => 'required|string|max:255',
                 'authority'  => 'required|string|max:255',
                 'dot'  => 'required|string|max:255',
@@ -58,6 +59,7 @@ class CarrierProfileController extends Controller
 
             $carrier->update([
                 'company_address'  => $request->company_address,
+                'company_name'  => $request->company_name,
                 'phone'  => $request->phone,
                 'authority'  => $request->authority,
                 'dot'  => $request->dot,
@@ -70,7 +72,7 @@ class CarrierProfileController extends Controller
 
             return redirect()->route('carrier.profile.list')->with('success', 'Profile updated successfully.');
         } catch (\Exception $e) {
-            dd('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }

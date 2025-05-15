@@ -10,11 +10,11 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 use App\Models\Shipper;
 use App\Enums\RoleEnum;
-
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendPasswordToShipper;
 
 class RegisteredUserController extends Controller
 {
@@ -26,15 +26,15 @@ class RegisteredUserController extends Controller
 
     public function store(Request $request): RedirectResponse
     {
-        // $request->validate([
-        //     'name' => 'required|string|max:255',
-        //     'role' => 'required', 'exists:roles,role',
-        //     'email' => 'required|email|unique:users,email',
-        //     'password' => 'required|confirmed|min:6',
-        //     'company_name' => 'required|string|max:255',
-        //     'company_address' => 'required|string|max:255',
-        //     'phone' => 'required|string|max:20',
-        // ]);
+        $request->validate([
+            'name' => 'required|string|max:15',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|confirmed|min:8',
+            'company_name' => 'required|string|max:255',
+            'company_address' => 'required|string|max:255',
+            'phone' => 'required|string|max:20',
+
+        ]);
 
             // Create the user
             $user = User::create([
@@ -55,6 +55,8 @@ class RegisteredUserController extends Controller
                 'phone' => $request->phone,
                 'service_category' => $request->service_category,
             ]);
+
+            Mail::to($request->email)->send(new SendPasswordToShipper($request->email));
 
             flash()->success('User created successfully!');
 

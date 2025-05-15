@@ -12,9 +12,9 @@
     <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet" type="text/css" id="app-style" />
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet" type="text/css" />
         <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
-   <link href="https://fonts.cdnfonts.com/css/staatliches" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/staatliches" rel="stylesheet">
     <style>
         .is-invalid {
             border-color: #dc3545;
@@ -132,7 +132,7 @@
     </style>
 </head>
 
-<div class="bg-white container-fluid  min-vh-100 pb-4 pt-4">
+<div class="pt-4 pb-4 bg-white container-fluid min-vh-100">
     <div class="overflow-hidden row justify-content-around" style="/*max-width: 1000px;*/">
 
         <!-- Left Column: Login Form -->

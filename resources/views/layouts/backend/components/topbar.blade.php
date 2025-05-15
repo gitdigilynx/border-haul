@@ -12,7 +12,7 @@
                 </li> --}}
                 <li class="d-none d-lg-block">
                     <div class="position-relative topbar-search">
-                        <input style="border-radius: 10px" type="text" class="bg-white form-control bg-light ps-4" placeholder="Search...">
+                        <input style="border-radius: 10px" type="text" class="bg-white form-control bg-light ps-4" placeholder="Search name, email or role">
                         <i
                             class="mdi mdi-magnify fs-16 position-absolute text-muted top-50 translate-middle-y ms-2"></i>
                     </div>
@@ -180,9 +180,20 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-end profile-dropdown ">
                         <!-- item-->
+
+                        @hasrole('Shipper')
+
                         <div class="dropdown-header noti-title">
-                            <h6 class="m-0 text-overflow">Welcome! {{ Auth::user()->role }}</h6>
+                            <h6 class="m-0 text-overflow">Welcome! {{ Auth::user()->shipper->company_name }}</h6>
                         </div>
+                        @endhasrole
+
+                        @hasrole('Carrier')
+
+                        <div class="dropdown-header noti-title">
+                            <h6 class="m-0 text-overflow">Welcome! {{ Auth::user()->carrier->company_name }}</h6>
+                        </div>
+                        @endhasrole
 
                         <!-- item-->
                         @hasrole('Admin')
@@ -215,11 +226,6 @@
                             </a>
                         @endhasrole
 
-                        <!-- item-->
-                        {{-- <a href="auth-lock-screen.html" class="dropdown-item notify-item">
-                            <i class="align-middle mdi mdi-lock-outline fs-16"></i>
-                            <span>Lock Screen</span>
-                        </a> --}}
 
                         <div class="dropdown-divider"></div>
 

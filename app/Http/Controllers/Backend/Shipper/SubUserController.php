@@ -52,6 +52,12 @@ class SubUserController extends Controller
                 'role' => 'ShipperUser',
             ]);
 
+            if (User::where('email', $request->email)->exists()) {
+                return redirect()->back()
+                    ->withInput() // keeps the old input
+                    ->withErrors(['email' => 'The email address is already registered.']);
+            }
+
             ShipperSubUser::create([
                 'user_id' => $user->id,
                 'shipper_id' => $shipper->id,
@@ -94,25 +100,24 @@ class SubUserController extends Controller
     public function update(Request $request, $id)
     {
         try {
-              $request->validate([
-                'name'  => 'required|string|max:255',
-                'email' => 'required|email|unique:users,email,' . $request->id,
-                'role'  => 'required|string|max:255',
+            $request->validate([
+                'name'  => 'required|string|max:50',
+                'last_name'  => 'required|string|max:50',
+                'email' => 'required|email',
             ]);
 
-            // Find user by ID
-            $subShipper = User::findOrFail($id);
+            $user = User::findOrFail($id);
 
-            // Update the user
-            $subShipper->update([
-                'name'  => $request['name'],
-                'email' => $request['email'],
-                'role'  => $request['role'],
+            $user->update([
+                'name'  => $request->name,
+                'last_name'  => $request->last_name,
+                'email' => $request->email,
             ]);
-            return redirect()->route('shipper.sub-users.index');
+
+            return redirect()->route('shipper.sub-users')->with('success', 'User updated successfully.');
         } catch (\Exception $e) {
             Flasher::addError('Something went wrong: ' . $e->getMessage());
-            return redirect()->back();
+            return redirect()->back()->withInput();
         }
     }
 

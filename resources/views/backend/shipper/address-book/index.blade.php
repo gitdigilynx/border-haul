@@ -31,14 +31,14 @@
                                     <!-- Left: Company Details -->
                                     <div class="mb-2 col-md-6 col-12 mb-md-0">
                                         <h3 style="
-                                        font-family: Poppins;
+                                        font-family: Poppins !importent;
                                         font-weight: 600;
                                         font-size: 18px;
                                         line-height: 100%;
                                         letter-spacing: 0%;
                                         color: #000000;
                                     "
-                                            class="" style="font-family: 'Poppins', sans-serif; color: black;">
+                                            class="" style="font-family: 'Poppins' !importent; color: black;">
                                             Company Name</h3>
                                     </div>
 
@@ -65,31 +65,38 @@
                                         @foreach ($addressBook as $address)
                                             <tr>
                                                 <td>{{ $address->name }}</td>
-                                                <td>{{ $address->street_address }}</td>
+                                                <td>{{ $address->street_address }}, {{ $address->city }}, {{ $address->state }}, {{ $address->country }}</td>
 
                                                 <td>{{ $address->phone }}</td>
-                                                <td class="text-center ">
-                                                    <a href="javascript:void(0)" style="background-color: #E0F3FF; "
-                                                        class="p-0 mb-0 btn" data-bs-toggle="modal"
-                                                        data-id="{{ $address->id }}"
-                                                        data-bs-target="#ShipperAddressBookModal{{ $address->id }}">
-                                                        <i style="color:#007BFF" class="p-2 fa fa-eye "></i>
+                                                <td class="text-center">
+
+                                                  <!-- View Button -->
+                                                    <a href="javascript:void(0)" style="background-color: #E0F3FF;"
+                                                       class="p-0 mb-0 btn" data-bs-toggle="modal"
+                                                       data-id="{{ $address->id }}"
+                                                       data-bs-target="#ShipperAddressBookModal{{ $address->id }}"
+                                                       title="View" aria-label="View">
+                                                        <i style="color:#007BFF" class="p-2 fa fa-eye"></i>
                                                     </a>
 
-                                                    <a href="javascript:void(0)" style="background-color: #EFEFEF; "
-                                                        class="p-0 mb-0 btn" data-bs-toggle="modal"
-                                                        data-bs-target="#addressBookEdit{{ $address->id }}">
+                                                <!-- Edit Button -->
+                                                    <a href="javascript:void(0)" style="background-color: #EFEFEF;"
+                                                       class="p-0 mb-0 btn" data-bs-toggle="modal"
+                                                       data-bs-target="#addressBookEdit{{ $address->id }}"
+                                                       title="Edit" aria-label="Edit">
                                                         <i style="color:#9F9F9F" class="p-2 fa fa-edit"></i>
                                                     </a>
 
-                                                    <a href="javascript:void(0);" style="background: #D2232A1A;  "
-                                                        class="p-0 mb-0 delete-address-book btn "
-                                                        data-id="{{ $address->id }}"
-                                                        data-url="{{ route('shipper.address-book.destroy', $address->id) }}">
+                                                <!-- Delete Button -->
+                                                    <a href="javascript:void(0);" style="background: #D2232A1A;"
+                                                       class="p-0 mb-0 delete-address-book btn"
+                                                       data-id="{{ $address->id }}"
+                                                       data-url="{{ route('shipper.address-book.destroy', $address->id) }}"
+                                                       title="Delete" aria-label="Delete">
                                                         <i style="color:#D2232A" class="p-2 fa fa-trash-can"></i>
                                                     </a>
-
                                                 </td>
+
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -126,6 +133,7 @@
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+
     <script>
         $(document).ready(function() {
             $('.delete-address-book').click(function() {
@@ -173,47 +181,57 @@
             var table = $('#responsive-datatable').DataTable({
                 responsive: true,
                 lengthChange: false,
-                pageLength: 50,
+                pageLength: 10,
                 ordering: false,
                 info: false,
                 pagingType: 'simple',
+                language: {
+                emptyTable: "No address have been added yet. Click ‘+ Add New Address’ to add a new address."
+            }
+
             });
 
             $('#customSearch').on('keyup', function() {
-                console.log('work'); // Should now fire
-                table.search(this.value).draw();
-            });
-            $('#responsive-datatable_filter').hide();
+            console.log('work'); // Should now fire
+            table.search(this.value).draw();
+        });
+        $('#responsive-datatable_filter').hide();
 
-            function updateButtons() {
-                let info = table.page.info();
+        function updateButtons() {
+            let info = table.page.info();
 
+            if (info.recordsDisplay === 0) {
+                // No data — disable both buttons
+                $('#prevPage, #nextPage').addClass('disabled');
+            } else {
                 $('#prevPage').toggleClass('disabled', info.page === 0);
                 $('#nextPage').toggleClass('disabled', info.page === info.pages - 1);
             }
+        }
 
-            function updateInfo() {
-                let info = table.page.info();
-                $('#customInfoText').text(
-                    `Showing ${info.start + 1} to ${info.end} of ${info.recordsDisplay} entries`
-                );
-                updateButtons();
-            }
 
-            updateInfo();
+        function updateInfo() {
+            let info = table.page.info();
+            $('#customInfoText').text(
+                `Showing ${info.start + 1} to ${info.end} of ${info.recordsDisplay} entries`
+            );
+            updateButtons();
+        }
 
-            $('#nextPage').on('click', function() {
-                table.page('next').draw('page');
-            });
+        updateInfo();
 
-            $('#prevPage').on('click', function() {
-                table.page('previous').draw('page');
-            });
-
-            table.on('draw', function() {
-                updateInfo();
-            });
+        $('#nextPage').on('click', function() {
+            table.page('next').draw('page');
         });
+
+        $('#prevPage').on('click', function() {
+            table.page('previous').draw('page');
+        });
+
+        table.on('draw', function() {
+            updateInfo();
+        });
+    });
     </script>
 
 
@@ -259,5 +277,6 @@
             max-width: 300px !important;
         }
     }
+
 </style>
 @endsection

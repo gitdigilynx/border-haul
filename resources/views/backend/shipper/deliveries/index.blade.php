@@ -24,26 +24,23 @@
                     <div class="card">
 
                         <div class="card-header" style="border-bottom: none;">
-                            <div class="gap-4 d-flex w-100">
+                            <div class="row g-3"> <!-- Bootstrap grid row with gutter spacing -->
+
                                 <!-- Status Dropdown -->
-                                <div class="flex-grow-1">
+                                <div class="col-12 col-md-4">
                                     <label class="form-label fw-bold text-uppercase small">Status</label>
-                                    <div class="input-group">
-                                        <div class="mb-3 col-md-12">
-                                            <select class="form-control" name="country" required>
-                                              <option selected>Select</option>
-                                              <option value="inprogress">In Progess</option>
-                                              <option value="pending">Pending</option>
-                                            </select>
-                                          </div>
-                                    </div>
+                                    <select class="form-control" name="country" required>
+                                        <option selected>Select Status</option>
+                                        <option value="inprogress">In Progress</option>
+                                        <option value="pending">Pending</option>
+                                    </select>
                                 </div>
+
                                 <!-- Date Range Input with Flatpickr -->
-                                <div class="flex-grow-1">
+                                <div class="col-12 col-md-4">
                                     <label class="form-label fw-bold text-uppercase small">Date Range</label>
                                     <div class="input-group">
-                                        <input type="text" id="dateRangePicker" class="form-control"
-                                            placeholder="DD/MM/YYYY">
+                                        <input type="text" id="dateRangePicker" class="form-control" placeholder="MM/DD/YYYY">
                                         <span class="bg-white input-group-text border-start-0">
                                             <i class="fa fa-calendar" aria-hidden="true"></i>
                                         </span>
@@ -51,22 +48,18 @@
                                 </div>
 
                                 <!-- Search Deliveries Input -->
-
-                                <div class="flex-grow-1">
+                                <div class="col-12 col-md-4">
                                     <label class="form-label fw-bold text-uppercase small">Search Deliveries</label>
-                                    <li class="d-lg-block">
-                                        <div class="position-relative topbar-search">
-                                            <input type="text"
-                                                    class="bg-opacity-75 form-control ps-4"
-                                                    placeholder="Search Deliveries...."
-                                                    style="border: 2px solid #f5f5f5;"> <!-- #007BFF is Bootstrap blue -->
-                                                <i class="mdi mdi-magnify fs-16 position-absolute text-muted top-50 translate-middle-y ms-2"></i>
-
-                                        </div>
-                                    </li>
+                                    <div class="position-relative topbar-search">
+                                        <input type="text" class="bg-opacity-75 form-control ps-4"
+                                            placeholder="Search Deliveries..." style="border: 2px solid #f5f5f5;">
+                                        <i class="mdi mdi-magnify fs-16 position-absolute text-muted top-50 translate-middle-y ms-2"></i>
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
+
 
                         <div class="card-body">
                             <table id="responsive-datatable" class="table dt-responsive nowrap">
@@ -247,7 +240,7 @@
 
 <script>
      flatpickr("#dateRangePicker", {
-            dateFormat: "d/m/Y",
+            dateFormat: "m/d/Y",
             allowInput: true
         });
     $(document).ready(function() {
