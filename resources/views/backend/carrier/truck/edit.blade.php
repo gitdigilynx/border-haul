@@ -8,7 +8,7 @@
                 <h5 class="text-center modal-title w-100">UPDATE TRUCK</h5>
             </div>
 
-            <form id="truckForm" method="POST"
+            <form id="editTruckForm" method="POST"
                 action="{{ isset($truck) ? route('carrier.trucks.update', $truck->id) : route('carrier.trucks.store') }}">
                 @csrf
                 <div class="modal-body">
@@ -17,8 +17,8 @@
                         <div class="mt-2 col-md-6">
                             <label for="truckNumber" class="form-label">Track Plate</label>
                             <input type="text" class="form-control" name="plate_number"
-                                value="{{ old('plate_number', $truck->plate_number ?? '') }}" placeholder="Enter Plate Number"
-                                required>
+                                value="{{ old('plate_number', $truck->plate_number ?? '') }}"
+                                placeholder="Enter Plate Number" required>
                         </div>
 
                         <div class="mt-2 col-md-6">
@@ -96,3 +96,64 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    $('#editTruckForm').validate({
+        errorClass: 'is-invalid',
+        validClass: 'is-valid',
+        errorElement: 'div',
+        errorPlacement: function(error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group, .col-md-6, .col-md-12').find('.invalid-feedback').remove();
+            error.insertAfter(element);
+        },
+        highlight: function(element) {
+            $(element).addClass('is-invalid').removeClass('is-valid');
+        },
+        unhighlight: function(element) {
+            $(element).removeClass('is-invalid').addClass('is-valid');
+        },
+        rules: {
+            plate_number: {
+                required: true
+            },
+            trucker_number: {
+                required: true
+            },
+            service_category: {
+                required: true
+            },
+            name: {
+                required: true,
+                minlength: 2
+            },
+            phone_number: {
+                required: true,
+                digits: true,
+                minlength: 10,
+                maxlength: 15
+            },
+            in_service: {
+                required: true
+            },
+            location: {
+                required: true
+            }
+        },
+        messages: {
+            plate_number: "Please enter the plate number",
+            trucker_number: "Please enter the trucker number",
+            service_category: "Please select a service category",
+            name: "Please enter the driver's name",
+            phone_number: {
+                required: "Please enter the driver's phone number",
+                minlength: "Phone number must be at least 10 digits",
+                maxlength: "Phone number must not exceed 15 digits",
+                digits: "Phone number should contain only digits"
+            },
+            in_service: "Please select the in-service status",
+            location: "Please enter the location"
+        }
+    });
+</script>
