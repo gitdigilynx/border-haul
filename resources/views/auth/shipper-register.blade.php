@@ -331,7 +331,6 @@
                             placeholder="Enter Phone Number" value="{{ old('phone') }}">
                         <div id="phone-error" style="color: red; display: none; font-size: 12px;">Invalid phone
                             number format</div>
-
                         @error('phone')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
