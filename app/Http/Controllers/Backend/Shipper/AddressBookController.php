@@ -33,7 +33,7 @@ class AddressBookController extends Controller
         //
     }
 
-   public function store(StoreAddressBook $request)
+    public function store(StoreAddressBook $request)
     {
         try {
             $user = auth()->user();
@@ -71,6 +71,8 @@ class AddressBookController extends Controller
     }
     public function update(Request $request, $id)
     {
+
+
         try {
             // Validate the request data
             $request->validate([

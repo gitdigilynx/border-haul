@@ -65,37 +65,37 @@
                                         @foreach ($addressBook as $address)
                                             <tr>
                                                 <td>{{ $address->name }}</td>
-                                                <td>{{ $address->street_address }}, {{ $address->city }}, {{ $address->state }}, {{ $address->country }}</td>
+                                                <td>{{ $address->street_address }}, {{ $address->city }},
+                                                    {{ $address->state }}, {{ $address->country }}</td>
 
                                                 <td>{{ $address->phone }}</td>
                                                 <td class="text-center">
 
-                                                  <!-- View Button -->
+                                                    <!-- View Button -->
                                                     <a href="javascript:void(0)" style="background-color: #E0F3FF;"
-                                                       class="p-0 mb-0 btn" data-bs-toggle="modal"
-                                                       data-id="{{ $address->id }}"
-                                                       data-bs-target="#ShipperAddressBookModal{{ $address->id }}">
-                                                       <i class="p-2 fa fa-eye" style="color:#007BFF" title="View Address"
-                                                       data-bs-toggle="tooltip" data-bs-placement="top"></i>
+                                                        class="p-0 mb-0 btn" data-bs-toggle="modal"
+                                                        data-id="{{ $address->id }}"
+                                                        data-bs-target="#ShipperAddressBookModal{{ $address->id }}"
+                                                        title="View" aria-label="View">
+                                                        <i style="color:#007BFF" class="p-2 fa fa-eye"></i>
                                                     </a>
 
-                                                <!-- Edit Button -->
+                                                    <!-- Edit Button -->
                                                     <a href="javascript:void(0)" style="background-color: #EFEFEF;"
-                                                       class="p-0 mb-0 btn" data-bs-toggle="modal"
-                                                       data-bs-target="#addressBookEdit{{ $address->id }}">
-                                                       <i class="p-2 fa fa-edit" style="color:#9F9F9F" title="Edit Address"
-                                                        data-bs-toggle="tooltip" data-bs-placement="top"></i>
+                                                        class="p-0 mb-0 btn" data-bs-toggle="modal"
+                                                        data-bs-target="#addressBookEdit{{ $address->id }}" title="Edit"
+                                                        aria-label="Edit">
+                                                        <i style="color:#9F9F9F" class="p-2 fa fa-edit"></i>
                                                     </a>
 
 
-                                                <!-- Delete Button -->
+                                                    <!-- Delete Button -->
                                                     <a href="javascript:void(0);" style="background: #D2232A1A;"
-                                                       class="p-0 mb-0 delete-address-book btn"
-                                                       data-id="{{ $address->id }}"
-                                                       data-url="{{ route('shipper.address-book.destroy', $address->id) }}">
-                                                       <i class="p-2 fa fa-trash-can" style="color:#D2232A"
-                                                       title="Delete Address" data-bs-toggle="tooltip"
-                                                       data-bs-placement="top"></i>
+                                                        class="p-0 mb-0 delete-address-book btn"
+                                                        data-id="{{ $address->id }}"
+                                                        data-url="{{ route('shipper.address-book.destroy', $address->id) }}"
+                                                        title="Delete" aria-label="Delete">
+                                                        <i style="color:#D2232A" class="p-2 fa fa-trash-can"></i>
                                                     </a>
                                                 </td>
 
@@ -127,14 +127,17 @@
         </div>
     </div>
 
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     @include('backend.shipper.address-book.create')
     @foreach ($addressBook as $address)
         @include('backend.shipper.address-book.show', ['address' => $address])
         @include('backend.shipper.address-book.edit', ['address' => $address])
     @endforeach
-
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
     <script>
         $(document).ready(function() {
@@ -188,97 +191,96 @@
                 info: false,
                 pagingType: 'simple',
                 language: {
-                emptyTable: '<div style="text-align:center;">No address have been added yet. Click ‘+ Add New Address’ to add a new address.</div>'
-            }
+                    emptyTable: '<div style="text-align:center;">No address have been added yet. Click ‘+ Add New Address’ to add a new address.</div>'
+                }
 
             });
 
             $('#customSearch').on('keyup', function() {
-            console.log('work'); // Should now fire
-            table.search(this.value).draw();
-        });
-        $('#responsive-datatable_filter').hide();
+                console.log('work'); // Should now fire
+                table.search(this.value).draw();
+            });
+            $('#responsive-datatable_filter').hide();
 
-        function updateButtons() {
-            let info = table.page.info();
+            function updateButtons() {
+                let info = table.page.info();
 
-            if (info.recordsDisplay === 0) {
-                // No data — disable both buttons
-                $('#prevPage, #nextPage').addClass('disabled');
-            } else {
-                $('#prevPage').toggleClass('disabled', info.page === 0);
-                $('#nextPage').toggleClass('disabled', info.page === info.pages - 1);
+                if (info.recordsDisplay === 0) {
+                    // No data — disable both buttons
+                    $('#prevPage, #nextPage').addClass('disabled');
+                } else {
+                    $('#prevPage').toggleClass('disabled', info.page === 0);
+                    $('#nextPage').toggleClass('disabled', info.page === info.pages - 1);
+                }
             }
-        }
 
 
-        function updateInfo() {
-            let info = table.page.info();
-            $('#customInfoText').text(
-                `Showing ${info.start + 1} to ${info.end} of ${info.recordsDisplay} entries`
-            );
-            updateButtons();
-        }
+            function updateInfo() {
+                let info = table.page.info();
+                $('#customInfoText').text(
+                    `Showing ${info.start + 1} to ${info.end} of ${info.recordsDisplay} entries`
+                );
+                updateButtons();
+            }
 
-        updateInfo();
-
-        $('#nextPage').on('click', function() {
-            table.page('next').draw('page');
-        });
-
-        $('#prevPage').on('click', function() {
-            table.page('previous').draw('page');
-        });
-
-        table.on('draw', function() {
             updateInfo();
+
+            $('#nextPage').on('click', function() {
+                table.page('next').draw('page');
+            });
+
+            $('#prevPage').on('click', function() {
+                table.page('previous').draw('page');
+            });
+
+            table.on('draw', function() {
+                updateInfo();
+            });
         });
-    });
     </script>
 
 
-<style>
-    .custom-pagination-btn {
-        border: 1px solid #d1d5db;
-        /* light gray */
-        border-radius: 8px;
-        font-weight: 500;
-        background-color: #fff;
-        color: #111827;
-        padding: 6px 16px;
-        font-size: 14px;
-        transition: all 0.2s ease-in-out;
-    }
-
-    .custom-pagination-btn:hover {
-        background-color: #f3f4f6;
-        /* light hover effect */
-        color: #000;
-    }
-
-    .custom-pagination-btn.disabled {
-        color: #9ca3af;
-        border-color: #d1d5db;
-        background-color: #fff;
-        pointer-events: none;
-        cursor: not-allowed;
-    }
-
-    .dataTables_paginate {
-        display: none !important;
-    }
-
-    @media (min-width: 992px) {
-        .responsive-search {
-            max-width: 140px !important;
+    <style>
+        .custom-pagination-btn {
+            border: 1px solid #d1d5db;
+            /* light gray */
+            border-radius: 8px;
+            font-weight: 500;
+            background-color: #fff;
+            color: #111827;
+            padding: 6px 16px;
+            font-size: 14px;
+            transition: all 0.2s ease-in-out;
         }
-    }
 
-    @media (max-width: 991.98px) {
-        .responsive-search {
-            max-width: 300px !important;
+        .custom-pagination-btn:hover {
+            background-color: #f3f4f6;
+            /* light hover effect */
+            color: #000;
         }
-    }
 
-</style>
+        .custom-pagination-btn.disabled {
+            color: #9ca3af;
+            border-color: #d1d5db;
+            background-color: #fff;
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+
+        .dataTables_paginate {
+            display: none !important;
+        }
+
+        @media (min-width: 992px) {
+            .responsive-search {
+                max-width: 140px !important;
+            }
+        }
+
+        @media (max-width: 991.98px) {
+            .responsive-search {
+                max-width: 300px !important;
+            }
+        }
+    </style>
 @endsection
