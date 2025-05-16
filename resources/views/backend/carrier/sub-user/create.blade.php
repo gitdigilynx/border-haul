@@ -2,31 +2,33 @@
 <div class="modal fade" id="carrierUserCreate" tabindex="-1" aria-labelledby="exampleModalgridLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content custom-modal">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            <div class="modal-header" style="border-bottom: none;">
-                <h5 class="text-center modal-title w-100">
-                    ADD SUB USER
-                </h5>
+            <div class="modal-header border-bottom-0 p-2">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <h5 class="text-center modal-title w-100">
+                ADD SUB USER
+            </h5>
 
             <form id="carrierUserForm" method="POST" action="{{ route('carrier.carrier-users.store') }}">
                 @csrf
                 <div class="modal-body">
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">First Name *</label>
+                            <label for="name" class="form-label">First Name <span
+                                    class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="name" name="name"
                                 placeholder="Entr First Name" required>
                         </div>
 
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Last Name *</label>
+                            <label for="name" class="form-label">Last Name <span
+                                    class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="last_name" name="last_name"
                                 placeholder="Enter Last Name" required>
                         </div>
                     </div>
                     <div class="mb-4 col-md-12">
-                        <label for="email" class="form-label">Email *</label>
+                        <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
                         <input type="text" class="form-control" id="email" name="email"
                             placeholder="Enter Email" required>
                     </div>

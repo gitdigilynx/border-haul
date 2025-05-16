@@ -15,14 +15,16 @@
 
                     <div class="row">
                         <div class="mt-2 col-md-6">
-                            <label for="truckNumber" class="form-label">Track Plate *</label>
+                            <label for="truckNumber" class="form-label">Track Plate <span
+                                    class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="plate_number"
                                 value="{{ old('plate_number', $truck->plate_number ?? '') }}"
                                 placeholder="Enter Plate Number" required>
                         </div>
 
                         <div class="mt-2 col-md-6">
-                            <label for="truckerNumber" class="form-label">Truck ID *</label>
+                            <label for="truckerNumber" class="form-label">Truck ID <span
+                                    class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="trucker_number"
                                 value="{{ old('trucker_number', $truck->trucker_number ?? '') }}"
                                 placeholder="Enter Trucker Number" required>
@@ -30,7 +32,8 @@
                     </div>
 
                     <div class="mb-3 col-md-12">
-                        <label for="serviceCategory" class="form-label">Service Category *</label>
+                        <label for="serviceCategory" class="form-label">Service Category <span
+                                class="text-danger">*</span></label>
                         <select class="form-control" name="service_category" required>
                             <option value="">Select Category</option>
                             <option
@@ -53,14 +56,16 @@
 
                     <div class="row">
                         <div class="mt-2 col-md-6">
-                            <label for="driverName" class="form-label">Driver Name *</label>
+                            <label for="driverName" class="form-label">Driver Name <span
+                                    class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="name"
                                 value="{{ old('name', $truck->driver->name ?? '') }}" placeholder="Enter Drvier Name"
                                 required>
                         </div>
 
                         <div class="mt-2 col-md-6">
-                            <label for="driverPhone" class="form-label">Driver Phone NO. *</label>
+                            <label for="driverPhone" class="form-label">Driver Phone NO. <span
+                                    class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="phone_number"
                                 value="{{ old('phone_number', $truck->driver->phone_number ?? '') }}"
                                 placeholder="Enter Trucker" required>
@@ -69,7 +74,8 @@
 
                     <div class="row">
                         <div class="mt-2 col-md-12">
-                            <label for="inService" class="form-label">In Service *</label>
+                            <label for="inService" class="form-label">In Service <span
+                                    class="text-danger">*</span></label>
                             <select class="form-control" name="in_service" required>
                                 <option value="">Select</option>
                                 <option value="1"
@@ -82,7 +88,7 @@
                         </div>
 
                         <div class="mt-2 mb-2 col-md-12">
-                            <label for="location" class="form-label">Location *</label>
+                            <label for="location" class="form-label">Location <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="location"
                                 value="{{ old('location', $truck->location ?? '') }}" placeholder="Enter Location"
                                 required>

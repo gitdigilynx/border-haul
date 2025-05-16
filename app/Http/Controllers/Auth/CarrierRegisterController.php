@@ -47,7 +47,6 @@ class CarrierRegisterController extends Controller
                 // 'caat_code'         => 'required|string|min:3|max:30',
                 'service_category'  => 'required|string|min:3|max:255',
                 'phone'             => 'required|string|max:11',
-
                 // 'transfer_approval_documents' => 'required|string|max:15',
                 // 'insurance_certificate' => 'required|string|max:15',
             ]);

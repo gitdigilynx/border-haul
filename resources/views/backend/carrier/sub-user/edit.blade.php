@@ -15,13 +15,15 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="mb-3 col-md-12">
-                            <label for="name" class="form-label">First Name *</label>
+                            <label for="name" class="form-label">First Name <span
+                                    class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="name" placeholder="Name"
                                 value="{{ old('name', $user->users->name ?? '') }}" required>
                         </div>
 
                         <div class="mb-3 col-md-12">
-                            <label for="last_name" class="form-label">Last Name *</label>
+                            <label for="last_name" class="form-label">Last Name <span
+                                    class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="last_name" placeholder="Last Name"
                                 value="{{ old('last_name', $user->users->last_name ?? '') }}" required>
                         </div>
