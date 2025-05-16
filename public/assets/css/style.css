@@ -1,48 +1,58 @@
 /* Font import */
-@import url('https://fonts.googleapis.com/css2?family=Staatliches&display=swap');
 
-.sidebar-menu a span{
+@import url("https://fonts.googleapis.com/css2?family=Staatliches&display=swap");
+.sidebar-menu a span {
     font-size: 16px;
     font-weight: 500;
 }
 
+
 /* Modal Content Styling */
+
 .modal-content.custom-modal {
     padding: 0.5rem;
     border-radius: 8px;
 }
 
 
-
 /* Close button styling */
+
 .custom-modal .btn-close {
     margin-left: auto;
     margin-bottom: -10px;
 }
 
+
 /* Modal Title */
+
 .custom-modal .modal-title {
     font-size: 1.5rem;
-    font-family: 'Staatliches', sans-serif;
+    font-family: "Staatliches", sans-serif;
     color: black;
 }
+
 
 /* Form labels */
+
 .custom-modal .form-label {
-    font-family: 'Staatliches', sans-serif;
+    font-family: "Staatliches", sans-serif;
     color: black;
 }
 
+
 /* Input fields */
+
 .custom-modal .form-control {
     border-radius: 6px;
     padding: 10px;
     font-weight: 500;
 }
 
+
 /* Submit button */
+
 .custom-modal .submit-btn {
-    background-color: #06367B;
+    background-color: #06367b;
     color: white;
     border: none;
     width: 100%;
@@ -52,13 +62,14 @@
     border-radius: 10px;
 }
 
+
 /* Validation feedback */
+
 .text-danger,
 .invalid-feedback {
     font-size: 0.875em;
     margin-top: 0.25rem;
 }
-
 
 .custom-modal-content {
     padding: 0.5rem 1rem;
@@ -76,13 +87,13 @@
 
 .custom-modal-title {
     font-size: 1.5rem;
-    font-family: 'Staatliches', sans-serif;
+    font-family: "Staatliches", sans-serif;
     margin: 0;
-    color:black
+    color: black;
 }
 
 .label-custom {
-    font-family: 'Staatliches', sans-serif;
+    font-family: "Staatliches", sans-serif;
     color: black;
 }
 
@@ -93,7 +104,7 @@
 }
 
 .custom-submit-btn {
-    background-color: #06367B;
+    background-color: #06367b;
     color: white;
     border: none;
     width: 100%;
@@ -101,4 +112,8 @@
     font-size: 1rem;
     font-weight: bold;
     border-radius: 10px;
+}
+
+.dataTables_empty {
+    text-align: center;
 }
