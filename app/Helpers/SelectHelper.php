@@ -80,6 +80,99 @@ if (!function_exists('formatPhone')) {
         return $number;
     }
 }
+
+if (!function_exists('getStateOptions')) {
+    function getStateOptions()
+    {
+        return [
+            'US' => [
+                'AL',
+                'AK',
+                'AZ',
+                'AR',
+                'CA',
+                'CO',
+                'CT',
+                'DE',
+                'FL',
+                'GA',
+                'HI',
+                'ID',
+                'IL',
+                'IN',
+                'IA',
+                'KS',
+                'KY',
+                'LA',
+                'ME',
+                'MD',
+                'MA',
+                'MI',
+                'MN',
+                'MS',
+                'MO',
+                'MT',
+                'NE',
+                'NV',
+                'NH',
+                'NJ',
+                'NM',
+                'NY',
+                'NC',
+                'ND',
+                'OH',
+                'OK',
+                'OR',
+                'PA',
+                'RI',
+                'SC',
+                'SD',
+                'TN',
+                'TX',
+                'UT',
+                'VT',
+                'VA',
+                'WA',
+                'WV',
+                'WI',
+                'WY'
+            ],
+            'Mexico' => [
+                'AG',
+                'BC',
+                'BS',
+                'CM',
+                'CS',
+                'CH',
+                'CO',
+                'CL',
+                'DG',
+                'GT',
+                'GR',
+                'HG',
+                'JA',
+                'EM',
+                'MI',
+                'MO',
+                'NA',
+                'NL',
+                'OA',
+                'PU',
+                'QE',
+                'QR',
+                'SL',
+                'SI',
+                'SO',
+                'TB',
+                'TM',
+                'TL',
+                'VE',
+                'YU',
+                'ZA'
+            ]
+        ];
+    }
+}
 // function serviceDirverCategory()
 // {
 //     return [

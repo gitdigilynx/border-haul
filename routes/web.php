@@ -204,7 +204,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/address-book/{id}/edit', 'edit')->name('address-book.edit');
             Route::get('/address-book/{id}', 'show')->name('address-book.show');
 
-            Route::put('/address-book/{id}', 'update')->name('address-book.update');
+            Route::post('/address-book/{id}', 'update')->name('address-book.update');
 
             Route::delete('/address-book/{id}', 'destroy')->name('address-book.destroy');
         });

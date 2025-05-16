@@ -1,4 +1,3 @@
-
 <div class="modal fade" id="subShipperEditModal{{ $user->id }}" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content custom-modal-content custom-modal">
@@ -22,24 +21,24 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label label-custom">First Name<span class="text-danger">*</span></label>
+                            <label for="name" class="form-label label-custom">First Name <span
+                                    class="text-danger">*</span></label>
                             <input type="text" class="form-control input-custom" name="name" id="name"
                                 placeholder="Enter Name" value="{{ old('name', $user->user->name ?? '') }}">
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="last_name" class="form-label label-custom">Last Name<span class="text-danger">*</span></label>
+                            <label for="last_name" class="form-label label-custom">Last Name <span
+                                    class="text-danger">*</span></label>
                             <input type="text" class="form-control input-custom" name="last_name" id="last_name"
-                                placeholder="Enter Last Name" value="{{ old('last_name', $user->user->last_name ?? '') }}">
+                                placeholder="Enter Last Name"
+                                value="{{ old('last_name', $user->user->last_name ?? '') }}">
                         </div>
                     </div>
                     <div class="mb-2">
-                        <label for="email" class="form-label label-custom">Email<span class="text-danger">*</span></label>
-                        <input type="email"
-                               class="form-control input-custom "
-                               name="email"
-
-                               placeholder="Enter Email"
-                               value="{{ old('email', $user->user->email ?? '') }}" disabled>
+                        <label for="email" class="form-label label-custom">Email <span
+                                class="text-danger">*</span></label>
+                        <input type="email" class="form-control input-custom " name="email"
+                            placeholder="Enter Email" value="{{ old('email', $user->user->email ?? '') }}" disabled>
 
                     </div>
 
@@ -92,7 +91,7 @@
         errorClass: "is-invalid",
         validClass: "is-valid",
         errorElement: "div",
-        errorPlacement: function (error, element) {
+        errorPlacement: function(error, element) {
             error.addClass('invalid-feedback');
             element.closest('.mb-3').append(error);
         },
