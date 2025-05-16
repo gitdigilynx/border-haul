@@ -14,19 +14,19 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">First Name </label>
+                            <label for="name" class="form-label">First Name *</label>
                             <input type="text" class="form-control" id="name" name="name"
                                 placeholder="Entr First Name" required>
                         </div>
 
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">Last Name </label>
+                            <label for="name" class="form-label">Last Name *</label>
                             <input type="text" class="form-control" id="last_name" name="last_name"
                                 placeholder="Enter Last Name" required>
                         </div>
                     </div>
                     <div class="mb-4 col-md-12">
-                        <label for="email" class="form-label">Email</label>
+                        <label for="email" class="form-label">Email *</label>
                         <input type="text" class="form-control" id="email" name="email"
                             placeholder="Enter Email" required>
                     </div>

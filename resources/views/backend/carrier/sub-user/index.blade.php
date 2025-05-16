@@ -82,32 +82,33 @@
                                                 </td> --}}
                                             <td>
                                                 <!-- View Button -->
-                                                <a href="javascript:void(0)" style="background-color: #E0F3FF; "
-                                                    class="p-0 mb-0 btn" data-bs-toggle="modal"
-                                                    data-id="{{ $user->id }}"
+                                                <a href="javascript:void(0)" style="background-color: #E0F3FF;"
+                                                    class="p-0 mb-0 btn" data-id="{{ $user->id }}"
+                                                    data-bs-toggle="modal"
                                                     data-bs-target="#carrierShowModal{{ $user->id }}">
-                                                    <i style="color:#007BFF" class="p-2 fa fa-eye "></i>
+                                                    <i class="p-2 fa fa-eye" style="color:#007BFF" title="View Sub User"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"></i>
                                                 </a>
-
 
                                                 <!-- Edit Button -->
                                                 <a href="javascript:void(0)" style="background-color: #EFEFEF;"
-                                                    class="p-0 mb-0 btn" data-bs-toggle="modal"
-                                                    data-id="{{ $user->id }}"
+                                                    class="p-0 mb-0 btn" data-id="{{ $user->id }}"
+                                                    data-bs-toggle="modal"
                                                     data-bs-target="#carrierEditModal{{ $user->id }}">
-                                                    <i style="color:#9F9F9F" class="p-2 fa fa-edit"></i>
+                                                    <i class="p-2 fa fa-edit" style="color:#9F9F9F" title="Edit Sub User"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"></i>
                                                 </a>
-
-                                                <a href="javascript:void(0);" style="background: #D2232A1A;  "
-                                                    class="p-0 mb-0 delete-carrier-user btn " data-id="{{ $user->id }}"
-                                                    data-url="{{ route('carrier.carrier-users.destroy', $user->id) }}">
-                                                    <i style="color:#D2232A" class="p-2 fa fa-trash-can"></i>
-                                                </a>
-
 
                                                 <!-- Delete Button -->
-
+                                                <a href="javascript:void(0);" style="background: #D2232A1A;"
+                                                    class="p-0 mb-0 delete-carrier-user btn" data-id="{{ $user->id }}"
+                                                    data-url="{{ route('carrier.carrier-users.destroy', $user->id) }}">
+                                                    <i class="p-2 fa fa-trash-can" style="color:#D2232A"
+                                                        title="Delete Sub User" data-bs-toggle="tooltip"
+                                                        data-bs-placement="top"></i>
+                                                </a>
                                             </td>
+
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -202,6 +203,9 @@
                 ordering: false,
                 info: false,
                 pagingType: 'simple',
+                language: {
+                    emptyTable: "You haven't added any users yet. Click '+ Invite Users' to add drivers or admin team members to your account."
+                }
             });
 
             $('#customSearch').on('keyup', function() {

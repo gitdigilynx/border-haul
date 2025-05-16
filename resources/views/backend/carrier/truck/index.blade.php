@@ -202,6 +202,9 @@
                 ordering: false,
                 info: false,
                 pagingType: 'simple',
+                language: {
+                    emptyTable: "No trucks have been added yet. Click '+ Add Truck' to add them to your account."
+                }
             });
 
             $('#customSearch').on('keyup', function() {
@@ -213,8 +216,15 @@
             function updateButtons() {
                 let info = table.page.info();
 
-                $('#prevPage').toggleClass('disabled', info.page === 0);
-                $('#nextPage').toggleClass('disabled', info.page === info.pages - 1);
+                if (info.recordsDisplay === 0) {
+                    // No data — disable both buttons
+                    $('#prevPage, #nextPage').addClass('disabled');
+                } else {
+
+                    $('#prevPage').toggleClass('disabled', info.page === 0);
+                    $('#nextPage').toggleClass('disabled', info.page === info.pages - 1);
+                }
+
             }
 
             function updateInfo() {
