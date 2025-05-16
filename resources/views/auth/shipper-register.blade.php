@@ -459,8 +459,8 @@
             const country = $('#company_country').val();
             let isValid = false;
 
-            if (phone.length > 15) {
-                $('#phone-error').text('Maximum 15 characters allowed.').show();
+            if (phone.length > 17) {
+                $('#phone-error').text('Maximum 17 characters allowed.').show();
                 return false;
             }
 

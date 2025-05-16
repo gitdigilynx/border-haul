@@ -193,7 +193,7 @@
                                 </option>
                             </select>
                             <div class="invalid-feedback">Please select a country.</div>
-                        
+
                         </div>
                         <div class="col-md-4">
                                  <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
@@ -392,8 +392,8 @@
         const country = $('#country').val();
         let isValid = false;
 
-        if (phone.length > 15) {
-            $('#phone-error').text('Maximum 15 characters allowed.').show();
+        if (phone.length > 17) {
+            $('#phone-error').text('Maximum 17 characters allowed.').show();
             return false;
         }
 

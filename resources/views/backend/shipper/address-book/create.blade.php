@@ -174,7 +174,7 @@
             var country = $('#country').val();
             var isValid = false;
 
-            if (phone.length > 15) {
+            if (phone.length > 17) {
                 $('#phone-error').text('Maximum 15 characters allowed.').show();
                 return false;
             }
@@ -196,7 +196,7 @@
             return isValid;
         }
 
-        $('form').on('submit', function (e) {
+        $('#shipperAddressBook').on('submit', function (e) {
             if (!validatePhone()) {
                 e.preventDefault();
             }
