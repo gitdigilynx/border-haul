@@ -13,9 +13,14 @@ class Shipper extends Authenticatable
     protected $fillable = [
         'user_id',
         'company_name',
-        'company_address',
+        'street_address',
         'service_category',
         'phone',
+        'city',
+        'company_state',
+        'company_zip_code',
+        'company_country',
+        'office_phone',
     ];
 
     public function user()

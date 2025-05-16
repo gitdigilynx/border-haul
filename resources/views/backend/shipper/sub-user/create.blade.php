@@ -15,11 +15,11 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label">First Name</label>
+                            <label for="name" class="form-label">First Name<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="name" name="name" placeholder="Enter First Name">
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="last_name" class="form-label">Last Name</label>
+                            <label for="last_name" class="form-label">Last Name<span class="text-danger">*</span></label>
                             <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter Last Name">
                         </div>
                     </div>

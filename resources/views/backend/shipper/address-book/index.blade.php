@@ -87,6 +87,7 @@
                                                         <i style="color:#9F9F9F" class="p-2 fa fa-edit"></i>
                                                     </a>
 
+
                                                 <!-- Delete Button -->
                                                     <a href="javascript:void(0);" style="background: #D2232A1A;"
                                                        class="p-0 mb-0 delete-address-book btn"
@@ -186,7 +187,7 @@
                 info: false,
                 pagingType: 'simple',
                 language: {
-                emptyTable: "No address have been added yet. Click ‘+ Add New Address’ to add a new address."
+                emptyTable: '<div style="text-align:center;">No address have been added yet. Click ‘+ Add New Address’ to add a new address.</div>'
             }
 
             });

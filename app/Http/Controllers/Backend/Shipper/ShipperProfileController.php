@@ -32,10 +32,16 @@ class ShipperProfileController extends Controller
          try {
              // Validate inputs
              $request->validate([
-                 'name'              => 'required|string|max:255',
-                 'company_address'   => 'required|string|max:255',
-                 'service_category'  => 'required|string|max:255',
-                 'phone'             => 'required|string|max:255',
+                'name' => 'required|string|max:50',
+                'service_category' => 'required|string|max:50',
+                'company_name' => 'required|string|max:50',
+                'street_address' => 'required|string|max:50',
+                'city' => 'required|string|max:50',
+                'company_state' => 'required|string|max:50',
+                'company_zip_code' => 'required|string|max:50',
+                'company_country' => 'required|string|max:50',
+                'phone' => 'required|string|max:50',
+                'office_phone' => 'required|string|max:50',
              ]);
 
              // Find user and shipper
@@ -53,9 +59,15 @@ class ShipperProfileController extends Controller
 
              // Update Shipper
              $shipper->update([
-                 'company_address'   => $request->company_address,
-                 'service_category'  => $request->service_category,
-                 'phone'             => $request->phone,
+                'company_name' => $request->company_name,
+                'street_address' => $request->street_address,
+                'phone' => $request->phone,
+                'city' => $request->city,
+                'company_state' => $request->company_state,
+                'company_zip_code' => $request->company_zip_code,
+                'company_country' => $request->company_country,
+                'service_category' => $request->service_category,
+                'office_phone' => $request->office_phone,
              ]);
 
              return redirect()->route('shipper.profile.list')->with('success', 'Profile updated successfully.');

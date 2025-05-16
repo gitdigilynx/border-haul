@@ -18,17 +18,17 @@
                     <tbody>
                         <tr>
                             <th scope="row" style="width: 30%; font-weight: 600;">Name</th>
-                            <td>{{ $user->users->name ?? '-' }} {{ $user->users->last_name ?? '' }}</td>
+                            <td>{{ $user->user->name ?? '-' }} {{ $user->user->last_name ?? '' }}</td>
                         </tr>
 
                         <tr>
                             <th scope="row" style="font-weight: 600;">Email</th>
-                            <td>{{ $user->users->email ?? '-' }}</td>
+                            <td>{{ $user->user->email ?? '-' }}</td>
                         </tr>
 
                         <tr>
                             <th scope="row" style="font-weight: 600;">Role</th>
-                            <td>{{ ucfirst($user->users->role ?? '-') }}</td>
+                            <td>{{ ucfirst($user->user->role ?? '-') }}</td>
                         </tr>
                     </tbody>
                 </table>

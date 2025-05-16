@@ -57,20 +57,20 @@
                                 <tbody>
                                     @foreach ($subUsers as $user)
                                         <tr>
-                                            <td>{{ $user->users->name }} {{ $user->users->last_name }}</td>
-                                            <td>{{ $user->users->email }}</td>
-                                            <td>{{ $user->users->role }}</td>
+                                            <td>{{ $user->user->name }} {{ $user->user->last_name }}</td>
+                                            <td>{{ $user->user->email }}</td>
+                                            <td>{{ $user->user->role }}</td>
                                             <td>
-                                            <form method="POST" action="{{ route('shipper.sub-users.toggleSubUser', $user->users->id) }}">
+                                            <form method="POST" action="{{ route('shipper.sub-users.toggleSubUser', $user->user->id) }}">
                                                 @csrf
                                                 @method('PATCH')
                                                 <div class="form-check form-switch">
                                                     <input class="form-check-input" type="checkbox" name="is_active"
                                                         onchange="this.form.submit()"
-                                                        {{ $user->users->is_active ? 'checked' : '' }}>
+                                                        {{ $user->user->is_active ? 'checked' : '' }}>
                                                     <label class="form-check-label px-1 rounded text-white
-                                                        {{ $user->users->is_active ? 'bg-success' : 'bg-danger' }}">
-                                                        {{ $user->users->is_active ? 'Active' : 'Inactive' }}
+                                                        {{ $user->user->is_active ? 'bg-success' : 'bg-danger' }}">
+                                                        {{ $user->user->is_active ? 'Active' : 'Inactive' }}
                                                     </label>
                                                 </div>
                                             </form>
@@ -189,8 +189,8 @@
             info: false,
             pagingType: 'simple',
             language: {
-            emptyTable: "No users have been added yet. Click ‘+ Invite Users’ to add a new user."
-        }
+                emptyTable: '<div style="text-align:center;">No users have been added yet. Click ‘+ Invite Users’ to add a new user.</div>'
+            }
         });
 
         $('#customSearch').on('keyup', function() {

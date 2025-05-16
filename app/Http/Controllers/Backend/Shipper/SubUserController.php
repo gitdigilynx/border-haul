@@ -24,8 +24,11 @@ class SubUserController extends Controller
     public function index()
     {
         $shipperId = auth()->id();
-        $subUsers = ShipperSubUser::with('users')
+        $subUsers = ShipperSubUser::with('user')
             ->where('shipper_id', $shipperId)
+            ->whereHas('user', function ($query) {
+                $query->where('is_active', 1);
+            })
             ->orderBy('created_at', 'desc')
             ->get();
 
@@ -41,7 +44,6 @@ class SubUserController extends Controller
     {
         try {
             $shipper = auth()->user();
-
             $rawPassword = Str::random(8);
 
             $user = User::create([
@@ -52,11 +54,9 @@ class SubUserController extends Controller
                 'role' => 'ShipperUser',
             ]);
 
-
             ShipperSubUser::create([
                 'user_id' => $user->id,
                 'shipper_id' => $shipper->id,
-                // 'phone' => $request->phone,
             ]);
 
             // Send credentials via email
@@ -73,19 +73,22 @@ class SubUserController extends Controller
     public function show($id)
     {
         try {
-            $user = ShipperSubUser::with('users')->findOrFail($id);
+            $user = ShipperSubUser::with('user')->findOrFail($id);
             return view('backend.shipper.sub-user.show', compact('user'));
+
         } catch (\Exception $e) {
             Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
 
-    public function edit(Request $request)
+    public function edit($id)
     {
-
         try {
-            return view('backend.shipper.sub-user.edit');
+
+            $user = ShipperSubUser::with('user')->findOrFail($id);
+            return view('backend.shipper.sub-user.edit',compact('user'));
+
         } catch (\Exception $e) {
             Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
@@ -95,28 +98,23 @@ class SubUserController extends Controller
     public function update(Request $request, $id)
     {
         try {
-            $request->validate([
-                'name'  => 'required|string|max:50',
-                'last_name'  => 'required|string|max:50',
-                'email' => 'required|email|unique:users,email,' . $id,
+            $subUser = ShipperSubUser::findOrFail($id);
 
-            ]);
-
-            $user = User::findOrFail($id);
-
-
+            // Update the related User
+            $user = User::findOrFail($subUser->user_id);
             $user->update([
-                'name'  => $request->name,
-                'last_name'  => $request->last_name,
-                'email' => $request->email,
+                'name'      => $request->name,
+                'last_name' => $request->last_name,
             ]);
 
             return redirect()->route('shipper.sub-users')->with('success', 'User updated successfully.');
+
         } catch (\Exception $e) {
             Flasher::addError('Something went wrong: ' . $e->getMessage());
-            return redirect()->back()->withInput();
+            return redirect()->back();
         }
     }
+
 
     public function destroy($id)
     {

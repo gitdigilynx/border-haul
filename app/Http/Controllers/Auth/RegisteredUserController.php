@@ -23,24 +23,30 @@ class RegisteredUserController extends Controller
         return view('auth.shipper-register');
     }
 
-
     public function store(Request $request): RedirectResponse
     {
         $request->validate([
-            'name' => 'required|string|max:15',
+            'name' => 'required|string|max:50',
+            'service_category' => 'required|string|max:50',
+            'company_name' => 'required|string|max:50',
             'email' => 'required|email|unique:users,email',
-            'password' => 'required|confirmed|min:8',
-            'company_name' => 'required|string|max:255',
-            'street_address' => 'required|string|max:255',
-            'phone' => 'required|string|max:20',
+            'street_address' => 'required|string|max:50',
+            'city' => 'required|string|max:50',
+            'company_state' => 'required|string|max:50',
+            'company_zip_code' => 'required|string|max:50',
+            'company_country' => 'required|string|max:50',
+            'phone' => 'required|string|max:50',
+            'office_phone' => 'required|string|max:50',
+            'password' => 'required|confirmed|min:6',
         ]);
 
-        // Check if email already exists
+        // Redundant check (already handled by validation) — can remove this
         if (User::where('email', $request->email)->exists()) {
             return redirect()->back()
-                ->withInput() // keeps the old input
+                ->withInput()
                 ->withErrors(['email' => 'The email address is already registered.']);
         }
+
         // Create the user
         $user = User::create([
             'name' => $request->name,
@@ -49,18 +55,21 @@ class RegisteredUserController extends Controller
             'role' => 'Shipper',
         ]);
 
-        // Assign role
-        // $user->assignRole($request->role);
-
         // Create shipper details
-        Shipper::create([
+        $shipper = Shipper::create([
             'user_id' => $user->id,
             'company_name' => $request->company_name,
             'street_address' => $request->street_address,
             'phone' => $request->phone,
+            'city' => $request->city,
+            'company_state' => $request->company_state,
+            'company_zip_code' => $request->company_zip_code,
+            'company_country' => $request->company_country,
             'service_category' => $request->service_category,
+            'office_phone' => $request->office_phone,
         ]);
 
+        // Send password notification
         Mail::to($request->email)->send(new SendPasswordToShipper($request->email));
 
         flash()->success('User created successfully!');
@@ -69,11 +78,13 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         if ($user->role === 'Shipper') {
-            return redirect()->route('shipper.deliveries');
+            return redirect()->route('shipper.deliveries'); // Make sure this route exists
         }
 
         return redirect(RouteServiceProvider::HOME);
     }
+
+
 
     public function shipperLogin(): View
     {

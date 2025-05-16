@@ -51,8 +51,13 @@
                 },
                 phone: {
                     required: true,
-                    minlength: 10
+                    minlength: 15
                 },
+                office_phone: {
+                    required: true,
+                    minlength: 15
+                },
+
                 // password: {
                 //     required: true,
                 //     minlength: 6
@@ -72,8 +77,12 @@
                     email: "Please enter a valid email address"
                 },
                 phone: {
-                    required: "Please enter your phone number",
-                    minlength: "Phone number must be at least 11 characters long"
+                    required: "Please enter your Cell number",
+                    minlength: "Phone number must be at least 15 characters long"
+                },
+                office_phone: {
+                    required: "Please enter your Office number",
+                    minlength: "Phone number must be at least 15 characters long"
                 },
                 password: {
                     required: "Please enter a password",

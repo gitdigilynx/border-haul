@@ -19,10 +19,10 @@ function isStatus()
 function serviceCategory()
 {
     return [
-        'Trucking Company' => 'Trucking Company',
-        'Logistics Company' => 'Logistics Companies',
-        'Warehouses' => 'Warehouses',
-        'Customs Brokers' => 'Customs Brokers'
+        'General Cargo' => 'General Cargo',
+        'Reefer' => 'Reefer',
+        'Hazmat' => 'Flatbed',
+        'Low Boy' => 'Low Boy'
     ];
 }
 function statusBadge(string $status): string
@@ -55,13 +55,19 @@ function statusInService($in_service): string
 }
 
 
-// function serviceDirverCategory()
-// {
-//     return [
-//         'general_cargo' => 'General Cargo',
-//         'reefer' => 'Reefer',
-//         'hazmat' => 'Hazmat',
-//         'flatbed' => 'Flatbed',
-//         'RGN' => 'rgn',
-//     ];
-// }
+function getStateOptions()
+    {
+        return [
+            'United States' => [
+                'AL', 'AK', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'FL', 'GA', 'HI', 'ID', 'IL', 'IN',
+                'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV',
+                'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI', 'SC', 'SD', 'TN',
+                'TX', 'UT', 'VT', 'VA', 'WA', 'WV', 'WI', 'WY', 'DC',
+            ],
+            'Mexico' => [
+                'AG', 'BC', 'BS', 'CM', 'CS', 'CH', 'CO', 'CL', 'DF', 'DG', 'GT', 'GR', 'HG', 'JA',
+                'MX', 'MI', 'MO', 'NA', 'NL', 'OA', 'PU', 'QE', 'QR', 'SL', 'SI', 'SO', 'TB', 'TM',
+                'TL', 'VE', 'YU', 'ZA',
+            ],
+        ];
+    }

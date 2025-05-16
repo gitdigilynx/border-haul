@@ -312,16 +312,27 @@
                         @enderror
                     </div>
 
+                    <div class="mb-2 col-md-6">
+                        <label for="office_phone" class="form-label">Office Phone Number<span class="text-danger">*</span></label>
+                        <input type="tel" name="office_phone" id="office_phone"
+                            class="form-control @error('office_phone') is-invalid @enderror"
+                            placeholder="+1 (956) 222-4567" value="{{ old('office_phone') }}">
+                        @error('office_phone')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     <div class="col-md-6">
-                        <label for="phone" class="form-label">Phone Number <span
-                                class="text-danger">*</span></label>
+                        <label for="phone" class="form-label">Cell Phone Number<span class="text-danger">*</span></label>
                         <input type="tel" name="phone" id="phone"
-                            class="form-control @error('phone') is-invalid @enderror" placeholder="+1 (956) 222-4567"
-                            value="{{ old('phone') }}">
+                            class="form-control @error('phone') is-invalid @enderror"
+                            placeholder="+52 (123) 456-7890" value="{{ old('phone') }}">
                         @error('phone')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+
+
                 </div>
 
                 {{-- Passwords --}}
@@ -340,7 +351,7 @@
                         @error('password')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
-                        <ul class="password-rules text-muted small mt-2 mb-0 ps-3" id="passwordRules">
+                        <ul class="mt-2 mb-0 password-rules text-muted small ps-3" id="passwordRules">
                             <li class="rule-length">Minimum 8 characters</li>
                             <li class="rule-uppercase">At least 1 uppercase letter</li>
                             <li class="rule-lowercase">At least 1 lowercase letter</li>
@@ -381,26 +392,10 @@
             </div>
         </div>
 
-        <!-- Right Column: Image & Caption -->
-        {{-- <div class="col-12 col-md-6 d-flex align-items-center justify-content-center" style=" padding-right: 50px;">
-            <div class="position-relative w-100" style="max-height: 100vh;">
-                <img src="{{ asset('assets/shipper/shipper_login.png') }}" alt="World Trade Bridge"
-                    class="img-fluid w-100 rounded-4" style="object-fit: cover;">
 
-                <div class="bottom-0 p-3 m-3 text-white position-absolute start-0"
-                    style="background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(2px); border-radius: 10px; max-width: 85%;">
-                    <img src="{{ asset('assets/shipper/shipper_logo.png') }}" alt="Logo" class="mb-2" style="height: 30px;">
-                    <h5 class="fw-bold">Ship with Confidence.</h5>
-                    <p class="mb-0 small">Manage, track, and deliver shipments with powerful tools built for speed, reliability, and control.</p>
-                </div>
-            </div>
-        </div> --}}
         <!-- Right Column: Image & Caption -->
         <div class="mt-4 col-12 col-md-5 d-flex align-items-end justify-content-center mt-md-0 loginbg"
             style="/*padding-right: 50px;*/ ">
-            {{-- <div class="position-relative w-100" style="/*max-height: 90vh;*/">
-                <img src="{{ asset('assets/shipper/loginNewglob.png') }}" alt="World Trade Bridge"
-                    class="img-fluid w-100 rounded-4" style="object-fit: contain; max-width:690px;max-height: 800px;"> --}}
 
             <div class="bottom-0 p-4 m-3 text-white start-0"
                 style="background: linear-gradient(180deg, rgba(106, 106, 106, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%);backdrop-filter: blur(16.600000381469727px);border-radius: 10px; max-width: 95%;">
@@ -415,114 +410,7 @@
     </div>
 </div>
 
-{{-- <div class="account-page">
-        <div class="p-0 container-fluid">
-            <div class="row align-items-center g-0">
-                <div class="col-xl-12">
-                    <div class="row">
-                        <div class="mx-auto col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="p-4 mb-0 border-0 p-md-5 p-lg-0">
-                                        <div class="p-0 mt-2 mb-2 text-center">
-                                            <a href="" class="auth-logo">
-                                                <img src="{{ asset('assets/images/logo/Border-Haul-logo.png') }}" alt="" height="90" style="margin-top: -25px;">
-                                            </a>
-                                        </div>
-                                        <div class="text-center auth-title-section">
 
-                                            <h4 class="mb-4 text-dark text-uppercase" style="font-weight: bold;">Shipper Register</h4>
-                                        </div>
-                                        <div class="pt-0">
-                                            <form id="registrationForm" method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
-                                                @csrf
-
-                                                <!-- User Type -->
-                                                <div class="mb-3 row">
-                                                    <div class="col-md-6">
-                                                        <label for="user_type" class="form-label">Shipper Name <span class="text-danger">*</span></label>
-                                                        <input type="text" name="name" id="name" class="form-control" placeholder="Company Name" >
-                                                        <div class="invalid-feedback"></div>
-                                                    </div>
-
-                                                    <!-- Service Category -->
-                                                    <div class="col-md-6">
-                                                        <label for="service_category" class="form-label">Service Category <span class="text-danger">*</span></label>
-                                                        <select name="service_category" id="service_category" class="form-control" >
-                                                            <option value="" selected="">Select</option>
-                                                            @foreach (serviceCategory() as $key => $services_category)
-                                                                <option value="{{ $key }}">{{ $services_category }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        <div class="invalid-feedback"></div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Company Name & Address -->
-                                                <div class="mb-3 row">
-                                                    <div class="col-md-6">
-                                                        <label for="company_name" class="form-label">Company Name <span class="text-danger">*</span></label>
-                                                        <input type="text" name="company_name" id="company_name" class="form-control" placeholder="Company Name" >
-                                                        <div class="invalid-feedback"></div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label for="company_address" class="form-label">Company Address <span class="text-danger">*</span></label>
-                                                        <input type="text" name="company_address" id="company_address" class="form-control" placeholder="Company Address" >
-                                                        <div class="invalid-feedback"></div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Email & Phone -->
-                                                <div class="mb-3 row">
-                                                    <div class="col-md-6">
-                                                        <label for="email" class="form-label">Email Address <span class="text-danger">*</span></label>
-                                                        <input type="email" name="email" id="email" class="form-control" placeholder="Email Address" >
-                                                        <div class="invalid-feedback"></div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
-                                                        <input type="number" name="phone" id="phone" class="form-control" placeholder="Phone" >
-                                                        <div class="invalid-feedback"></div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Password & Confirm Password -->
-                                                <div class="mb-3 row">
-                                                    <div class="col-md-6">
-                                                        <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
-                                                        <input type="password" name="password" id="password" class="form-control" placeholder="Password" >
-                                                        <div class="invalid-feedback"></div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label for="password_confirmation" class="form-label">Confirm Password <span class="text-danger">*</span></label>
-                                                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="Confirm Password" >
-                                                        <div class="invalid-feedback"></div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Submit Button -->
-                                                <div class="mb-2 text-center" style="padding: 0 100px; margin-top: 20px;">
-                                                    <button type="submit" class="btn btn-primary w-100">Register</button>
-                                                </div>
-                                            </form>
-
-                                            <div class="mt-3 text-center text-muted">
-                                                <p class="mb-0">Already have an account?
-                                                    <a class="text-primary ms-2 fw-medium" href="{{ route('login') }}">Login here</a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-
-<!-- Scripts -->
 @include('backend.components.js-validations.shipper-users.shipper-register')
 
 </body>

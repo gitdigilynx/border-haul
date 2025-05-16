@@ -11,36 +11,35 @@
                 </h5>
             </div>
 
-            <!-- Changed form ID to include user->id -->
             <form id="editSubForm" method="POST"
                 action="{{ isset($user) ? route('shipper.sub-users.update', $user->id) : route('shipper.sub-users.store') }}">
 
                 @csrf
                 @isset($user)
-                    @method('PUT') <!-- Add method spoofing for updates -->
+                    @method('PUT')
                 @endisset
 
                 <div class="modal-body">
                     <div class="row">
                         <div class="mb-3 col-md-6">
-                            <label for="name" class="form-label label-custom">First Name</label>
+                            <label for="name" class="form-label label-custom">First Name<span class="text-danger">*</span></label>
                             <input type="text" class="form-control input-custom" name="name" id="name"
-                                placeholder="Enter Name" value="{{ old('name', $user->users->name ?? '') }}">
+                                placeholder="Enter Name" value="{{ old('name', $user->user->name ?? '') }}">
                         </div>
                         <div class="mb-3 col-md-6">
-                            <label for="last_name" class="form-label label-custom">Last Name</label>
+                            <label for="last_name" class="form-label label-custom">Last Name<span class="text-danger">*</span></label>
                             <input type="text" class="form-control input-custom" name="last_name" id="last_name"
-                                placeholder="Enter Last Name" value="{{ old('last_name', $user->users->last_name ?? '') }}">
+                                placeholder="Enter Last Name" value="{{ old('last_name', $user->user->last_name ?? '') }}">
                         </div>
                     </div>
                     <div class="mb-2">
-                        <label for="email" class="form-label label-custom">Email</label>
+                        <label for="email" class="form-label label-custom">Email<span class="text-danger">*</span></label>
                         <input type="email"
-                               class="form-control input-custom @error('email') is-invalid @enderror"
+                               class="form-control input-custom "
                                name="email"
-                               id="email"
+
                                placeholder="Enter Email"
-                               value="{{ old('email', $user->users->email ?? '') }}">
+                               value="{{ old('email', $user->user->email ?? '') }}" disabled>
 
                     </div>
 
@@ -65,16 +64,16 @@
         rules: {
             name: {
                 required: true,
-                minlength: 2
+                minlength: 1
             },
             last_name: {
                 required: true,
-                minlength: 2
+                minlength: 1
             },
-            email: {
-                required: true,
-                email: true
-            }
+            // email: {
+            //     required: true,
+            //     email: true
+            // }
         },
         messages: {
             name: {
@@ -85,10 +84,10 @@
                 required: "Last name is required",
                 minlength: "Last name must be at least 2 characters"
             },
-            email: {
-                required: "Email is required",
-                email: "Please enter a valid email address"
-            }
+            // email: {
+            //     required: "Email is required",
+            //     email: "Please enter a valid email address"
+            // }
         },
         errorClass: "is-invalid",
         validClass: "is-valid",
@@ -97,29 +96,6 @@
             error.addClass('invalid-feedback');
             element.closest('.mb-3').append(error);
         },
-
-        submitHandler: function (form) {
-            let email = $("#email").val();
-
-            $.ajax({
-                url: '{{ route("shipper.check.email") }}',
-                method: 'POST',
-                data: {
-                    email: email,
-                    _token: '{{ csrf_token() }}'
-                },
-                success: function (response) {
-                    if (response.exists) {
-                        let emailField = $("#email");
-                        emailField.addClass("is-invalid");
-                        emailField.next('.invalid-feedback').remove();
-                        emailField.after('<div class="invalid-feedback">Email already exists</div>');
-                    } else {
-                        form.submit();
-                    }
-                }
-            });
-        }
 
     });
 </script>
