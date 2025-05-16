@@ -10,7 +10,7 @@
             errorPlacement: function(error, element) {
                 error.addClass('invalid-feedback');
                 element.closest('.form-group, .col-md-6').find('.invalid-feedback')
-            .remove(); // Remove existing errors
+                    .remove(); // Remove existing errors
                 error.insertAfter(element);
             },
             highlight: function(element) {
@@ -51,7 +51,7 @@
                 },
                 phone: {
                     required: true,
-                    minlength: 15
+                    minlength: 10
                 },
                 office_phone: {
                     required: true,

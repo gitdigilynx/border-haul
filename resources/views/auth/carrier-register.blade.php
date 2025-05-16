@@ -109,7 +109,7 @@
             background-size: cover;
             /* max-height: 100vh; */
             /* width: 100%; */
-            border-radius: 0 0 20px 20px;
+            border-radius: 20px 20px 20px 20px;
         }
 
         .question {
@@ -184,23 +184,21 @@
 
                     <div class="mb-2 row">
                         <div class="col-md-4">
-                            <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
-                            <input type="number" name="phone" id="phone" class="form-control"
-                                placeholder="Phone" value="{{ old('phone') }}">
-                            <div class="invalid-feedback"></div>
+                                                        <label for="country" class="form-label">Country <span
+                                    class="text-danger">*</span></label>
+                            <select name="country" id="country" class="form-control" required>
+                                <option value="">Select Country</option>
+                                <option value="us" {{ old('mexico') == 'us' ? 'selected' : '' }}>US</option>
+                                <option value="mexico" {{ old('mexico') == 'mexico' ? 'selected' : '' }}>Mexico
+                                </option>
+                            </select>
+                            <div class="invalid-feedback">Please select a country.</div>
+                        
                         </div>
                         <div class="col-md-4">
-                            <label for="service_category" class="form-label">Service Category <span
-                                    class="text-danger">*</span></label>
-                            <select name="service_category" id="service_category" class="form-control">
-                                <option value="">Select</option>
-                                @foreach (serviceCategory() as $key => $services_category)
-                                    <option value="{{ $key }}"
-                                        {{ old('service_category') == $key ? 'selected' : '' }}>
-                                        {{ $services_category }}
-                                    </option>
-                                @endforeach
-                            </select>
+                                 <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
+                            <input type="tel" name="phone" id="phone" class="form-control"
+                                placeholder="Phone" value="{{ old('phone') }}">
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="col-md-4">
@@ -227,15 +225,18 @@
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="col-md-4">
-                            <label for="country" class="form-label">Country <span
+                                                        <label for="service_category" class="form-label">Service Category <span
                                     class="text-danger">*</span></label>
-                            <select name="country" id="country" class="form-control" required>
-                                <option value="">Select Country</option>
-                                <option value="us" {{ old('mexico') == 'us' ? 'selected' : '' }}>US</option>
-                                <option value="mexico" {{ old('mexico') == 'mexico' ? 'selected' : '' }}>Mexico
-                                </option>
+                            <select name="service_category" id="service_category" class="form-control">
+                                <option value="">Select</option>
+                                @foreach (serviceCategory() as $key => $services_category)
+                                    <option value="{{ $key }}"
+                                        {{ old('service_category') == $key ? 'selected' : '' }}>
+                                        {{ $services_category }}
+                                    </option>
+                                @endforeach
                             </select>
-                            <div class="invalid-feedback">Please select a country.</div>
+                            <div class="invalid-feedback"></div>
                         </div>
                     </div>
 
@@ -253,10 +254,10 @@
                                 <span class="text-danger">*</span></label>
                             <input type="file" name="transfer_approval_documents" id="transfer_approval_documents"
                                 class="form-control cutom-vaidation" accept="application/pdf,image/jpeg">
-                            <small id="transfer_approval_help" class="form-text text-muted">PDF or JPG only. Max
+                            <small id="transfer_approval_help" class="form-text text-muted">PDF,DOCX,PNG or JPG only. Max
                                 10MB.</small>
                             <div id="transfer_approval_error" class="text-danger" style="display: none;">Invalid
-                                file. Please upload a PDF or JPG less than 10MB.</div>
+                                file. Please upload a PDF,DOCX,PNG or JPG less than 10MB.</div>
                         </div>
 
                         <div class="col-md-4">
@@ -264,10 +265,10 @@
                                     class="text-danger">*</span></label>
                             <input type="file" name="insurance_certificate" id="insurance_certificate"
                                 class="form-control cutom-vaidation" accept="application/pdf,image/jpeg">
-                            <small id="insurance_certificate_help" class="form-text text-muted">PDF or JPG only. Max
+                            <small id="insurance_certificate_help" class="form-text text-muted">PDF,DOCX,PNG or JPG only. Max
                                 10MB.</small>
                             <div id="insurance_certificate_error" class="text-danger" style="display: none;">Invalid
-                                file. Please upload a PDF or JPG less than 10MB.</div>
+                                file. Please upload a PDF,DOCX,PNG or JPG less than 10MB.</div>
                         </div>
                     </div>
 
@@ -325,31 +326,10 @@
                 </div>
             </div>
 
-            <!-- Right Column: Image & Caption -->
-            {{-- <div class="col-md-5" style="height: 95vh; margin-top: 70px;">
-                <div class="h-100 w-100 position-relative">
-                    <img src="{{ asset('assets/carrier/shipper_image.png') }}" alt="World Trade Bridge"
-                        class="img-fluid" style="border-radius: 22px; object-fit: cover; height: 100%; width: 100%;">
 
-                    <div class="bottom-0 p-2 m-4 text-white position-absolute start-0" style="
-                        background: rgba(0, 0, 0, 0.4);
-                        backdrop-filter: blur(2px);
-                        border-radius: 10px;
-                        max-width: 90%;">
-                        <img src="{{ asset('assets/shipper/shipper_logo.png') }}" alt="Logo" style="height: 30px;"
-                            class="mb-2">
-                        <h5 class="fw-bold">Ship with Confidence.</h5>
-                        <p class="mb-0 small">Manage, track, and deliver shipments with powerful tools built for speed,
-                            reliability, and control.</p>
-                    </div>
-                </div>
-            </div> --}}
-            <!-- Right Column: Image & Caption -->
             <div class="mt-4 col-12 pb-sm-5 col-md-5 d-flex align-items-end justify-content-center mt-md-0 loginbg"
                 style="/padding-right: 50px;/ ">
-                {{-- <div class="position-relative w-100" style="/max-height: 90vh;/">
-                <img src="{{ asset('assets/shipper/loginNewglob.png') }}" alt="World Trade Bridge"
-                    class="img-fluid w-100 rounded-4" style="object-fit: contain; max-width:690px;max-height: 800px;"> --}}
+
 
                 <div class="bottom-0 p-4 m-3 text-white start-0"
                     style="background: linear-gradient(180deg, rgba(106, 106, 106, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%);backdrop-filter: blur(16.600000381469727px);border-radius: 10px; max-width: 95%;">
@@ -365,217 +345,9 @@
         </div>
     </div>
 </div>
-{{--
 
-<body class="bg-primary-subtle">
-    <div class="account-page">
-        <div class="p-0 container-fluid">
-            <div class="row align-items-center g-0">
-                <div class="col-xl-12">
-                    <div class="row">
-                        <div class="mx-auto col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <div class="p-4 mb-0 border-0 p-md-5 p-lg-0">
-                                        <div class="mb-3 text-center auth-title-section">
-                                            <div class="p-0 mb-2 text-center">
-                                                <a href="" class="auth-logo">
-                                                    <img src="{{ asset('assets/images/logo/Border-Haul-logo.png') }}"
-                                                        alt="" height="90" style="margin-top: -25px;">
-                                                </a>
-                                            </div>
-                                            <div class="text-center auth-title-section">
-
-                                                <h4 class="mb-4 text-dark text-uppercase" style="font-weight: bold;">
-                                                    Carrier Register</h4>
-                                            </div>
-                                        </div>
-                                        <div class="pt-0">
-                                            <form id="registrationCarrier" method="POST"
-                                                action="{{ route('carrier.register') }}" enctype="multipart/form-data">
-                                                @csrf
-                                                <!-- Authority & DOT -->
-                                                <div class="mb-2 row">
-                                                    <div class="col-md-6">
-                                                        <label for="name" class="form-label">Company Name <span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="text" name="name" id="name" class="form-control"
-                                                            placeholder="Company Name">
-                                                        <div class="invalid-feedback"></div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label for="company_address" class="form-label">Company Address
-                                                            <span class="text-danger">*</span></label>
-                                                        <input type="text" name="company_address" id="company_address"
-                                                            class="form-control" placeholder="Company Address">
-                                                        <div class="invalid-feedback"></div>
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="mb-2 row">
-                                                    <div class="col-md-6">
-                                                        <label for="email" class="form-label">Email <span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="email" name="email" id="email" class="form-control"
-                                                            placeholder="Email">
-                                                        <div class="invalid-feedback"></div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label for="phone" class="form-label">Phone <span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="number" name="phone" id="phone"
-                                                            class="form-control" placeholder="Phone">
-                                                        <div class="invalid-feedback"></div>
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="mb-2 row">
-                                                    <div class="col-md-6">
-                                                        <label for="service_category" class="form-label">Service
-                                                            Category <span class="text-danger">*</span></label>
-                                                        <select name="service_category" id="service_category"
-                                                            class="form-control">
-                                                            <option value="" selected="">Select</option>
-                                                            @foreach (serviceCategory() as $key => $services_category)
-                                                            <option value="{{ $key }}">{{ $services_category }}</option>
-                                                            @endforeach
-                                                        </select>
-                                                        <div class="invalid-feedback"></div>
-                                                    </div>
-
-                                                    <div class="col-md-6">
-                                                        <label for="authority" class="form-label">Authority <span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="text" name="authority" id="authority"
-                                                            class="form-control" placeholder="Authority">
-                                                        <div class="invalid-feedback"></div>
-                                                    </div>
-
-                                                </div>
-
-                                                <!-- MC & SCAC Code -->
-                                                <div class="mb-2 row">
-                                                    <div class="col-md-6">
-                                                        <label for="mc" class="form-label">MC <span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="text" name="mc" id="mc" class="form-control"
-                                                            placeholder="MC">
-                                                        <div class="invalid-feedback"></div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label for="scac_code" class="form-label">SCAC Code <span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="number" name="scac_code" id="scac_code"
-                                                            class="form-control" placeholder="SCAC Code">
-                                                        <div class="invalid-feedback"></div>
-                                                    </div>
-                                                </div>
-
-                                                <!-- Mexico & CAAT Code -->
-                                                <div class="mb-2 row">
-
-                                                    <div class="col-md-6">
-                                                        <label for="mexico" class="form-label">Country <span
-                                                                class="text-danger">*</span></label>
-                                                        <select name="mexico" id="mexico" class="form-control" required>
-                                                            <option value="">Select Country</option>
-                                                            <option value="us">US</option>
-                                                            <option value="mexico">Mexico</option>
-                                                        </select>
-                                                        <div class="invalid-feedback">Please select a country.</div>
-                                                    </div>
-
-                                                    <div class="col-md-6">
-                                                        <label for="caat_code" class="form-label">CAAT Code <span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="number" name="caat_code" id="caat_code"
-                                                            class="form-control" placeholder="CAAT Code">
-                                                        <div class="invalid-feedback"></div>
-                                                    </div>
-                                                </div> --}}
-
-<!-- Service Category & Phone -->
-{{-- <div class="mb-2 row">
-                                                    <div class="col-md-6">
-                                                        <label for="dot" class="form-label">DOT <span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="text" name="dot" id="dot" class="form-control"
-                                                            placeholder="DOT">
-                                                        <div class="invalid-feedback"></div>
-                                                    </div>
-
-                                                    <div class="col-md-6">
-                                                        <label for="password" class="form-label">Password <span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="password" name="password" id="password"
-                                                            class="form-control" placeholder="Password">
-                                                        <div class="invalid-feedback"></div>
-                                                    </div>
-                                                </div>
-
-                                                <div class="mb-2 row">
-                                                    <div class="col-md-6">
-                                                        <label for="password_confirmation" class="form-label">Confirm
-                                                            Password <span class="text-danger">*</span></label>
-                                                        <input type="password" name="password_confirmation"
-                                                            id="password_confirmation" class="form-control"
-                                                            placeholder="Confirm Password">
-                                                        <div class="invalid-feedback"></div>
-                                                    </div>
-                                                </div> --}}
-
-
-
-<!-- Transfer Approval Documents & Insurance Certificate -->
-{{-- <div class="mb-3 row">
-                                                    <div class="col-md-6">
-                                                        <label for="transfer_approval_documents"
-                                                            class="form-label">Transfer Approval Documents <span
-                                                                class="text-danger">*</span></label>
-                                                        <input type="file" name="transfer_approval_documents"
-                                                            id="transfer_approval_documents" class="form-control">
-                                                        <div class="invalid-feedback"></div>
-                                                    </div>
-                                                    <div class="col-md-6">
-                                                        <label for="insurance_certificate" class="form-label">Insurance
-                                                            Certificate <span class="text-danger">*</span></label>
-                                                        <input type="file" name="insurance_certificate"
-                                                            id="insurance_certificate" class="form-control">
-                                                        <div class="invalid-feedback"></div>
-                                                    </div>
-                                                </div> --}}
-
-<!-- Submit Button -->
-{{-- <div class="mb-2 text-center"
-                                                    style="padding: 0 100px; margin-top: 20px;">
-                                                    <button type="submit"
-                                                        class="btn btn-primary w-100">Register</button>
-                                                </div>
-                                            </form>
-                                            <div class="mt-3 text-center text-muted">
-                                                <p class="mb-0">Already have an account?
-                                                    <a class="text-primary ms-2 fw-medium"
-                                                        href="{{ route('carrier.login') }}">Login here</a>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div> --}}
-
-<!-- Scripts -->
 @include('backend.components.js-validations.carrier.carrier-register')
 
-{{--
-</body> --}}
 <script>
     document.querySelectorAll('.toggle-password').forEach(function(element) {
         element.addEventListener('click', function() {
@@ -596,6 +368,68 @@
 
 
     $(document).ready(function() {
+
+    // Event bindings
+    $('#phone').on('input blur', function () {
+        validatePhone();
+    });
+
+    $('#country').on('change', function () {
+        $('#phone').val('');
+        $('#phone-error').hide();
+        updatePhonePlaceholder();
+    });
+
+    $('form').on('submit', function (e) {
+        if (!validatePhone()) {
+            e.preventDefault();
+        }
+    });
+
+    // Validate phone number
+    function validatePhone() {
+        const phone = $('#phone').val().trim();
+        const country = $('#country').val();
+        let isValid = false;
+
+        if (phone.length > 15) {
+            $('#phone-error').text('Maximum 15 characters allowed.').show();
+            return false;
+        }
+
+        if (country === 'us') {
+            // Strict US phone format
+            const usPattern = /^(\+1\s?)?(\(?\d{3}\)?[\s.-]?)\d{3}[\s.-]?\d{4}$/;
+            isValid = usPattern.test(phone);
+        } else if (country === 'mexico') {
+            // Strict Mexico formats (international or local)
+            const mxPattern = /^(\+52\s?1?\s?\d{2}\s?\d{4}\s?\d{4})$|^(\d{2}-\d{4}-\d{4})$/;
+            isValid = mxPattern.test(phone);
+        }
+
+        if (!isValid) {
+            $('#phone-error').text('Invalid phone number format.').show();
+        } else {
+            $('#phone-error').hide();
+        }
+
+        return isValid;
+    }
+
+    // Update phone placeholder dynamically
+    function updatePhonePlaceholder() {
+        const country = $('#country').val();
+        let placeholder = '';
+
+        if (country === 'us') {
+            placeholder = '+1 (555) 123-4567';
+        } else if (country === 'mexico') {
+            placeholder = '+52 1 55 1234 5678';
+        }
+
+        $('#phone').attr('placeholder', placeholder);
+    }
+
         function validatePasswordRules(password) {
             return {
                 length: password.length >= 8,
@@ -644,46 +478,57 @@
     });
 
     // Function to validate the file
-    function validateFile(inputId, errorId) {
-        const fileInput = document.getElementById(inputId);
-        const errorMessage = document.getElementById(errorId);
-
+$(document).ready(function () {
+    function validateFile(inputId, errorId, required = false) {
+        const fileInput = $('#' + inputId)[0];
+        const errorMessage = $('#' + errorId);
         const file = fileInput.files[0];
 
         if (!file) {
-            errorMessage.style.display = "none"; // No file selected, hide error
-            return true;
+            if (required) {
+                errorMessage.text("This file is required.").show();
+                return false;
+            } else {
+                errorMessage.hide();
+                return true;
+            }
         }
 
-        // Check file type (PDF or JPG)
-        const allowedTypes = ['application/pdf', 'image/jpeg', 'image/jpg'];
+        const allowedTypes = ['application/pdf', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'image/jpeg', 'image/jpg', 'image/png'];
         if (!allowedTypes.includes(file.type)) {
-            errorMessage.textContent = "Invalid file type. Only PDF and JPG are allowed.";
-            errorMessage.style.display = "block";
+            errorMessage.text("Invalid file type. Only PDF and JPG are allowed.").show();
             return false;
         }
 
-        // Check file size (Max 10MB)
-        const maxSize = 10 * 1024 * 1024; // 10MB in bytes
+        const maxSize = 10 * 1024 * 1024; // 10MB
         if (file.size > maxSize) {
-            errorMessage.textContent = "File is too large. Maximum size is 10MB.";
-            errorMessage.style.display = "block";
+            errorMessage.text("File is too large. Maximum size is 10MB.").show();
             return false;
         }
 
-        // If everything is fine, hide error message
-        errorMessage.style.display = "none";
+        errorMessage.hide();
         return true;
     }
 
-    // Attach event listeners for file validation on input change
-    document.getElementById('transfer_approval_documents').addEventListener('change', function() {
-        validateFile('transfer_approval_documents', 'transfer_approval_error');
+    // Trigger validation on file input change
+    $('#transfer_approval_documents').on('change', function () {
+        validateFile('transfer_approval_documents', 'transfer_approval_error', true);
     });
 
-    document.getElementById('insurance_certificate').addEventListener('change', function() {
-        validateFile('insurance_certificate', 'insurance_certificate_error');
+    $('#insurance_certificate').on('change', function () {
+        validateFile('insurance_certificate', 'insurance_certificate_error', true);
     });
+
+    // Block form submission if invalid
+    $('#registrationCarrier').on('submit', function (e) {
+        const isTransferValid = validateFile('transfer_approval_documents', 'transfer_approval_error', true);
+        const isInsuranceValid = validateFile('insurance_certificate', 'insurance_certificate_error', true);
+
+        if (!isTransferValid || !isInsuranceValid) {
+            e.preventDefault(); // Prevent form from submitting
+        }
+    });
+});
 </script>
 
 </html>
