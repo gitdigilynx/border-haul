@@ -54,7 +54,29 @@ function statusInService($in_service): string
     };
 }
 
+if (!function_exists('formatPhone')) {
+    function formatPhone($number)
+    {
+        $number = preg_replace('/[^\d]/', '', $number);
 
+        // Format as (XXX) XXX-XXXX
+        if (strlen($number) === 10) {
+            return '(' . substr($number, 0, 3) . ') '
+                . substr($number, 3, 3) . '-'
+                . substr($number, 6);
+        }
+
+        // Format as +52-XXX-XXX-XXXX
+        if (strlen($number) === 12 && str_starts_with($number, '52')) {
+            return '+52-' . substr($number, 2, 3) . '-'
+                . substr($number, 5, 3) . '-'
+                . substr($number, 8);
+        }
+
+        // Default: return as-is
+        return $number;
+    }
+}
 // function serviceDirverCategory()
 // {
 //     return [

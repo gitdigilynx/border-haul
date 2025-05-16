@@ -36,6 +36,19 @@ class TruckController extends Controller
     {
         try {
 
+            // Sanitize input manually
+            $sanitized = [
+                'plate_number'     => trim($request->input('plate_number')),
+                'trucker_number'   => trim($request->input('trucker_number')),
+                'service_category' => trim($request->input('service_category')),
+                'location'         => trim($request->input('location')),
+                'in_service'       => filter_var($request->input('in_service'), FILTER_VALIDATE_BOOLEAN),
+                'name'             => trim($request->input('name')),
+                'phone_number'     => preg_replace('/\D+/', '', $request->input('phone_number')), // keep only digits
+            ];
+
+            $request->merge($sanitized); // Apply sanitized values to request
+
             $request->validate([
                 'plate_number' => 'required|unique:trucks,plate_number',
                 'trucker_number' => 'required|unique:trucks,trucker_number',
@@ -85,44 +98,57 @@ class TruckController extends Controller
         }
     }
 
-   public function update(Request $request, $id)
-{
-    try {
-        $truck = Truck::findOrFail($id);
-        $driver = $truck->driver; // Assuming a relationship exists between Truck and Driver
+    public function update(Request $request, $id)
+    {
 
-        // Validate truck and driver data
-        $request->validate([
-            'plate_number' => 'required|unique:trucks,plate_number,' . $truck->id,
-            'trucker_number' => 'required|unique:trucks,trucker_number,' . $truck->id,
-            'service_category' => 'required|string',
-            'location' => 'required|string',
-            'in_service' => 'required|boolean',
-            'name' => 'required|string',
-            'phone_number' => 'required|unique:drivers,phone_number,' . $driver->id,
-        ]);
+        try {
+            $truck = Truck::findOrFail($id);
+            $driver = $truck->driver; // Assuming a relationship exists between Truck and Driver
 
-        // Update truck data
-        $truck->update([
-            'plate_number' => $request->plate_number,
-            'trucker_number' => $request->trucker_number,
-            'service_category' => $request->service_category,
-            'location' => $request->location,
-            'in_service' => $request->in_service,
-        ]);
+            // Sanitize input manually
+            $sanitized = [
+                'plate_number'     => trim($request->input('plate_number')),
+                'trucker_number'   => trim($request->input('trucker_number')),
+                'service_category' => trim($request->input('service_category')),
+                'location'         => trim($request->input('location')),
+                'in_service'       => filter_var($request->input('in_service'), FILTER_VALIDATE_BOOLEAN),
+                'name'             => trim($request->input('name')),
+                'phone_number'     => preg_replace('/\D+/', '', $request->input('phone_number')), // keep only digits
+            ];
 
-        // Update driver data
-        $driver->update([
-            'name' => $request->name,
-            'phone_number' => $request->phone_number,
-        ]);
+            $request->merge($sanitized); // Apply sanitized values to request
+            // Validate truck and driver data
+            $request->validate([
+                'plate_number' => 'required|unique:trucks,plate_number,' . $truck->id,
+                'trucker_number' => 'required|unique:trucks,trucker_number,' . $truck->id,
+                'service_category' => 'required|string',
+                'location' => 'required|string',
+                'in_service' => 'required|boolean',
+                'name' => 'required|string',
+                'phone_number' => 'required|unique:drivers,phone_number,' . $driver->id,
+            ]);
 
-        return redirect()->route('carrier.trucks')->with('success', 'Truck and driver updated successfully!');
-    } catch (\Exception $e) {
-        Flasher::addError('Something went wrong: ' . $e->getMessage());
-        return redirect()->back();
+            // Update truck data
+            $truck->update([
+                'plate_number' => $request->plate_number,
+                'trucker_number' => $request->trucker_number,
+                'service_category' => $request->service_category,
+                'location' => $request->location,
+                'in_service' => $request->in_service,
+            ]);
+
+            // Update driver data
+            $driver->update([
+                'name' => $request->name,
+                'phone_number' => $request->phone_number,
+            ]);
+
+            return redirect()->route('carrier.trucks')->with('success', 'Truck and driver updated successfully!');
+        } catch (\Exception $e) {
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
+            return redirect()->back();
+        }
     }
-}
 
     public function destroy($id)
     {
