@@ -60,7 +60,7 @@ class ShipperProfileController extends Controller
 
              return redirect()->route('shipper.profile.list')->with('success', 'Profile updated successfully.');
          } catch (\Exception $e) {
-             dd('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
              return redirect()->back();
          }
      }

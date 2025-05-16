@@ -211,11 +211,11 @@
             <span>or</span>
             </div>
             <div class="text-center">
-                <p class="mb-1 question">Don't have a Shipper account?
-                    <a href="{{ route('shipper.register') }}" class="text-primary">Create Partner account</a>
+                <p class="mb-1 question">I need to <strong>ship</strong>  goods →
+                    <a href="{{ route('shipper.register') }}" class="text-primary">[Create Shipper Account]</a>
                 </p>
-                <p class="mb-0 question">Transfer Courier Partner?
-                    <a href="{{ url('carrier/register') }}" class="text-primary">Create Carrier Partner account</a>
+                <p class="mb-0 question">I provide <strong>transport</strong> →
+                    <a href="{{ url('carrier/register') }}" class="text-primary">[Create Carrier Account]</a>
                 </p>
             </div>
         </div>
@@ -236,60 +236,8 @@
 
     </div>
 </div>
-
-<!-- Add custom media queries if needed -->
-
-
     @include('backend.components.js-validations.shipper-users.shipper-login')
 </body>
 
 </html>
 
-{{-- <x-guest-layout>
-    <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
-
-    <form method="POST" action="{{ route('login') }}">
-        @csrf
-
-        <!-- Email Address -->
-        <div>
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block w-full mt-1" type="email" name="email" :value="old('email')" required
-                autofocus autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block w-full mt-1" type="password" name="password" required
-                autocomplete="current-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Remember Me -->
-        <div class="block mt-4">
-            <label for="remember_me" class="inline-flex items-center">
-                <input id="remember_me" type="checkbox"
-                    class="text-indigo-600 border-gray-300 rounded shadow-sm focus:ring-indigo-500" name="remember">
-                <span class="text-sm text-gray-600 ms-2">{{ __('Remember me') }}</span>
-            </label>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            @if (Route::has('password.request'))
-            <a class="text-sm text-gray-600 underline rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                href="{{ route('password.request') }}">
-                {{ __('Forgot your password?') }}
-            </a>
-            @endif
-
-            <x-primary-button class="ms-3">
-                {{ __('Log in') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout> --}}
