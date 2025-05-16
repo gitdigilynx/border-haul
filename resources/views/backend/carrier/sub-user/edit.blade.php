@@ -8,9 +8,10 @@
                     UPDATE TRUCK
                 </h5>
             </div>
-            <form id="carrierForm" method="POST" action="{{ route('carrier.carrier-users.update', $user->id) }}">
+            <form id="carrierForm" method="POST"
+                action="{{ route('carrier.carrier-users.update', $user->users->id) }}">
                 @csrf
-
+                <input type="hidden" name="id" value="{{ $user->users->id }}">
                 <div class="modal-body">
                     <div class="row">
                         <div class="mb-3 col-md-12">
@@ -28,7 +29,7 @@
                         <div class="mb-3 col-md-12">
                             <label for="email" class="form-label">Email</label>
                             <input type="email" class="form-control" name="email" placeholder="Email"
-                                value="{{ old('email', $user->users->email ?? '') }}" required readonly>
+                                value="{{ old('email', $user->users->email ?? '') }}" required readonly disabled>
                         </div>
                     </div>
                     <div class="text-center">
@@ -39,3 +40,42 @@
         </div>
     </div>
 </div>
+
+<script>
+    $('#carrierForm').validate({
+        rules: {
+            name: {
+                required: true
+            },
+            last_name: {
+                required: true
+            },
+        },
+        messages: {
+            name: {
+                required: "First name is required"
+            },
+            last_name: {
+                required: "Last name is required"
+            },
+
+        },
+        errorClass: 'is-invalid',
+        validClass: 'is-valid',
+        errorElement: 'div',
+        highlight: function(element, errorClass, validClass) {
+            $(element).addClass(errorClass).removeClass(validClass);
+        },
+        unhighlight: function(element, errorClass, validClass) {
+            $(element).removeClass(errorClass).addClass(validClass);
+        },
+        errorPlacement: function(error, element) {
+            if (element.parent('.input-group').length) {
+                error.insertAfter(element.parent());
+            } else {
+                error.insertAfter(element);
+            }
+            error.addClass('invalid-feedback');
+        }
+    });
+</script>
