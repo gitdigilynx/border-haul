@@ -90,18 +90,20 @@
                                                 </a>
 
 
+                                                <!-- Edit Button -->
+                                                <a href="javascript:void(0)" style="background-color: #EFEFEF;"
+                                                    class="p-0 mb-0 btn" data-bs-toggle="modal"
+                                                    data-id="{{ $user->id }}"
+                                                    data-bs-target="#carrierEditModal{{ $user->id }}">
+                                                    <i style="color:#9F9F9F" class="p-2 fa fa-edit"></i>
+                                                </a>
+
                                                 <a href="javascript:void(0);" style="background: #D2232A1A;  "
                                                     class="p-0 mb-0 delete-carrier-user btn " data-id="{{ $user->id }}"
                                                     data-url="{{ route('carrier.carrier-users.destroy', $user->id) }}">
                                                     <i style="color:#D2232A" class="p-2 fa fa-trash-can"></i>
                                                 </a>
 
-                                                <!-- Edit Button -->
-                                                {{-- <a href="javascript:void(0)" class="p-0 mb-0 rounded-circle btn bg-success"
-                                                    data-bs-toggle="modal" data-id="{{ $user->id }}"
-                                                    data-bs-target="#carrierEditModal{{ $user->id }}">
-                                                    <i class="p-1 text-white fa fa-edit text-secondary"></i>
-                                                </a> --}}
 
                                                 <!-- Delete Button -->
 
@@ -134,14 +136,16 @@
     </div>
     </div>
 
-    @foreach ($carrierUsers as $user)
-        @include('backend.carrier.sub-user.show', ['document' => $user])
-        @include('backend.carrier.sub-user.edit', ['document' => $user])
-    @endforeach
+
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
+
+    @foreach ($carrierUsers as $user)
+        @include('backend.carrier.sub-user.show', ['document' => $user])
+        @include('backend.carrier.sub-user.edit', ['document' => $user])
+    @endforeach
 
     @include('backend.carrier.sub-user.create')
 

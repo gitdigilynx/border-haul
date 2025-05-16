@@ -25,9 +25,9 @@ class CarrierSubUserController extends Controller
         try {
             $shipperId = auth()->id();
             $carrierUsers = CarrierSubUser::with('users')
-              ->where('carrier_id', $shipperId)
-              ->orderBy('created_at', 'desc')
-              ->get();
+                ->where('carrier_id', $shipperId)
+                ->orderBy('created_at', 'desc')
+                ->get();
 
             return view('backend.carrier.sub-user.index', compact('carrierUsers'));
         } catch (\Exception $e) {
@@ -67,7 +67,7 @@ class CarrierSubUserController extends Controller
             ]);
 
             // Send credentials via email
-             Mail::to($request->email)->send(new SendPasswordToCarrierUser($request->email, $rawPassword));
+            Mail::to($request->email)->send(new SendPasswordToCarrierUser($request->email, $rawPassword));
 
             return redirect()->route('carrier.carrier-users')->with('success', 'User created successfully!');
         } catch (\Exception $e) {
@@ -101,9 +101,9 @@ class CarrierSubUserController extends Controller
     public function update(Request $request, $id)
     {
         try {
-           $request->validate([
+            $request->validate([
                 'name'  => 'required|string|max:255',
-                'email' => 'required|email|unique:users,email,' . $id,
+                // 'email' => 'required|email|unique:users,email,' . $id,
                 'last_name'  => 'required|string|max:255',
             ]);
 
@@ -111,7 +111,7 @@ class CarrierSubUserController extends Controller
 
             $subCarrier->update([
                 'name'  => $request->name,
-                'email' => $request->email,
+                // 'email' => $request->email,
                 'last_name'  => $request->last_name,
             ]);
             return redirect()->route('carrier.carrier-users')->with('success', 'User updated successfully!');
@@ -129,7 +129,7 @@ class CarrierSubUserController extends Controller
 
             return response()->json(['message' => 'Deleted successfully']);
         } catch (\Exception $e) {
-           Flasher::addError('Something went wrong: ' . $e->getMessage());
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
     }
@@ -142,10 +142,9 @@ class CarrierSubUserController extends Controller
             $user->save();
 
             return back()->with('status', 'User status updated.');
-         } catch (\Exception $e) {
-           Flasher::addError('Something went wrong: ' . $e->getMessage());
+        } catch (\Exception $e) {
+            Flasher::addError('Something went wrong: ' . $e->getMessage());
             return redirect()->back();
         }
-
     }
 }
