@@ -414,8 +414,6 @@
         </div>
     </div>
 </div>
-
-
 @include('backend.components.js-validations.shipper-users.shipper-register')
 
 </body>
