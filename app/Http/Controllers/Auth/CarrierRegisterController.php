@@ -126,7 +126,7 @@ class CarrierRegisterController extends Controller
 
         if (!$user) {
             return back()->withErrors([
-                'email' => 'No account found with this email.',
+                'email' => 'Invalid credentials.',
             ])->onlyInput('email');
         }
 
