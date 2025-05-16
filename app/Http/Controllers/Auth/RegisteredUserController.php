@@ -107,7 +107,7 @@ class RegisteredUserController extends Controller
         }
 
         // Check if the user has the carrier role
-        if ($user->role !== \App\Enums\RoleEnum::SHIPPER->value) {
+        if ($user->role !== RoleEnum::SHIPPER->value) {
             return back()->withErrors([
                 'email' => 'Access restricted. Only shipper accounts can log in here.',
             ])->onlyInput('email');

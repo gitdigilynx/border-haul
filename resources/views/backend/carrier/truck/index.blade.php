@@ -26,14 +26,14 @@
                                 <!-- Left: Company Details -->
                                 <div class="mb-2 col-md-6 col-12 mb-md-0">
                                     <h3 style="
-                                    font-family: Poppins;
+                                    font-family: Poppins !importent;
                                     font-weight: 600;
                                     font-size: 18px;
                                     line-height: 100%;
                                     letter-spacing: 0%;
                                     color: #000000;
                                 "
-                                        class="" style="font-family: 'Poppins', sans-serif; color: black;">
+                                        class="" style="font-family: Poppins !importent;color: black;">
                                         Trucks</h3>
                                 </div>
 

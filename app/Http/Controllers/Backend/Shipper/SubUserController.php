@@ -26,9 +26,6 @@ class SubUserController extends Controller
         $shipperId = auth()->id();
         $subUsers = ShipperSubUser::with('user')
             ->where('shipper_id', $shipperId)
-            ->whereHas('user', function ($query) {
-                $query->where('is_active', 1);
-            })
             ->orderBy('created_at', 'desc')
             ->get();
 

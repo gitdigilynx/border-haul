@@ -129,7 +129,7 @@ class CarrierRegisterController extends Controller
         }
 
         // Check if the user has the carrier role
-        if ($user->role !== \App\Enums\RoleEnum::CARRIER->value) {
+        if ($user->role !== RoleEnum::CARRIER->value) {
             return back()->withErrors([
                 'email' => 'Access restricted. Only carrier accounts can log in here.',
             ])->onlyInput('email');

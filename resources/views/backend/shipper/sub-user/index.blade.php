@@ -81,26 +81,29 @@
                                                 <a href="javascript:void(0)" style="background-color: #E0F3FF; "
                                                     class="p-0 mb-0 btn" data-bs-toggle="modal"
                                                     data-id="{{ $user->id }}"
-                                                    data-bs-target="#shipperUsertShow{{ $user->id }}"
-                                                    title="View" aria-label="View">
-                                                    <i style="color:#007BFF" class="p-2 fa fa-eye "></i>
+                                                    data-bs-target="#shipperUsertShow{{ $user->id }}">
+                                                    <i class="p-2 fa fa-eye" style="color:#007BFF" title="View User"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"></i>
+
                                                 </a>
 
                                                 <!-- Edit Button -->
                                                 <a href="javascript:void(0)" style="background-color: #EFEFEF;"
                                                     class="p-0 mb-0 btn" data-bs-toggle="modal"
-                                                    data-bs-target="#subShipperEditModal{{ $user->id }}"
-                                                    title="Edit" aria-label="Edit">
-                                                    <i style="color:#9F9F9F" class="p-2 fa fa-edit"></i>
+                                                    data-bs-target="#subShipperEditModal{{ $user->id }}">
+                                                    <i class="p-2 fa fa-edit" style="color:#9F9F9F" title="Edit User"
+                                                    data-bs-toggle="tooltip" data-bs-placement="top"></i>
                                                 </a>
 
                                                 <!-- Delete Button -->
                                                 <a href="javascript:void(0);" style="background: #D2232A1A;"
                                                     class="p-0 mb-0 delete-user btn"
                                                     data-id="{{ $user->id }}"
-                                                    data-url="{{ route('shipper.sub-users.destroy', $user->id) }}"
-                                                    title="Delete" aria-label="Delete">
-                                                    <i style="color:#D2232A" class="p-2 fa fa-trash-can"></i>
+                                                    data-url="{{ route('shipper.sub-users.destroy', $user->id) }}">
+                                                    <i class="p-2 fa fa-trash-can" style="color:#D2232A"
+                                                    title="Delete User" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"></i>
+
                                                 </a>
                                             </td>
                                         </tr>
@@ -189,7 +192,7 @@
             info: false,
             pagingType: 'simple',
             language: {
-                emptyTable: '<div style="text-align:center;">No users have been added yet. Click ‘+ Invite Users’ to add a new user.</div>'
+                emptyTable: '<div style="text-align:center;">You haven‘t added any users yet. Click ‘+ Invite Users’ to add drivers or admin team members to your account.</div>'
             }
         });
 

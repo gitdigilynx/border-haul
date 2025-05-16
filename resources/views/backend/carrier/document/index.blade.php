@@ -119,23 +119,26 @@
 
                                         <a href="javascript:void(0)" style="background-color: #E0F3FF; "
                                             class="p-0 mb-0 btn" data-bs-toggle="modal" data-id="{{ $document->id }}"
-                                            data-bs-target="#carrierDocumentShow{{ $document->id }}"
-                                            title="View" aria-label="View">
-                                            <i style="color:#007BFF" class="p-2 fa fa-eye "></i>
+                                            data-bs-target="#carrierDocumentShow{{ $document->id }}">
+                                            <i class="p-2 fa fa-eye" style="color:#007BFF" title="View Document"
+                                            data-bs-toggle="tooltip" data-bs-placement="top"></i>
+
                                         </a>
 
                                         <a href="javascript:void(0)" style="background-color: #EFEFEF; "
                                             class="p-0 mb-0 btn" data-bs-toggle="modal"
-                                            data-bs-target="#carrierDocumentEdit{{ $document->id }}"
-                                            title="Edit" aria-label="Edit">
-                                            <i style="color:#9F9F9F" class="p-2 fa fa-edit"></i>
+                                            data-bs-target="#carrierDocumentEdit{{ $document->id }}">
+                                            <i class="p-2 fa fa-edit" style="color:#9F9F9F" title="Edit Document"
+                                            data-bs-toggle="tooltip" data-bs-placement="top"></i>
                                         </a>
 
                                         <a href="javascript:void(0);" style="background: #D2232A1A;  "
                                             class="p-0 mb-0 delete-documents btn " data-id="{{ $document->id }}"
-                                            data-url="{{ route('carrier.documents.destroy', $document->id) }}"
-                                            title="Delete" aria-label="Delete">
-                                            <i style="color:#D2232A" class="p-2 fa fa-trash-can"></i>
+                                            data-url="{{ route('carrier.documents.destroy', $document->id) }}">
+                                            <i class="p-2 fa fa-trash-can" style="color:#D2232A"
+                                                    title="Delete Document" data-bs-toggle="tooltip"
+                                                    data-bs-placement="top"></i>
+
                                         </a>
                                         </td>
                                     </tr>

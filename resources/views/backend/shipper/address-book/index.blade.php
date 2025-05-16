@@ -74,17 +74,17 @@
                                                     <a href="javascript:void(0)" style="background-color: #E0F3FF;"
                                                        class="p-0 mb-0 btn" data-bs-toggle="modal"
                                                        data-id="{{ $address->id }}"
-                                                       data-bs-target="#ShipperAddressBookModal{{ $address->id }}"
-                                                       title="View" aria-label="View">
-                                                        <i style="color:#007BFF" class="p-2 fa fa-eye"></i>
+                                                       data-bs-target="#ShipperAddressBookModal{{ $address->id }}">
+                                                       <i class="p-2 fa fa-eye" style="color:#007BFF" title="View Address"
+                                                       data-bs-toggle="tooltip" data-bs-placement="top"></i>
                                                     </a>
 
                                                 <!-- Edit Button -->
                                                     <a href="javascript:void(0)" style="background-color: #EFEFEF;"
                                                        class="p-0 mb-0 btn" data-bs-toggle="modal"
-                                                       data-bs-target="#addressBookEdit{{ $address->id }}"
-                                                       title="Edit" aria-label="Edit">
-                                                        <i style="color:#9F9F9F" class="p-2 fa fa-edit"></i>
+                                                       data-bs-target="#addressBookEdit{{ $address->id }}">
+                                                       <i class="p-2 fa fa-edit" style="color:#9F9F9F" title="Edit Address"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"></i>
                                                     </a>
 
 
@@ -92,9 +92,10 @@
                                                     <a href="javascript:void(0);" style="background: #D2232A1A;"
                                                        class="p-0 mb-0 delete-address-book btn"
                                                        data-id="{{ $address->id }}"
-                                                       data-url="{{ route('shipper.address-book.destroy', $address->id) }}"
-                                                       title="Delete" aria-label="Delete">
-                                                        <i style="color:#D2232A" class="p-2 fa fa-trash-can"></i>
+                                                       data-url="{{ route('shipper.address-book.destroy', $address->id) }}">
+                                                       <i class="p-2 fa fa-trash-can" style="color:#D2232A"
+                                                       title="Delete Address" data-bs-toggle="tooltip"
+                                                       data-bs-placement="top"></i>
                                                     </a>
                                                 </td>
 

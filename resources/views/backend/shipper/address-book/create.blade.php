@@ -35,8 +35,8 @@
                                 <option value="">Select State</option>
                                 @foreach (getStateOptions() as $country => $states)
                                     <optgroup label="{{ $country }}">
-                                        @foreach ($states as $state)
-                                            <option value="{{ $state }}">{{ $state }}</option>
+                                        @foreach ($states as $code => $state)
+                                            <option value="{{ $code }}">{{ $state }}</option>
                                         @endforeach
                                     </optgroup>
                                 @endforeach
@@ -61,7 +61,7 @@
 
                         <div class="mb-3 col-md-12">
                             <label for="type" class="form-label">Type <span class="text-danger">*</span></label>
-                            <select class="form-control" name="type" id="type">
+                            <select class="form-control" name="type" id="pickup_type">
                                 <option selected>Select Type</option>
                                 <option value="pickup">Pickup</option>
                                 <option value="delivery">Delivery</option>
@@ -119,7 +119,7 @@
                     errorMessage = 'This postal code field is required.';
                 } else if (id === 'country' && value === '') {
                     errorMessage = 'This country field is required.';
-                } else if (id === 'type' && value === '') {
+                } else if (id === 'pickup_type' && value === '') {
                     errorMessage = 'This type field is required.';
                 } else if (id === 'contact_person_name' && value === '') {
                     errorMessage = 'This person name field is required.';
@@ -129,7 +129,7 @@
                 if (!errorMessage) {
                     if (['company_name', 'street_address', 'contact_person_name'].includes(id) && value.length > 50) {
                         errorMessage = 'Maximum 50 characters allowed.';
-                    } else if (['state', 'country', 'postal_code'].includes(id) && value.length > 10) {
+                    } else if (['state', 'country','postal_code'].includes(id) && value.length > 10) {
                         errorMessage = 'Maximum 10 characters allowed.';
                     }
                 }

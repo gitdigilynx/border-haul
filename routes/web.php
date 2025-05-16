@@ -203,9 +203,7 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/address-book', 'store')->name('address-book.store');
             Route::get('/address-book/{id}/edit', 'edit')->name('address-book.edit');
             Route::get('/address-book/{id}', 'show')->name('address-book.show');
-
-            Route::put('/address-book/{id}', 'update')->name('address-book.update');
-
+            // Route::put('/address-book/{id}', 'update')->name('address-book.update');
             Route::delete('/address-book/{id}', 'destroy')->name('address-book.destroy');
         });
     });

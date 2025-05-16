@@ -71,7 +71,6 @@ class AddressBookController extends Controller
     }
     public function update(Request $request, $id)
     {
-
         try {
             // Validate the request data
             $request->validate([
