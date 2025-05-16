@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('file_path')->nullable();
             $table->date('expires_at')->nullable();
             $table->string('status')->nullable();
-            $table->text('notes')->nullable();
             $table->foreign('carrier_id')->references('id')->on('carriers')->onDelete('cascade');
 
             $table->timestamps();

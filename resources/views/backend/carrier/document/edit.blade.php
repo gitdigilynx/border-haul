@@ -9,75 +9,143 @@
                 <h5 class="text-center modal-title w-100">UPDATE DOCUMENT</h5>
             </div>
 
+        <form id="shipperAddressBook"
+            method="POST"
+            enctype="multipart/form-data"
+            action="{{ isset($document) ? route('carrier.documents.update', $document->id) : route('carrier.documents.store') }}">
 
-        <form id="shipperAddressBook" class="px-3 py-2 row g-3" method="POST" action="{{ isset($document) ? route('carrier.documents.update', $document->id) : route('carrier.documents.store') }}">
           @csrf
 
           <div class="modal-body">
             <div class="row">
             <div class="mb-2 col-md-12">
                 <div>
-                    <label for="serviceCategory" class="form-label">Document Type</label>
+                    <label for="serviceCategory" class="form-label">Document Type <span class="text-danger">*</span></label>
                     <select class="form-select" name="document_type" id="document_type">
-                        <option value="" {{ old('document_type', $document->document_type) == '' ? 'selected' : '' }}>Select</option>
-                        <option value="Docx" {{ old('document_type', $document->document_type) == 'Docx' ? 'selected' : '' }}>DOCX</option>
-                        <option value="doc" {{ old('document_type', $document->document_type) == 'doc' ? 'selected' : '' }}>DOC</option>
-                        <option value="Pdf" {{ old('document_type', $document->document_type) == 'Pdf' ? 'selected' : '' }}>PDF</option>
-                        <option value="xls" {{ old('document_type', $document->document_type) == 'xls' ? 'selected' : '' }}>XLS</option>
-                        <option value="jpg" {{ old('document_type', $document->document_type) == 'jpg' ? 'selected' : '' }}>JPG</option>
-                        <option value="jpeg" {{ old('document_type', $document->document_type) == 'jpeg' ? 'selected' : '' }}>JPEG</option>
-                        <option value="png" {{ old('document_type', $document->document_type) == 'png' ? 'selected' : '' }}>PNG</option>
-                        <option value="gif" {{ old('document_type', $document->document_type) == 'gif' ? 'selected' : '' }}>GIF</option>
+                        <option value="" {{ old('document_type', $document->document_type) == '' ? 'selected' : '' }}>Select Document</option>
+                        <option value="Insurance Certificate" {{ old('document_type', $document->document_type) == 'Insurance Certificate' ? 'selected' : '' }}>Insurance Certificate</option>
+                        <option value="Transfer Authority" {{ old('document_type', $document->document_type) == 'Transfer Authority' ? 'selected' : '' }}>Transfer Authority</option>
+                        <option value="Vehicle Registration" {{ old('document_type', $document->document_type) == 'Vehicle Registration' ? 'selected' : '' }}>Vehicle Registration</option>
+                        <option value="Business License" {{ old('document_type', $document->document_type) == 'Business License' ? 'selected' : '' }}>Business License</option>
+                        <option value="Compliance Document" {{ old('document_type', $document->document_type) == 'Compliance Document' ? 'selected' : '' }}>Compliance Document</option>
+                        <option value="Other" {{ old('document_type', $document->document_type) == 'Other' ? 'selected' : '' }}>Other</option>
                     </select>
+
                 </div>
             </div>
 
-
             <div class="col-md-12">
-              <label for="expires_at" class="form-label">Date</label>
+              <label for="expires_at" class="form-label">Expiration Date ( Optional )</label>
               <input type="date" class="form-control" name="expires_at" placeholder="Date"
-                     value="{{ old('expires_at', $document->expires_at ?? '') }}" required>
+              value="{{ old('expires_at', $document->expires_at ?? '') }}">
             </div>
 
-            <div class="col-md-12">
-              <label for="status" class="form-label">Status</label>
-              <select name="status" class="form-select" required>
-                @foreach (documentStatus() as $key => $label)
-                  <option value="{{ $key }}" {{ (old('status', $document->status ?? '') == $key) ? 'selected' : '' }}>
-                    {{ $label }}
-                  </option>
-                @endforeach
-              </select>
+            <div class="mb-2 col-md-12">
+                <label for="status" class="form-label">Status</label>
+                <select class="form-select" name="status">
+                    <option value="" {{ old('status', $document->status ?? '') == '' ? 'selected' : '' }}>Select Status</option>
+                    <option value="Verified" {{ old('status', $document->status ?? '') == 'Verified' ? 'selected' : '' }}>Verified</option>
+                    <option value="Submitted" {{ old('status', $document->status ?? '') == 'Submitted' ? 'selected' : '' }}>Submitted</option>
+                    <option value="Under Review" {{ old('status', $document->status ?? '') == 'Under Review' ? 'selected' : '' }}>Under Review</option>
+                </select>
             </div>
 
               <!-- File Upload -->
               <div class="col-md-12">
-                <label for="file" class="form-label">Upload Document</label>
+                <label for="file" class="form-label">Upload Document <span class="text-danger">*</span></label>
+
+                {{-- Show old file if exists --}}
+                @if($document->file_path)
+                    <div class="mb-2">
+                        <a href="{{ asset('storage/' . $document->file_path) }}" target="_blank" class="btn btn-sm btn-info">
+                            View Current File
+                        </a>
+                    </div>
+                @endif
+
                 <div class="p-4 text-center border rounded upload-box" style="position: relative; background-color: #D5F2FD;">
-                    <input type="file" name="file_path" accept=".zip,.rar" class="file-input"
-                           style="opacity: 0; position: absolute; top: 0; left: 0; height: 100%; width: 100%; cursor: pointer;" required>
+                    <input type="file" name="file_path"
+                           accept=".pdf,.jpg,.jpeg,.png,.docx"
+                           class="file-input"
+                           style="opacity: 0; position: absolute; top: 0; left: 0; height: 100%; width: 100%; cursor: pointer;">
                     <div>
                         <div class="mb-2">
-
-                            <img src="{{ asset('assets/icons/document-icon.svg') }}" alt="Upload Icon" width="40" height="40">
+                            <img src="{{ asset('assets/icons/document-icon.svg') }}"
+                                alt="Upload Icon"
+                                width="40"
+                                height="40">
                         </div>
                         <strong style="color: #000;">Drag and drop files, or <span style="color: #000;">Browse</span></strong>
-                        <div class="text-dark">Support zip and rar files</div>
+                        <div class="text-dark">Support File: PDF, JPG, PNG, DOCX (Max 10MB)”</div>
                     </div>
                 </div>
             </div>
 
-            {{-- <div class="col-md-12">
-                <label for="notes" class="form-label">Note</label>
-                <textarea class="form-control" name="notes" rows="4" placeholder="Notes" required>{{ old('notes', $document->notes ?? '') }}</textarea>
-              </div> --}}
 
           </div>
           <div class="mt-3 text-center">
             <button type="submit" class="submit-btn">UPDATE</button>
         </div>
     </div>
-</form>
+        </form>
+    </div>
+    </div>
 </div>
-</div>
-</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+
+
+<script>
+    // Custom filesize method (for max 10MB)
+    $.validator.addMethod("filesize", function (value, element, param) {
+        return this.optional(element) || (element.files[0].size <= param);
+    }, "File size must be less than {0}");
+
+    $("#shipperAddressBook").validate({
+        rules: {
+            document_type: {
+                required: true
+            },
+            // expires_at: {
+            //     required: true,
+            //     date: true
+            // },
+            status: {
+                required: true
+            },
+            file_path: {
+                extension: "pdf|jpg|jpeg|png|docx",
+                filesize: 10485760 // 10MB
+            }
+        },
+        messages: {
+            document_type: {
+                required: "Missing document type"
+            },
+            expires_at: {
+                required: "Expiration date is required",
+                date: "Invalid date format"
+            },
+            status: {
+                required: "Status is required"
+            },
+            file_path: {
+                required: "Missing file upload",
+                extension: "Unsupported file format",
+                filesize: "File must be less than 10MB"
+            }
+        },
+        errorClass: "is-invalid",
+        validClass: "is-valid",
+        errorElement: "div",
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            if (element.closest('.upload-box').length) {
+                element.closest('.upload-box').append(error);
+            } else {
+                element.closest('.mb-2, .col-md-12').append(error);
+            }
+        }
+    });
+</script>

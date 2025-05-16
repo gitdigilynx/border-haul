@@ -34,15 +34,18 @@ function statusBadge(string $status): string
     };
 }
 
-
-function statusDocument(string $statusDocument): string
+function statusDocument($status)
 {
-    return match ($statusDocument) {
-        'Completed' => 'badge bg-success',
-        'Pending'   => 'badge bg-danger',
-    };
+    switch ($status) {
+        case 'Verified':
+            return 'badge bg-success'; // green
+        case 'Submitted':
+        case 'Under Review':
+            return 'badge bg-danger'; // red
+        default:
+            return 'badge bg-secondary'; // default gray
+    }
 }
-
 
 
 function statusInService($in_service): string

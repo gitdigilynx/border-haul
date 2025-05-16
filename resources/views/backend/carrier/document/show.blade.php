@@ -9,7 +9,7 @@
             <div class="modal-header" style="border-bottom: none; padding: 0.5rem 0 0.25rem 0;">
                 <h5 class="text-center modal-title w-100"
                     style="font-size: 1.5rem; font-family: 'Staatliches', sans-serif; margin: 0; color:black">
-                    Truck Details
+                    Document Details
                 </h5>
             </div>
 
@@ -17,7 +17,7 @@
                 <table class="table table-bordered" style="font-size: 0.95rem;">
                     <tbody>
                         <tr>
-                            <th scope="row">Doc Name</th>
+                            <th scope="row">Document Name</th>
                             <td>{{ $document->document_type ?? '-' }}</td>
                         </tr>
                         <tr>
@@ -30,12 +30,14 @@
                         </tr>
                         <tr>
                             <th scope="row">Status</th>
-                            <td>
-                                <span class="{{ statusDocument($document->status) }}">
-                                    {{ $document->status }}
-                                </span>
+                                <td style="
+                                color:
+                                    {{ $document->status === 'Verified' ? 'green' :
+                                    ($document->status === 'Submitted' ? 'blue' :
+                                    ($document->status === 'Under Review' ? 'orange' : 'black')) }};
+                            ">
+                                {{ $document->status }}
                             </td>
-
                         </tr>
 
                     </tbody>

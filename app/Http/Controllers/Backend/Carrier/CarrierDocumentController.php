@@ -10,6 +10,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UpdateDocumentRequest;
 use Flasher\Laravel\Facade\Flasher;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+
 
 class CarrierDocumentController extends Controller
 {
@@ -40,6 +42,10 @@ class CarrierDocumentController extends Controller
     public function store(Request $request)
     {
         try {
+            $request->validate([
+                'file_path' => 'nullable|file|mimes:pdf,jpg,jpeg,png,docx|max:10240',
+            ]);
+
               $user = auth()->user();
               $carrier = $user->carrier;
 
@@ -73,17 +79,47 @@ class CarrierDocumentController extends Controller
         }
     }
 
-    public function update(UpdateDocumentRequest $request, $id)
+    public function update(Request $request, $id)
     {
+
         try {
+            $request->validate([
+                'file_path' => 'nullable|file|mimes:pdf,jpg,jpeg,png,docx|max:10240',
+            ]);
+
             $document = CarrierDocument::findOrFail($id);
 
-            $document->update([
+            // Prepare update data
+            $updateData = [
                 'document_type' => $request->document_type,
                 'expires_at' => $request->expires_at,
-                'status' => $request->status ?? 'pending',
-                'notes' => $request->notes,
-            ]);
+                'status' => $request->status,
+            ];
+
+
+            if ($request->hasFile('file_path')) {
+                // Delete old file if exists
+                if ($document->file_path && Storage::disk('public')->exists($document->file_path)) {
+                    Storage::disk('public')->delete($document->file_path);
+                }
+
+                // Get original filename and extension
+                $originalName = $request->file('file_path')->getClientOriginalName();
+                $filename = pathinfo($originalName, PATHINFO_FILENAME);
+                $extension = $request->file('file_path')->getClientOriginalExtension();
+
+                // Create a safe, slugified filename
+                $safeName = Str::slug($filename) . '.' . $extension;
+
+                // Store the new file in 'public/documents' with the safe name
+                $documentPath = $request->file('file_path')->storeAs('documents', $safeName, 'public');
+
+                // Update file path
+                $updateData['file_path'] = $documentPath;
+            }
+
+            // Update the document
+            $document->update($updateData);
 
             return redirect()->back()->with('success', 'Document updated successfully.');
         } catch (\Exception $e) {
@@ -91,6 +127,7 @@ class CarrierDocumentController extends Controller
             return redirect()->back();
         }
     }
+
 
     public function destroy($id)
     {

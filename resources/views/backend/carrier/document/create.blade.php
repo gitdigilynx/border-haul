@@ -15,47 +15,42 @@
                     <!-- Document Type -->
                     <div class="mb-2 col-md-12">
                         <div>
-                            <label for="serviceCategory" class="form-label">Document Type</label>
+                            <label for="serviceCategory" class="form-label">Document Type<span class="text-danger">*</span></label>
                             <select class="form-select" name="document_type" id="document_type">
-                                <option value="" selected>Select</option>
-                                <option value="Docx">DOCX</option>
-                                <option value="doc">DOC</option>
-                                <option value="Pdf">PDF</option>
-                                <option value="xls">XLS</option>
-                                <option value="jpg">JPG</option>
-                                <option value="jpeg">JPEG</option>
-                                <option value="png">PNG</option>
-                                <option value="gif">GIF</option>
+                                <option value="" selected>Select Document</option>
+                                <option value="Insurance Certificate">Insurance Certificate</option>
+                                <option value="Transfer Authority">Transfer Authority</option>
+                                <option value="Vehicle Registration">Vehicle Registration</option>
+                                <option value="Business License">Business License</option>
+                                <option value="Compliance Document">Compliance Document</option>
+                                <option value="Other">Other</option>
                             </select>
                         </div>
                     </div>
 
                     <!-- Expiration Date -->
                     <div class="mb-2 col-md-12">
-                        <label for="expires_at" class="form-label">Expiration Date</label>
+                        <label for="expires_at" class="form-label">Expiration Date ( Optional )</label>
                         <input type="date" class="form-control" name="expires_at">
                     </div>
 
                     <div class="mb-2 col-md-12">
-                        <label for="expires_at" class="form-label">Status</label>
+                        <label for="status" class="form-label">Status<span class="text-danger">*</span></label>
                         <select class="form-select" name="status">
-                            <option value="" selected="">Select</option>
-                            @foreach (documentStatus() as $key => $status)
-                                <option value="{{ $key }}">{{ $status }}</option>
-                            @endforeach
+                            <option value="" selected="">Select Status</option>
+                            <option value="Verified">Verified</option>
+                            <option value="Submitted">Submitted</option>
+                            <option value="Under Review">Under Review</option>
                         </select>
                     </div>
-
-                    <!-- Notes -->
-                    {{-- <div class="col-md-12">
-                        <label for="notes" class="form-label">Notes</label>
-                        <textarea class="form-control" name="notes" rows="3" placeholder="Optional notes..."></textarea>
-                    </div> --}}
                     <!-- File Upload -->
                     <div class="col-md-12">
-                        <label for="file" class="form-label">Upload Document</label>
+                        <label for="file" class="form-label">Upload Document<span class="text-danger">*</span></label>
                         <div class="p-4 text-center border rounded upload-box" style="position: relative; background-color: #D5F2FD;">
-                            <input type="file" name="file_path" accept=".zip,.rar" class="file-input"
+                            <input type="file"
+                                name="file_path"
+                                accept=".pdf,.jpg,.jpeg,.png,.docx"
+                                class="file-input"
                                    style="opacity: 0; position: absolute; top: 0; left: 0; height: 100%; width: 100%; cursor: pointer;" required>
                             <div>
                                 <div class="mb-2">
@@ -63,7 +58,7 @@
                                     <img src="{{ asset('assets/icons/document-icon.svg') }}" alt="Upload Icon" width="40" height="40">
                                 </div>
                                 <strong style="color: #000;">Drag and drop files, or <span style="color: #000;">Browse</span></strong>
-                                <div class="text-dark">Support zip and rar files</div>
+                                <div class="text-dark">Support File: PDF, JPG, PNG, DOCX (Max 10MB)”</div>
                             </div>
                         </div>
                     </div>
@@ -80,107 +75,59 @@
   <!-- Scripts -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+
+
+
   <script>
-    $(document).ready(function () {
-      $('#documents').validate({
-        errorClass: 'is-invalid',
-        validClass: 'is-valid',
-        errorElement: 'div',
-        errorPlacement: function (error, element) {
-          error.addClass('invalid-feedback');
-          element.closest('.form-group, .col-md-6').find('.invalid-feedback').remove();
-          error.insertAfter(element);
-        },
-        highlight: function (element) {
-          $(element).addClass('is-invalid').removeClass('is-valid');
-        },
-        unhighlight: function (element) {
-          $(element).removeClass('is-invalid').addClass('is-valid');
-        },
+    // Custom filesize method (for max 10MB)
+    $.validator.addMethod("filesize", function (value, element, param) {
+        return this.optional(element) || (element.files[0].size <= param);
+    }, "File size must be less than {0}");
+
+    $("#documents").validate({
         rules: {
-          shipper_id: {
-            required: true,
-            digits: true
-          },
-          name: {
-            required: true,
-            minlength: 2
-          },
-          phone: {
-            required: true,
-            digits: true,
-            minlength: 10,
-            maxlength: 15
-          },
-          street_address: {
-            required: true,
-            minlength: 5
-          },
-          city: {
-            required: true,
-            minlength: 2
-          },
-          state: {
-            minlength: 2
-          },
-          postal_code: {
-            minlength: 2,
-            maxlength: 20
-          },
-          country: {
-            required: true,
-            minlength: 2
-          },
-          type: {
-            required: true,
-            minlength: 2
-          }
+            document_type: {
+                required: true
+            },
+            // expires_at: {
+            //     required: true,
+            //     date: true
+            // },
+            status: {
+                required: true
+            },
+            file_path: {
+                extension: "pdf|jpg|jpeg|png|",
+                filesize: 10485760 // 10MB
+            }
         },
         messages: {
-          shipper_id: "Please enter a valid shipper ID",
-          name: {
-            required: "Please enter the contact name",
-            minlength: "Name must be at least 2 characters"
-          },
-          phone: {
-            required: "Please enter your phone number",
-            digits: "Phone number should contain only digits",
-            minlength: "Phone number must be at least 10 digits",
-            maxlength: "Phone number must not exceed 15 digits"
-          },
-          street_address: {
-            required: "Please enter the street address",
-            minlength: "Street address must be at least 5 characters"
-          },
-          city: {
-            required: "Please enter the city",
-            minlength: "City must be at least 2 characters"
-          },
-          state: {
-            minlength: "State must be at least 2 characters"
-          },
-          postal_code: {
-            minlength: "Postal code must be at least 2 characters",
-            maxlength: "Postal code must not exceed 20 characters"
-          },
-          country: {
-            required: "Please enter the country",
-            minlength: "Country must be at least 2 characters"
-          },
-          type: {
-            required: "Please select a type",
-            minlength: "Please select a valid type"
-          }
+            document_type: {
+                required: "Missing document type"
+            },
+            expires_at: {
+                required: "Expiration date is required",
+                date: "Invalid date format"
+            },
+            status: {
+                required: "Status is required"
+            },
+            file_path: {
+                required: "Missing file upload",
+                extension: "Unsupported file format",
+                filesize: "File must be less than 10MB"
+            }
+        },
+        errorClass: "is-invalid",
+        validClass: "is-valid",
+        errorElement: "div",
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            if (element.closest('.upload-box').length) {
+                element.closest('.upload-box').append(error);
+            } else {
+                element.closest('.mb-2, .col-md-12').append(error);
+            }
         }
-      });
     });
-  </script>
-
-
-  <style>
-    .text-danger,
-    .invalid-feedback {
-      font-size: 0.875em;
-      margin-top: 0.25rem;
-    }
-  </style>
+</script>

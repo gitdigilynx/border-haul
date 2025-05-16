@@ -12,7 +12,7 @@
                 <img src="{{ asset('assets/icons/icon.svg') }}" alt="Truck Icon" style="width: 40px; height: 40px; margin-right: 8px;">
                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#carrierDocuments"
                 style="background-color: #06367B; color: white; border: none;  font-size: 1rem; font-weight: bold; border-radius: 6px; ">
-                 + New Documents
+                 + Add Document
                 </button>
 
             </div>
@@ -68,13 +68,13 @@
                                 <!-- Left: Company Details -->
                                 <div class="mb-2 col-md-6 col-12 mb-md-0">
                                     <h3 style="
-                                        font-family: Poppins;
+                                        font-family: Poppins !importent;
                                         font-weight: 600;
                                         font-size: 16px;
                                         line-height: 100%;
                                         letter-spacing: 0%;
                                         color: #000000;
-                                    " class="" style="font-family: 'Poppins', sans-serif; color: black;">
+                                    " class="" style="font-family: 'Poppins' !importent; color: black;">
                                         Documents</h3>
                                 </div>
 
@@ -101,40 +101,40 @@
                                     @foreach ($documents as $document)
                                     <tr>
                                         <td>{{ $document->document_type }}</td>
-                                        <td>
-                                            <span class="{{ statusDocument($document->status) }}">
-                                                {{ ucfirst($document->status) }}
-                                            </span>
+                                        <td style="
+                                            color:
+                                                {{ $document->status === 'Verified' ? 'green' :
+                                                ($document->status === 'Submitted' ? 'blue' :
+                                                ($document->status === 'Under Review' ? 'orange' : 'black')) }};
+                                        ">
+                                            {{ $document->status }}
                                         </td>
+
 
                                         <td>{{ $document->expires_at }}</td>
                                         <td>
                                             {{ $document->updated_at->format('M j, Y') }}
                                         </td>
                                         <td>
-                                             <!-- Download Button -->
-                                            {{-- <a href="{{ route('carrier.documents.download', $document->id) }}"
-                                                class="p-0 mb-0 rounded-circle btn bg-info" title="Download">
-                                                <i class="p-1 text-white fa fa-download"></i>
-                                            </a> --}}
 
-                                            <!-- View Button -->
-
-                                            <a href="javascript:void(0)" style="background-color: #E0F3FF; "
+                                        <a href="javascript:void(0)" style="background-color: #E0F3FF; "
                                             class="p-0 mb-0 btn" data-bs-toggle="modal" data-id="{{ $document->id }}"
-                                            data-bs-target="#carrierDocumentShow{{ $document->id }}">
+                                            data-bs-target="#carrierDocumentShow{{ $document->id }}"
+                                            title="View" aria-label="View">
                                             <i style="color:#007BFF" class="p-2 fa fa-eye "></i>
                                         </a>
 
                                         <a href="javascript:void(0)" style="background-color: #EFEFEF; "
                                             class="p-0 mb-0 btn" data-bs-toggle="modal"
-                                            data-bs-target="#carrierDocumentEdit{{ $document->id }}">
+                                            data-bs-target="#carrierDocumentEdit{{ $document->id }}"
+                                            title="Edit" aria-label="Edit">
                                             <i style="color:#9F9F9F" class="p-2 fa fa-edit"></i>
                                         </a>
 
                                         <a href="javascript:void(0);" style="background: #D2232A1A;  "
                                             class="p-0 mb-0 delete-documents btn " data-id="{{ $document->id }}"
-                                            data-url="{{ route('carrier.documents.destroy', $document->id) }}">
+                                            data-url="{{ route('carrier.documents.destroy', $document->id) }}"
+                                            title="Delete" aria-label="Delete">
                                             <i style="color:#D2232A" class="p-2 fa fa-trash-can"></i>
                                         </a>
                                         </td>
@@ -220,10 +220,13 @@
         var table = $('#responsive-datatable').DataTable({
             responsive: true,
             lengthChange: false,
-            pageLength: 50,
+            pageLength: 10,
             ordering: false,
             info: false,
             pagingType: 'simple',
+            language: {
+                emptyTable: '<div style="text-align:center;">No documnet have been added yet. Click ‘+ Add Document to add a new document.</div>'
+            }
         });
 
         $('#customSearch').on('keyup', function() {
@@ -232,13 +235,17 @@
         });
         $('#responsive-datatable_filter').hide();
 
-        function updateButtons() {
+       function updateButtons() {
             let info = table.page.info();
 
-            $('#prevPage').toggleClass('disabled', info.page === 0);
-            $('#nextPage').toggleClass('disabled', info.page === info.pages - 1);
+            if (info.recordsDisplay === 0) {
+                // No data — disable both buttons
+                $('#prevPage, #nextPage').addClass('disabled');
+            } else {
+                $('#prevPage').toggleClass('disabled', info.page === 0);
+                $('#nextPage').toggleClass('disabled', info.page === info.pages - 1);
+            }
         }
-
         function updateInfo() {
             let info = table.page.info();
             $('#customInfoText').text(
@@ -265,6 +272,18 @@
 
 
 <style>
+        /* status */
+
+    .verified {
+        color: green;
+    }
+    .submitted {
+        color: blue;
+    }
+    .under-review {
+        color: orange;
+    }
+
     .custom-pagination-btn {
         border: 1px solid #d1d5db;
         /* light gray */

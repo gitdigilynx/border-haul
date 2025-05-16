@@ -24,8 +24,9 @@ class UpdateDocumentRequest extends FormRequest
         return [
             'document_type' => 'required|string|max:255',
             'expires_at' => 'nullable|date',
-            'status' => 'nullable|string',
+            'status' => 'nullable|string|in:pending,approved,rejected',
             'notes' => 'nullable|string',
+            'file_path' => 'nullable|file|mimes:pdf,jpg,jpeg,png|max:20480', // adjust as needed
         ];
     }
 }
