@@ -1,25 +1,28 @@
 <!-- Modal -->
 <div class="modal fade" id="truckUserModal" tabindex="-1" aria-labelledby="exampleModalgridLabel" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content custom-modal">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
-            <div class="modal-header" style="border-bottom: none;margin-bottom: -15px;">
-                <h5 class="text-center modal-title w-100" id="subUserModalLabel">ADD TRUCK</h5>
+        <div class="modal-content custom-modal">
+            <div class="modal-header border-bottom-0 p-2">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+
+            <h5 class="text-center modal-title w-100" id="subUserModalLabel">ADD TRUCK</h5>
 
             <form id="truckForm" method="POST" action="{{ route('carrier.trucks.store') }}">
                 @csrf
                 <div class="modal-body">
                     <div class="row">
                         <div class="mt-2 col-md-6">
-                            <label for="truckNumber" class="form-label">Track Plate</label>
+                            <label for="truckNumber" class="form-label">Track Plate <span
+                                    class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="plate_number"
                                 placeholder="Enter Plate Number" required>
                         </div>
 
                         <div class="mt-2 col-md-6">
-                            <label for="truckerNumber" class="form-label">Truck ID#</label>
+                            <label for="truckerNumber" class="form-label">Truck ID <span
+                                    class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="trucker_number"
                                 placeholder="Enter Trucker Number" required>
                         </div>
@@ -27,7 +30,8 @@
 
                     <div class="mt-2 col-md-12">
                         <div>
-                            <label for="serviceCategory" class="form-label">Service Category</label>
+                            <label for="serviceCategory" class="form-label">Service Category <span
+                                    class="text-danger">*</span></label>
                             <select class="form-select" name="service_category" id="serviceCategory">
                                 <option value="" selected>Select</option>
                                 <option value="General Cargo">General Cargo</option>
@@ -41,13 +45,15 @@
 
                     <div class="row">
                         <div class="mt-2 col-md-6">
-                            <label for="driverName" class="form-label">Driver Name</label>
+                            <label for="driverName" class="form-label">Driver Name <span
+                                    class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="name" placeholder="Enter Drvier Name"
                                 required>
                         </div>
 
                         <div class="mt-2 col-md-6">
-                            <label for="driverPhone" class="form-label">Driver Phone NO.</label>
+                            <label for="driverPhone" class="form-label">Driver Phone NO. <span
+                                    class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="phone_number" placeholder="Enter Trucker "
                                 required>
                         </div>
@@ -55,7 +61,8 @@
 
                     <div class="row">
                         <div class="mt-2 col-md-12">
-                            <label for="inService" class="form-label">In Service</label>
+                            <label for="inService" class="form-label">In Service <span
+                                    class="text-danger">*</span></label>
                             <select class="form-control" name="in_service" required>
                                 <option value="">Select</option>
                                 <option value="1">Yes</option>
@@ -64,7 +71,7 @@
                         </div>
 
                         <div class="mt-2 mb-2 col-md-12">
-                            <label for="location" class="form-label">Location</label>
+                            <label for="location" class="form-label">Location <span class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="location" placeholder="Enter Location"
                                 required>
                         </div>
@@ -111,7 +118,6 @@
             },
             phone_number: {
                 required: true,
-                digits: true,
                 minlength: 10,
                 maxlength: 15
             },

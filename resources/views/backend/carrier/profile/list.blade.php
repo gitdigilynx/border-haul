@@ -2,37 +2,39 @@
 @section('title', 'Profile')
 @section('content')
 
-<div class="content-page">
-    <div class="content">
+    <div class="content-page">
+        <div class="content">
 
-        <!-- Start Content-->
-        <div class="container-fluid">
-            <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
-                <div class="flex-grow-1">
-                    <h4 class="m-0 fs-18 fw-semibold">Profile</h4>
+            <!-- Start Content-->
+            <div class="container-fluid">
+                <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
+                    <div class="flex-grow-1">
+                        <h4 class="m-0 fs-18 fw-semibold">Profile</h4>
+                    </div>
+
+                    <div class="text-end">
+                        <ol class="py-0 m-0 breadcrumb">
+                            <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
+                            <li class="breadcrumb-item active">Profile</li>
+                        </ol>
+                    </div>
                 </div>
 
-                <div class="text-end">
-                    <ol class="py-0 m-0 breadcrumb">
-                        <li class="breadcrumb-item"><a href="javascript: void(0);">Dashboard</a></li>
-                        <li class="breadcrumb-item active">Profile</li>
-                    </ol>
-                </div>
-            </div>
-
-            <div class="row">
-                <div class="col-12">
+                <div class="row">
+                    <div class="col-12">
                         <div class="card">
                             <div class="pt-0 card-body">
                                 <ul class="pt-2 nav nav-underline border-bottom" id="pills-tab" role="tablist">
                                     <li class="nav-item" role="presentation">
-                                        <a class="p-2 nav-link active" id="profile_about_tab" data-bs-toggle="tab" href="#profile_about" role="tab">
+                                        <a class="p-2 nav-link active" id="profile_about_tab" data-bs-toggle="tab"
+                                            href="#profile_about" role="tab">
                                             <span class="d-block d-sm-none"><i class="mdi mdi-information"></i></span>
                                             <span class="d-none d-sm-block">Profile</span>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="p-2 nav-link" id="profile_setting_tab" data-bs-toggle="tab" href="#profile_setting" role="tab">
+                                        <a class="p-2 nav-link" id="profile_setting_tab" data-bs-toggle="tab"
+                                            href="#profile_setting" role="tab">
                                             <span class="d-block d-sm-none"><i class="mdi mdi-sitemap-outline"></i></span>
                                             <span class="d-none d-sm-block">Setting</span>
                                         </a>
@@ -48,82 +50,166 @@
                                                     <div class="card-header">
                                                         <h4 class="mb-0 card-title">Personal Information</h4>
                                                     </div>
-                                                    <form method="post" action="{{ route('carrier.profile.update', Auth::user()->id) }}">
+                                                    <form method="post"
+                                                        action="{{ route('carrier.profile.update', Auth::user()->id) }}">
                                                         @csrf
                                                         <div class="card-body">
                                                             <div class="row">
 
                                                                 <div class="mb-3 col-lg-6">
-                                                                    <label class="form-label">Full Name</label>
-                                                                    <input class="form-control" type="text" name="name" value="{{ Auth::user()->name }}">
+                                                                    <label class="form-label">Full Name <span
+                                                                            class="text-danger">*</span></label>
+                                                                    <input class="form-control" type="text"
+                                                                        name="name" value="{{ Auth::user()->name }}">
                                                                 </div>
 
                                                                 <div class="mb-3 col-lg-6">
-                                                                    <label class="form-label">Company Name</label>
-                                                                    <input class="form-control" type="text" name="company_name" value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->company_name : '' }}">
+                                                                    <label class="form-label">Company Name <span
+                                                                            class="text-danger">*</span></label>
+                                                                    <input class="form-control" type="text"
+                                                                        name="company_name"
+                                                                        value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->company_name : '' }}">
                                                                 </div>
 
                                                                 <div class="mb-3 col-lg-6">
-                                                                    <label class="form-label">Cell Phone</label>
-                                                                    <input class="form-control" type="number" name="phone" value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->phone : '' }}">
+                                                                    <label class="form-label">Cell Phone <span
+                                                                            class="text-danger">*</span></label>
+                                                                    <input class="form-control" type="number"
+                                                                        name="phone"
+                                                                        value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->phone : '' }}">
                                                                 </div>
 
                                                                 <div class="mb-3 col-lg-6">
                                                                     <label class="form-label">Email Address</label>
                                                                     <div class="input-group">
-                                                                        <span class="input-group-text"><i class="mdi mdi-email"></i></span>
-                                                                        <input type="text" class="form-control" name="email" value="{{ Auth::user()->email }}" disabled>
+                                                                        <span class="input-group-text"><i
+                                                                                class="mdi mdi-email"></i></span>
+                                                                        <input type="text" class="form-control"
+                                                                            name="email" value="{{ Auth::user()->email }}"
+                                                                            disabled>
                                                                     </div>
                                                                 </div>
 
                                                                 <div class="mb-3 col-lg-6">
-                                                                    <label class="form-label">Company Address</label>
-                                                                    <input class="form-control" type="text" name="company_address" value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->company_address : '' }}">
+                                                                    <label class="form-label">Company Address <span
+                                                                            class="text-danger">*</span></label>
+                                                                    <input class="form-control" type="text"
+                                                                        name="company_address"
+                                                                        value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->company_address : '' }}">
                                                                 </div>
 
-                                                                <div class="mb-3 col-lg-6">
+                                                                {{-- <div class="mb-3 col-lg-6">
                                                                     <label class="form-label">Service Category</label>
-                                                                    <input class="form-control" type="text" name="service_category" value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->service_category : '' }}">
+                                                                    <input class="form-control" type="text"
+                                                                        name="service_category"
+                                                                        value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->service_category : '' }}">
+                                                                </div> --}}
+                                                                <div class="mb-3 col-lg-6">
+                                                                    <label for="service_category" class="form-label">Service
+                                                                        Category <span class="text-danger">*</span></label>
+                                                                    <select name="service_category" id="service_category"
+                                                                        class="form-control">
+                                                                        <option value="">Select</option>
+                                                                        @foreach (serviceCategory() as $key => $services_category)
+                                                                            <option value="{{ $key }}"
+                                                                                {{ Auth::user()->carrier->service_category == $key ? 'selected' : '' }}>
+                                                                                {{ $services_category }}
+                                                                            </option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                    <div class="invalid-feedback"></div>
+                                                                </div>
+
+                                                                {{-- <div class="mb-3 col-lg-6">
+                                                                    <label class="form-label">Country <span
+                                                                            class="text-danger">*</span></label>
+                                                                    <input class="form-control" type="text"
+                                                                        name="country"
+                                                                        value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->country : '' }}">
+                                                                </div> --}}
+
+                                                                <div class="mb-3 col-lg-6">
+                                                                    <label for="country" class="form-label">Country <span
+                                                                            class="text-danger">*</span></label>
+                                                                    <select name="country" id="country"
+                                                                        class="form-control" required>
+                                                                        <option value="">Select Country</option>
+                                                                        <option value="us"
+                                                                            {{ Auth::user()->carrier->country == 'us' ? 'selected' : '' }}>
+                                                                            US</option>
+                                                                        <option value="mexico"
+                                                                            {{ Auth::user()->carrier->country == 'mexico' ? 'selected' : '' }}>
+                                                                            Mexico
+                                                                        </option>
+                                                                    </select>
+                                                                    <div class="invalid-feedback">Please select a country.
+                                                                    </div>
                                                                 </div>
 
                                                                 <div class="mb-3 col-lg-6">
-                                                                    <label class="form-label">Country</label>
-                                                                    <input class="form-control" type="text" name="country" value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->country : '' }}">
+                                                                    <label class="form-label">Authority <span
+                                                                            class="text-danger">*</span></label>
+                                                                    <input class="form-control" type="text"
+                                                                        name="authority"
+                                                                        value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->authority : '' }}">
                                                                 </div>
 
                                                                 <div class="mb-3 col-lg-6">
-                                                                    <label class="form-label">Authority</label>
-                                                                    <input class="form-control" type="text" name="authority" value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->authority : '' }}">
+                                                                    <label class="form-label">DOT <span
+                                                                            class="text-danger">*</span></label>
+                                                                    <input class="form-control" type="text"
+                                                                        name="dot"
+                                                                        value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->dot : '' }}">
                                                                 </div>
 
                                                                 <div class="mb-3 col-lg-6">
-                                                                    <label class="form-label">DOT</label>
-                                                                    <input class="form-control" type="text" name="dot" value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->dot : '' }}">
+                                                                    <label class="form-label">MC <span
+                                                                            class="text-danger">*</span></label>
+                                                                    <input class="form-control" type="text"
+                                                                        name="mc"
+                                                                        value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->mc : '' }}">
                                                                 </div>
 
                                                                 <div class="mb-3 col-lg-6">
-                                                                    <label class="form-label">MC</label>
-                                                                    <input class="form-control" type="text" name="mc" value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->mc : '' }}">
+                                                                    <label class="form-label">SCAC Code <span
+                                                                            class="text-danger">*</span></label>
+                                                                    <input class="form-control" type="number"
+                                                                        name="scac_code"
+                                                                        value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->scac_code : '' }}">
                                                                 </div>
 
                                                                 <div class="mb-3 col-lg-6">
-                                                                    <label class="form-label">SCAC Code</label>
-                                                                    <input class="form-control" type="number" name="scac_code" value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->scac_code : '' }}">
+                                                                    <label class="form-label">CAAT Code <span
+                                                                            class="text-danger">*</span></label>
+                                                                    <input class="form-control" type="text"
+                                                                        name="caat_code"
+                                                                        value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->caat_code : '' }}">
                                                                 </div>
 
-                                                                <div class="mb-3 col-lg-6">
-                                                                    <label class="form-label">CAAT Code</label>
-                                                                    <input class="form-control" type="text" name="caat_code" value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->caat_code : '' }}">
+
+
+                                                                {{-- <div class="mb-3 col-lg-6">
+                                                                    <label class="form-label">Transfer Approval Document
+                                                                        <span class="text-danger">*</span> </label>
+                                                                    <input class="form-control" type="file"
+                                                                        value="{{ Auth::user()->role }}">
                                                                 </div>
-
-
                                                                 <div class="mb-3 col-lg-6">
-                                                                    <label class="form-label">Role</label>
-                                                                    <input class="form-control" type="text" value="{{ Auth::user()->role }}" disabled>
+                                                                    <label class="form-label">Insurance Certificate <span
+                                                                            class="text-danger">*</span> </label>
+                                                                    <input class="form-control" type="file"
+                                                                        value="{{ Auth::user()->role }}">
+                                                                </div> --}}
+                                                                <div class="mb-3 col-lg-6">
+                                                                    <label class="form-label">Role </label>
+                                                                    <input class="form-control" type="text"
+                                                                        value="{{ Auth::user()->role }}" disabled>
                                                                 </div>
 
                                                                 <div class="text-left col-lg-12">
-                                                                    <button type="submit" class="mb-2 btn btn-primary">Update Information</button>
+                                                                    <button type="submit"
+                                                                        class="mb-2 btn btn-primary">Update
+                                                                        Information</button>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -148,28 +234,35 @@
                                                             <div class="mb-3 form-group row">
                                                                 <label class="form-label">Old Password</label>
                                                                 <div class="col-lg-12 col-xl-12">
-                                                                    <input class="form-control" type="password" name="current_password" placeholder="Old Password">
+                                                                    <input class="form-control" type="password"
+                                                                        name="current_password"
+                                                                        placeholder="Old Password">
                                                                 </div>
                                                             </div>
 
                                                             <div class="mb-3 form-group row">
                                                                 <label class="form-label">New Password</label>
                                                                 <div class="col-lg-12 col-xl-12">
-                                                                    <input class="form-control" type="password" name="password" placeholder="New Password">
+                                                                    <input class="form-control" type="password"
+                                                                        name="password" placeholder="New Password">
                                                                 </div>
                                                             </div>
 
                                                             <div class="mb-3 form-group row">
                                                                 <label class="form-label">Confirm Password</label>
                                                                 <div class="col-lg-12 col-xl-12">
-                                                                    <input class="form-control" type="password" name="password_confirmation" placeholder="Confirm Password">
+                                                                    <input class="form-control" type="password"
+                                                                        name="password_confirmation"
+                                                                        placeholder="Confirm Password">
                                                                 </div>
                                                             </div>
 
                                                             <div class="form-group row">
                                                                 <div class="col-lg-12 col-xl-12">
-                                                                    <button type="submit" class="btn btn-primary">Change Password</button>
-                                                                    <button type="button" class="btn btn-danger">Cancel</button>
+                                                                    <button type="submit" class="btn btn-primary">Change
+                                                                        Password</button>
+                                                                    <button type="button"
+                                                                        class="btn btn-danger">Cancel</button>
                                                                 </div>
                                                             </div>
                                                         </div><!-- end card-body -->
@@ -180,10 +273,10 @@
                                     </div>
                                 </div><!-- end tab-content -->
                             </div>
+                        </div>
                     </div>
                 </div>
-        </div>
-{{--
+                {{--
             <div class="row">
                 <div class="col-12">
                     <div class="card">
@@ -313,64 +406,64 @@
                 </div>
             </div> --}}
 
+            </div>
+            <!-- container-fluid -->
         </div>
-        <!-- container-fluid -->
+        <!-- content -->
     </div>
-    <!-- content -->
-</div>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<!-- jQuery Validation Plugin -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- jQuery Validation Plugin -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
 
-<script>
-    $(document).ready(function () {
-        $("#updatePassword").validate({
-            errorClass: 'is-invalid',
-            validClass: 'is-valid',
-            errorElement: 'div',
-            errorPlacement: function (error, element) {
-                error.addClass('invalid-feedback');
-                element.closest('.form-group').find('.invalid-feedback').remove();
-                error.insertAfter(element);
-            },
-            highlight: function (element) {
-                $(element).addClass('is-invalid').removeClass('is-valid');
-            },
-            unhighlight: function (element) {
-                $(element).removeClass('is-invalid').addClass('is-valid');
-            },
-            rules: {
-                current_password: {
-                    required: true,
-                    minlength: 6
+    <script>
+        $(document).ready(function() {
+            $("#updatePassword").validate({
+                errorClass: 'is-invalid',
+                validClass: 'is-valid',
+                errorElement: 'div',
+                errorPlacement: function(error, element) {
+                    error.addClass('invalid-feedback');
+                    element.closest('.form-group').find('.invalid-feedback').remove();
+                    error.insertAfter(element);
                 },
-                password: {
-                    required: true,
-                    minlength: 6
+                highlight: function(element) {
+                    $(element).addClass('is-invalid').removeClass('is-valid');
                 },
-                password_confirmation: {
-                    required: true,
-                    equalTo: '[name="password"]' // Reference the password field here
+                unhighlight: function(element) {
+                    $(element).removeClass('is-invalid').addClass('is-valid');
+                },
+                rules: {
+                    current_password: {
+                        required: true,
+                        minlength: 6
+                    },
+                    password: {
+                        required: true,
+                        minlength: 6
+                    },
+                    password_confirmation: {
+                        required: true,
+                        equalTo: '[name="password"]' // Reference the password field here
+                    }
+                },
+                messages: {
+                    current_password: {
+                        required: "Please enter your current password",
+                        minlength: "Password must be at least 6 characters long"
+                    },
+                    password: {
+                        required: "Please enter a new password",
+                        minlength: "Password must be at least 6 characters long"
+                    },
+                    password_confirmation: {
+                        required: "Please confirm your new password",
+                        equalTo: "Passwords do not match"
+                    }
                 }
-            },
-            messages: {
-                current_password: {
-                    required: "Please enter your current password",
-                    minlength: "Password must be at least 6 characters long"
-                },
-                password: {
-                    required: "Please enter a new password",
-                    minlength: "Password must be at least 6 characters long"
-                },
-                password_confirmation: {
-                    required: "Please confirm your new password",
-                    equalTo: "Passwords do not match"
-                }
-            }
+            });
         });
-    });
-</script>
+    </script>
 
 
 @endsection

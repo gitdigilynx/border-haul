@@ -50,7 +50,7 @@
                                 <thead>
                                     <tr>
                                         <th>Truck Plate #</th>
-                                        <th>Trucker ID#</th>
+                                        <th>Trucker ID #</th>
                                         <th>Service Category</th>
                                         <th>Driver Name</th>
                                         <th>Driver Phone</th>
@@ -66,7 +66,7 @@
                                             <td>{{ $truck->trucker_number }}</td>
                                             <td>{{ $truck->service_category }}</td>
                                             <td>{{ $truck->driver->name }}</td>
-                                            <td>{{ $truck->driver->phone_number }}</td>
+                                            <td>{{ formatPhone($truck->driver->phone_number) }}</td>
 
                                             <td>
 
@@ -89,28 +89,29 @@
 
                                             {{-- <td>{{ $truck->location }}</td> --}}
                                             <td>
-
-                                                <a href="javascript:void(0)" style="background-color: #E0F3FF; "
-                                                    class="p-0 mb-0 btn" data-bs-toggle="modal"
-                                                    data-id="{{ $truck->id }}"
-                                                    data-bs-target="#truckShow{{ $truck->id }}">
-                                                    <i style="color:#007BFF" class="p-2 fa fa-eye "></i>
+                                                <a href="javascript:void(0)" style="background-color: #E0F3FF;"
+                                                    class="p-0 mb-0 btn" data-id="{{ $truck->id }}"
+                                                    data-bs-toggle="modal" data-bs-target="#truckShow{{ $truck->id }}">
+                                                    <i style="color:#007BFF" class="p-2 fa fa-eye" title="View Truck"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"></i>
                                                 </a>
 
-                                                <a href="javascript:void(0)" style="background-color: #EFEFEF; "
+                                                <a href="javascript:void(0)" style="background-color: #EFEFEF;"
                                                     class="p-0 mb-0 btn" data-bs-toggle="modal"
                                                     data-bs-target="#truckEdit{{ $truck->id }}">
-                                                    <i style="color:#9F9F9F" class="p-2 fa fa-edit"></i>
+                                                    <i style="color:#9F9F9F" class="p-2 fa fa-edit" title="Edit Entry"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"></i>
                                                 </a>
 
-                                                <a href="javascript:void(0);" style="background: #D2232A1A;  "
-                                                    class="p-0 mb-0 delete-truck btn " data-id="{{ $truck->id }}"
-                                                    data-url="{{ route('carrier.trucks.destroy', $truck->id) }}">
+                                                <a href="javascript:void(0);" style="background: #D2232A1A;"
+                                                    class="p-0 mb-0 delete-truck btn" data-id="{{ $truck->id }}"
+                                                    data-url="{{ route('carrier.trucks.destroy', $truck->id) }}"
+                                                    title="Delete Truck" data-bs-toggle="tooltip" data-bs-placement="top">
                                                     <i style="color:#D2232A" class="p-2 fa fa-trash-can"></i>
                                                 </a>
 
-
                                             </td>
+
                                         </tr>
                                     @endforeach
                                 </tbody>
@@ -201,6 +202,9 @@
                 ordering: false,
                 info: false,
                 pagingType: 'simple',
+                language: {
+                    emptyTable: "No trucks have been added yet. Click '+ Add Truck' to add them to your account."
+                }
             });
 
             $('#customSearch').on('keyup', function() {
@@ -212,8 +216,15 @@
             function updateButtons() {
                 let info = table.page.info();
 
-                $('#prevPage').toggleClass('disabled', info.page === 0);
-                $('#nextPage').toggleClass('disabled', info.page === info.pages - 1);
+                if (info.recordsDisplay === 0) {
+                    // No data — disable both buttons
+                    $('#prevPage, #nextPage').addClass('disabled');
+                } else {
+
+                    $('#prevPage').toggleClass('disabled', info.page === 0);
+                    $('#nextPage').toggleClass('disabled', info.page === info.pages - 1);
+                }
+
             }
 
             function updateInfo() {

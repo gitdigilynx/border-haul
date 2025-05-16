@@ -2,12 +2,12 @@
     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content custom-modal">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            <div class="modal-header" style="border-bottom: none;">
-                <h5 class="text-center modal-title w-100">
-                    UPDATE TRUCK
-                </h5>
+            <div class="modal-header border-bottom-0 p-2">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
+            <h5 class="text-center modal-title w-100">
+                UPDATE SUB USER
+            </h5>
             <form id="carrierForm" method="POST"
                 action="{{ route('carrier.carrier-users.update', $user->users->id) }}">
                 @csrf
@@ -15,13 +15,15 @@
                 <div class="modal-body">
                     <div class="row">
                         <div class="mb-3 col-md-12">
-                            <label for="name" class="form-label">Name</label>
+                            <label for="name" class="form-label">First Name <span
+                                    class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="name" placeholder="Name"
                                 value="{{ old('name', $user->users->name ?? '') }}" required>
                         </div>
 
                         <div class="mb-3 col-md-12">
-                            <label for="last_name" class="form-label">Name</label>
+                            <label for="last_name" class="form-label">Last Name <span
+                                    class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="last_name" placeholder="Last Name"
                                 value="{{ old('last_name', $user->users->last_name ?? '') }}" required>
                         </div>
