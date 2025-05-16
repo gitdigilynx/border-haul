@@ -106,7 +106,7 @@
             background-size: cover;
             /* max-height: 100vh; */
             /* width: 100%; */
-            border-radius: 0 0 20px 20px;
+            border-radius: 20px 20px 20px 20px;
         }
 
         .question {
@@ -313,7 +313,8 @@
                     </div>
 
                     <div class="mb-2 col-md-6">
-                        <label for="office_phone" class="form-label">Office Phone Number<span class="text-danger">*</span></label>
+                        <label for="office_phone" class="form-label">Office Phone Number<span
+                                class="text-danger">*</span></label>
                         <input type="tel" name="office_phone" id="office_phone"
                             class="form-control @error('office_phone') is-invalid @enderror"
                             placeholder="+1 (956) 222-4567" value="{{ old('office_phone') }}">
@@ -323,10 +324,14 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label for="phone" class="form-label">Cell Phone Number<span class="text-danger">*</span></label>
+                        <label for="phone" class="form-label">Cell Phone Number<span
+                                class="text-danger">*</span></label>
                         <input type="tel" name="phone" id="phone"
                             class="form-control @error('phone') is-invalid @enderror"
-                            placeholder="+52 (123) 456-7890" value="{{ old('phone') }}">
+                            placeholder="Enter Phone Number" value="{{ old('phone') }}">
+                        <div id="phone-error" style="color: red; display: none; font-size: 12px;">Invalid phone
+                            number format</div>
+
                         @error('phone')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -434,6 +439,75 @@
 
 
     $(document).ready(function() {
+        // Event bindings
+        $('#phone').on('input blur', function() {
+            validatePhone();
+        });
+
+        $('#company_country').on('change', function() {
+            $('#phone').val('');
+            $('#phone-error').hide();
+            updatePhonePlaceholder();
+        });
+
+        $('form').on('submit', function(e) {
+            if (!validatePhone()) {
+                e.preventDefault();
+            }
+        });
+
+        // Validate phone number
+        function validatePhone() {
+            const phone = $('#phone').val().trim();
+            const country = $('#company_country').val();
+            let isValid = false;
+
+            if (phone.length > 15) {
+                $('#phone-error').text('Maximum 15 characters allowed.').show();
+                return false;
+            }
+
+            if (country === 'US') {
+                // Strict US phone format
+                const usPattern = /^(\+1\s?)?(\(?\d{3}\)?[\s.-]?)\d{3}[\s.-]?\d{4}$/;
+                isValid = usPattern.test(phone);
+            } else if (country === 'Mexico') {
+                // Strict Mexico formats (international or local)
+                const mxPattern = /^(\+52\s?1?\s?\d{2}\s?\d{4}\s?\d{4})$|^(\d{2}-\d{4}-\d{4})$/;
+                isValid = mxPattern.test(phone);
+            }
+
+            if (!isValid) {
+                $('#phone-error').text('Invalid phone number format.').show();
+            } else {
+                $('#phone-error').hide();
+            }
+
+            return isValid;
+        }
+
+        // Update phone placeholder dynamically
+        function updatePhonePlaceholder() {
+            const country = $('#company_country').val();
+            let placeholder = '';
+
+            if (country === 'US') {
+                placeholder = '+1 (555) 123-4567';
+            } else if (country === 'Mexico') {
+                placeholder = '+52 1 55 1234 5678';
+            }
+
+            $('#phone').attr('placeholder', placeholder);
+        }
+        const $password = $('#password');
+        const $confirm = $('#password_confirmation');
+        const $form = $('form');
+
+        // Set required attributes just in case
+        $password.attr('required', true);
+        $confirm.attr('required', true);
+
+        // Validate password rules
         function validatePasswordRules(password) {
             return {
                 length: password.length >= 8,
@@ -443,19 +517,61 @@
             };
         }
 
-        $('#password').on('input', function() {
-            const password = $(this).val();
-            const rules = validatePasswordRules(password);
+        function updatePasswordRulesUI(rules) {
+            $('#passwordRules .rule-length').toggleClass('valid', rules.length).toggleClass('invalid', !rules
+                .length);
+            $('#passwordRules .rule-uppercase').toggleClass('valid', rules.uppercase).toggleClass('invalid', !
+                rules.uppercase);
+            $('#passwordRules .rule-lowercase').toggleClass('valid', rules.lowercase).toggleClass('invalid', !
+                rules.lowercase);
+            $('#passwordRules .rule-number').toggleClass('valid', rules.number).toggleClass('invalid', !rules
+                .number);
+        }
 
-            // Apply styles based on rules
-            $('#passwordRules .rule-length').toggleClass('valid', rules.length).toggleClass('invalid', !
-                rules.length);
-            $('#passwordRules .rule-uppercase').toggleClass('valid', rules.uppercase).toggleClass(
-                'invalid', !rules.uppercase);
-            $('#passwordRules .rule-lowercase').toggleClass('valid', rules.lowercase).toggleClass(
-                'invalid', !rules.lowercase);
-            $('#passwordRules .rule-number').toggleClass('valid', rules.number).toggleClass('invalid', !
-                rules.number);
+        function checkPasswordMatch() {
+            const password = $password.val();
+            const confirm = $confirm.val();
+
+            if (confirm.length > 0) {
+                if (password === confirm) {
+                    $confirm.removeClass('invalid').addClass('valid');
+                    $('#mismatchError').hide();
+                    return true;
+                } else {
+                    $confirm.removeClass('valid').addClass('invalid');
+                    $('#mismatchError').show();
+                    return false;
+                }
+            } else {
+                $confirm.removeClass('valid invalid');
+                $('#mismatchError').hide();
+                return false;
+            }
+        }
+
+        $password.on('input', function() {
+            const rules = validatePasswordRules($(this).val());
+            updatePasswordRulesUI(rules);
+        });
+
+        $password.add($confirm).on('input', function() {
+            checkPasswordMatch();
+        });
+
+        // Block form submission if validation fails (protects even if required is removed)
+        $form.on('submit', function(e) {
+            const password = $password.val();
+            const confirm = $confirm.val();
+
+            const rules = validatePasswordRules(password);
+            const allValid = rules.length && rules.uppercase && rules.lowercase && rules.number;
+            const match = password === confirm;
+
+            if (!password || !confirm || !allValid || !match || !validatePhone()) {
+                e.preventDefault(); // prevent submission
+                $password[0].reportValidity(); // show browser prompt for empty
+                $confirm[0].reportValidity(); // show browser prompt for empty
+            }
         });
     });
 
@@ -485,57 +601,3 @@
 </script>
 
 </html>
-
-
-{{-- <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
-        @csrf
-
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block w-full mt-1" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
-        </div>
-
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block w-full mt-1" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block w-full mt-1"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block w-full mt-1"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="text-sm text-gray-600 underline rounded-md hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
-</x-guest-layout> --}}
