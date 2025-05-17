@@ -44,7 +44,7 @@
                                                         <h4 class="table-card">Personal Information</h4>
                                                     </div>
                                                     <form method="post" id="carrierForm"
-                                                        action="{{ route('carrier.profile.update', Auth::user()->id) }}">
+                                                        action="{{ route('carrier.profile.update', Auth::user()->id) }}" enctype="multipart/form-data">
                                                         @csrf
                                                         <div class="card-body custom-modal modal-title">
                                                             <div class="row">
@@ -167,27 +167,72 @@
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="mb-3 col-lg-6">
-                                                                    <label class="form-label">Transfer Approval Documents</label>
+                                                                <div class="col-md-12">
+                                                                    <label for="file" class="form-label">Upload Approval Documents File<span class="text-danger">*</span></label>
 
-                                                                    <div class="mb-2">
-                                                                        <a href="{{ asset('storage/' . (Auth::user()->role == 'Carrier' ? Auth::user()->carrier->transfer_approval_documents : '')) }}" target="_blank" class="btn btn-sm btn-info">
-                                                                            View File
-                                                                        </a>
+                                                                    {{-- Show old file if exists --}}
+
+                                                                        <div class="mb-2">
+                                                                            <div class="mb-2">
+                                                                                <a href="{{ asset('storage/' . (Auth::user()->role == 'Carrier' ? Auth::user()->carrier->transfer_approval_documents : '')) }}" target="_blank" class="btn btn-sm btn-info">
+                                                                                    View File
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    <div class="p-4 text-center border rounded upload-box" style="position: relative; background-color: #D5F2FD;">
+                                                                        <input type="file" name="transfer_approval_documents"
+                                                                               accept=".pdf,.jpg,.jpeg,.png,.docx"
+                                                                               class="file-input"
+                                                                               style="opacity: 0; position: absolute; top: 0; left: 0; height: 100%; width: 100%; cursor: pointer;">
+                                                                        <div>
+                                                                            <div class="mb-2">
+                                                                                <img src="{{ asset('assets/icons/document-icon.svg') }}"
+                                                                                    alt="Upload Icon"
+                                                                                    width="40"
+                                                                                    height="40">
+                                                                            </div>
+                                                                            <strong style="color: #000;">Drag and drop files, or <span style="color: #000;">Browse</span></strong>
+                                                                            <div class="text-dark">Support File: PDF, JPG, PNG, DOCX (Max 10MB)”</div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="mb-3 col-lg-6">
-                                                                    <label class="form-label">Insurance Certificate</label>
 
-                                                                    <div class="mb-2">
-                                                                        <a href="{{ asset('storage/' . (Auth::user()->role == 'Carrier' ? Auth::user()->carrier->insurance_certificate : '')) }}" target="_blank" class="btn btn-sm btn-info">
-                                                                            View File
-                                                                        </a>
+                                                                <div class="col-md-12 mt-3">
+                                                                    <label for="file" class="form-label">Upload Insurance Certificate File<span class="text-danger">*</span></label>
+
+                                                                    {{-- Show old file if exists --}}
+
+                                                                        <div class="mb-2">
+                                                                            <div class="mb-2">
+                                                                                <a href="{{ asset('storage/' . (Auth::user()->role == 'Carrier' ? Auth::user()->carrier->insurance_certificate : '')) }}" target="_blank" class="btn btn-sm btn-info">
+                                                                                    View File
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+
+
+                                                                    <div class="p-4 text-center border rounded upload-box" style="position: relative; background-color: #D5F2FD;">
+                                                                        <input type="file" name="insurance_certificate"
+                                                                               accept=".pdf,.jpg,.jpeg,.png,.docx"
+                                                                               class="file-input"
+                                                                               style="opacity: 0; position: absolute; top: 0; left: 0; height: 100%; width: 100%; cursor: pointer;">
+                                                                        <div>
+                                                                            <div class="mb-2">
+                                                                                <img src="{{ asset('assets/icons/document-icon.svg') }}"
+                                                                                    alt="Upload Icon"
+                                                                                    width="40"
+                                                                                    height="40">
+                                                                            </div>
+                                                                            <strong style="color: #000;">Drag and drop files, or <span style="color: #000;">Browse</span></strong>
+                                                                            <div class="text-dark">Support File: PDF, JPG, PNG, DOCX (Max 10MB)”</div>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="text-left col-lg-12">
+                                                                <div class="text-left col-lg-12 mt-2">
                                                                     <button type="submit" class="submit-btn-profile">Update Profile</button>
                                                                 </div>
                                                             </div>
