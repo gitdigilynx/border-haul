@@ -206,9 +206,8 @@
                                 class="text-danger">*</span></label>
                         <select name="service_category" id="service_category"
                             class="form-control @error('service_category') is-invalid @enderror">
-                            <option value="" disabled {{ old('service_category') ? '' : 'selected' }}>Select
-                                service type</option>
-                            @foreach (serviceCategory() as $key => $services_category)
+                            <option selected>Select your company type</option>
+                            @foreach (serviceCategoryRegister() as $key => $services_category)
                                 <option value="{{ $key }}"
                                     {{ old('service_category') == $key ? 'selected' : '' }}>
                                     {{ $services_category }}

@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('carriers', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('company_address', 255)->nullable();
-            $table->string('company_name', 255)->nullable();
+
+            $table->string('company_name')->nullable();
+            $table->string('company_address')->nullable();
             $table->string('phone')->nullable();
             $table->string('authority')->nullable();
             $table->string('dot')->nullable();

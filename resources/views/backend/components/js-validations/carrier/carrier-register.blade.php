@@ -26,7 +26,16 @@
                 company_name: {
                     required: true
                 },
-                company_address: {
+                street_address: {
+                    required: true
+                },
+                city: {
+                    required: true
+                },
+                zip_code: {
+                    required: true
+                },
+                state: {
                     required: true
                 },
                 email: {
@@ -49,7 +58,7 @@
                 scac_code: {
                     required: true
                 },
-                mexico: {
+                country: {
                     required: true
                 },
                 caat_code: {
@@ -82,11 +91,15 @@
                     required: "Please enter your phone number",
                     minlength: "Phone number must be at least 10 characters"
                 },
+                street_address: "Please enter street address",
+                city: "Please enter city",
+                zip_code: "Please enter zip/postal code",
+                state: "Please enter state",
                 authority: "Please enter authority",
                 dot: "Please enter DOT",
                 mc: "Please enter MC",
                 scac_code: "Please enter SCAC Code",
-                mexico: "Please enter Mexico info",
+                country: "Please enter Mexico info",
                 caat_code: "Please enter CAAT Code",
                 service_category: "Please select a service category",
                 // password: {

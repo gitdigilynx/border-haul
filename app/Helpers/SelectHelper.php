@@ -25,6 +25,16 @@ function serviceCategory()
         'Low Boy' => 'Low Boy'
     ];
 }
+
+function serviceCategoryRegister()
+{
+    return [
+        'Trucking Company' => 'Trucking Company',
+        'Logistics Provider' => 'Logistics Provider',
+        'Warehouse Operator' => 'Warehouse Operator',
+        'Customs Brokerage' => 'Customs Brokerage'
+    ];
+}
 function statusBadge(string $status): string
 {
     return match ($status) {

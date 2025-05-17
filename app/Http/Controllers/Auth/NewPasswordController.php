@@ -32,45 +32,45 @@ class NewPasswordController extends Controller
      * @throws \Illuminate\Validation\ValidationException
      */
 
-    public function store(Request $request)
-    {
-        $request->validate([
-            'token' => ['required'],
-            'email' => ['required', 'email'],
-            'password' => ['required', 'confirmed', Rules\Password::defaults()],
-        ]);
+     public function store(Request $request)
+     {
+         $request->validate([
+             'token' => ['required'],
+             'email' => ['required', 'email'],
+             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+         ]);
 
-        $status = Password::reset(
-            $request->only('email', 'password', 'password_confirmation', 'token'),
-            function (User $user, string $password) use ($request) {
-                $user->forceFill([
-                    'password' => Hash::make($password),
-                    'remember_token' => Str::random(60),
-                ])->save();
+         $status = Password::reset(
+             $request->only('email', 'password', 'password_confirmation', 'token'),
+             function (User $user, string $password) use ($request) {
+                 $user->forceFill([
+                     'password' => Hash::make($password),
+                     'remember_token' => Str::random(60),
+                 ])->save();
 
-                // Optional: auto-login
-                auth()->login($user);
-            }
-        );
+                 // Optional: auto-login
+                 auth()->login($user);
+             }
+         );
 
-        if ($status == Password::PASSWORD_RESET) {
-            $user = User::where('email', $request->email)->first();
+         if ($status == Password::PASSWORD_RESET) {
+             $user = User::where('email', $request->email)->first();
 
-            // Redirect based on user type
-            if ($user->role === 'Carrier') {
-                return redirect()->route('carrier.login')->with('status', __($status));
-            }
-            if ($user->role === 'Shipper') {
-                return redirect()->route('shipper.login')->with('status', __($status));
-            } else {
-                return redirect()->route('admin.login')->with('status', __($status));
-            }
-        }
+             // Redirect based on user role
+             if ($user->role === 'Carrier') {
+                 return redirect()->to('carrier/carrier-users')->with('status', __($status));
+             } elseif ($user->role === 'Shipper') {
+                 return redirect()->to('shipper/deliveries')->with('status', __($status));
+             } else {
+                 return redirect()->to('/home')->with('status', __($status));
+             }
+         }
 
-        throw ValidationException::withMessages([
-            'email' => [trans($status)],
-        ]);
-    }
+         throw ValidationException::withMessages([
+             'email' => [trans($status)],
+         ]);
+     }
+
 
     // public function store(Request $request): RedirectResponse
     // {

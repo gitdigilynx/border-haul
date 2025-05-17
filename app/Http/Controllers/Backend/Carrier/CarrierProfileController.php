@@ -32,17 +32,17 @@ class CarrierProfileController extends Controller
         try {
             // Validate inputs
             $request->validate([
-                'name'  => 'required|string|max:255',
-                'company_address'  => 'required|string|max:255',
-                'company_name'  => 'required|string|max:15',
-                'phone'  => 'required|string|max:255',
-                'authority'  => 'required|string|max:255',
-                'dot'  => 'required|string|max:255',
-                'mc'  => 'required|string|max:255',
-                'scac_code'  => 'required|string|max:255',
-                'country'  => 'required|string|max:255',
-                'caat_code'  => 'required|string|max:255',
-                'service_category'  => 'required|string|max:255',
+                'name'  => 'required|string|max:50',
+                'company_address'  => 'required|string|max:50',
+                'company_name'  => 'required|string|max:50',
+                'phone'  => 'required|string|max:20',
+                'authority'  => 'required|string|max:50',
+                'dot'  => 'required|string|max:50',
+                'mc'  => 'required|string|max:50',
+                'scac_code'  => 'required|string|max:10',
+                'country'  => 'required|string|max:10',
+                'caat_code'  => 'required|string|max:10',
+                'service_category'  => 'required|string|max:20',
             ]);
 
               // Find user and carrier

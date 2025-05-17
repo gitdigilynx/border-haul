@@ -196,7 +196,7 @@
 
                         </div>
                         <div class="col-md-4">
-                                 <label for="phone" class="form-label">Phone <span class="text-danger">*</span></label>
+                                 <label for="phone" class="form-label">Phone Number <span class="text-danger">*</span></label>
                             <input type="tel" name="phone" id="phone" class="form-control"
                                 placeholder="Phone" value="{{ old('phone') }}">
                             <div class="invalid-feedback"></div>
@@ -225,10 +225,10 @@
                             <div class="invalid-feedback"></div>
                         </div>
                         <div class="col-md-4">
-                                                        <label for="service_category" class="form-label">Service Category <span
+                            <label for="service_category" class="form-label">Service Category <span
                                     class="text-danger">*</span></label>
                             <select name="service_category" id="service_category" class="form-control">
-                                <option value="">Select</option>
+                                <option value="">Select Company</option>
                                 @foreach (serviceCategory() as $key => $services_category)
                                     <option value="{{ $key }}"
                                         {{ old('service_category') == $key ? 'selected' : '' }}>

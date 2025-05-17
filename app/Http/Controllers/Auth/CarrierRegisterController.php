@@ -15,7 +15,7 @@ use App\Models\Carrier;
 use App\Enums\RoleEnum;
 use App\Mail\SendPasswordToCarrier;
 use Illuminate\Support\Facades\Mail;
-use Flasher\Laravel\Facade\Flasher;
+use Illuminate\Support\Str;
 
 class CarrierRegisterController extends Controller
 {
@@ -48,8 +48,8 @@ class CarrierRegisterController extends Controller
             // 'caat_code'         => 'required|string|min:3|max:30',
             'service_category'  => 'required|string|min:3|max:255',
             'phone'             => 'required|string|max:17',
-            // 'transfer_approval_documents' => 'required|string|max:15',
-            // 'insurance_certificate' => 'required|string|max:15',
+            'transfer_approval_documents' => 'required|file|mimes:pdf,jpg,jpeg,png,docx|max:10240',
+            'insurance_certificate' => 'required|file|mimes:pdf,jpg,jpeg,png,docx|max:10240',
         ]);
 
 
@@ -69,13 +69,19 @@ class CarrierRegisterController extends Controller
             'role' => 'Carrier',
         ]);
 
-        //  $originalName = $request->file('file_path')->getClientOriginalName();
-        //     $filename = pathinfo($originalName, PATHINFO_FILENAME);
-        //     $extension = $request->file('file_path')->getClientOriginalExtension();
-        //     $safeName = Str::slug($filename) . '.' . $extension;
+        $originalName = $request->file('transfer_approval_documents')->getClientOriginalName();
+            $filename = pathinfo($originalName, PATHINFO_FILENAME);
+            $extension = $request->file('transfer_approval_documents')->getClientOriginalExtension();
+            $safeName = Str::slug($filename) . '.' . $extension;
 
-        // $transferDocPath = $request->file('transfer_approval_documents')->storeAs('approval_documents', $safeName,'public');
-        // $insuranceCertPath = $request->file('insurance_certificate')->storeAs('certificates', $safeName, 'public');
+            $approval_documents = $request->file('transfer_approval_documents')->storeAs('register_documents', $safeName, 'public');
+
+        $originalName = $request->file('insurance_certificate')->getClientOriginalName();
+            $filename = pathinfo($originalName, PATHINFO_FILENAME);
+            $extension = $request->file('insurance_certificate')->getClientOriginalExtension();
+            $safeName = Str::slug($filename) . '.' . $extension;
+
+            $insurance_certificate = $request->file('insurance_certificate')->storeAs('register_documents', $safeName, 'public');
 
         Carrier::create([
             'user_id' => $user->id,
@@ -89,8 +95,8 @@ class CarrierRegisterController extends Controller
             'caat_code' => $request->caat_code,
             'service_category' => $request->service_category,
             'phone' => $request->phone,
-            // 'transfer_approval_documents' => $transferDocPath,
-            // 'insurance_certificate' => $insuranceCertPath,
+            'transfer_approval_documents' => $approval_documents,
+            'insurance_certificate' => $insurance_certificate,
         ]);
 
         Mail::to($request->email)->send(new SendPasswordToCarrier($request->email));

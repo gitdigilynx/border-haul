@@ -40,8 +40,8 @@ class ShipperProfileController extends Controller
                 'company_state' => 'required|string|max:50',
                 'company_zip_code' => 'required|string|max:50',
                 'company_country' => 'required|string|max:50',
-                'phone' => 'required|string|max:50',
-                'office_phone' => 'required|string|max:50',
+                'phone' => 'required|string|max:20',
+                'office_phone' => 'required|string|max:20',
              ]);
 
              // Find user and shipper

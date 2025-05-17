@@ -38,13 +38,13 @@
                                         <div class="row">
                                             <div class="col-lg-12">
                                                 <div class="border card">
-                                                    <div class="card-header">
+                                                    <div class="card-header ">
                                                         <h4 class="table-card">Personal Information</h4>
                                                     </div>
                                                     <form id="shipperForm" method="post" action="{{ route('shipper.profile.update', Auth::user()->id) }}">
                                                         @csrf
 
-                                                        <div class="card-body custom-modal">
+                                                        <div class="card-body custom-modal modal-title">
                                                             <div class="row">
 
                                                                 <div class="mb-3 col-md-6">
@@ -125,24 +125,22 @@
                                                                     @enderror
                                                                 </div>
 
-
-                                                             <!-- US Format: (123) 456-7890 -->
                                                             <div class="mb-3 col-lg-6">
                                                                 <label class="form-label">Office Phone Number <span class="text-danger">*</span></label>
                                                                 <input class="form-control" type="tel" name="office_phone"
-                                                                    pattern="(\+1\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}"
-                                                                    placeholder="Enter Office Phone Number"
+                                                                    pattern="(\+1\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}|\+52\s?1?\s?\d{3}\s?\d{3}\s?\d{4}"
+                                                                    placeholder="Enter Office or Cell Phone Number"
                                                                     value="{{ Auth::user()->role == 'Shipper' ? Auth::user()->shipper->office_phone : '' }}">
                                                             </div>
 
-                                                            <!-- Mexico Format: +52 1 234 567 8901 -->
                                                             <div class="mb-3 col-lg-6">
                                                                 <label class="form-label">Cell Phone Number <span class="text-danger">*</span></label>
                                                                 <input class="form-control" type="tel" name="phone"
-                                                                    pattern="\+52\s?1?\s?\d{3}\s?\d{3}\s?\d{4}"
-                                                                    placeholder="Enter Phone Number "
+                                                                    pattern="(\+1\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}|\+52\s?1?\s?\d{3}\s?\d{3}\s?\d{4}"
+                                                                    placeholder="Enter Office or Cell Phone Number"
                                                                     value="{{ Auth::user()->role == 'Shipper' ? Auth::user()->shipper->phone : '' }}">
                                                             </div>
+
 
                                                                 <div class="mb-3 col-lg-6">
                                                                     <label class="form-label">Email Address<span class="text-danger">*</span></label>
@@ -172,28 +170,54 @@
                                                     <div class="card-header">
                                                         <h4 class="table-card">Change Password</h4>
                                                     </div>
-                                                    <form method="post" action="{{ route('password.update') }}">
+                                                    <form id="updatePasswordForm" method="post" action="{{ route('password.update') }}">
                                                         @csrf
                                                         @method('put')
                                                         <div class="card-body custom-modal">
                                                             <div class="mb-3 form-group row">
                                                                 <label class="form-label">Old Password</label>
                                                                 <div class="col-lg-12 col-xl-12">
-                                                                    <input class="form-control" type="password" name="current_password" placeholder="Old Password">
+                                                                    <input class="form-control" type="password" id="current_password"
+                                                                        name="current_password"
+                                                                        placeholder="Old Password">
                                                                 </div>
                                                             </div>
 
-                                                            <div class="mb-3 form-group row">
-                                                                <label class="form-label">New Password</label>
-                                                                <div class="col-lg-12 col-xl-12">
-                                                                    <input class="form-control" type="password" name="password" placeholder="New Password">
-                                                                </div>
-                                                            </div>
+                                                            <div class="mb-3 row">
+                                                                <div class="mb-2 col-md-12">
+                                                                    <label for="password" class="form-label">Password <span class="text-danger">*</span></label>
+                                                                    <div class="position-relative">
+                                                                        <input type="password" name="password" id="password"
+                                                                            class="form-control @error('password') is-invalid @enderror pwd"
+                                                                            placeholder="Password">
+                                                                        <span class="toggle-password" toggle="#password"
+                                                                            style="position:absolute; top:50%; right:10px; transform:translateY(-50%); cursor:pointer;">
+                                                                            <i class="fa fa-eye-slash"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                    @error('password')
+                                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                                    @enderror
 
-                                                            <div class="mb-3 form-group row">
-                                                                <label class="form-label">Confirm Password</label>
-                                                                <div class="col-lg-12 col-xl-12">
-                                                                    <input class="form-control" type="password" name="password_confirmation" placeholder="Confirm Password">
+                                                                </div>
+
+                                                                <div class="col-md-12">
+                                                                    <label for="password_confirmation" class="form-label">Confirm Password <span
+                                                                            class="text-danger">*</span></label>
+                                                                    <div class="position-relative">
+                                                                        <input type="password" name="password_confirmation" id="password_confirmation"
+                                                                            class="form-control @error('password_confirmation') is-invalid @enderror pwd"
+                                                                            placeholder="Confirm Password">
+                                                                        <span class="toggle-password" toggle="#password_confirmation"
+                                                                            style="position:absolute; top:50%; right:10px; transform:translateY(-50%); cursor:pointer;">
+                                                                            <i class="fa fa-eye-slash"></i>
+                                                                        </span>
+                                                                    </div>
+                                                                    <div class="mt-1 text-danger small" id="mismatchError" style="display:none;">Passwords do
+                                                                        not match</div>
+                                                                    @error('password_confirmation')
+                                                                        <div class="invalid-feedback">{{ $message }}</div>
+                                                                    @enderror
                                                                 </div>
                                                             </div>
 
@@ -202,8 +226,7 @@
                                                                     <button type="submit" class="submit-btn">Change Password</button>
                                                                 </div>
                                                             </div>
-
-                                                        </div><!-- end card-body -->
+                                                        </div>
                                                     </form>
                                                 </div>
                                             </div>
@@ -271,13 +294,13 @@
             },
             office_phone: {
                 required: true,
-                digits: true,
-                minlength: 12
+                minlength: 10,
+                maxlength: 20
             },
             phone: {
                 required: true,
-                digits: true,
-                minlength: 12
+                minlength: 10,
+                maxlength: 20
             }
         },
         messages: {
@@ -317,12 +340,12 @@
             office_phone: {
                 required: "Office Phone Number is required",
                 digits: "Enter valid digits",
-                minlength: "Must be at least 11 digits"
+                minlength: "Must be at least 17 digits"
             },
             phone: {
                 required: "Cell Phone Number is required",
                 digits: "Enter valid digits",
-                minlength: "Must be at least 11 digits"
+                minlength: "Must be at least 17 digits"
             }
         },
         errorClass: "is-invalid",
@@ -341,53 +364,119 @@
 
 
 <script>
-    $(document).ready(function () {
-        $("#updatePassword").validate({
-            errorClass: 'is-invalid',
-            validClass: 'is-valid',
-            errorElement: 'div',
-            errorPlacement: function (error, element) {
-                error.addClass('invalid-feedback');
-                element.closest('.form-group').find('.invalid-feedback').remove();
-                error.insertAfter(element);
-            },
-            highlight: function (element) {
-                $(element).addClass('is-invalid').removeClass('is-valid');
-            },
-            unhighlight: function (element) {
-                $(element).removeClass('is-invalid').addClass('is-valid');
-            },
-            rules: {
-                current_password: {
-                    required: true,
-                    minlength: 6
-                },
-                password: {
-                    required: true,
-                    minlength: 6
-                },
-                password_confirmation: {
-                    required: true,
-                    equalTo: '[name="password"]'
-                }
-            },
-            messages: {
-                current_password: {
-                    required: "Please enter your current password",
-                    minlength: "Password must be at least 6 characters long"
-                },
-                password: {
-                    required: "Please enter a new password",
-                    minlength: "Password must be at least 6 characters long"
-                },
-                password_confirmation: {
-                    required: "Please confirm your new password",
-                    equalTo: "Passwords do not match"
-                }
+    // Toggle password visibility
+    document.querySelectorAll('.toggle-password').forEach(function (element) {
+        element.addEventListener('click', function () {
+            const target = document.querySelector(this.getAttribute('toggle'));
+            const icon = this.querySelector('i');
+
+            if (target.type === 'password') {
+                target.type = 'text';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            } else {
+                target.type = 'password';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
             }
         });
     });
-</script>
 
+    const $password = $('#password');
+    const $confirm = $('#password_confirmation');
+    const $form = $('#updatePasswordForm');
+
+    function validatePasswordRules(password) {
+        return {
+            length: password.length >= 8,
+            uppercase: /[A-Z]/.test(password),
+            lowercase: /[a-z]/.test(password),
+            number: /[0-9]/.test(password)
+        };
+    }
+
+    function updatePasswordRulesUI(rules) {
+        $('#passwordRules .rule-length').toggleClass('valid', rules.length).toggleClass('invalid', !rules.length);
+        $('#passwordRules .rule-uppercase').toggleClass('valid', rules.uppercase).toggleClass('invalid', !rules.uppercase);
+        $('#passwordRules .rule-lowercase').toggleClass('valid', rules.lowercase).toggleClass('invalid', !rules.lowercase);
+        $('#passwordRules .rule-number').toggleClass('valid', rules.number).toggleClass('invalid', !rules.number);
+    }
+
+    function checkPasswordMatch() {
+        const password = $password.val();
+        const confirm = $confirm.val();
+
+        if (confirm.length > 0) {
+            if (password === confirm) {
+                $confirm.removeClass('is-invalid').addClass('is-valid');
+                $('#mismatchError').hide();
+                return true;
+            } else {
+                $confirm.removeClass('is-valid').addClass('is-invalid');
+                $('#mismatchError').show();
+                return false;
+            }
+        } else {
+            $confirm.removeClass('is-valid is-invalid');
+            $('#mismatchError').hide();
+            return false;
+        }
+    }
+
+    $password.on('input', function () {
+        const rules = validatePasswordRules($(this).val());
+        updatePasswordRulesUI(rules);
+        checkPasswordMatch();
+    });
+
+    $confirm.on('input', function () {
+        checkPasswordMatch();
+    });
+
+    // Add jQuery Validation password rules
+    $.validator.addMethod("pwcheck", function (value) {
+        return /[A-Z]/.test(value) && /[a-z]/.test(value) && /[0-9]/.test(value);
+    });
+
+    $form.validate({
+        rules: {
+            current_password: {
+                required: true,
+                minlength: 8
+            },
+            password: {
+                required: true,
+                minlength: 8,
+                pwcheck: true
+            },
+            password_confirmation: {
+                required: true,
+                equalTo: "#password"
+            }
+        },
+        messages: {
+            current_password: {
+                required: "Old Password is required",
+                minlength: "Old Password must be at least 8 characters"
+            },
+            password: {
+                required: "New Password is required",
+                minlength: "Password must be at least 8 characters",
+                pwcheck: "Password must include 1 uppercase, 1 lowercase, and 1 number"
+            },
+
+        },
+        errorClass: "is-invalid",
+        validClass: "is-valid",
+        errorElement: "div",
+        errorPlacement: function (error, element) {
+            error.addClass('invalid-feedback');
+            element.closest('.form-group, .mb-3, .col-md-12').append(error);
+        },
+        submitHandler: function (form) {
+            form.submit();
+        }
+    });
+</script>
 
 @endsection

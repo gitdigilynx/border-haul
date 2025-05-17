@@ -121,3 +121,46 @@
 .dataTables_empty {
     text-align: center;
 }
+
+
+
+.table-card-heading {
+    font-family: 'Poppins', !important;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0;
+    color: #000000;
+}
+
+.profile-heading {
+    font-family: "Staatliches", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: 0;
+    color: #000000;
+}
+
+.submit-btn-profile {
+    background-color: #06367b;
+    color: white;
+    border: none;
+    width: 30%;
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+.table-card{
+    font-family: 'Poppins', !important;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: 0;
+    color: #000000;
+    text-align: center;
+}
+
+
