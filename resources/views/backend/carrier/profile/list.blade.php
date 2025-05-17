@@ -289,12 +289,12 @@
 
     <script>
         $(document).ready(function () {
-            const usMexicoRegex = /^(\+1\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}|\+52\s?1?\s?\d{2,3}\s?\d{3,4}\s?\d{4})$/;
+            const formattedUsMexicoRegex = /^(\+1\s?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}|\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}|\+52\s?1?\s?\d{2,3}\s\d{3,4}\s\d{4})$/;
 
             $('#phone').on('input', function () {
                 const phone = $(this).val().trim();
 
-                if (usMexicoRegex.test(phone)) {
+                if (formattedUsMexicoRegex.test(phone)) {
                     $(this).removeClass('is-invalid').addClass('is-valid');
                     $('#phone-error').hide();
                 } else {
@@ -303,7 +303,8 @@
                 }
             });
         });
-        </script>
+    </script>
+
 
     <script>
         $("#carrierForm").validate({

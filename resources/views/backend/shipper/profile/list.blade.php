@@ -125,22 +125,21 @@
                                                                     @enderror
                                                                 </div>
 
-                                                            <div class="mb-3 col-lg-6">
-                                                                <label class="form-label">Office Phone Number <span class="text-danger">*</span></label>
-                                                                <input class="form-control" type="tel" name="office_phone"
-                                                                    pattern="(\+1\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}|\+52\s?1?\s?\d{3}\s?\d{3}\s?\d{4}"
-                                                                    placeholder="Enter Office or Cell Phone Number"
-                                                                    value="{{ Auth::user()->role == 'Shipper' ? Auth::user()->shipper->office_phone : '' }}">
-                                                            </div>
+                                                                <div class="mb-3 col-lg-6">
+                                                                    <label class="form-label">Office Phone Number <span class="text-danger">*</span></label>
+                                                                    <input class="form-control" type="tel" name="office_phone" id="office_phone"
+                                                                        placeholder="Enter Office or Cell Phone Number"
+                                                                        value="{{ Auth::user()->role == 'Shipper' ? Auth::user()->shipper->office_phone : '' }}">
+                                                                    <small id="office-phone-error" class="text-danger" style="display:none;">Invalid office phone number format.</small>
+                                                                </div>
 
-                                                            <div class="mb-3 col-lg-6">
-                                                                <label class="form-label">Cell Phone Number <span class="text-danger">*</span></label>
-                                                                <input class="form-control" type="tel" name="phone"
-                                                                    pattern="(\+1\s?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}|\+52\s?1?\s?\d{3}\s?\d{3}\s?\d{4}"
-                                                                    placeholder="Enter Office or Cell Phone Number"
-                                                                    value="{{ Auth::user()->role == 'Shipper' ? Auth::user()->shipper->phone : '' }}">
-                                                            </div>
-
+                                                                <div class="mb-3 col-lg-6">
+                                                                    <label class="form-label">Cell Phone Number <span class="text-danger">*</span></label>
+                                                                    <input class="form-control" type="tel" name="phone" id="phone"
+                                                                        placeholder="Enter Office or Cell Phone Number"
+                                                                        value="{{ Auth::user()->role == 'Shipper' ? Auth::user()->shipper->phone : '' }}">
+                                                                    <small id="phone-error" class="text-danger" style="display:none;">Invalid cell phone number format.</small>
+                                                                </div>
 
                                                                 <div class="mb-3 col-lg-6">
                                                                     <label class="form-label">Email Address<span class="text-danger">*</span></label>
@@ -245,15 +244,35 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/cleave.js/1.6.0/cleave.min.js"></script>
 <script>
-  new Cleave('[name="office_phone"]', {
-    phone: true,
-    phoneRegionCode: 'US'
-  });
+    $(document).ready(function () {
+        const usMexicoRegex = /^(\+1\s?\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}|\(?\d{3}\)?[\s.-]\d{3}[\s.-]\d{4}|\+52\s?1?\s?\d{2,3}\s\d{3,4}\s\d{4})$/;
 
-  new Cleave('[name="phone"]', {
-    phone: true,
-    phoneRegionCode: 'MX'
-  });
+        // Cell Phone Validation
+        $('#phone').on('input', function () {
+            const value = $(this).val().trim();
+
+            if (usMexicoRegex.test(value)) {
+                $(this).removeClass('is-invalid').addClass('is-valid');
+                $('#phone-error').hide();
+            } else {
+                $(this).removeClass('is-valid').addClass('is-invalid');
+                $('#phone-error').show();
+            }
+        });
+
+        // Office Phone Validation
+        $('#office_phone').on('input', function () {
+            const value = $(this).val().trim();
+
+            if (usMexicoRegex.test(value)) {
+                $(this).removeClass('is-invalid').addClass('is-valid');
+                $('#office-phone-error').hide();
+            } else {
+                $(this).removeClass('is-valid').addClass('is-invalid');
+                $('#office-phone-error').show();
+            }
+        });
+    });
 </script>
 
 <script>
