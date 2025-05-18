@@ -40,7 +40,7 @@
                                 <div class="col-12 col-md-4">
                                     <label class="form-label fw-bold text-uppercase small">Date Range</label>
                                     <div class="input-group">
-                                        <input type="text" id="dateRangePicker" class="form-control" placeholder="MM/DD/YYYY">
+                                        <input type="text" class="form-control" id="rangecalendar-datepicker" placeholder="yyyy-mm-dd">
                                         <span class="bg-white input-group-text border-start-0">
                                             <i class="fa fa-calendar" aria-hidden="true"></i>
                                         </span>
@@ -193,6 +193,8 @@
         </div>
     </div>
     </div>
+
+@include('backend.components.date-picker')
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

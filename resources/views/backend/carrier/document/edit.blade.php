@@ -36,7 +36,7 @@
 
             <div class="col-md-12">
               <label for="expires_at" class="form-label">Expiration Date ( Optional )</label>
-              <input type="date" class="form-control" name="expires_at" placeholder="Date"
+              <input name="expires_at" class="form-control" id="basic-datepicker" placeholder="yyyy-mm-dd"
               value="{{ old('expires_at', $document->expires_at ?? '') }}">
             </div>
 
@@ -91,6 +91,8 @@
     </div>
     </div>
 </div>
+
+@include('backend.components.date-picker')
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>

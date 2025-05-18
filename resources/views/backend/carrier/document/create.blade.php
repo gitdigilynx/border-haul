@@ -31,7 +31,7 @@
                     <!-- Expiration Date -->
                     <div class="mb-2 col-md-12">
                         <label for="expires_at" class="form-label">Expiration Date ( Optional )</label>
-                        <input type="date" class="form-control" name="expires_at">
+                        <input name="expires_at" class="form-control" id="basic-datepicker" placeholder="yyyy-mm-dd" >
                     </div>
 
                     <div class="mb-2 col-md-12">
@@ -72,6 +72,7 @@
     </div>
   </div>
 
+  @include('backend.components.date-picker')
   <!-- Scripts -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
