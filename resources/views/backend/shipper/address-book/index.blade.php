@@ -14,8 +14,22 @@
                     </div>
 
                     <div class="card-header d-flex justify-content-between align-items-center" style="border-bottom: none;">
+
                         <img src="{{ asset('assets/icons/icon.svg') }}" alt="Truck Icon"
-                            style="width: 40px; height: 40px; margin-right: 8px;">
+                            style="width: 40px; height: 40px; margin-right: 8px; cursor: pointer;"
+                            onclick="toggleDropdown()" />
+
+                        <div class="card-body">
+                            <div class="d-flex flex-wrap gap-2">
+                                <div class="btn-group">
+                                    <div class="dropdown-menu dropdown-menu-end" id="roleDropdown">
+                                        <a class="dropdown-item" href="#">Admin</a>
+                                        <a class="dropdown-item" href="#">Driver</a>
+                                        <a class="dropdown-item" href="#">Dispatcher</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addressBook"
                             style="background-color: #06367B; color: white; border: none;  font-size: 1rem; font-weight: bold; border-radius: 6px; ">
                             + Add New Address
@@ -140,6 +154,28 @@
     @endforeach
 
     <script>
+        // Role wsie search
+
+        function toggleDropdown() {
+            const dropdown = document.getElementById('roleDropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function filterByRole(role) {
+            alert("Filter applied: " + role);
+            document.getElementById('roleDropdown').style.display = 'none';
+        }
+
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('roleDropdown');
+            const icon = event.target.closest('img');
+
+            if (!icon && !event.target.closest('#roleDropdown')) {
+                dropdown.style.display = 'none';
+            }
+        });
+
+
         $(document).ready(function() {
             $('.delete-address-book').click(function() {
                 const button = $(this);

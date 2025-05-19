@@ -1,7 +1,7 @@
 @extends('layouts.backend.master')
 @section('title', 'Users Listing')
 @section('content')
-<div class="content-page">
+    <div class="content-page">
         <!-- Start Content-->
         <div class="container-fluid">
             <div class="py-3 d-flex align-items-sm-center flex-sm-row flex-column">
@@ -9,10 +9,28 @@
                     <h4 class="m-0 fs-26" style="font-family: 'Staatliches', sans-serif; color: black;">COMPANY USERS</h4>
                 </div>
                 <div class="card-header d-flex justify-content-between align-items-center" style="border-bottom: none;">
-                    <img src="{{ asset('assets/icons/icon.svg') }}" alt="Truck Icon" style="width: 40px; height: 40px; margin-right: 8px;">
+                    <div style="position: relative; display: inline-block;">
+                        <!-- Image Button -->
+
+                        <img src="{{ asset('assets/icons/icon.svg') }}" alt="Truck Icon"
+                            style="width: 40px; height: 40px; margin-right: 8px; cursor: pointer;"
+                            onclick="toggleDropdown()" />
+
+                        <div class="card-body">
+                            <div class="d-flex flex-wrap gap-2">
+                                <div class="btn-group">
+                                    <div class="dropdown-menu dropdown-menu-end" id="roleDropdown">
+                                        <a class="dropdown-item" href="#">Admin</a>
+                                        <a class="dropdown-item" href="#">Driver</a>
+                                        <a class="dropdown-item" href="#">Dispatcher</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                     <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#subUserModal"
-                    style="background-color: #06367B; color: white; border: none;  font-size: 1rem; font-weight: bold; border-radius: 6px; ">
-                       + Invite Users
+                        style="background-color: #06367B; color: white; border: none;  font-size: 1rem; font-weight: bold; border-radius: 6px; ">
+                        + Invite Users
                     </button>
                 </div>
             </div>
@@ -61,29 +79,31 @@
                                             <td>{{ $user->user->email }}</td>
                                             <td>{{ $user->user->role }}</td>
                                             <td>
-                                            <form method="POST" action="{{ route('shipper.sub-users.toggleSubUser', $user->user->id) }}">
-                                                @csrf
-                                                @method('PATCH')
-                                                <div class="form-check form-switch">
-                                                    <input class="form-check-input" type="checkbox" name="is_active"
-                                                        onchange="this.form.submit()"
-                                                        {{ $user->user->is_active ? 'checked' : '' }}>
-                                                    <label class="form-check-label px-1 rounded text-white
+                                                <form method="POST"
+                                                    action="{{ route('shipper.sub-users.toggleSubUser', $user->user->id) }}">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <div class="form-check form-switch">
+                                                        <input class="form-check-input" type="checkbox" name="is_active"
+                                                            onchange="this.form.submit()"
+                                                            {{ $user->user->is_active ? 'checked' : '' }}>
+                                                        <label
+                                                            class="form-check-label px-1 rounded text-white
                                                         {{ $user->user->is_active ? 'bg-success' : 'bg-danger' }}">
-                                                        {{ $user->user->is_active ? 'Active' : 'Inactive' }}
-                                                    </label>
-                                                </div>
-                                            </form>
+                                                            {{ $user->user->is_active ? 'Active' : 'Inactive' }}
+                                                        </label>
+                                                    </div>
+                                                </form>
 
-                                                </td>
+                                            </td>
                                             <td>
-                                                  <!-- View Button -->
+                                                <!-- View Button -->
                                                 <a href="javascript:void(0)" style="background-color: #E0F3FF; "
                                                     class="p-0 mb-0 btn" data-bs-toggle="modal"
                                                     data-id="{{ $user->id }}"
                                                     data-bs-target="#shipperUsertShow{{ $user->id }}">
                                                     <i class="p-2 fa fa-eye" style="color:#007BFF" title="View User"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top"></i>
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"></i>
 
                                                 </a>
 
@@ -92,17 +112,15 @@
                                                     class="p-0 mb-0 btn" data-bs-toggle="modal"
                                                     data-bs-target="#subShipperEditModal{{ $user->id }}">
                                                     <i class="p-2 fa fa-edit" style="color:#9F9F9F" title="Edit User"
-                                                    data-bs-toggle="tooltip" data-bs-placement="top"></i>
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"></i>
                                                 </a>
 
                                                 <!-- Delete Button -->
                                                 <a href="javascript:void(0);" style="background: #D2232A1A;"
-                                                    class="p-0 mb-0 delete-user btn"
-                                                    data-id="{{ $user->id }}"
+                                                    class="p-0 mb-0 delete-user btn" data-id="{{ $user->id }}"
                                                     data-url="{{ route('shipper.sub-users.destroy', $user->id) }}">
-                                                    <i class="p-2 fa fa-trash-can" style="color:#D2232A"
-                                                    title="Delete User" data-bs-toggle="tooltip"
-                                                    data-bs-placement="top"></i>
+                                                    <i class="p-2 fa fa-trash-can" style="color:#D2232A" title="Delete User"
+                                                        data-bs-toggle="tooltip" data-bs-placement="top"></i>
 
                                                 </a>
                                             </td>
@@ -130,154 +148,178 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
 
-@include('backend.shipper.sub-user.create')
-@foreach($subUsers as $user)
-    @include('backend.shipper.sub-user.show', ['user' => $user])
-    @include('backend.shipper.sub-user.edit', ['user' => $user])
-@endforeach
+    @include('backend.shipper.sub-user.create')
+    @foreach ($subUsers as $user)
+        @include('backend.shipper.sub-user.show', ['user' => $user])
+        @include('backend.shipper.sub-user.edit', ['user' => $user])
+    @endforeach
 
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 
-<script>
-    $(document).ready(function () {
-        $('.delete-user').click(function () {
-            const button = $(this);
-            const deleteUrl = button.data('url');
+    <script>
+        // Role wsie search
 
-            Swal.fire({
-                title: 'Are you sure?',
-                text: 'This action cannot be undone.',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#d33',
-                cancelButtonColor: '#3085d6',
-                confirmButtonText: 'Yes, delete it!'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    $.ajax({
-                        url: deleteUrl,
-                        type: 'POST',
-                        data: {
-                            _method: 'DELETE',
-                            _token: '{{ csrf_token() }}'
-                        },
-                        success: function (response) {
-                            Swal.fire('Deleted!', 'The document entry has been deleted.', 'success')
-                                .then(() => {
-                                    location.reload();
-                                });
-                        },
-                        error: function (xhr) {
-                            Swal.fire('Error', 'Something went wrong.', 'error');
-                        }
-                    });
-                }
+        function toggleDropdown() {
+            const dropdown = document.getElementById('roleDropdown');
+            dropdown.style.display = dropdown.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function filterByRole(role) {
+            alert("Filter applied: " + role);
+            document.getElementById('roleDropdown').style.display = 'none';
+        }
+
+        document.addEventListener('click', function(event) {
+            const dropdown = document.getElementById('roleDropdown');
+            const icon = event.target.closest('img');
+
+            if (!icon && !event.target.closest('#roleDropdown')) {
+                dropdown.style.display = 'none';
+            }
+        });
+
+        $(document).ready(function() {
+            $('.delete-user').click(function() {
+                const button = $(this);
+                const deleteUrl = button.data('url');
+
+                Swal.fire({
+                    title: 'Are you sure?',
+                    text: 'This action cannot be undone.',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#d33',
+                    cancelButtonColor: '#3085d6',
+                    confirmButtonText: 'Yes, delete it!'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $.ajax({
+                            url: deleteUrl,
+                            type: 'POST',
+                            data: {
+                                _method: 'DELETE',
+                                _token: '{{ csrf_token() }}'
+                            },
+                            success: function(response) {
+                                Swal.fire('Deleted!',
+                                        'The document entry has been deleted.',
+                                        'success')
+                                    .then(() => {
+                                        location.reload();
+                                    });
+                            },
+                            error: function(xhr) {
+                                Swal.fire('Error', 'Something went wrong.', 'error');
+                            }
+                        });
+                    }
+                });
             });
         });
-    });
-</script>
+    </script>
 
 
 
-<script>
-    $(document).ready(function() {
-        var table = $('#responsive-datatable').DataTable({
-            responsive: true,
-            lengthChange: false,
-            pageLength: 10,
-            ordering: false,
-            info: false,
-            pagingType: 'simple',
-            language: {
-                emptyTable: '<div style="text-align:center;">You haven‘t added any users yet. Click ‘+ Invite Users’ to add drivers or admin team members to your account.</div>'
+    <script>
+        $(document).ready(function() {
+            var table = $('#responsive-datatable').DataTable({
+                responsive: true,
+                lengthChange: false,
+                pageLength: 10,
+                ordering: false,
+                info: false,
+                pagingType: 'simple',
+                language: {
+                    emptyTable: '<div style="text-align:center;">You haven‘t added any users yet. Click ‘+ Invite Users’ to add drivers or admin team members to your account.</div>'
+                }
+            });
+
+            $('#customSearch').on('keyup', function() {
+                console.log('work'); // Should now fire
+                table.search(this.value).draw();
+            });
+            $('#responsive-datatable_filter').hide();
+
+            function updateButtons() {
+                let info = table.page.info();
+
+                if (info.recordsDisplay === 0) {
+                    // No data — disable both buttons
+                    $('#prevPage, #nextPage').addClass('disabled');
+                } else {
+                    $('#prevPage').toggleClass('disabled', info.page === 0);
+                    $('#nextPage').toggleClass('disabled', info.page === info.pages - 1);
+                }
             }
-        });
 
-        $('#customSearch').on('keyup', function() {
-            console.log('work'); // Should now fire
-            table.search(this.value).draw();
-        });
-        $('#responsive-datatable_filter').hide();
-
-        function updateButtons() {
-            let info = table.page.info();
-
-            if (info.recordsDisplay === 0) {
-                // No data — disable both buttons
-                $('#prevPage, #nextPage').addClass('disabled');
-            } else {
-                $('#prevPage').toggleClass('disabled', info.page === 0);
-                $('#nextPage').toggleClass('disabled', info.page === info.pages - 1);
+            function updateInfo() {
+                let info = table.page.info();
+                $('#customInfoText').text(
+                    `Showing ${info.start + 1} to ${info.end} of ${info.recordsDisplay} entries`
+                );
+                updateButtons();
             }
-        }
-        function updateInfo() {
-            let info = table.page.info();
-            $('#customInfoText').text(
-                `Showing ${info.start + 1} to ${info.end} of ${info.recordsDisplay} entries`
-            );
-            updateButtons();
-        }
 
-        updateInfo();
-
-        $('#nextPage').on('click', function() {
-            table.page('next').draw('page');
-        });
-
-        $('#prevPage').on('click', function() {
-            table.page('previous').draw('page');
-        });
-
-        table.on('draw', function() {
             updateInfo();
+
+            $('#nextPage').on('click', function() {
+                table.page('next').draw('page');
+            });
+
+            $('#prevPage').on('click', function() {
+                table.page('previous').draw('page');
+            });
+
+            table.on('draw', function() {
+                updateInfo();
+            });
         });
-    });
-</script>
+    </script>
 
-<style>
-    .custom-pagination-btn {
-        border: 1px solid #d1d5db;
-        /* light gray */
-        border-radius: 8px;
-        font-weight: 500;
-        background-color: #fff;
-        color: #111827;
-        padding: 6px 16px;
-        font-size: 14px;
-        transition: all 0.2s ease-in-out;
-    }
-
-    .custom-pagination-btn:hover {
-        background-color: #f3f4f6;
-        /* light hover effect */
-        color: #000;
-    }
-
-    .custom-pagination-btn.disabled {
-        color: #9ca3af;
-        border-color: #d1d5db;
-        background-color: #fff;
-        pointer-events: none;
-        cursor: not-allowed;
-    }
-
-    .dataTables_paginate {
-        display: none !important;
-    }
-
-    @media (min-width: 992px) {
-        .responsive-search {
-            max-width: 140px !important;
+    <style>
+        .custom-pagination-btn {
+            border: 1px solid #d1d5db;
+            /* light gray */
+            border-radius: 8px;
+            font-weight: 500;
+            background-color: #fff;
+            color: #111827;
+            padding: 6px 16px;
+            font-size: 14px;
+            transition: all 0.2s ease-in-out;
         }
-    }
 
-    @media (max-width: 991.98px) {
-        .responsive-search {
-            max-width: 300px !important;
+        .custom-pagination-btn:hover {
+            background-color: #f3f4f6;
+            /* light hover effect */
+            color: #000;
         }
-    }
-</style>
+
+        .custom-pagination-btn.disabled {
+            color: #9ca3af;
+            border-color: #d1d5db;
+            background-color: #fff;
+            pointer-events: none;
+            cursor: not-allowed;
+        }
+
+        .dataTables_paginate {
+            display: none !important;
+        }
+
+        @media (min-width: 992px) {
+            .responsive-search {
+                max-width: 140px !important;
+            }
+        }
+
+        @media (max-width: 991.98px) {
+            .responsive-search {
+                max-width: 300px !important;
+            }
+        }
+    </style>
 @endsection
