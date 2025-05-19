@@ -59,7 +59,7 @@
                             <label for="driverName" class="form-label">Driver Name <span
                                     class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="name"
-                                value="{{ old('name', $truck->driver->name ?? '') }}" placeholder="Enter Drvier Name"
+                                value="{{ old('name', $truck->driver->name ?? '') }}" placeholder="Enter Driver Name"
                                 required>
                         </div>
 
@@ -68,7 +68,7 @@
                                     class="text-danger">*</span></label>
                             <input type="text" class="form-control" name="phone_number"
                                 value="{{ old('phone_number', $truck->driver->phone_number ?? '') }}"
-                                placeholder="Enter Trucker" required>
+                                placeholder="Enter Driver Phone NO" required>
                         </div>
                     </div>
 
@@ -119,9 +119,9 @@
             const value = input.inputmask.unmaskedvalue();
 
             // Custom formatting
-            if (value.length === 10) {
+            if (value.length === 20) {
                 input.val('(' + value.slice(0, 3) + ') ' + value.slice(3, 6) + '-' + value.slice(6));
-            } else if (value.length === 13 && value.startsWith('52')) {
+            } else if (value.length === 20 && value.startsWith('52')) {
                 input.val('+52-' + value.slice(2, 5) + '-' + value.slice(5, 8) + '-' + value.slice(8));
             }
         }

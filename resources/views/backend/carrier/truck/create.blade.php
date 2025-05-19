@@ -47,16 +47,17 @@
                         <div class="mt-2 col-md-6">
                             <label for="driverName" class="form-label">Driver Name <span
                                     class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="name" placeholder="Enter Drvier Name"
+                            <input type="text" class="form-control" name="name" placeholder="Enter Driver Name"
                                 required>
                         </div>
 
                         <div class="mt-2 col-md-6">
-                            <label for="driverPhone" class="form-label">Driver Phone NO. <span
-                                    class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="phone_number" placeholder="Enter Trucker "
-                                required>
+                            <label for="phone_number" class="form-label">Driver Phone No. <span class="text-danger">*</span></label>
+                            <input type="text" class="form-control" name="phone_number" id="phone_number" placeholder="Enter Phone No">
+                            <div class="invalid-feedback"></div>
                         </div>
+
+
                     </div>
 
                     <div class="row">
@@ -118,8 +119,7 @@
             },
             phone_number: {
                 required: true,
-                minlength: 10,
-                maxlength: 15
+                maxlength: 20
             },
             in_service: {
                 required: true
@@ -143,6 +143,83 @@
             location: "Please enter the location"
         }
     });
+
+//  phone number format for us and mexico
+
+document.addEventListener('DOMContentLoaded', function () {
+    const phoneFields = [
+        {
+            input: document.getElementById('phone_number'),
+            error: document.getElementById('phone_number')?.nextElementSibling
+        }
+    ];
+
+    const allPatterns = [
+        // US formats
+        /^\d{3}-\d{3}-\d{4}$/,
+        /^\(\d{3}\)\s?\d{3}-\d{4}$/,
+        /^\d{3}\.\d{3}\.\d{4}$/,
+        /^\+1\s\d{3}\s\d{3}\s\d{4}$/,
+        /^\+1\d{10}$/,
+        /^\+1\s\(\d{3}\)\s\d{3}-\d{4}$/,
+        // Mexico formats
+        /^\d{2}-\d{4}-\d{4}$/,
+        /^\+52\s1\s\d{2}\s\d{4}\s\d{4}$/,
+        /^\+52\s\d{2}\s\d{4}\s\d{4}$/,
+        /^\+521\d{8}$/,
+        /^\+5255\d{8}$/
+    ];
+
+    const allExamples = [
+        '(123) 456-7890',
+        '+1 123 456 7890',
+        '+52 1 55 1234 5678',
+        '+52 55 1234 5678'
+    ];
+
+    function validatePhone(inputEl, errorEl) {
+        const value = inputEl.value.trim();
+
+        if (value === '') {
+            // Don't validate or show error on empty input
+            inputEl.classList.remove('is-invalid');
+            errorEl.innerHTML = '';
+            errorEl.style.display = 'none';
+            return;
+        }
+
+        const isValid = allPatterns.some(pattern => pattern.test(value));
+
+        if (!isValid) {
+            inputEl.classList.add('is-invalid');
+            errorEl.innerHTML = `Invalid phone format.<br>Examples:<br>${allExamples.join('<br>')}`;
+            errorEl.style.display = 'block';
+        } else {
+            inputEl.classList.remove('is-invalid');
+            errorEl.innerHTML = '';
+            errorEl.style.display = 'none';
+        }
+    }
+
+    function setPlaceholders() {
+        phoneFields.forEach(({ input }) => {
+            if (input) {
+                input.placeholder = `e.g., ${allExamples[0]}`;
+            }
+        });
+    }
+
+    // Attach events
+    phoneFields.forEach(({ input, error }) => {
+        if (input) {
+            input.addEventListener('input', () => validatePhone(input, error));
+        }
+    });
+
+    // Set placeholder only (no initial validation)
+    setPlaceholders();
+});
+
 </script>
 
 <style>
@@ -151,4 +228,6 @@
         font-size: 0.875em;
         margin-top: 0.25rem;
     }
+
+
 </style>
