@@ -65,13 +65,28 @@
                                                                 </div>
 
                                                                 <div class="mb-3 col-lg-6">
-                                                                    <label class="form-label">Phone Number <span class="text-danger">*</span></label>
-                                                                    <input class="form-control" type="tel" name="phone" id="phone"
-                                                                        placeholder="Enter Phone Number"
-                                                                        value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->phone : '' }}">
-                                                                        <small id="phone-error" class="text-danger" style="display:none;">Invalid phone number format.</small>
+                                                                    <label for="country" class="form-label">Country <span class="text-danger">*</span></label>
+                                                                    <select name="country" id="country" class="form-control" required>
+                                                                        <option value="">Select Country</option>
+                                                                        <option value="us" {{ Auth::user()->carrier->country == 'us' ? 'selected' : '' }}>US</option>
+                                                                        <option value="mexico" {{ Auth::user()->carrier->country == 'mexico' ? 'selected' : '' }}>Mexico</option>
+                                                                    </select>
+                                                                    <div class="invalid-feedback">Please select a country.</div>
                                                                 </div>
 
+                                                                <div class="mb-3 col-lg-6">
+                                                                    <label for="phone" class="form-label">Phone Number <span class="text-danger">*</span></label>
+                                                                    <input
+                                                                        class="form-control"
+                                                                        type="tel"
+                                                                        name="phone"
+                                                                        id="phone"
+                                                                        placeholder="Enter Phone Number"
+                                                                        value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->phone : '' }}"
+                                                                        required
+                                                                    >
+                                                                    <small id="phone-error" class="text-danger" style="display:none;"></small>
+                                                                </div>
 
                                                                 <div class="mb-3 col-lg-6">
                                                                     <label class="form-label">Company Address <span
@@ -80,7 +95,6 @@
                                                                         name="company_address"
                                                                         value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->company_address : '' }}">
                                                                 </div>
-
 
                                                                 <div class="mb-3 col-lg-6">
                                                                     <label for="service_category" class="form-label">Service
@@ -98,23 +112,6 @@
                                                                     <div class="invalid-feedback"></div>
                                                                 </div>
 
-                                                                <div class="mb-3 col-lg-6">
-                                                                    <label for="country" class="form-label">Country <span
-                                                                            class="text-danger">*</span></label>
-                                                                    <select name="country" id="country"
-                                                                        class="form-control" required>
-                                                                        <option value="">Select Country</option>
-                                                                        <option value="us"
-                                                                            {{ Auth::user()->carrier->country == 'us' ? 'selected' : '' }}>
-                                                                            US</option>
-                                                                        <option value="mexico"
-                                                                            {{ Auth::user()->carrier->country == 'mexico' ? 'selected' : '' }}>
-                                                                            Mexico
-                                                                        </option>
-                                                                    </select>
-                                                                    <div class="invalid-feedback">Please select a country.
-                                                                    </div>
-                                                                </div>
 
                                                                 <div class="mb-3 col-lg-6">
                                                                     <label class="form-label">Authority <span
@@ -581,6 +578,167 @@
     });
 </script>
 
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const countrySelect = document.getElementById('country');
+        const phoneInput = document.getElementById('phone');
+        const phoneError = document.getElementById('phone-error');
 
-</script>
+        const patterns = {
+            us: [
+                /^\d{3}-\d{3}-\d{4}$/,                    // 123-456-7890
+                /^\(\d{3}\)\s?\d{3}-\d{4}$/,              // (123) 456-7890
+                /^\d{3}\.\d{3}\.\d{4}$/,                  // 123.456.7890
+                /^\+1\s\d{3}\s\d{3}\s\d{4}$/,             // +1 123 456 7890
+                /^\+1\d{10}$/,                            // +11234567890
+                /^\+1\s\(\d{3}\)\s\d{3}-\d{4}$/           // +1 (123) 456-7890
+            ],
+            mexico: [
+                /^\d{2}-\d{4}-\d{4}$/,                    // 55-1234-5678
+                /^\+52\s1\s\d{2}\s\d{4}\s\d{4}$/,         // +52 1 55 1234 5678
+                /^\+52\s\d{2}\s\d{4}\s\d{4}$/,            // +52 55 1234 5678
+                /^\+521\d{8}$/,                           // +5215512345678
+                /^\+5255\d{8}$/                           // +525512345678
+            ]
+        };
+
+        const examples = {
+            us: [
+                '123-456-7890',
+                '(123) 456-7890',
+                '123.456.7890',
+                '+1 123 456 7890',
+                '+11234567890',
+                '+1 (123) 456-7890'
+            ],
+            mexico: [
+                '55-1234-5678',
+                '+52 1 55 1234 5678',
+                '+52 55 1234 5678',
+                '+5215512345678',
+                '+525512345678'
+            ]
+        };
+
+        function validatePhone() {
+            const selected = countrySelect.value;
+            const phone = phoneInput.value.trim();
+            const validPatterns = patterns[selected] || [];
+
+            const isValid = validPatterns.some(regex => regex.test(phone));
+
+            if (!isValid) {
+                phoneError.innerHTML = `Invalid format. Acceptable formats:<br>${examples[selected].join('<br>')}`;
+                phoneError.style.display = 'block';
+                phoneInput.classList.add('is-invalid');
+            } else {
+                phoneError.style.display = 'none';
+                phoneInput.classList.remove('is-invalid');
+            }
+        }
+
+        function updatePlaceholder() {
+            const selected = countrySelect.value;
+            if (examples[selected]) {
+                phoneInput.placeholder = `e.g., ${examples[selected][0]}`;
+            } else {
+                phoneInput.placeholder = 'Enter Phone Number';
+            }
+        }
+
+        countrySelect.addEventListener('change', function () {
+            updatePlaceholder();
+            validatePhone();
+        });
+
+        phoneInput.addEventListener('input', validatePhone);
+
+        // Initialize
+        updatePlaceholder();
+        validatePhone();
+    });
+    </script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const countrySelect = document.getElementById('country');
+        const phoneInput = document.getElementById('phone');
+        const phoneError = document.getElementById('phone-error');
+
+        const patterns = {
+            us: [
+                /^\d{3}-\d{3}-\d{4}$/,                    // 123-456-7890
+                /^\(\d{3}\)\s?\d{3}-\d{4}$/,              // (123) 456-7890
+                /^\d{3}\.\d{3}\.\d{4}$/,                  // 123.456.7890
+                /^\+1\s\d{3}\s\d{3}\s\d{4}$/,             // +1 123 456 7890
+                /^\+1\d{10}$/,                            // +11234567890
+                /^\+1\s\(\d{3}\)\s\d{3}-\d{4}$/           // +1 (123) 456-7890
+            ],
+            mexico: [
+                /^\d{2}-\d{4}-\d{4}$/,                    // 55-1234-5678
+                /^\+52\s1\s\d{2}\s\d{4}\s\d{4}$/,         // +52 1 55 1234 5678
+                /^\+52\s\d{2}\s\d{4}\s\d{4}$/,            // +52 55 1234 5678
+                /^\+521\d{8}$/,                           // +5215512345678
+                /^\+5255\d{8}$/                           // +525512345678
+            ]
+        };
+
+        const examples = {
+            us: [
+                '123-456-7890',
+                '(123) 456-7890',
+                '123.456.7890',
+                '+1 123 456 7890',
+                '+11234567890',
+                '+1 (123) 456-7890'
+            ],
+            mexico: [
+                '55-1234-5678',
+                '+52 1 55 1234 5678',
+                '+52 55 1234 5678',
+                '+5215512345678',
+                '+525512345678'
+            ]
+        };
+
+        function validatePhone() {
+            const selected = countrySelect.value;
+            const phone = phoneInput.value.trim();
+            const validPatterns = patterns[selected] || [];
+
+            const isValid = validPatterns.some(regex => regex.test(phone));
+
+            if (!isValid && selected) {
+                phoneError.innerHTML = `Invalid format for ${selected.toUpperCase()}.<br>Examples:<br>${examples[selected].join('<br>')}`;
+                phoneError.style.display = 'block';
+                phoneInput.classList.add('is-invalid');
+            } else {
+                phoneError.style.display = 'none';
+                phoneInput.classList.remove('is-invalid');
+            }
+        }
+
+        function updatePlaceholder() {
+            const selected = countrySelect.value;
+            if (examples[selected]) {
+                phoneInput.placeholder = `e.g., ${examples[selected][0]}`;
+            } else {
+                phoneInput.placeholder = 'Enter Phone Number';
+            }
+        }
+
+        countrySelect.addEventListener('change', () => {
+            updatePlaceholder();
+            validatePhone();
+        });
+
+        phoneInput.addEventListener('input', validatePhone);
+
+        // Initial run
+        updatePlaceholder();
+        validatePhone();
+    });
+    </script>
+
+
 @endsection

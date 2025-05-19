@@ -498,4 +498,93 @@
     });
 </script>
 
+
+<script>
+    // selected office Number and Phone Number on selected country
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const countrySelect = document.getElementById('company_country');
+        const phoneFields = [
+            { input: document.getElementById('office_phone'), error: document.getElementById('office-phone-error') },
+            { input: document.getElementById('phone'), error: document.getElementById('phone-error') }
+        ];
+
+        const patterns = {
+            US: [
+                /^\d{3}-\d{3}-\d{4}$/,                    // 123-456-7890
+                /^\(\d{3}\)\s?\d{3}-\d{4}$/,              // (123) 456-7890
+                /^\d{3}\.\d{3}\.\d{4}$/,                  // 123.456.7890
+                /^\+1\s\d{3}\s\d{3}\s\d{4}$/,             // +1 123 456 7890
+                /^\+1\d{10}$/,                            // +11234567890
+                /^\+1\s\(\d{3}\)\s\d{3}-\d{4}$/           // +1 (123) 456-7890
+            ],
+            Mexico: [
+                /^\d{2}-\d{4}-\d{4}$/,                    // 55-1234-5678
+                /^\+52\s1\s\d{2}\s\d{4}\s\d{4}$/,         // +52 1 55 1234 5678
+                /^\+52\s\d{2}\s\d{4}\s\d{4}$/,            // +52 55 1234 5678
+                /^\+521\d{8}$/,                           // +5215512345678
+                /^\+5255\d{8}$/                           // +525512345678
+            ]
+        };
+
+        const examples = {
+            US: [
+                '123-456-7890',
+                '(123) 456-7890',
+                '123.456.7890',
+                '+1 123 456 7890',
+                '+11234567890',
+                '+1 (123) 456-7890'
+            ],
+            Mexico: [
+                '55-1234-5678',
+                '+52 1 55 1234 5678',
+                '+52 55 1234 5678',
+                '+5215512345678',
+                '+525512345678'
+            ]
+        };
+
+        function validatePhone(inputEl, errorEl) {
+            const selectedCountry = countrySelect.value;
+            const phone = inputEl.value.trim();
+            const validPatterns = patterns[selectedCountry] || [];
+
+            const isValid = validPatterns.some(regex => regex.test(phone));
+
+            if (!isValid && selectedCountry) {
+                errorEl.innerHTML = `Invalid ${inputEl.name.replace('_', ' ')} format for ${selectedCountry}.<br>Examples:<br>${examples[selectedCountry].join('<br>')}`;
+                errorEl.style.display = 'block';
+                inputEl.classList.add('is-invalid');
+            } else {
+                errorEl.style.display = 'none';
+                inputEl.classList.remove('is-invalid');
+            }
+        }
+
+        function updatePlaceholders() {
+            const selected = countrySelect.value;
+            if (examples[selected]) {
+                phoneFields.forEach(({ input }) => {
+                    input.placeholder = `e.g., ${examples[selected][0]}`;
+                });
+            }
+        }
+
+        // Event Listeners
+        countrySelect.addEventListener('change', () => {
+            updatePlaceholders();
+            phoneFields.forEach(({ input, error }) => validatePhone(input, error));
+        });
+
+        phoneFields.forEach(({ input, error }) => {
+            input.addEventListener('input', () => validatePhone(input, error));
+        });
+
+        // Initial trigger
+        updatePlaceholders();
+        phoneFields.forEach(({ input, error }) => validatePhone(input, error));
+    });
+    </script>
+
 @endsection
