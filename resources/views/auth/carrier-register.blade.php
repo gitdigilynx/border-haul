@@ -369,67 +369,6 @@
 
     $(document).ready(function() {
 
-    // Event bindings
-    $('#phone').on('input blur', function () {
-        validatePhone();
-    });
-
-    $('#country').on('change', function () {
-        $('#phone').val('');
-        $('#phone-error').hide();
-        updatePhonePlaceholder();
-    });
-
-    $('form').on('submit', function (e) {
-        if (!validatePhone()) {
-            e.preventDefault();
-        }
-    });
-
-    // Validate phone number
-    function validatePhone() {
-        const phone = $('#phone').val().trim();
-        const country = $('#country').val();
-        let isValid = false;
-
-        if (phone.length > 17) {
-            $('#phone-error').text('Maximum 17 characters allowed.').show();
-            return false;
-        }
-
-        if (country === 'us') {
-            // Strict US phone format
-            const usPattern = /^(\+1\s?)?(\(?\d{3}\)?[\s.-]?)\d{3}[\s.-]?\d{4}$/;
-            isValid = usPattern.test(phone);
-        } else if (country === 'mexico') {
-            // Strict Mexico formats (international or local)
-            const mxPattern = /^(\+52\s?1?\s?\d{2}\s?\d{4}\s?\d{4})$|^(\d{2}-\d{4}-\d{4})$/;
-            isValid = mxPattern.test(phone);
-        }
-
-        if (!isValid) {
-            $('#phone-error').text('Invalid phone number format.').show();
-        } else {
-            $('#phone-error').hide();
-        }
-
-        return isValid;
-    }
-
-    // Update phone placeholder dynamically
-    function updatePhonePlaceholder() {
-        const country = $('#country').val();
-        let placeholder = '';
-
-        if (country === 'us') {
-            placeholder = '+1 (555) 123-4567';
-        } else if (country === 'mexico') {
-            placeholder = '+52 1 55 1234 5678';
-        }
-
-        $('#phone').attr('placeholder', placeholder);
-    }
-
         function validatePasswordRules(password) {
             return {
                 length: password.length >= 8,
@@ -477,7 +416,10 @@
         checkPasswordMatch(); // Live check for matching
     });
 
-    // Function to validate the file
+
+
+// countries base validation on phone numbers
+
 $(document).ready(function () {
     function validateFile(inputId, errorId, required = false) {
         const fileInput = $('#' + inputId)[0];
@@ -529,6 +471,83 @@ $(document).ready(function () {
         }
     });
 });
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const countrySelect = document.getElementById('country');
+    const phoneInput = document.getElementById('phone');
+    const phoneError = phoneInput.nextElementSibling;
+
+    const patterns = {
+        us: [
+            /^\d{3}-\d{3}-\d{4}$/,                    // 123-456-7890
+            /^\(\d{3}\)\s?\d{3}-\d{4}$/,              // (123) 456-7890
+            /^\d{3}\.\d{3}\.\d{4}$/,                  // 123.456.7890
+            /^\+1\s\d{3}\s\d{3}\s\d{4}$/,             // +1 123 456 7890
+            /^\+1\d{10}$/,                            // +11234567890
+            /^\+1\s\(\d{3}\)\s\d{3}-\d{4}$/           // +1 (123) 456-7890
+        ],
+        mexico: [
+            /^\d{2}-\d{4}-\d{4}$/,                    // 55-1234-5678
+            /^\+52\s1\s\d{2}\s\d{4}\s\d{4}$/,         // +52 1 55 1234 5678
+            /^\+52\s\d{2}\s\d{4}\s\d{4}$/,            // +52 55 1234 5678
+            /^\+521\d{8}$/,                           // +5215512345678
+            /^\+5255\d{8}$/                           // +525512345678
+        ]
+    };
+
+    const examples = {
+        us: [
+            '123-456-7890',
+            '(123) 456-7890',
+            '+1 (123) 456-7890'
+        ],
+        mexico: [
+            '55-1234-5678',
+            '+52 1 55 1234 5678',
+
+        ]
+    };
+
+    function validatePhone() {
+        const country = countrySelect.value;
+        const value = phoneInput.value.trim();
+        const validPatterns = patterns[country] || [];
+
+        const isValid = validPatterns.some(pattern => pattern.test(value));
+
+        if (!isValid && country) {
+            phoneInput.classList.add('is-invalid');
+            phoneError.innerHTML = `Invalid phone format for ${country.toUpperCase()}.<br>Examples:<br>${examples[country].join('<br>')}`;
+            phoneError.style.display = 'block';
+        } else {
+            phoneInput.classList.remove('is-invalid');
+            phoneError.innerHTML = '';
+            phoneError.style.display = 'none';
+        }
+    }
+
+    function updatePlaceholder() {
+        const country = countrySelect.value;
+        if (examples[country]) {
+            phoneInput.placeholder = `e.g., ${examples[country][0]}`;
+        } else {
+            phoneInput.placeholder = 'Phone';
+        }
+    }
+
+    countrySelect.addEventListener('change', () => {
+        updatePlaceholder();
+        validatePhone();
+    });
+
+    phoneInput.addEventListener('input', validatePhone);
+
+    // Initial load
+    updatePlaceholder();
+    validatePhone();
+});
+
 </script>
 
 </html>

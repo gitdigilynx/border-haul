@@ -56,7 +56,7 @@ class RegisteredUserController extends Controller
         ]);
 
         // Create shipper details
-        $shipper = Shipper::create([
+        Shipper::create([
             'user_id' => $user->id,
             'company_name' => $request->company_name,
             'street_address' => $request->street_address,

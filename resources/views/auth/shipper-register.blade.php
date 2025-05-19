@@ -281,6 +281,21 @@
                     </div>
 
                     <div class="col-md-6">
+                        <label for="email" class="form-label">Email Address <span
+                                class="text-danger">*</span></label>
+                        <input type="email" name="email" id="email"
+                            class="form-control @error('email') is-invalid @enderror" placeholder="Email Address"
+                            value="{{ old('email') }}">
+                        @error('email')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
+                {{-- Contact Info --}}
+                <div class="mb-3 row">
+
+                    <div class="col-md-6">
                         <label for="company_country" class="form-label">Country <span
                                 class="text-danger">*</span></label>
                         <select name="company_country" id="company_country"
@@ -296,20 +311,6 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-                </div>
-
-                {{-- Contact Info --}}
-                <div class="mb-3 row">
-                    <div class="col-md-6">
-                        <label for="email" class="form-label">Email Address <span
-                                class="text-danger">*</span></label>
-                        <input type="email" name="email" id="email"
-                            class="form-control @error('email') is-invalid @enderror" placeholder="Email Address"
-                            value="{{ old('email') }}">
-                        @error('email')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
-                    </div>
 
                     <div class="mb-2 col-md-6">
                         <label for="office_phone" class="form-label">Office Phone Number<span
@@ -317,6 +318,7 @@
                         <input type="tel" name="office_phone" id="office_phone"
                             class="form-control @error('office_phone') is-invalid @enderror"
                             placeholder="+1 (956) 222-4567" value="{{ old('office_phone') }}">
+                            <div id="office-phone-error" style="color: red; display: none; font-size: 12px;"></div>
                         @error('office_phone')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -328,8 +330,7 @@
                         <input type="tel" name="phone" id="phone"
                             class="form-control @error('phone') is-invalid @enderror"
                             placeholder="Enter Phone Number" value="{{ old('phone') }}">
-                        <div id="phone-error" style="color: red; display: none; font-size: 12px;">Invalid phone
-                            number format</div>
+                            <div id="phone-error" style="color: red; display: none; font-size: 12px;"></div>
                         @error('phone')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -415,185 +416,5 @@
 @include('backend.components.js-validations.shipper-users.shipper-register')
 
 </body>
-<script>
-    document.querySelectorAll('.toggle-password').forEach(function(element) {
-        element.addEventListener('click', function() {
-            const input = document.querySelector(this.getAttribute('toggle'));
-            const icon = this.querySelector('i');
-
-            if (input.type === 'password') {
-                input.type = 'text';
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                input.type = 'password';
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            }
-        });
-    });
-
-
-    $(document).ready(function() {
-        // Event bindings
-        $('#phone').on('input blur', function() {
-            validatePhone();
-        });
-
-        $('#company_country').on('change', function() {
-            $('#phone').val('');
-            $('#phone-error').hide();
-            updatePhonePlaceholder();
-        });
-
-        $('form').on('submit', function(e) {
-            if (!validatePhone()) {
-                e.preventDefault();
-            }
-        });
-
-        // Validate phone number
-        function validatePhone() {
-            const phone = $('#phone').val().trim();
-            const country = $('#company_country').val();
-            let isValid = false;
-
-            if (phone.length > 17) {
-                $('#phone-error').text('Maximum 17 characters allowed.').show();
-                return false;
-            }
-
-            if (country === 'US') {
-                // Strict US phone format
-                const usPattern = /^(\+1\s?)?(\(?\d{3}\)?[\s.-]?)\d{3}[\s.-]?\d{4}$/;
-                isValid = usPattern.test(phone);
-            } else if (country === 'Mexico') {
-                // Strict Mexico formats (international or local)
-                const mxPattern = /^(\+52\s?1?\s?\d{2}\s?\d{4}\s?\d{4})$|^(\d{2}-\d{4}-\d{4})$/;
-                isValid = mxPattern.test(phone);
-            }
-
-            if (!isValid) {
-                $('#phone-error').text('Invalid phone number format.').show();
-            } else {
-                $('#phone-error').hide();
-            }
-
-            return isValid;
-        }
-
-        // Update phone placeholder dynamically
-        function updatePhonePlaceholder() {
-            const country = $('#company_country').val();
-            let placeholder = '';
-
-            if (country === 'US') {
-                placeholder = '+1 (555) 123-4567';
-            } else if (country === 'Mexico') {
-                placeholder = '+52 1 55 1234 5678';
-            }
-
-            $('#phone').attr('placeholder', placeholder);
-        }
-        const $password = $('#password');
-        const $confirm = $('#password_confirmation');
-        const $form = $('form');
-
-        // Set required attributes just in case
-        $password.attr('required', true);
-        $confirm.attr('required', true);
-
-        // Validate password rules
-        function validatePasswordRules(password) {
-            return {
-                length: password.length >= 8,
-                uppercase: /[A-Z]/.test(password),
-                lowercase: /[a-z]/.test(password),
-                number: /[0-9]/.test(password)
-            };
-        }
-
-        function updatePasswordRulesUI(rules) {
-            $('#passwordRules .rule-length').toggleClass('valid', rules.length).toggleClass('invalid', !rules
-                .length);
-            $('#passwordRules .rule-uppercase').toggleClass('valid', rules.uppercase).toggleClass('invalid', !
-                rules.uppercase);
-            $('#passwordRules .rule-lowercase').toggleClass('valid', rules.lowercase).toggleClass('invalid', !
-                rules.lowercase);
-            $('#passwordRules .rule-number').toggleClass('valid', rules.number).toggleClass('invalid', !rules
-                .number);
-        }
-
-        function checkPasswordMatch() {
-            const password = $password.val();
-            const confirm = $confirm.val();
-
-            if (confirm.length > 0) {
-                if (password === confirm) {
-                    $confirm.removeClass('invalid').addClass('valid');
-                    $('#mismatchError').hide();
-                    return true;
-                } else {
-                    $confirm.removeClass('valid').addClass('invalid');
-                    $('#mismatchError').show();
-                    return false;
-                }
-            } else {
-                $confirm.removeClass('valid invalid');
-                $('#mismatchError').hide();
-                return false;
-            }
-        }
-
-        $password.on('input', function() {
-            const rules = validatePasswordRules($(this).val());
-            updatePasswordRulesUI(rules);
-        });
-
-        $password.add($confirm).on('input', function() {
-            checkPasswordMatch();
-        });
-
-        // Block form submission if validation fails (protects even if required is removed)
-        $form.on('submit', function(e) {
-            const password = $password.val();
-            const confirm = $confirm.val();
-
-            const rules = validatePasswordRules(password);
-            const allValid = rules.length && rules.uppercase && rules.lowercase && rules.number;
-            const match = password === confirm;
-
-            if (!password || !confirm || !allValid || !match || !validatePhone()) {
-                e.preventDefault(); // prevent submission
-                $password[0].reportValidity(); // show browser prompt for empty
-                $confirm[0].reportValidity(); // show browser prompt for empty
-            }
-        });
-    });
-
-    function checkPasswordMatch() {
-        const password = $('#password').val();
-        const confirm = $('#password_confirmation').val();
-
-        if (confirm.length > 0) {
-            if (password === confirm) {
-                $('#password_confirmation').removeClass('invalid').addClass('valid');
-                $('#mismatchError').hide();
-            } else {
-                $('#password_confirmation').removeClass('valid').addClass('invalid');
-                $('#mismatchError').show();
-            }
-        } else {
-            $('#password_confirmation').removeClass('valid invalid');
-            $('#mismatchError').hide();
-        }
-    }
-
-    $('#password, #password_confirmation').on('input', function() {
-        console.log('run file');
-
-        checkPasswordMatch(); // Live check for matching
-    });
-</script>
 
 </html>

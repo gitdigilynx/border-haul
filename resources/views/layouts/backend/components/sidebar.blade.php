@@ -13,10 +13,7 @@
         <div id="sidebar-menu">
 
             <div class="logo-box">
-                <a href="{{ route('home') }}" class="logo logo-dark">
-                    <span class="logo-sm">
-                        <img src="assets/images/logo/Border-Haul-logo.png" alt="" height="22">
-                    </span>
+                <a href="#" class="logo logo-dark">
                     <span class="logo-lg">
                         <img src="{{ asset('assets/images/logo/Border-Haul-logo.png') }}" alt="" height="80" style="margin-left:-20px"
                         >
