@@ -109,7 +109,7 @@
 
                 <h4 class="mb-3 text-black text-uppercase fw-bold custom-font">Transfer Carrier Log In</h4>
 
-                
+
                 @include('backend.components.alerts.errors')
 
 
@@ -134,8 +134,7 @@
                         <input type="checkbox" class="form-check-input" id="checkbox-signin" name="remember">
                         <label class="form-check-label" for="checkbox-signin">{{ __('Remember me') }}</label>
                     </div> --}}
-                        <a class="mt-2 text-muted fs-14 mt-md-0" href="#">Forgot password?</a>
-                        {{-- <a class="mt-2 text-muted fs-14 mt-md-0" href="{{ route('password.request') }}">Forgot password?</a> --}}
+                    <a href="{{ route('password.request') }}" class="mt-2 text-muted mt-md-0 forgot-pwd">Forgot your password?</a>
                     </div>
 
                     <div class="mb-4 form-group row">
@@ -154,26 +153,9 @@
                 </div>
             </div>
 
-
-            {{-- <div class="mt-4 col-12 col-md-6 d-flex align-items-center justify-content-center mt-md-0" style="padding-right: 50px;">
-            <div class="position-relative w-100" style="max-height: 90vh;">
-                <img src="{{ asset('assets/carrier/shipper_image.png') }}" alt="World Trade Bridge"
-                    class="img-fluid w-100 rounded-4" style="object-fit: cover; max-height: 90vh;">
-
-                <div class="bottom-0 p-3 m-3 text-white position-absolute start-0"
-                    style="background: rgba(0, 0, 0, 0.4); backdrop-filter: blur(2px); border-radius: 10px; max-width: 85%;">
-                    <img src="{{ asset('assets/shipper/shipper_logo.png') }}" alt="Logo" class="mb-2" style="height: 30px;">
-                   <h5 class="fw-bold">Ship with Confidence.</h5>
-                    <p class="mb-0 small">Manage, track, and deliver shipments with powerful tools built for speed, reliability, and control.</p>
-                </div>
-            </div>
-        </div> --}}
             <!-- Right Column: Image & Caption -->
             <div class="mt-4 col-12 pb-sm-5 col-md-5 d-flex align-items-end justify-content-center mt-md-0 loginbg"
                 style="/*padding-right: 50px;*/ ">
-                {{-- <div class="position-relative w-100" style="/*max-height: 90vh;*/">
-                <img src="{{ asset('assets/shipper/loginNewglob.png') }}" alt="World Trade Bridge"
-                    class="img-fluid w-100 rounded-4" style="object-fit: contain; max-width:690px;max-height: 800px;"> --}}
 
                 <div class="bottom-0 p-4 m-3 text-white start-0"
                     style="background: linear-gradient(180deg, rgba(106, 106, 106, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%);backdrop-filter: blur(16.600000381469727px);border-radius: 10px; max-width: 95%;">
