@@ -45,11 +45,22 @@
                         </div>
 
                         <div class="mb-3 col-md-6">
-                            <label for="state" class="form-label">STATE/PROVINCE <span
-                                    class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="state" placeholder="State"
-                                value="{{ old('state', $address->state) }}">
+                            <label for="state" class="form-label">STATE/PROVINCE <span class="text-danger">*</span></label>
+                            <select class="form-control" id="state" name="state">
+                                <option value="">Select State</option>
+                                @foreach (getStateOptions() as $country => $states)
+                                    <optgroup label="{{ $country }}">
+                                        @foreach ($states as $code => $state)
+                                            <option value="{{ $code }}"
+                                                {{ old('state', $address->state) == $code ? 'selected' : '' }}>
+                                                {{ $state }}
+                                            </option>
+                                        @endforeach
+                                    </optgroup>
+                                @endforeach
+                            </select>
                         </div>
+                        
 
                         <div class="mb-3 col-md-6">
                             <label for="postal_code" class="form-label">ZIP/POSTAL CODE <span
@@ -60,7 +71,7 @@
 
                         <div class="mb-3 col-md-12">
                             <label for="country" class="form-label">COUNTRY <span class="text-danger">*</span></label>
-                            <select class="form-control" name="country" required>
+                            <select class="form-control" name="country" id="country">
                                 <option value="mexico"
                                     {{ old('country', $address->country) == 'mexico' ? 'selected' : '' }}>Mexico
                                 </option>
@@ -91,8 +102,10 @@
                         <div class="mb-3 col-md-12">
                             <label for="phone" class="form-label">PHONE NUMBER <span
                                     class="text-danger">*</span></label>
-                            <input type="text" class="form-control" name="phone" placeholder="Phone"
+                            <input type="text" class="form-control" name="phone" placeholder="Phone" id="phone"
                                 value="{{ old('phone', $address->phone) }}">
+                             <span id="phone-error" class="text-danger" style="display:none;"></span>
+
                         </div>
                     </div>
 
@@ -109,9 +122,13 @@
     </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.21.0/jquery.validate.min.js"></script>
+<!-- jQuery and jQuery Validate -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
 
 <script>
+
+    // jQuery Validate rules
     $('#addressFormUpdate').validate({
         rules: {
             name: {
@@ -146,7 +163,7 @@
             phone: {
                 required: true,
                 minlength: 15,
-                maxlength: 17
+                maxlength: 20
             }
         },
         messages: {
@@ -164,8 +181,7 @@
             contact_person_name: "Please enter the contact person name",
             phone: {
                 required: "Please enter a phone number",
-                minlength: "Phone must be at least 10 digits",
-                maxlength: "Phone cannot exceed 15 digits"
+                maxlength: "Phone cannot exceed 20 digits"
             }
         },
         errorElement: 'span',
@@ -174,4 +190,98 @@
             error.insertAfter(element);
         }
     });
+
+    // Country code mapping
+    const countryCodeMap = {
+        unitedstates: 'us',
+        usa: 'us',
+        us: 'us',
+        mexico: 'mexico',
+        mx: 'mexico'
+    };
+
+    const countrySelect = document.getElementById('country');
+    const phoneFields = [
+        { input: document.getElementById('phone'), error: document.getElementById('phone-error') }
+    ];
+
+    const patterns = {
+        us: [
+            /^\d{3}-\d{3}-\d{4}$/,                    // 123-456-7890
+            /^\(\d{3}\)\s?\d{3}-\d{4}$/,              // (123) 456-7890
+            /^\d{3}\.\d{3}\.\d{4}$/,                  // 123.456.7890
+            /^\+1\s\d{3}\s\d{3}\s\d{4}$/,             // +1 123 456 7890
+            /^\+1\d{10}$/,                            // +11234567890
+            /^\+1\s\(\d{3}\)\s\d{3}-\d{4}$/           // +1 (123) 456-7890
+        ],
+        mexico: [
+            /^\d{2}-\d{4}-\d{4}$/,                    // 55-1234-5678
+            /^\+52\s1\s\d{2}\s\d{4}\s\d{4}$/,         // +52 1 55 1234 5678
+            /^\+52\s\d{2}\s\d{4}\s\d{4}$/,            // +52 55 1234 5678
+            /^\+521\d{8}$/,                           // +5215512345678
+            /^\+5255\d{8}$/                           // +525512345678
+        ]
+    };
+
+    const examples = {
+        us: [
+            '(123) 456-7890',
+            '+1 (123) 456-7890'
+        ],
+        mexico: [
+            '55-1234-5678',
+            '+52 1 55 1234 5678'
+        ]
+    };
+
+    function validatePhone(inputEl, errorEl) {
+        const selectedCountry = countrySelect.value.toLowerCase();
+        const selectedKey = countryCodeMap[selectedCountry];
+        const phone = inputEl.value.trim();
+        const validPatterns = patterns[selectedKey] || [];
+
+        const isValid = validPatterns.some(regex => regex.test(phone));
+
+        if (!isValid && selectedKey) {
+            errorEl.innerHTML = `Invalid phone format for ${selectedKey.toUpperCase()}.<br>Examples:<br>${examples[selectedKey].join('<br>')}`;
+            errorEl.style.display = 'block';
+            inputEl.classList.add('is-invalid');
+        } else {
+            errorEl.style.display = 'none';
+            inputEl.classList.remove('is-invalid');
+        }
+    }
+
+    function updatePlaceholders() {
+        const selectedKey = countryCodeMap[countrySelect.value.toLowerCase()];
+        if (examples[selectedKey]) {
+            phoneFields.forEach(({ input }) => {
+                input.placeholder = `e.g., ${examples[selectedKey][0]}`;
+            });
+        }
+    }
+
+    // Listen for country change
+    countrySelect.addEventListener('change', () => {
+        updatePlaceholders();
+        phoneFields.forEach(({ input, error }) => validatePhone(input, error));
+    });
+
+    // Validate phone fields on input
+    phoneFields.forEach(({ input, error }) => {
+        input.addEventListener('input', () => validatePhone(input, error));
+
+        // Optional: Restrict invalid characters
+        input.addEventListener('keypress', function(e) {
+            const allowedChars = /[\d\s\-\+\(\)]/;
+            if (!allowedChars.test(e.key)) {
+                e.preventDefault();
+            }
+        });
+    });
+
+    // Initial state
+    updatePlaceholders();
+    phoneFields.forEach(({ input, error }) => validatePhone(input, error));
+
 </script>
