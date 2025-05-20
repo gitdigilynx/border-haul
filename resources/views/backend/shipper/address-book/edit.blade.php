@@ -126,8 +126,44 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.inputmask/5.0.8/jquery.inputmask.min.js"></script>
+
 <script>
 
+$('input[name="phone"]').inputmask({
+    mask: [
+        // US formats
+        '999-999-9999',              // 123-456-7890
+        '(999) 999-9999',            // (123) 456-7890
+        '999.999.9999',              // 123.456.7890
+        '+1 999 999 9999',           // +1 123 456 7890
+        '+1(999) 999-9999',          // +1(123) 456-7890
+        '+19999999999',              // +11234567890
+
+        // Mexico formats
+        '99-9999-9999',              // 55-1234-5678
+        '+52 1 99 9999 9999',        // +52 1 55 1234 5678
+        '+52 99 9999 9999',          // +52 55 1234 5678
+        '+5219999999999',            // +5215512345678
+        '+529999999999'              // +525512345678
+    ],
+        greedy: false,
+        showMaskOnHover: false,
+        showMaskOnFocus: false, // hide mask while typing
+        autoUnmask: true,
+        oncomplete: function() {
+            // Format on completion
+            const input = $(this);
+            const value = input.inputmask.unmaskedvalue();
+
+            // Custom formatting
+            if (value.length === 20) {
+                input.val('(' + value.slice(0, 3) + ') ' + value.slice(3, 6) + '-' + value.slice(6));
+            } else if (value.length === 20 && value.startsWith('52')) {
+                input.val('+52-' + value.slice(2, 5) + '-' + value.slice(5, 8) + '-' + value.slice(8));
+            }
+        }
+    });
     // jQuery Validate rules
     $('#addressFormUpdate').validate({
         rules: {
@@ -162,7 +198,7 @@
             },
             phone: {
                 required: true,
-                minlength: 15,
+            
                 maxlength: 20
             }
         },
@@ -191,97 +227,5 @@
         }
     });
 
-    // Country code mapping
-    const countryCodeMap = {
-        unitedstates: 'us',
-        usa: 'us',
-        us: 'us',
-        mexico: 'mexico',
-        mx: 'mexico'
-    };
-
-    const countrySelect = document.getElementById('country');
-    const phoneFields = [
-        { input: document.getElementById('phone'), error: document.getElementById('phone-error') }
-    ];
-
-    const patterns = {
-        us: [
-            /^\d{3}-\d{3}-\d{4}$/,                    // 123-456-7890
-            /^\(\d{3}\)\s?\d{3}-\d{4}$/,              // (123) 456-7890
-            /^\d{3}\.\d{3}\.\d{4}$/,                  // 123.456.7890
-            /^\+1\s\d{3}\s\d{3}\s\d{4}$/,             // +1 123 456 7890
-            /^\+1\d{10}$/,                            // +11234567890
-            /^\+1\s\(\d{3}\)\s\d{3}-\d{4}$/           // +1 (123) 456-7890
-        ],
-        mexico: [
-            /^\d{2}-\d{4}-\d{4}$/,                    // 55-1234-5678
-            /^\+52\s1\s\d{2}\s\d{4}\s\d{4}$/,         // +52 1 55 1234 5678
-            /^\+52\s\d{2}\s\d{4}\s\d{4}$/,            // +52 55 1234 5678
-            /^\+521\d{8}$/,                           // +5215512345678
-            /^\+5255\d{8}$/                           // +525512345678
-        ]
-    };
-
-    const examples = {
-        us: [
-            '(123) 456-7890',
-            '+1 (123) 456-7890'
-        ],
-        mexico: [
-            '55-1234-5678',
-            '+52 1 55 1234 5678'
-        ]
-    };
-
-    function validatePhone(inputEl, errorEl) {
-        const selectedCountry = countrySelect.value.toLowerCase();
-        const selectedKey = countryCodeMap[selectedCountry];
-        const phone = inputEl.value.trim();
-        const validPatterns = patterns[selectedKey] || [];
-
-        const isValid = validPatterns.some(regex => regex.test(phone));
-
-        if (!isValid && selectedKey) {
-            errorEl.innerHTML = `Invalid phone format for ${selectedKey.toUpperCase()}.<br>Examples:<br>${examples[selectedKey].join('<br>')}`;
-            errorEl.style.display = 'block';
-            inputEl.classList.add('is-invalid');
-        } else {
-            errorEl.style.display = 'none';
-            inputEl.classList.remove('is-invalid');
-        }
-    }
-
-    function updatePlaceholders() {
-        const selectedKey = countryCodeMap[countrySelect.value.toLowerCase()];
-        if (examples[selectedKey]) {
-            phoneFields.forEach(({ input }) => {
-                input.placeholder = `e.g., ${examples[selectedKey][0]}`;
-            });
-        }
-    }
-
-    // Listen for country change
-    countrySelect.addEventListener('change', () => {
-        updatePlaceholders();
-        phoneFields.forEach(({ input, error }) => validatePhone(input, error));
-    });
-
-    // Validate phone fields on input
-    phoneFields.forEach(({ input, error }) => {
-        input.addEventListener('input', () => validatePhone(input, error));
-
-        // Optional: Restrict invalid characters
-        input.addEventListener('keypress', function(e) {
-            const allowedChars = /[\d\s\-\+\(\)]/;
-            if (!allowedChars.test(e.key)) {
-                e.preventDefault();
-            }
-        });
-    });
-
-    // Initial state
-    updatePlaceholders();
-    phoneFields.forEach(({ input, error }) => validatePhone(input, error));
 
 </script>

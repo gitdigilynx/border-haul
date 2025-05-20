@@ -201,13 +201,13 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    function setPlaceholders() {
-        phoneFields.forEach(({ input }) => {
-            if (input) {
-                input.placeholder = `e.g., ${allExamples[0]}`;
-            }
-        });
-    }
+    // function setPlaceholders() {
+    //     phoneFields.forEach(({ input }) => {
+    //         if (input) {
+    //             input.placeholder = `e.g., ${allExamples[0]}`;
+    //         }
+    //     });
+    // }
 
     // Attach events
     phoneFields.forEach(({ input, error }) => {

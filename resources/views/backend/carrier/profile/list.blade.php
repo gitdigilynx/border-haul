@@ -132,7 +132,7 @@
                                                                 <div class="mb-3 col-lg-6">
                                                                     <label class="form-label">MC <span
                                                                             class="text-danger">*</span></label>
-                                                                    <input class="form-control" type="number"
+                                                                    <input class="form-control" type="text"
                                                                         name="mc"
                                                                         value="{{ Auth::user()->role == 'Carrier' ? Auth::user()->carrier->mc : '' }}">
                                                                 </div>
