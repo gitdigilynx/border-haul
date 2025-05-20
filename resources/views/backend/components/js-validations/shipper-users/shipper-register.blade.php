@@ -97,7 +97,15 @@
     });
 
 </script>
+
 <script>
+
+    // Override default email validator
+jQuery.validator.addMethod("email", function(value, element) {
+    return this.optional(element) || /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(value);
+}, "Please enter a valid email address (e.g., user@example.com).");
+
+
     document.querySelectorAll('.toggle-password').forEach(function(element) {
         element.addEventListener('click', function() {
             const input = document.querySelector(this.getAttribute('toggle'));
@@ -306,6 +314,20 @@
     updatePlaceholders();
     phoneFields.forEach(({ input, error }) => validatePhone(input, error));
 });
+
+
+function validateEmail(input) {
+    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    const errorDiv = document.getElementById('emailError');
+
+    if (!regex.test(input.value)) {
+        input.classList.add('is-invalid');
+        errorDiv.classList.remove('d-none');
+    } else {
+        input.classList.remove('is-invalid');
+        errorDiv.classList.add('d-none');
+    }
+}
 
 
 </script>

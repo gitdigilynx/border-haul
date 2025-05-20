@@ -200,13 +200,11 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
-
                     <div class="col-md-6">
-                        <label for="service_category" class="form-label">Service Category <span
-                                class="text-danger">*</span></label>
+                        <label for="service_category" class="form-label">Shipper Category <span class="text-danger">*</span></label>
                         <select name="service_category" id="service_category"
-                            class="form-control @error('service_category') is-invalid @enderror">
-                            <option selected>Select your company type</option>
+                            class="form-control @error('service_category') is-invalid @enderror" required>
+                            <option value="">Select your company type</option>
                             @foreach (serviceCategoryRegister() as $key => $services_category)
                                 <option value="{{ $key }}"
                                     {{ old('service_category') == $key ? 'selected' : '' }}>
@@ -218,6 +216,7 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                    
                 </div>
 
                 {{-- Company Info --}}
@@ -281,15 +280,30 @@
                     </div>
 
                     <div class="col-md-6">
-                        <label for="email" class="form-label">Email Address <span
-                                class="text-danger">*</span></label>
-                        <input type="email" name="email" id="email"
-                            class="form-control @error('email') is-invalid @enderror" placeholder="Email Address"
-                            value="{{ old('email') }}">
+                        <label for="email" class="form-label">
+                            Email Address <span class="text-danger">*</span>
+                        </label>
+                        <input 
+                            type="text" 
+                            name="email" 
+                            id="email"
+                            class="form-control @error('email') is-invalid @enderror" 
+                            placeholder="Email Address"
+                            value="{{ old('email') }}"
+                            pattern="^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$"
+                            required
+                            oninput="validateEmail(this)"
+                        >
+                        <div id="emailError" class="invalid-feedback d-none">
+                            Please enter a valid email address (e.g., user@example.com).
+                        </div>
+                        
                         @error('email')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                    
+                    
                 </div>
 
                 {{-- Contact Info --}}
@@ -415,6 +429,22 @@
 </div>
 @include('backend.components.js-validations.shipper-users.shipper-register')
 
+<script>
+    function validateEmail(input) {
+        const regex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
+        const errorDiv = document.getElementById('emailError');
+    
+        if (!regex.test(input.value)) {
+            input.classList.add('is-invalid');
+            errorDiv.classList.remove('d-none');
+        } else {
+            input.classList.remove('is-invalid');
+            errorDiv.classList.add('d-none');
+        }
+    }
+    </script>
+    
+    
 </body>
 
 </html>

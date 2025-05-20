@@ -29,7 +29,11 @@ class RegisteredUserController extends Controller
             'name' => 'required|string|max:50',
             'service_category' => 'required|string|max:50',
             'company_name' => 'required|string|max:50',
-            'email' => 'required|email|unique:users,email',
+            'email' => [
+                'required',
+                'regex:/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/',
+                'unique:users,email',
+            ],
             'street_address' => 'required|string|max:50',
             'city' => 'required|string|max:50',
             'company_state' => 'required|string|max:50',
