@@ -22,16 +22,15 @@ class StoreAddressBook extends FormRequest
     public function rules(): array
     {
         return [
-                'name' => 'required|string|max:255',
-                'phone' => 'nullable|string|max:255',
-
-                'street_address' => 'required|string|max:255',
-                'city' => 'required|string|max:100',
-                'state' => 'required|string|max:100',
-                'postal_code' => 'required|string|max:20',
-                'country' => 'required|string|max:100',
+                'name' => 'required|string|max:50',
+                'phone' => 'nullable|string|max:20',
+                'street_address' => 'required|string|max:50',
+                'city' => 'required|string|max:20',
+                'state' => 'required|string|max:20',
+                'postal_code' => 'required|string|max:5',
+                'country' => 'required|string|max:10',
                 'type' => 'required',
-                'contact_person_name' => 'required|string|max:25',
+                'contact_person_name' => 'required|string|max:50',
            ];
     }
 }

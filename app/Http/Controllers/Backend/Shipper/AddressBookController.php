@@ -78,9 +78,9 @@ class AddressBookController extends Controller
             $request->validate([
                 'name' => 'nullable|string|max:50',
                 'street_address' => 'required|string|max:50',
-                'city' => 'required|string|max:15',
-                'state' => 'nullable|string|max:10',
-                'postal_code' => 'nullable|string|max:10',
+                'city' => 'required|string|max:20',
+                'state' => 'nullable|string|max:20',
+                'postal_code' => 'nullable|string|max:5',
                 'country' => 'nullable|string|max:10',
                 'type' => 'required|in:pickup,delivery',
                 'contact_person_name' => 'nullable|string|max:50',
