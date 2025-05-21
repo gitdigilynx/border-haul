@@ -1,6 +1,129 @@
+{{-- @include('backend.components.backend.master') --}}
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.js"></script>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/intlTelInput.min.js"></script>
+<script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const countrySelect = document.getElementById('company_country');
+            const officeInput = document.getElementById('office_phone');
+            const cellInput = document.getElementById('phone');
+        
+            const initTelInput = (input) => {
+                return window.intlTelInput(input, {
+                    onlyCountries: ['us', 'mx'],
+                    initialCountry: 'us',
+                    nationalMode: false,
+                    autoHideDialCode: false,
+                    formatOnDisplay: true,
+                    allowDropdown: false,
+                    utilsScript: "https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/js/utils.min.js"
+                });
+            };
+        
+           
+            const itiOffice = initTelInput(officeInput);
+            const itiCell = initTelInput(cellInput);
+        
+            // Change country handler
+            countrySelect.addEventListener('change', function () {
+                const countryCode = countrySelect.value === 'Mexico' ? 'mx' : 'us';
+                itiOffice.setCountry(countryCode);
+                itiCell.setCountry(countryCode);
+            });
+        
+            const validatePhone = (input, iti, errorId) => {
+                const errorDiv = document.getElementById(errorId);
+                const value = input.value.trim();
+                const dialCode = '+' + iti.getSelectedCountryData().dialCode;
+        
+                // Check if number starts with correct dial code
+                if (!value.startsWith(dialCode)) {
+                    showError(input, errorDiv, 'Invalid phone number for selected country.');
+                    return;
+                }
+        
+                // Strip formatting to count digits
+                const rawDigits = value.replace(/\D/g, '').replace(iti.getSelectedCountryData().dialCode, '');
+        
+                if (rawDigits.length < 10) {
+                    clearFeedback(input, errorDiv); // don't show error while typing
+                    return;
+                }
+        
+                if (!iti.isValidNumber()) {
+                    showError(input, errorDiv, 'Invalid phone number for selected country.');
+                } else {
+                    showValid(input, errorDiv);
+                }
+            };
+        
+            const showError = (input, errorDiv, msg) => {
+                input.classList.add('is-invalid');
+                input.classList.remove('is-valid');
+                errorDiv.textContent = msg;
+                errorDiv.style.display = 'block';
+            };
+        
+            const showValid = (input, errorDiv) => {
+                input.classList.add('is-valid');
+                input.classList.remove('is-invalid');
+                errorDiv.style.display = 'none';
+            };
+        
+            const clearFeedback = (input, errorDiv) => {
+                input.classList.remove('is-invalid', 'is-valid');
+                errorDiv.style.display = 'none';
+            };
+        
+            const formatPhoneNumber = (value) => {
+                const digits = value.replace(/\D/g, '').slice(0, 10);
+                const match = digits.match(/^(\d{0,3})(\d{0,3})(\d{0,4})$/);
+                if (!match) return value;
+        
+                let formatted = '';
+                if (match[1]) formatted += '(' + match[1];
+                if (match[1].length === 3) formatted += ') ';
+                if (match[2]) formatted += match[2];
+                if (match[2].length === 3) formatted += '-';
+                if (match[3]) formatted += match[3];
+        
+                return formatted;
+            };
+        
+            const setupRealTimeValidation = (input, iti, errorId) => {
+                input.addEventListener('input', () => {
+                    const dialCode = '+' + iti.getSelectedCountryData().dialCode;
+                    let raw = input.value.replace(dialCode, '').replace(/\D/g, '');
+                    const formatted = formatPhoneNumber(raw);
+                    input.value = dialCode + ' ' + formatted;
+        
+                    validatePhone(input, iti, errorId);
+                });
+            };
+        
+            setupRealTimeValidation(officeInput, itiOffice, 'office-phone-error');
+            setupRealTimeValidation(cellInput, itiCell, 'phone-error');
+        
+            const setupExtraValidation = (input, iti, errorId) => {
+                input.addEventListener('blur', () => validatePhone(input, iti, errorId));
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        validatePhone(input, iti, errorId);
+                        input.blur();
+                    }
+                });
+            };
+        
+            
+            setupExtraValidation(officeInput, itiOffice, 'office-phone-error');
+            setupExtraValidation(cellInput, itiCell, 'phone-error');
+        });
+</script>
+          
+        
 <script>
     $(document).ready(function() {
         $("#registrationForm").validate({
@@ -51,11 +174,11 @@
                 },
                 phone: {
                     required: true,
-                    mix: 20
+                    minlength: 11
                 },
                 office_phone: {
                     required: true,
-                    mix: 20
+                    minlength: 11
                 },
 
                 // password: {
@@ -72,17 +195,18 @@
                 service_category: "Please select a service category",
                 company_name: "Please enter your company name",
                 company_address: "Please enter your company address",
+                company_country: "Please enter your company address",
                 email: {
                     required: "Please enter an email address",
                     email: "Please enter a valid email address"
                 },
                 phone: {
                     required: "Please enter your Cell number",
-                    minlength: "Phone number must be at least 20 characters long"
+                    minlength: "Phone number must be at least 11 characters long"
                 },
                 office_phone: {
                     required: "Please enter your Office number",
-                    minlength: "Phone number must be at least 20 characters long"
+                    minlength: "Phone number must be at least 11 characters long"
                 },
                 password: {
                     required: "Please enter a password",
@@ -101,9 +225,9 @@
 <script>
 
     // Override default email validator
-jQuery.validator.addMethod("email", function(value, element) {
-    return this.optional(element) || /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(value);
-}, "Please enter a valid email address (e.g., user@example.com).");
+    jQuery.validator.addMethod("email", function(value, element) {
+        return this.optional(element) || /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/.test(value);
+    }, "Please enter a valid email address");
 
 
     document.querySelectorAll('.toggle-password').forEach(function(element) {
@@ -230,90 +354,90 @@ jQuery.validator.addMethod("email", function(value, element) {
 
 // countries base validation on phone numbers
 
-  document.addEventListener('DOMContentLoaded', function () {
-    const countrySelect = document.getElementById('company_country');
-    const phoneFields = [
-        { input: document.getElementById('office_phone'), error: document.getElementById('office-phone-error') },
-        { input: document.getElementById('phone'), error: document.getElementById('phone-error') }
-    ];
+//   document.addEventListener('DOMContentLoaded', function () {
+//     const countrySelect = document.getElementById('company_country');
+//     const phoneFields = [
+//         { input: document.getElementById('office_phone'), error: document.getElementById('office-phone-error') },
+//         { input: document.getElementById('phone'), error: document.getElementById('phone-error') }
+//     ];
 
-    const patterns = {
-        US: [
-            /^\d{3}-\d{3}-\d{4}$/,                    // 123-456-7890
-            /^\(\d{3}\)\s?\d{3}-\d{4}$/,              // (123) 456-7890
-            /^\d{3}\.\d{3}\.\d{4}$/,                  // 123.456.7890
-            /^\+1\s\d{3}\s\d{3}\s\d{4}$/,             // +1 123 456 7890
-            /^\+1\d{10}$/,                            // +11234567890
-            /^\+1\s\(\d{3}\)\s\d{3}-\d{4}$/           // +1 (123) 456-7890
-        ],
-        Mexico: [
-            /^\d{2}-\d{4}-\d{4}$/,                    // 55-1234-5678
-            /^\+52\s1\s\d{2}\s\d{4}\s\d{4}$/,         // +52 1 55 1234 5678
-            /^\+52\s\d{2}\s\d{4}\s\d{4}$/,            // +52 55 1234 5678
-            /^\+521\d{8}$/,                           // +5215512345678
-            /^\+5255\d{8}$/                           // +525512345678
-        ]
-    };
+//     const patterns = {
+//         US: [
+//             /^\d{3}-\d{3}-\d{4}$/,                    // 123-456-7890
+//             /^\(\d{3}\)\s?\d{3}-\d{4}$/,              // (123) 456-7890
+//             /^\d{3}\.\d{3}\.\d{4}$/,                  // 123.456.7890
+//             /^\+1\s\d{3}\s\d{3}\s\d{4}$/,             // +1 123 456 7890
+//             /^\+1\d{10}$/,                            // +11234567890
+//             /^\+1\s\(\d{3}\)\s\d{3}-\d{4}$/           // +1 (123) 456-7890
+//         ],
+//         Mexico: [
+//             /^\d{2}-\d{4}-\d{4}$/,                    // 55-1234-5678
+//             /^\+52\s1\s\d{2}\s\d{4}\s\d{4}$/,         // +52 1 55 1234 5678
+//             /^\+52\s\d{2}\s\d{4}\s\d{4}$/,            // +52 55 1234 5678
+//             /^\+521\d{8}$/,                           // +5215512345678
+//             /^\+5255\d{8}$/                           // +525512345678
+//         ]
+//     };
 
-    const examples = {
-        US: [
-            // '123-456-7890',
-            '(123) 456-7890',
-            // '123.456.7890',
-            // '+1 123 456 7890',
-            // '+11234567890',
-            '+1 (123) 456-7890'
-        ],
-        Mexico: [
-             '55-1234-5678',
-             '+52 1 55 1234 5678',
-            // '+52 55 1234 5678',
-            // '+5215512345678',
-            // '+525512345678'
-        ]
-    };
+//     const examples = {
+//         US: [
+//             // '123-456-7890',
+//             '(123) 456-7890',
+//             // '123.456.7890',
+//             // '+1 123 456 7890',
+//             // '+11234567890',
+//             '+1 (123) 456-7890'
+//         ],
+//         Mexico: [
+//              '55-1234-5678',
+//              '+52 1 55 1234 5678',
+//             // '+52 55 1234 5678',
+//             // '+5215512345678',
+//             // '+525512345678'
+//         ]
+//     };
 
-    function validatePhone(inputEl, errorEl) {
-        const selectedCountry = countrySelect.value;
-        const phone = inputEl.value.trim();
-        const validPatterns = patterns[selectedCountry] || [];
+//     function validatePhone(inputEl, errorEl) {
+//         const selectedCountry = countrySelect.value;
+//         const phone = inputEl.value.trim();
+//         const validPatterns = patterns[selectedCountry] || [];
 
-        const isValid = validPatterns.some(regex => regex.test(phone));
+//         const isValid = validPatterns.some(regex => regex.test(phone));
 
-        if (!isValid && selectedCountry) {
-            errorEl.innerHTML = `Invalid ${inputEl.name.replace('_', ' ')} format for ${selectedCountry}.<br>Examples:<br>${examples[selectedCountry].join('<br>')}`;
-            errorEl.style.display = 'block';
-            inputEl.classList.add('is-invalid');
-        } else {
-            errorEl.style.display = 'none';
-            inputEl.classList.remove('is-invalid');
-        }
-    }
+//         if (!isValid && selectedCountry) {
+//             errorEl.innerHTML = `Invalid ${inputEl.name.replace('_', ' ')} format for ${selectedCountry}.<br>Examples:<br>${examples[selectedCountry].join('<br>')}`;
+//             errorEl.style.display = 'block';
+//             inputEl.classList.add('is-invalid');
+//         } else {
+//             errorEl.style.display = 'none';
+//             inputEl.classList.remove('is-invalid');
+//         }
+//     }
 
-    function updatePlaceholders() {
-        const selected = countrySelect.value;
-        if (examples[selected]) {
-            phoneFields.forEach(({ input }) => {
-                input.placeholder = `e.g., ${examples[selected][0]}`;
-            });
-        }
-    }
+//     function updatePlaceholders() {
+//         const selected = countrySelect.value;
+//         if (examples[selected]) {
+//             phoneFields.forEach(({ input }) => {
+//                 input.placeholder = `e.g., ${examples[selected][0]}`;
+//             });
+//         }
+//     }
 
-    // Listen for country change
-    countrySelect.addEventListener('change', () => {
-        updatePlaceholders();
-        phoneFields.forEach(({ input, error }) => validatePhone(input, error));
-    });
+//     // Listen for country change
+//     countrySelect.addEventListener('change', () => {
+//         updatePlaceholders();
+//         phoneFields.forEach(({ input, error }) => validatePhone(input, error));
+//     });
 
-    // Validate each phone field on input
-    phoneFields.forEach(({ input, error }) => {
-        input.addEventListener('input', () => validatePhone(input, error));
-    });
+//     // Validate each phone field on input
+//     phoneFields.forEach(({ input, error }) => {
+//         input.addEventListener('input', () => validatePhone(input, error));
+//     });
 
-    // Initial state
-    updatePlaceholders();
-    phoneFields.forEach(({ input, error }) => validatePhone(input, error));
-});
+//     // Initial state
+//     updatePlaceholders();
+//     phoneFields.forEach(({ input, error }) => validatePhone(input, error));
+// });
 
 
 function validateEmail(input) {
@@ -331,3 +455,19 @@ function validateEmail(input) {
 
 
 </script>
+
+<style>
+    .iti {
+  direction: ltr;
+}
+
+.iti--allow-dropdown input {
+  padding-left: 52px; /* enough space for flag */
+}
+
+.iti__flag-container {
+  left: 0;
+  right: auto;
+}
+
+    </style>

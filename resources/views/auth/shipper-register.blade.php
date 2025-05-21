@@ -18,7 +18,33 @@
     <link href="https://fonts.cdnfonts.com/css/staatliches" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-    <style>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.min.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.19/css/intlTelInput.css" />
+
+ 
+
+<style>
+.intl-tel-input {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+}
+
+.intl-tel-input .flag-container {
+    position: absolute;
+    right: 10px;
+    left: auto !important;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.intl-tel-input input {
+    padding-right: 60px;
+    padding-left: 10px;
+    direction: ltr;
+}
+
         .is-invalid {
             border-color: #dc3545;
         }
@@ -308,50 +334,30 @@
 
                 {{-- Contact Info --}}
                 <div class="mb-3 row">
-
                     <div class="col-md-6">
-                        <label for="company_country" class="form-label">Country <span
-                                class="text-danger">*</span></label>
-                        <select name="company_country" id="company_country"
-                            class="form-control @error('company_country') is-invalid @enderror">
-                            <option value="" disabled {{ old('company_country') ? '' : 'selected' }}>Select
-                                Company Country</option>
-                            <option value="US" {{ old('company_country') == 'US' ? 'selected' : '' }}>U.S.
-                            </option>
-                            <option value="Mexico" {{ old('company_country') == 'Mexico' ? 'selected' : '' }}>Mexico
-                            </option>
+                        <label for="company_country" class="form-label">Country <span class="text-danger">*</span></label>
+                        <select name="company_country" id="company_country" class="form-control">
+                            <option>Select Country </option>
+                            <option value="US">U.S.</option>
+                            <option value="Mexico">Mexico</option>
                         </select>
-                        @error('company_country')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                      
                     </div>
-
+                
                     <div class="mb-2 col-md-6">
-                        <label for="office_phone" class="form-label">Office Phone Number<span
-                                class="text-danger">*</span></label>
-                        <input type="tel" name="office_phone" id="office_phone"
-                            class="form-control @error('office_phone') is-invalid @enderror"
-                            placeholder="+1 (956) 222-4567" value="{{ old('office_phone') }}">
-                            <div id="office-phone-error" style="color: red; display: none; font-size: 12px;"></div>
-                        @error('office_phone')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        <label for="office_phone" class="form-label">Office Phone Number <span class="text-danger">*</span></label>
+                        <input type="tel" name="office_phone" id="office_phone" class="form-control" placeholder="+1 (956) 222-4567">
+                        
+                        <div id="office-phone-error" class="text-danger" style="display:none;"></div>
                     </div>
-
+                
                     <div class="col-md-6">
-                        <label for="phone" class="form-label">Cell Phone Number<span
-                                class="text-danger">*</span></label>
-                        <input type="tel" name="phone" id="phone"
-                            class="form-control @error('phone') is-invalid @enderror"
-                            placeholder="Enter Phone Number" value="{{ old('phone') }}">
-                            <div id="phone-error" style="color: red; display: none; font-size: 12px;"></div>
-                        @error('phone')
-                            <div class="invalid-feedback">{{ $message }}</div>
-                        @enderror
+                        <label for="phone" class="form-label">Cell Phone Number <span class="text-danger">*</span></label>
+                        <input type="tel" name="phone" id="phone" class="form-control" placeholder="Enter Phone Number">
+                        <div id="phone-error" class="text-danger" style="display:none;"></div>
                     </div>
-
-
                 </div>
+                
 
                 {{-- Passwords --}}
                 <div class="mb-3 row">
@@ -443,6 +449,7 @@
         }
     }
     </script>
+    
     
     
 </body>
